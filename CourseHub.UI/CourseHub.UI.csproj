@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\fonts\WEB BASED RESULT PUBLICATION SYSTEM FOR EDUCATION BOARDS.pdf" />
+    <None Include="wwwroot\icon-fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\icon-fonts\fontawesome-webfont.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CourseHub.Core\CourseHub.Core.csproj" />
   </ItemGroup>
 
