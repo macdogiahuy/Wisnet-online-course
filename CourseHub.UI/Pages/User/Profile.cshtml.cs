@@ -7,8 +7,13 @@ namespace CourseHub.UI.Pages.User;
 public class ProfileModel : PageModel
 {
     private readonly IUserApiService _userApiService;
-    
+
     public UserFullModel? Client { get; set; }
+
+
+    public class ExModel {
+        //...
+    }
 
     public ProfileModel(IUserApiService userApiService)
     {
