@@ -5,7 +5,6 @@ using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
 
 namespace CourseHub.API.Controllers.CourseControllers;
 

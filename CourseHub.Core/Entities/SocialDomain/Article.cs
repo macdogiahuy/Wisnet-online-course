@@ -1,15 +1,11 @@
-﻿using CourseHub.Core.Entities.CommonDomain;
-using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.UserDomain;
-
-namespace CourseHub.Core.Entities.SocialDomain;
+﻿namespace CourseHub.Core.Entities.SocialDomain;
 
 #pragma warning disable CS8618
 
 public class Article : AuditedEntity
 {
     // Attributes
-    public string Restriction { get; set; }
+    //public string Restriction { get; set; }
     public string Content { get; set; }
     public string Title { get; set; }
     public string Status { get; set; }

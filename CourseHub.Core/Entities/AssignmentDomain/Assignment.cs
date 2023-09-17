@@ -1,10 +1,6 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Entities.UserDomain;
+﻿namespace CourseHub.Core.Entities.AssignmentDomain;
 
-namespace CourseHub.Core.Entities.AssignmentDomain;
-
-public class Assignment : AuditedEntity
+public class Assignment : Entity
 {
     // Attributes
     public string Name { get; set; }

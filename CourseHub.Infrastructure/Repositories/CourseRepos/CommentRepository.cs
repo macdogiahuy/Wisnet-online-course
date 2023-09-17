@@ -1,6 +1,6 @@
 ﻿using CourseHub.Core.Entities.CommonDomain;
+using CourseHub.Core.Interfaces.Repositories.CommonRepos;
 using CourseHub.Core.Interfaces.Repositories.Shared;
-using CourseHub.Core.Interfaces.Repositories.SharedRepos;
 using CourseHub.Core.Models.Common.CommentModels;
 using System.Linq.Expressions;
 

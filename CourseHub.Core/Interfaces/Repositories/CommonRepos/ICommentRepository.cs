@@ -1,9 +1,8 @@
-﻿using CourseHub.Core.Entities.CommonDomain;
-using CourseHub.Core.Interfaces.Repositories.Shared;
+﻿using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Common.CommentModels;
 using System.Linq.Expressions;
 
-namespace CourseHub.Core.Interfaces.Repositories.SharedRepos;
+namespace CourseHub.Core.Interfaces.Repositories.CommonRepos;
 
 public interface ICommentRepository
 {

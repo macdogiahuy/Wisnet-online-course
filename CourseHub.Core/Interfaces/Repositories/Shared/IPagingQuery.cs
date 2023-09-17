@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace CourseHub.Core.Interfaces.Repositories.Shared;
 

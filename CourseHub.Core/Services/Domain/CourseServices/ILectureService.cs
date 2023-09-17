@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Helpers.Messaging;
+﻿using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.RequestDtos.Course.LectureDtos;
 
 namespace CourseHub.Core.Services.Domain.CourseServices;

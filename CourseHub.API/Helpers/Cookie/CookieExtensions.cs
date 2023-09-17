@@ -14,10 +14,9 @@ public static class CookieExtensions
     {
         foreach (Claim claim in httpContext.User.Claims)
             if (claim.Type == ClaimTypes.NameIdentifier)
-            {
-                Guid.TryParse(claim.Value, out Guid result);
-                return result;
-            }
+                // there might be multiple NameIdentifiers
+                if (Guid.TryParse(claim.Value, out Guid result))
+                    return result;
         return null;
     }
 

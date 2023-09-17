@@ -1,7 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.UserDomain;
-
-namespace CourseHub.Core.Entities.CourseDomain;
+﻿namespace CourseHub.Core.Entities.CourseDomain;
 
 public class CourseReview : AuditedEntity
 {

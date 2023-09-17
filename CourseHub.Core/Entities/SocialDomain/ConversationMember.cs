@@ -1,7 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.UserDomain;
-
-namespace CourseHub.Core.Entities.SocialDomain;
+﻿namespace CourseHub.Core.Entities.SocialDomain;
 
 public class ConversationMember : CreationAuditedDomainObject
 {

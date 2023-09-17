@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.CommonDomain;
-using CourseHub.Core.Helpers.Messaging;
+﻿using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.RequestDtos.Common.CommentDtos;
 

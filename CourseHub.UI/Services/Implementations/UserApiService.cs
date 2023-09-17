@@ -20,9 +20,16 @@ public class UserApiService : IUserApiService
 
 
 
-    public Task<UserModel?> GetAsync(Guid id)
+    public async Task<UserModel?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _client.GetFromJsonAsync<UserModel>($"api/users/{id}");
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     public async Task<UserFullModel?> GetClientAsync(HttpContext context)
@@ -38,19 +45,39 @@ public class UserApiService : IUserApiService
         }
     }
 
-    public Task<List<UserOverviewModel>> GetOverviewAsync(IEnumerable<Guid> ids)
+    public async Task<List<UserOverviewModel>?> GetOverviewAsync(IEnumerable<Guid> ids)
     {
-        throw new NotImplementedException();
+        string url = QueryBuilder.BuildWithArray("api/users/multiple?", "ids={0}&", ids.Select(_ => _.ToString()));
+
+        try
+        {
+            return await _client.GetFromJsonAsync<List<UserOverviewModel>>(url);
+        }
+        catch
+        {
+            return null;
+        }
     }
 
-    public Task<PagedResult<UserModel>> GetPagedAsync(QueryUserDto dto, HttpContext context)
+    public async Task<PagedResult<UserModel>> GetPagedAsync(QueryUserDto dto, HttpContext context)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _client.AddBearerHeader(context);
+            var result = await _client.GetFromJsonAsync<PagedResult<UserModel>>($"api/users");
+            return result!;
+        }
+        catch
+        {
+            return PagedResult<UserModel>.GetEmpty();
+        }
     }
 
     public string GetAvatarApiUrl(Guid? id)
     {
-        throw new NotImplementedException();
+        if (id is null)
+            return "/image/user/User_Empty.png";
+        return $"{_client.BaseAddress}api/users/avatar/{id}";
     }
 
 
@@ -63,9 +90,9 @@ public class UserApiService : IUserApiService
         return await _client.PostAsJsonAsync("api/auth/SignIn", dto);
     }
 
-    public Task<HttpResponseMessage> RefreshAsync()
+    public async Task SignOutAsync()
     {
-        throw new NotImplementedException();
+        await _client.PostAsync("api/auth/SignOut", null);
     }
 
     public async Task<HttpResponseMessage> RegisterAsync(CreateUserDto dto)
@@ -85,7 +112,7 @@ public class UserApiService : IUserApiService
             { nameof(dto.FullName), dto.FullName },
             { nameof(dto.DateOfBirth), dto.DateOfBirth?.ToString() },
             { nameof(dto.Bio), dto.Bio },
-            { nameof(dto.Phone), dto.Phone },
+            //{ nameof(dto.Phone), dto.Phone },
 
             { nameof(dto.CurrentPassword), dto.CurrentPassword },
             { nameof(dto.NewPassword), dto.NewPassword }
@@ -94,9 +121,10 @@ public class UserApiService : IUserApiService
         MultipartFormDataContent content = new();
         if (dto.Avatar is not null)
         {
-            StreamContent sContent = new(dto.Avatar.OpenReadStream());
-            sContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(dto.Avatar.ContentType);
-            content.Add(sContent, nameof(dto.Avatar), dto.Avatar.FileName);
+            if (dto.Avatar.File is not null)
+                content.Add(dto.Avatar.File.AsStreamContent(), nameof(dto.Avatar.File), dto.Avatar.File.FileName);
+            else if (dto.Avatar.Url is not null)
+                content.Add(new StringContent(dto.Avatar.Url), nameof(dto.Avatar.Url));
         }
         foreach (var pair in kvps)
         {

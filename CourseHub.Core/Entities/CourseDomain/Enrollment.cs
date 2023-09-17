@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.CourseDomain.Enums;
-using CourseHub.Core.Entities.PaymentDomain;
+﻿using CourseHub.Core.Entities.CourseDomain.Enums;
 
 namespace CourseHub.Core.Entities.CourseDomain;
 
@@ -16,5 +14,6 @@ public class Enrollment : CreationAuditedDomainObject
     public Guid? BillId { get; set; }
 
     // Navigation
+    public Course? Course { get; set; }
     public Bill? Bill { get; set; }
 }

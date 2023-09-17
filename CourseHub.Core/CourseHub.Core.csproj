@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Interfaces\Repositories\AssignmentRepos\" />
+    <Folder Include="Interfaces\Repositories\PaymentRepos\" />
+    <Folder Include="Interfaces\Repositories\SocialRepos\" />
     <Folder Include="Models\Common\ReactionModels\" />
     <Folder Include="Models\Course\LectureModels\" />
     <Folder Include="RequestDtos\Common\ReactionDtos\" />

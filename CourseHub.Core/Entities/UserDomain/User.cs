@@ -1,8 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Entities.PaymentDomain;
-using CourseHub.Core.Entities.SocialDomain;
-using CourseHub.Core.Entities.UserDomain.Enums;
+﻿using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Helpers.Cryptography;
 using CourseHub.Core.Helpers.Text;
 
@@ -34,7 +30,7 @@ public class User : TimeAuditedEntity
     //public int Point { get; set; }
 
     // Navigations
-    public ICollection<Enrollment> Enrollments { get; private set; }
+    // public ICollection<Enrollment> Enrollments { get; private set; }
     public ICollection<PaymentAccount> PaymentAccounts { get; private set; }
     public ICollection<ConversationMember> ConversationMembers { get; private set; }
 
@@ -50,10 +46,11 @@ public class User : TimeAuditedEntity
         Id = id;
         SetFullName(fullName);
         SetPassword(inputPassword);
+        SetCreationTime();
     }
 
     /// <summary>
-    /// Used for the insertion of a new Entity
+    /// Used for password registration
     /// </summary>
     public User(string userName, string inputPassword)
     {
@@ -62,9 +59,32 @@ public class User : TimeAuditedEntity
         SetFullName(userName);                  // default Full Name is UserName
         SetPassword(inputPassword);
         GenerateToken();
+        SetCreationTime();
         AvatarUrl = string.Empty;
-        LastModificationTime = DateTime.UtcNow;
         Bio = string.Empty;
+    }
+
+    /// <summary>
+    /// Used for external registration
+    /// </summary>
+    public User(string loginProvider, string providerKey, string? email, string userName, Role role)
+    {
+        Id = Guid.NewGuid();
+        UserName = userName;
+        SetFullName(userName);
+        SetCreationTime();
+        Password = string.Empty;
+        AvatarUrl = string.Empty;
+        Token = string.Empty;
+        RefreshToken = string.Empty;
+        LastModificationTime = DateTime.UtcNow;
+        Email = email is not null ? email : string.Empty;
+        Bio = string.Empty;
+        Role = role;
+        IsVerified = true;
+        // IsApproved
+        LoginProvider = loginProvider;
+        ProviderKey = providerKey;
     }
 
 #pragma warning restore CS8618
@@ -115,6 +135,13 @@ public class User : TimeAuditedEntity
         return Role == Role.Admin ? !IsApproved : !IsVerified;
     }
 
+    private void SetCreationTime()
+    {
+        DateTime now = DateTime.UtcNow;
+        CreationTime = now;
+        LastModificationTime = now;
+    }
+
 
 
 
@@ -122,6 +149,8 @@ public class User : TimeAuditedEntity
 
     public static bool IsMatchPasswords(string plainTextPassword, string hashedPassword)
     {
+        if (string.IsNullOrEmpty(plainTextPassword))
+            return false;
         return hashedPassword == HashPassword(plainTextPassword);
     }
 

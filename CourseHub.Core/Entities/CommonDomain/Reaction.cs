@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.CommonDomain.Enums;
+﻿using CourseHub.Core.Entities.CommonDomain.Enums;
 
 namespace CourseHub.Core.Entities.CommonDomain;
 

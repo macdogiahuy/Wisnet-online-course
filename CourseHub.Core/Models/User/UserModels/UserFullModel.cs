@@ -13,8 +13,10 @@ public class UserFullModel
     public Role Role { get; set; }
     public bool IsVerified { get; set; }
     public bool IsApproved { get; set; }
+    public string? LoginProvider { get; set; }
     public string Bio { get; set; }
     public DateTime? DateOfBirth { get; set; }
-    public string? Phone { get; set; }
     public int EnrollmentCount { get; set; }
+
+    public DateTime CreationTime { get; set; }
 }

@@ -1,7 +1,5 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.CourseDomain.Enums;
+﻿using CourseHub.Core.Entities.CourseDomain.Enums;
 using CourseHub.Core.Entities.CommonDomain.Enums;
-using CourseHub.Core.Entities.UserDomain;
 
 namespace CourseHub.Core.Entities.CommonDomain;
 
@@ -15,12 +13,15 @@ public class Comment : AuditedEntity
     public CommentSourceEntityType SourceType { get; private set; }
 
     // FKs
-    public Guid SourceEntityId { get; private set; }
     public Guid? ParentId { get; set; }
+    public Guid? LectureId { get; set; }
+    public Guid? ArticleId { get; set; }
 
     // Navigations
     public User? Creator { get; set; }
     public Comment? Parent { get; private set; }
+    public Lecture? Lecture { get; set; }
+    public Article? Article { get; set; }
     public ICollection<CommentMedia> Medias { get; private set; }
     public ICollection<Comment> Replies { get; private set; }
     public ICollection<Reaction> Reactions { get; private set; }
@@ -31,8 +32,10 @@ public class Comment : AuditedEntity
 
     public void SetPath(Guid sourceEntityId, CommentSourceEntityType type)
     {
-        SourceEntityId = sourceEntityId;
-        SourceType = type;
+        switch (type)
+        {
+
+        }
     }
 
     public void SetParent(Comment parent)

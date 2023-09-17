@@ -37,7 +37,6 @@ internal class CourseConfig : SqlServerEntityConfiguration<Course>
             .SetEnumParsing(_ => _.Status).SetEnumParsing(_ => _.Level)
             .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE);
 
-        builder.HasMany(_ => _.Categories).WithMany().UsingEntity(RelationsConfig.COURSE_CATEGORY);
         builder.OwnsMany(_ => _.Metas, meta => meta.Property(_ => _.Value).HasColumnType(NVARCHAR100));
         builder.HasOne(_ => _.Creator).WithMany().OnDelete(DeleteBehavior.NoAction);
     }

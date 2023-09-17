@@ -1,11 +1,8 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.UserDomain;
-
-namespace CourseHub.Core.Entities.PaymentDomain;
+﻿namespace CourseHub.Core.Entities.PaymentDomain;
 
 #pragma warning disable CS8618
 
-public class Bill : AuditedEntity
+public class Bill : CreationAuditedEntity
 {
     // Attributes
     public string Action { get; set; }                      // System Action

@@ -20,7 +20,7 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
     {
         return await DbSet
             .Where(_ => _.Id == id)
-            .ProjectTo<UserModel>(UserMapperProfile.UserModelConfig)
+            .ProjectTo<UserModel>(UserMapperProfile.ModelConfig)
             .FirstOrDefaultAsync();
     }
 
@@ -28,7 +28,7 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
     {
         return await DbSet
             .Where(_ => _.Id == id)
-            .ProjectTo<UserFullModel>(UserMapperProfile.UserFullModelConfig)
+            .ProjectTo<UserFullModel>(UserMapperProfile.FullModelConfig)
             .FirstOrDefaultAsync();
     }
 
@@ -36,13 +36,18 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
     {
         return await DbSet
             .Where(_ => ids.Contains(_.Id))
-            .ProjectTo<UserOverviewModel>(UserMapperProfile.UserOverviewModelConfig)
+            .ProjectTo<UserOverviewModel>(UserMapperProfile.OverviewModelConfig)
             .ToListAsync();
     }
 
     public IPagingQuery<User, UserModel> GetPagingQuery(Expression<Func<User, bool>>? whereExpression, short pageIndex, byte pageSize)
     {
-        return GetPagingQuery<UserModel>(UserMapperProfile.UserModelConfig, whereExpression, pageIndex, pageSize);
+        return GetPagingQuery<UserModel>(UserMapperProfile.ModelConfig, whereExpression, pageIndex, pageSize);
+    }
+
+    public async Task<Guid> GetIdByProviderKey(string key)
+    {
+        return await DbSet.Where(_ => _.ProviderKey == key).Take(1).Select(_ => _.Id).FirstOrDefaultAsync();
     }
 
 

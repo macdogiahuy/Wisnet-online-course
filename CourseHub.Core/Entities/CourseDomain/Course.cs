@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.CourseDomain.Enums;
-using CourseHub.Core.Entities.UserDomain;
+﻿using CourseHub.Core.Entities.CourseDomain.Enums;
 using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Helpers.Text;
 
@@ -26,11 +24,15 @@ public class Course : AuditedEntity
     public byte LectureCount { get; private set; }
     public int LearnerCount { get; set; }
     public int RatingCount { get; private set; }
+    public long TotalRating { get; private set; }
     public int BookmarkCount { get; set; }
+
+    // FKs
+    public Guid LeafCategoryId { get; set; }
 
     // Navigations
     public User? Creator { get; set; }
-    public ICollection<Category> Categories { get; private set; }
+    public Category? LeafCategory { get; set; }
     public ICollection<Section> Sections { get; private set; }
     public ICollection<CourseMeta> Metas { get; private set; }
     public ICollection<CourseReview> Reviews { get; private set; }
