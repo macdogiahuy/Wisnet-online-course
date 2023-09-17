@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-
-namespace CourseHub.Core.Entities.CourseDomain;
+﻿namespace CourseHub.Core.Entities.CourseDomain;
 
 #pragma warning disable CS8618
 

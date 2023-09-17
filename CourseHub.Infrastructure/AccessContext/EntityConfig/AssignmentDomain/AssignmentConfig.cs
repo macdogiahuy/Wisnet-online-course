@@ -20,7 +20,6 @@ internal class AssignmentConfig : SqlServerEntityConfiguration<Assignment>
     {
         builder
             .ToTable(RelationsConfig.ASSIGNMENT)
-            .SetColumnsTypes(Columns)
-            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE);
+            .SetColumnsTypes(Columns);
     }
 }

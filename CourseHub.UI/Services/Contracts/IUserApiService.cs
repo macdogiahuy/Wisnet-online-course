@@ -19,5 +19,5 @@ public interface IUserApiService
     Task<HttpResponseMessage> ResetPasswordAsync(ResetPasswordDto dto);
 
     Task<HttpResponseMessage> SignInAsync(SignInDto dto);
-    Task<HttpResponseMessage> RefreshAsync();
+    Task SignOutAsync();
 }

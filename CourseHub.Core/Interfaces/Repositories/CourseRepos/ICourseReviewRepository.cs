@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Entities.UserDomain;
-using CourseHub.Core.Interfaces.Repositories.Shared;
+﻿using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseReviewModels;
 using System.Linq.Expressions;
 

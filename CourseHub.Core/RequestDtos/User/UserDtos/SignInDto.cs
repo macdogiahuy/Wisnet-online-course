@@ -6,7 +6,7 @@ namespace CourseHub.Core.RequestDtos.User.UserDtos;
 
 public class SignInDto
 {
-    public string? Username { get; set; }
+    public string? UserName { get; set; }
 
     [EmailAddress(ErrorMessage = UserDomainMessages.INVALID_EMAIL)]
     public string? Email { get; set; }

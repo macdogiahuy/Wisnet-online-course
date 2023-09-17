@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.Helpers.Messaging;
+using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.RequestDtos.Course.CategoryDtos;
@@ -13,23 +13,82 @@ public class CategoryService : DomainService, ICategoryService
     {
     }
 
-    public Task<ServiceResult<Guid>> CreateAsync(CreateCategoryDto entity)
+
+
+    public async Task<ServiceResult<List<Category>>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var result = await _uow.CategoryRepo.GetAllAsync();
+        return ToQueryResult(result);
     }
 
-    public Task<ServiceResult> DeleteAsync(Guid id)
+
+
+    public async Task<ServiceResult<Guid>> CreateAsync(CreateCategoryDto dto)
     {
-        throw new NotImplementedException();
+        Category? parent = null;
+        if (dto.ParentId is not null)
+        {
+            parent = await _uow.CategoryRepo.Find(dto.ParentId);
+            if (parent is null)
+                return BadRequest<Guid>(CourseDomainMessages.INVALID_PARENT);
+        }
+
+        Category entity = Adapt(dto, parent);
+        await _uow.CategoryRepo.Insert(entity);
+        await _uow.CommitAsync();
+        return Created(entity.Id);
     }
 
-    public Task<ServiceResult<List<Category>>> GetAllAsync()
+    public async Task<ServiceResult> UpdateAsync(UpdateCategoryDto dto)
     {
-        throw new NotImplementedException();
+        Category? parent = null;
+        if (dto.ParentId is not null)
+        {
+            parent = await _uow.CategoryRepo.Find(dto.ParentId);
+            if (parent is null)
+                return BadRequest<Guid>(CourseDomainMessages.INVALID_PARENT);
+        }
+
+        var entity = await _uow.CategoryRepo.Find(dto.Id);
+        if (entity is null)
+            return BadRequest();
+
+        ApplyChanges(dto, entity, parent);
+        await _uow.CommitAsync();
+        return Ok();
     }
 
-    public Task<ServiceResult> UpdateAsync(UpdateCategoryDto entity)
+    public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _uow.CategoryRepo.ExecuteDeleteAsync(id);
+            return Ok();
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+
+
+
+
+
+    private Category Adapt(CreateCategoryDto dto, Category? parent)
+    {
+        return new Category(dto.Title, dto.Description, dto.IsLeaf, parent);
+    }
+
+    private void ApplyChanges(UpdateCategoryDto dto, Category entity, Category? parent)
+    {
+        if (dto.Title is not null)
+            entity.Title = dto.Title;
+        if (dto.Description is not null)
+            entity.Description = dto.Description;
+
+        if (parent is not null)
+            entity.SetPath(parent);
     }
 }

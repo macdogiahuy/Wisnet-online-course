@@ -11,7 +11,7 @@ internal class ArticleConfig : SqlServerEntityConfiguration<Article>
 {
     protected override Dictionary<Expression<Func<Article, object?>>, string> Columns => new()
     {
-        { _ => _.Restriction, VARCHAR45 },
+        //{ _ => _.Restriction, VARCHAR45 },
         { _ => _.Content, NVARCHAR3000 },
         { _ => _.Title, NVARCHAR255 },
         { _ => _.Status, VARCHAR45 },

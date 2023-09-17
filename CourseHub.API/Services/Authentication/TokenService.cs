@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CourseHub.API.Services.Token;
+namespace CourseHub.API.Services.Authentication;
 
 public class TokenService : ITokenService
 {

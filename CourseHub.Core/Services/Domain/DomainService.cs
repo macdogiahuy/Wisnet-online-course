@@ -35,6 +35,7 @@ public abstract class DomainService
     protected static ServiceResult<T> Unauthorized<T>(string message) => new(401, message);
 
     protected static ServiceResult Forbidden() => new(403);
+    protected static ServiceResult<T> Forbidden<T>() => new(403);
     protected static ServiceResult<T> Forbidden<T>(string message) => new(403, message);
 
     protected static ServiceResult<T> NotFound<T>() => new(404);

@@ -19,7 +19,7 @@ public class VerifyEmailModel : PageModel
     {
         var response = await _userService.VerifyEmailAsync(email, token);
         if (response.IsSuccessStatusCode)
-            return RedirectToPage(Global.PAGE_SIGNIN);
+            return Redirect(Global.PAGE_SIGNIN);
 
         return Page();
     }

@@ -2,10 +2,10 @@ using CourseHub.API.Helpers.AppStart;
 using CourseHub.API.Services.ApiDocumentation;
 using CourseHub.API.Services.Domain;
 using CourseHub.API.Services.Logging;
-using CourseHub.API.Services.Token;
 using CourseHub.API.Services.Email;
 using Serilog;
 using CourseHub.API.Services.AppInfo;
+using CourseHub.API.Services.Authentication;
 
 const string POLICY = "Policy";
 
@@ -20,7 +20,7 @@ builder.Services
     .AddLogger()
     .AddMapper()
     .AddAppInfo()
-    .AddTokenService()
+    .AddAuthenticationServices()
     .AddEmailService()
     .AddDomainServices()
     .AddDocumentation()
@@ -42,3 +42,5 @@ app
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

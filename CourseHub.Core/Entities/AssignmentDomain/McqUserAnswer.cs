@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-
-namespace CourseHub.Core.Entities.AssignmentDomain;
+﻿namespace CourseHub.Core.Entities.AssignmentDomain;
 
 public class McqUserAnswer : DomainObject
 {
@@ -12,6 +10,5 @@ public class McqUserAnswer : DomainObject
     public Guid MCQChoiceId { get; set; }
 
     public Submission? Submission { get; set; }
-    public McqQuestion? MCQQuestion { get; set; }
     public McqChoice? MCQChoice { get; set; }
 }

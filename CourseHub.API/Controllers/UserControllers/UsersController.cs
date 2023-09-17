@@ -12,7 +12,6 @@ using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Net.Mime;
 
 namespace CourseHub.API.Controllers.UserControllers;
 
@@ -82,7 +81,7 @@ public class UsersController : BaseController
     {
         ServiceResult<string> result = await _userService.CreateAsync(dto);
 
-        string link = $"{appInfo.Value.MainFrontendApp}/verifyemail/{dto.Email}/{result.Data}";
+        string link = $"{appInfo.Value.MainFrontendApp}/verify-email/{dto.Email}/{result.Data}";
 #pragma warning disable CS4014
         emailService.SendRegistrationEmail(dto.Email, dto.UserName, link);
 #pragma warning restore CS4014
@@ -119,7 +118,7 @@ public class UsersController : BaseController
         if (!result.IsSuccessful)
             return result.AsResponse();
 
-        string link = $"{appInfo.Value.MainFrontendApp}/resetpassword/{email}/{result.Data}";
+        string link = $"{appInfo.Value.MainFrontendApp}/reset-password/{email}/{result.Data}";
 #pragma warning disable CS4014
         emailService.SendPasswordResetEmail(email, link);
 #pragma warning restore CS4014

@@ -1,7 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.UserDomain;
-
-namespace CourseHub.Core.Entities.AssignmentDomain;
+﻿namespace CourseHub.Core.Entities.AssignmentDomain;
 
 public class Submission : AuditedEntity
 {

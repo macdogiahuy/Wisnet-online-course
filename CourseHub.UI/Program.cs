@@ -22,10 +22,11 @@ builder.Services
     .AddRazorPagesOptions(options =>
     {
         options.Conventions
-            .AddPageRoute("/User/VerifyEmail", "verifyemail/{email}/{token}")
+            .AddPageRoute("/User/VerifyEmail", "verify-email/{email}/{token}")
             .AddPageRoute("/User/SignIn", "signin")
+            .AddPageRoute("/User/ExternalLogin", "external")
             .AddPageRoute("/User/Profile", "profile")
-            .AddPageRoute("/User/ResetPassword", "resetpassword/{email}/{token}");
+            .AddPageRoute("/User/ResetPassword", "reset-password/{email}/{token}");
     })
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
 

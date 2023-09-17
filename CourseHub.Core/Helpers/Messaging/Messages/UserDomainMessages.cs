@@ -4,7 +4,7 @@ internal static class UserDomainMessages
 {
     // Mostly 400
     internal const string INVALID_EMAIL = "Invalid Email";
-    internal const string INVALID_USERNAME = "Username must be between 6 and 20 characters";
+    internal const string INVALID_USERNAME = "UserName must be between 6 and 20 characters";
     internal const string INVALID_PASSWORD_6TO20CHARS = "Password must be between 6 and 20 characters";
     internal const string INVALID_PASSWORD_REGEX = "Password must contain Uppercase, Lowercase and Number";
     internal const string INVALID_PHONE = "Invalid phone number";

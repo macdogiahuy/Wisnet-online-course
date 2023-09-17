@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Interfaces.Repositories.Shared;
+﻿using CourseHub.Core.Interfaces.Repositories.Shared;
 
 namespace CourseHub.Core.Interfaces.Repositories.CourseRepos;
 

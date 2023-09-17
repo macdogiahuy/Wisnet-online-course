@@ -1,9 +1,6 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.UserDomain;
+﻿namespace CourseHub.Core.Entities.CommonDomain;
 
-namespace CourseHub.Core.Entities.CommonDomain;
-
-public class Notification : AuditedEntity
+public class Notification : CreationAuditedEntity
 {
     // Attributes
     public string Message { get; set; }

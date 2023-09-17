@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-
-namespace CourseHub.Core.Entities.SocialDomain;
+﻿namespace CourseHub.Core.Entities.SocialDomain;
 
 public class Tag : DomainObject
 {

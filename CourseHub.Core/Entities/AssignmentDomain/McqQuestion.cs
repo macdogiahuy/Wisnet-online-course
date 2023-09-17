@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-
-namespace CourseHub.Core.Entities.AssignmentDomain;
+﻿namespace CourseHub.Core.Entities.AssignmentDomain;
 
 /// <summary>
 /// Mc"q"Question instead of McQuestion for better clarity

@@ -8,7 +8,6 @@ using System.Net.Mime;
 
 namespace CourseHub.API.Controllers.CommonControllers;
 
-[Produces(contentType: MediaTypeNames.Application.Json)]
 public class CommentsController : BaseController
 {
     private readonly ICommentService _commentService;

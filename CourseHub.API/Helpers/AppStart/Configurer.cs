@@ -1,5 +1,6 @@
 ﻿using CourseHub.API.Helpers.Cookie;
 using CourseHub.API.Services.AppInfo;
+using CourseHub.API.Services.Authentication;
 using CourseHub.API.Services.Email;
 using CourseHub.Core.Interfaces.Authentication;
 
@@ -36,6 +37,9 @@ public class Configurer
 
     public static EmailOptions GetEmailOptions()
         => _configuration!.GetSection("External:Gmail").Get<EmailOptions>();
+
+    public static OAuthOptions GetGoogleOAuthOptions()
+        => _configuration!.GetSection("External:OAuth:Google").Get<OAuthOptions>();
 
     public static AppInfoOptions GetAppInfoOptions()
         => _configuration!.GetSection("AppInfo").Get<AppInfoOptions>();

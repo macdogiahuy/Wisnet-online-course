@@ -1,6 +1,4 @@
-﻿using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.UserDomain;
-using CourseHub.Core.Helpers.Messaging.Messages;
+﻿using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Helpers.Text;
 
 namespace CourseHub.Core.Entities.CourseDomain;

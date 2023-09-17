@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Helpers.Messaging.Messages;
@@ -55,6 +54,9 @@ public class UserService : DomainService, IUserService
         var result = await _uow.UserRepo.GetOverviewAsync(ids);
         return ToQueryResult(result);
     }
+
+
+
 
 
 
@@ -128,8 +130,8 @@ public class UserService : DomainService, IUserService
     public async Task<ServiceResult<AuthDto>> SignInAsync(SignInDto dto, ITokenService tokenService)
     {
         User? entity;
-        if (dto.Username is not null)
-            entity = await _uow.UserRepo.FindByUserName(dto.Username);
+        if (dto.UserName is not null)
+            entity = await _uow.UserRepo.FindByUserName(dto.UserName);
         else if (dto.Email is not null)
             entity = await _uow.UserRepo.FindByEmail(dto.Email);
         else
@@ -154,6 +156,73 @@ public class UserService : DomainService, IUserService
         authDTO.User = _mapper.Map<UserFullModel>(entity);
         await _uow.CommitAsync();
         return Ok(authDTO);
+    }
+
+    public async Task<ServiceResult<ClaimsPrincipal>> ExternalSignInAsync(ClaimsPrincipal claimsPrincipal, Role role)
+    {
+        if (claimsPrincipal.Identity is null)
+            return Unauthorized<ClaimsPrincipal>();
+        if (role == Role.SysAdmin)
+            return Forbidden<ClaimsPrincipal>();
+
+        // Requires email
+        string? email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
+        if (email is null)
+            return Unauthorized<ClaimsPrincipal>();
+
+        User? entity = await _uow.UserRepo.FindByEmail(email);
+        var identity = claimsPrincipal.Identity as ClaimsIdentity;
+        if (identity is null)
+            return Unauthorized<ClaimsPrincipal>();
+        Claim? providerIdentifier = identity.FindFirst(ClaimTypes.NameIdentifier);
+        if (providerIdentifier is null)
+            return Unauthorized<ClaimsPrincipal>();
+
+        if (entity is null)
+        {
+            // Register if the user does not have an account
+            entity = new User(identity.AuthenticationType!, providerIdentifier.Value, email, identity.Name!, role);
+            try
+            {
+                await _uow.UserRepo.Insert(entity);
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(ex.Message);
+                return ServerError<ClaimsPrincipal>();
+            }
+        }
+        else
+        {
+            // Update user if the user has an account
+            if (entity.Role != role)
+                return Unauthorized<ClaimsPrincipal>();
+
+            if (entity.LoginProvider != identity.AuthenticationType)
+            {
+                if (entity.LoginProvider is not null)
+                    return Unauthorized<ClaimsPrincipal>();
+                entity.LoginProvider = identity.AuthenticationType;
+            }
+            if (entity.ProviderKey != providerIdentifier.Value)
+            {
+                if (entity.ProviderKey is not null)
+                    return Unauthorized<ClaimsPrincipal>();
+                entity.ProviderKey = providerIdentifier.Value;
+            }
+
+            entity.ResetAccessFailedCount();
+        }
+        await _uow.CommitAsync();
+
+        // SignIn
+        if (entity.IsNotApproved())
+            return Forbidden<ClaimsPrincipal>(UserDomainMessages.FORBIDDEN_NOT_APPROVED);
+        var customClaims = identity.Claims.ToList();
+        customClaims.Add(new Claim(ClaimTypes.NameIdentifier, entity.Id.ToString()));
+        customClaims.Add(new Claim(ClaimTypes.Role, entity.Role.ToString()));
+        ClaimsPrincipal principle = new(new ClaimsIdentity(customClaims, identity.AuthenticationType));
+        return Ok(principle);
     }
 
     public async Task<ServiceResult<AuthDto>> RefreshAsync(string? accessToken, string? refreshToken, ITokenService tokenService)
@@ -216,24 +285,32 @@ public class UserService : DomainService, IUserService
     {
         var entity = new User(dto.UserName, dto.Password)
         {
-            Email = dto.Email
+            Email = dto.Email,
+            Role = dto.Role
         };
         return entity;
     }
 
-    private async Task ApplyChanges(UpdateUserDto dto, User user)
+    private async Task ApplyChanges(UpdateUserDto dto, User entity)
     {
         if (dto.FullName is not null)
-            user.SetFullName(dto.FullName);
-        if (dto.Phone is not null)
-            user.Phone = dto.Phone;
-        if (dto.DateOfBirth is not null)
-            user.DateOfBirth = (DateTime)dto.DateOfBirth;
+            entity.SetFullName(dto.FullName);
         if (dto.Avatar is not null)
-            await SaveAvatar(dto.Avatar, user.Id);
+        {
+            if (dto.Avatar.File is not null)
+                entity.AvatarUrl = await SaveAvatar(dto.Avatar.File, entity.Id);
+            else if (dto.Avatar.Url is not null)
+                entity.AvatarUrl = dto.Avatar.Url;
+        }
+        if (dto.DateOfBirth is not null)
+            entity.DateOfBirth = (DateTime)dto.DateOfBirth;
+        if (dto.Bio is not null)
+            entity.Bio = dto.Bio;
+        /*if (dto.Phone is not null)
+            user.Phone = dto.Phone;*/
 
         if (dto.CurrentPassword is not null && dto.NewPassword is not null)
-            user.SetPassword(dto.NewPassword);
+            entity.SetPassword(dto.NewPassword);
     }
 
     private Expression<Func<User, bool>>? GetPredicate(QueryUserDto dto)
@@ -266,9 +343,11 @@ public class UserService : DomainService, IUserService
         return new AuthDto(_mapper.Map<UserFullModel>(user), accessToken, refreshToken);
     }
 
-    private async Task SaveAvatar(IFormFile file, Guid userId)
+    private async Task<string> SaveAvatar(IFormFile file, Guid userId)
     {
         Stream stream = await new FileConverter().ToJpg(file);
-        await ServerStorage.SaveFile(stream, UserStorage.GetAvatarPath(userId), _logger);
+        string path = UserStorage.GetAvatarPath(userId);
+        await ServerStorage.SaveFile(stream, path, _logger);
+        return path;
     }
 }

@@ -1,7 +1,4 @@
-﻿using CourseHub.Core.Entities.CommonDomain;
-using CourseHub.Core.Entities.Contracts;
-using CourseHub.Core.Entities.SocialDomain.Enums;
-using CourseHub.Core.Entities.UserDomain;
+﻿using CourseHub.Core.Entities.SocialDomain.Enums;
 
 namespace CourseHub.Core.Entities.SocialDomain;
 
