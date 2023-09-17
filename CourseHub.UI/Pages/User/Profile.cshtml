@@ -2,5 +2,77 @@
 @model CourseHub.UI.Pages.User.ProfileModel
 @{
 }
+<div class="Setting_setting-wrapper__FdLtc">
+    <div class="Setting_sidebar-wrapper__OR4mJ"><h1 class="Setting_heading__pfRml">Cài đặt</h1><ul class="Setting_sidebar-list__7Yj-I"><li><a aria-current="page" class="Setting_active__bcAyq" href="/settings/personal"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="user" class="svg-inline--fa fa-user Setting_icon__cYZ5C" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 304h-96C78.8 304 0 382.8 0 480c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32C448 382.8 369.2 304 272 304zM48.99 464C56.89 400.9 110.8 352 176 352h96c65.16 0 119.1 48.95 127 112H48.99zM224 256c70.69 0 128-57.31 128-128c0-70.69-57.31-128-128-128S96 57.31 96 128C96 198.7 153.3 256 224 256zM224 48c44.11 0 80 35.89 80 80c0 44.11-35.89 80-80 80S144 172.1 144 128C144 83.89 179.9 48 224 48z"></path></svg><span>Cài đặt tài khoản</span></a></li><li><a href="/settings/security"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="shield" class="svg-inline--fa fa-shield Setting_icon__cYZ5C" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M466.5 83.71l-192-80C269.6 1.67 261.3 0 256 0C250.7 0 242.5 1.67 237.6 3.702l-192 80C27.7 91.1 16 108.6 16 127.1c0 257.2 189.2 384 239.1 384c51.1 0 240-128.2 240-384C496 108.6 484.3 91.1 466.5 83.71zM256 446.5l.0234-381.1c.0059-.0234 0 0 0 0l175.9 73.17C427.8 319.7 319 417.1 256 446.5z"></path></svg><span>Bảo mật và đăng nhập</span></a></li><li><a href="/settings/notifications"><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="bell" class="svg-inline--fa fa-bell Setting_icon__cYZ5C" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 32V49.88C328.5 61.39 384 124.2 384 200V233.4C384 278.8 399.5 322.9 427.8 358.4L442.7 377C448.5 384.2 449.6 394.1 445.6 402.4C441.6 410.7 433.2 416 424 416H24C14.77 416 6.365 410.7 2.369 402.4C-1.628 394.1-.504 384.2 5.26 377L20.17 358.4C48.54 322.9 64 278.8 64 233.4V200C64 124.2 119.5 61.39 192 49.88V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32V32zM216 96C158.6 96 112 142.6 112 200V233.4C112 281.3 98.12 328 72.31 368H375.7C349.9 328 336 281.3 336 233.4V200C336 142.6 289.4 96 232 96H216zM288 448C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288z"></path></svg><span>Cài đặt thông báo</span></a></li></ul></div><div class="Setting_pageWrapper__PM+M5">
+        <section class="index-module_row__-AHgh">
+            <section class="index-module_col__2EQm9 index-module_c-12__u7UXF index-module_m-12__2CxUL index-module_l-12__340Ve">
+                <div class="Setting_wrapper__TX8z0">
+                    <div class="GroupField_wrapper__1-jfw">
+                        <h2 class="GroupField_heading__PIaoN">Thông tin cá nhân</h2><div class="FieldWrapper_wrapper__QcEfS">
+                            <div class="InputField_fieldContent__iWttQ">
+                                <h3 class="InputField_fieldContentLabel__wJO4a">Họ tên</h3><div>
+                                    <div class="
+                        InputField_fieldContentEdit__KYEiF
 
-<h1>@(Model.Client is not null ? Model.Client.Id : "You are not logged in")</h1>
+                    ">
+                                        <input type="text" name="full_name" class="InputField_fieldContentInput__lO21W" maxlength="50" placeholder="Thêm tên của bạn" disabled="" value="Phung Huy Cuong (K17 DN)"><div class="InputField_description__unJBo"><p>Tên của bạn xuất hiện trên trang cá nhân và bên cạnh các bình luận của bạn.</p></div>
+                                    </div>
+                                </div>
+                            </div><div class="InputField_fieldBtn__OG6ZB"><button class="Button_fieldButton__B93oZ Button_fieldButtonDefault__7a6UD">Chỉnh sửa</button></div>
+                        </div><div class="FieldWrapper_wrapper__QcEfS">
+                            <div class="InputField_fieldContent__iWttQ">
+                                <h3 class="InputField_fieldContentLabel__wJO4a">Bio</h3><div>
+                                    <div class="
+                        InputField_fieldContentEdit__KYEiF
+
+                    ">
+                                        <input type="text" name="bio" class="InputField_fieldContentInput__lO21W" maxlength="150" placeholder="Thêm giới thiệu" disabled="" value=""><div class="InputField_description__unJBo"><p>Bio hiển thị trên trang cá nhân và trong các bài viết (blog) của bạn.</p></div>
+                                    </div>
+                                </div>
+                            </div><div class="InputField_fieldBtn__OG6ZB"><button class="Button_fieldButton__B93oZ Button_fieldButtonDefault__7a6UD">Chỉnh sửa</button></div>
+                        </div><div class="FieldWrapper_wrapper__QcEfS"><div class="PhotoField_fieldContent__QiVzm"><h3 class="PhotoField_fieldContentLabel__rBtfX">Avatar</h3><div class="PhotoField_fieldContentEdit__8iE7p"><div class="PhotoField_contentBody__fl5E5">Nên là ảnh vuông, chấp nhận các tệp: JPG, PNG hoặc GIF.</div><div class="PhotoField_contentImage__zbcdo"><div class="PhotoField_avatar__Qdo+k"><div class="FallbackAvatar_avatar__gmj3S" style="--font-size: 8.9px;"><img src="https://files.fullstack.edu.vn/f8-prod/user_photos/175288/621c7220ea204.jpg" alt="Phung Huy Cuong (K17 DN)"></div></div><label for="avatar"></label></div></div></div><div class="PhotoField_fieldBtn__TSg2A"><button class="Button_fieldButton__B93oZ Button_fieldButtonDefault__7a6UD">Chỉnh sửa</button></div></div><div class="FieldWrapper_wrapper__QcEfS">
+                            <div class="InputField_fieldContent__iWttQ">
+                                <h3 class="InputField_fieldContentLabel__wJO4a">Email</h3><div>
+                                    <div class="
+                        InputField_fieldContentEdit__KYEiF
+
+                    ">
+                                        <input type="text" name="email" class="InputField_fieldContentInput__lO21W" maxlength="50" placeholder="Eg. hoclaptrinh@f8.edu.vn" disabled="" value=""><div class="InputField_description__unJBo"></div>
+                                    </div>
+                                </div>
+                            </div><div class="InputField_fieldBtn__OG6ZB"></div>
+                        </div><div class="FieldWrapper_wrapper__QcEfS">
+                            <div class="InputField_fieldContent__iWttQ">
+                                <h3 class="InputField_fieldContentLabel__wJO4a">User Name</h3><div>
+                                    <div class="
+                        InputField_fieldContentEdit__KYEiF
+
+                    ">
+                                        <input type="text" name="username" class="InputField_fieldContentInput__lO21W" maxlength="50" placeholder="Thêm user name" disabled="" value=""><div class="InputField_description__unJBo"><p><span class="Setting_url__Q8DAK">URL: </span> https://fullstack.edu.vn</p></div>
+                                    </div>
+                                </div>
+                            </div><div class="InputField_fieldBtn__OG6ZB"></div>
+                        </div><div class="FieldWrapper_wrapper__QcEfS">
+                            <div class="InputField_fieldContent__iWttQ">
+                                <h3 class="InputField_fieldContentLabel__wJO4a">Số điện thoại</h3><div>
+                                    <div class="
+                        InputField_fieldContentEdit__KYEiF
+
+                    ">
+                                        <input type="text" name="phone" class="InputField_fieldContentInput__lO21W" maxlength="10" placeholder="Thêm số điện thoại" disabled="" value=""><div class="InputField_description__unJBo"><p>Điện thoại liên kết với F8.</p></div>
+                                    </div>
+                                </div>
+                            </div><div class="InputField_fieldBtn__OG6ZB"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+</div>
+
+
+
+
+
+
