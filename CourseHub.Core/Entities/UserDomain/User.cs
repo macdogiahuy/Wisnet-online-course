@@ -36,11 +36,6 @@ public class User : TimeAuditedEntity
 
 #pragma warning disable CS8618
 
-    public User(Guid id)
-    {
-        Id = id;
-    }
-
     public User(Guid id, string fullName, string inputPassword)
     {
         Id = id;
@@ -49,15 +44,37 @@ public class User : TimeAuditedEntity
         SetCreationTime();
     }
 
+    public User(string userName, string inputPassword, string email, string fullName, Role role, DateTime dateOfBirth, string phone, Guid id)
+    {
+        Id = id;
+        SetCreationTime();
+        UserName = userName;
+        SetPassword(inputPassword);
+        Email = email;
+        SetFullName(fullName);
+        SetPassword(inputPassword);
+        AvatarUrl = string.Empty;
+        Role = role;
+        Token = string.Empty;
+        RefreshToken = string.Empty;
+        IsApproved = true;
+        IsVerified = true;
+        Bio = string.Empty;
+        DateOfBirth = dateOfBirth;
+        Phone = phone;
+    }
+
     /// <summary>
     /// Used for password registration
     /// </summary>
-    public User(string userName, string inputPassword)
+    public User(string userName, string inputPassword, string email, Role role, Guid? id = null)
     {
-        Id = Guid.NewGuid();
+        Id = id is null ? Guid.NewGuid() : (Guid)id;
         UserName = userName;
-        SetFullName(userName);                  // default Full Name is UserName
         SetPassword(inputPassword);
+        Email = email;
+        SetFullName(userName);                  // default Full Name is UserName
+        Role = role;
         GenerateToken();
         SetCreationTime();
         AvatarUrl = string.Empty;

@@ -1,0 +1,144 @@
+﻿@using CourseHub.UI.Helpers.Utils;
+@{
+    ViewData[Global.TITLE] = "Profile";
+
+    Dictionary<string, string> text = new()
+    {
+        { "Settings", "Settings" },
+        { "ProfileSettings", "Profile Settings" },
+        { "ChangePassword", "Change Password" },
+        { "ReturnIndex", "Return Home Page" },
+        { "SignOut", "Sign Out" }
+    };
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@Global.APP_NAME">
+    <meta name="keywords" content="@Global.APP_NAME, education, creative, course, learn">
+    <title>@ViewData[Global.TITLE]</title>
+    <link href="~/img/favicon.png" rel="icon" />
+    <link rel="stylesheet" href="~/css/Profile/style.css">
+    <link rel="stylesheet" href="~/css/Profile/styleProfile.css">
+    <link rel="stylesheet" href="~/css/Profile/main.16480feb.css">
+    <!--<link rel="stylesheet" type="text/css" href="~/css/Profile/1643.ad151cd3.chunk.css">
+    <link rel="stylesheet" type="text/css" href="~/css/Profile/8282.7278d4b3.chunk.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="~/css/Profile/821.2ca926ad.chunk.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="~/css/Profile/5619.c9f5bff3.chunk.css">-->
+    <link rel="stylesheet" type="text/css" href="~/css/Profile/793.a40e2718.chunk.css">
+</head>
+<body style="overflow-y: auto; overflow-x: unset;">
+    <div id="root">
+        <!--
+        <div class="NavBar_wrapper__4m3K5" id="header">
+            <div class="NavBar_logo__Rgo-5"><a href="/"><img src="icon"></a><a href="/" class="NavBar_backHome__U1RTm">
+                    <h4 class="NavBar_logoHeading__bs7MP"><svg aria-hidden="true" focusable="false" data-prefix="fas"
+                            data-icon="chevron-left" class="svg-inline--fa fa-chevron-left " role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                            <path fill="currentColor"
+                                d="M224 480c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l169.4 169.4c12.5 12.5 12.5 32.75 0 45.25C240.4 476.9 232.2 480 224 480z">
+                            </path>
+                        </svg><span>Quay lại</span></h4>
+                </a></div>
+            <div class="NavBar_body__4Yhth d-flex-center">
+                <div>
+                    <div class="Search_wrapper__Bwvae d-flex-center" aria-expanded="false">
+                        <div class="Search_searchIcon__-23JY"></div><input class="Search_input__GnMba"
+                            spellcheck="false" placeholder="Tìm kiếm khóa học, bài viết, video, ..." value="">
+                    </div>
+                </div>
+            </div>
+            <div class="NavBar_actions__nSNzo">
+                <div id="navbar-actions-portal"></div>
+                <div><button class="NavBar_myLearn__vCvEB" aria-expanded="false">Khóa học của tôi</button></div>
+                <div>
+                    <div class="NavBar_actionBtn__tzSZd" id="notification-button" aria-expanded="false"><svg
+                            aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bell"
+                            class="svg-inline--fa fa-bell NavBar_action-icon__l9MxX" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <path fill="currentColor"
+                                d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z">
+                            </path>
+                        </svg></div>
+                </div>
+                <div class="NavBar_avatar-wrapper__j7jMj" aria-expanded="false">
+                    <div class="FallbackAvatar_avatar__gmj3S" style="--font-size: 3.2px;"><img
+                            class="NavBar_avatar__OG7ib"
+                            src="https://files.fullstack.edu.vn/f8-prod/user_photos/175288/621c7220ea204.jpg"
+                            alt="Phung Huy Cuong (K17 DN)"></div>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="Setting_setting-wrapper__FdLtc">
+            <div class="Setting_sidebar-wrapper__OR4mJ">
+                <h1 class="Setting_heading__pfRml">@text["Settings"]</h1>
+                <ul class="Setting_sidebar-list__7Yj-I">
+                    <li>
+                        <a @*aria-current="page" class="Setting_active__bcAyq"*@ href="@Global.PAGE_PROFILE">
+                            <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="user" class="svg-inline--fa fa-user Setting_icon__cYZ5C" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path fill="currentColor"
+                                    d="M272 304h-96C78.8 304 0 382.8 0 480c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32C448 382.8 369.2 304 272 304zM48.99 464C56.89 400.9 110.8 352 176 352h96c65.16 0 119.1 48.95 127 112H48.99zM224 256c70.69 0 128-57.31 128-128c0-70.69-57.31-128-128-128S96 57.31 96 128C96 198.7 153.3 256 224 256zM224 48c44.11 0 80 35.89 80 80c0 44.11-35.89 80-80 80S144 172.1 144 128C144 83.89 179.9 48 224 48z">
+                                </path>
+                            </svg><span>@text["ProfileSettings"]</span></a>
+                    </li>
+                    <li>
+                        <a @*aria-current="page" class="Setting_active__bcAyq"*@ href="@Global.PAGE_CHANGE_PASSWORD">
+                            <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="user" class="svg-inline--fa fa-user Setting_icon__cYZ5C" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path fill="currentColor"
+                                    d="M272 304h-96C78.8 304 0 382.8 0 480c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32C448 382.8 369.2 304 272 304zM48.99 464C56.89 400.9 110.8 352 176 352h96c65.16 0 119.1 48.95 127 112H48.99zM224 256c70.69 0 128-57.31 128-128c0-70.69-57.31-128-128-128S96 57.31 96 128C96 198.7 153.3 256 224 256zM224 48c44.11 0 80 35.89 80 80c0 44.11-35.89 80-80 80S144 172.1 144 128C144 83.89 179.9 48 224 48z">
+                                </path>
+                            </svg>
+                            <span>@text["ChangePassword"]</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Global.PAGE_INDEX">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="shield" class="svg-inline--fa fa-shield Setting_icon__cYZ5C" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="currentColor"
+                                    d="M466.5 83.71l-192-80C269.6 1.67 261.3 0 256 0C250.7 0 242.5 1.67 237.6 3.702l-192 80C27.7 91.1 16 108.6 16 127.1c0 257.2 189.2 384 239.1 384c51.1 0 240-128.2 240-384C496 108.6 484.3 91.1 466.5 83.71zM256 446.5l.0234-381.1c.0059-.0234 0 0 0 0l175.9 73.17C427.8 319.7 319 417.1 256 446.5z">
+                                </path>
+                            </svg>
+                            <span>@text["ReturnIndex"]</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Global.PAGE_SIGNOUT">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas"
+                                data-icon="shield" class="svg-inline--fa fa-shield Setting_icon__cYZ5C" role="img"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="currentColor"
+                                    d="M466.5 83.71l-192-80C269.6 1.67 261.3 0 256 0C250.7 0 242.5 1.67 237.6 3.702l-192 80C27.7 91.1 16 108.6 16 127.1c0 257.2 189.2 384 239.1 384c51.1 0 240-128.2 240-384C496 108.6 484.3 91.1 466.5 83.71zM256 446.5l.0234-381.1c.0059-.0234 0 0 0 0l175.9 73.17C427.8 319.7 319 417.1 256 446.5z">
+                                </path>
+                            </svg><span>@text["SignOut"]</span></a>
+                    </li>
+                    <!--<li><a href="@Global.PAGE_SIGNOUT"><svg aria-hidden="true" focusable="false" data-prefix="fas"
+                                data-icon="shield" class="svg-inline--fa fa-shield Setting_icon__cYZ5C" role="img"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="currentColor"
+                                    d="M466.5 83.71l-192-80C269.6 1.67 261.3 0 256 0C250.7 0 242.5 1.67 237.6 3.702l-192 80C27.7 91.1 16 108.6 16 127.1c0 257.2 189.2 384 239.1 384c51.1 0 240-128.2 240-384C496 108.6 484.3 91.1 466.5 83.71zM256 446.5l.0234-381.1c.0059-.0234 0 0 0 0l175.9 73.17C427.8 319.7 319 417.1 256 446.5z">
+                                </path>
+                            </svg><span>Bảo mật và đăng nhập</span></a></li>
+                    <li><a href="/settings/notifications"><svg aria-hidden="true" focusable="false" data-prefix="far"
+                                data-icon="bell" class="svg-inline--fa fa-bell Setting_icon__cYZ5C" role="img"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path fill="currentColor"
+                                    d="M256 32V49.88C328.5 61.39 384 124.2 384 200V233.4C384 278.8 399.5 322.9 427.8 358.4L442.7 377C448.5 384.2 449.6 394.1 445.6 402.4C441.6 410.7 433.2 416 424 416H24C14.77 416 6.365 410.7 2.369 402.4C-1.628 394.1-.504 384.2 5.26 377L20.17 358.4C48.54 322.9 64 278.8 64 233.4V200C64 124.2 119.5 61.39 192 49.88V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32V32zM216 96C158.6 96 112 142.6 112 200V233.4C112 281.3 98.12 328 72.31 368H375.7C349.9 328 336 281.3 336 233.4V200C336 142.6 289.4 96 232 96H216zM288 448C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288z">
+                                </path>
+                            </svg><span>Cài đặt thông báo</span></a></li>-->
+                </ul>
+            </div>
+
+            @RenderBody()
+
+        </div>
+    </div>
+
+    @await RenderSectionAsync(name: "ValidateScript", required: false)
+</body>
+</html>

@@ -12,6 +12,17 @@ public class Section : TimeAuditedEntity
     // Navigations
     public ICollection<Lecture> Lectures { get; private set; }
     //public Assignment? Assignment { get; private set; }
+
+    public Section()
+    {
+
+    }
+
+    public Section(byte index, string title)
+    {
+        Index = index;
+        Title = title;
+    }
 }
 
 #pragma warning restore CS8618

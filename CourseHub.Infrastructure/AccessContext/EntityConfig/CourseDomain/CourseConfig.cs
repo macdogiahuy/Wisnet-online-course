@@ -39,5 +39,6 @@ internal class CourseConfig : SqlServerEntityConfiguration<Course>
 
         builder.OwnsMany(_ => _.Metas, meta => meta.Property(_ => _.Value).HasColumnType(NVARCHAR100));
         builder.HasOne(_ => _.Creator).WithMany().OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne(_ => _.Instructor).WithMany(_ => _.Courses).OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -1,18 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using CourseHub.UI.Helpers.Http;
+
+@{
+	Dictionary<string, string> text = new()
+	{
+		{ "SignIn", "Sign In" },
+		{ "Profile", "Profile" },
+		{ "SignOut", "Sign Out" }
+	};
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WebUni Education Template">
-    <meta name="keywords" content="webuni, education, creative, html">
-    <title>@ViewData["Title"] - @Global.APP_NAME</title>
+    <meta name="description" content="@Global.APP_NAME">
+	<meta name="keywords" content="@Global.APP_NAME, education, creative, course, learn">
+    <title>@ViewData[Global.TITLE]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    @* <link rel="stylesheet" href="~/CourseHub.UI.styles.css" asp-append-version="true" /> *@
-    <!-- Favicon -->
-    <link href="~/img/favicon.ico" rel="shortcut icon" />
-
-    <!-- Google Fonts -->
+    <link href="~/img/favicon.png" rel="icon" />
 	<link href="~/lib/bootstrap/dist/css/fonts.css" rel="stylesheet">
 
     <!-- Stylesheets -->
@@ -20,36 +27,83 @@
     <link rel="stylesheet" href="~/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/css/owl.carousel.css" />
 	<link rel="stylesheet" href="~/css/style.css" />
+
+	<style>
+		.site-btn {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+
+		.site-btn .dropdown-menu{
+			width: 100%;
+			margin-top: 20px !important;
+		}
+
+		.site-btn .dropdown-menu li{
+			text-align: center;
+		}
+
+		.site-btn .dropdown-menu a{
+			display: block;
+			padding: 16px;
+		}
+	</style>
 </head>
 <body>
 	<!-- Header section -->
-	<header class="header-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-3">
-					<div class="site-logo">
-						<h4>CourseHub</h4>
-						<p>Learn from the best</p>
+	@if (TempData[Global.DATA_IGNORE_NAV] is null)
+	{
+			<header class="header-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-3">
+						<img src="~/img/Logo.png" alt="" style="pointer-events: none; user-select: none;">
+						<div class="nav-switch">
+							<i class="fa fa-bars"></i>
+						</div>
 					</div>
-					<div class="nav-switch">
-						<i class="fa fa-bars"></i>
+					<div class="col-lg-9 col-md-9">
+						@{
+							var client = await Context.GetClientData();
+							if (client is null)
+							{
+								<a href="@Global.PAGE_SIGNIN" class="site-btn header-btn">@text["SignIn"]</a>
+							}
+							else
+							{
+								<div class="dropdown site-btn header-btn">
+									<div data-bs-toggle="dropdown" aria-expanded="false">@client?.FullName</div>
+									<ul class="dropdown-menu">
+										<li><a href="@Global.PAGE_PROFILE">@text["Profile"]</a></li>
+										<li><a href="@Global.PAGE_SIGNOUT">@text["SignOut"]</a></li>
+									</ul>
+								</div>
+							}
+						}
+						<nav class="main-menu">
+							<ul>
+								<li><a href="#">Home</a></li>
+								<li><a href="#">About us</a></li>
+								<li><a href="#">Courses</a></li>
+								<li><a href="#">News</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+						</nav>
 					</div>
-				</div>
-				<div class="col-lg-9 col-md-9">
-					<a href="" class="site-btn header-btn">Login</a>
-					<nav class="main-menu">
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="#">About us</a></li>
-							<li><a href="courses.html">Courses</a></li>
-							<li><a href="blog.html">News</a></li>
-							<li><a href="contact.html">Contact</a></li>
-						</ul>
-					</nav>
 				</div>
 			</div>
+		</header>
+	}
+	
+	@if (TempData[Global.DATA_USE_BACKGROUND] is not null)
+	{
+		<div class="page-info-section set-bg" data-setbg="img/page-bg/2.jpg"
+			style="background-image: url(&quot;img/page-bg/2.jpg&quot;); height: 200px">
+			<div class="container">
+			</div>
 		</div>
-	</header>
+	}
+
     <div>
         <main role="main" class="pb-3">
             @RenderBody()
@@ -57,8 +111,7 @@
     </div>
 
 
-	<!-- footer section -->
-	<footer class="footer-section spad pb-0">
+	<!--<footer class="footer-section spad pb-0">
 		<div class="footer-top">
 			<div class="footer-warp">
 				<div class="row">
@@ -119,13 +172,13 @@
 					<li><a href="#">Privacy</a></li>
 				</ul>
 				<div class="copyright">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy;<script>document.write(new Date().getFullYear());</script>  | CourseHub
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					<-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --
+					Copyright &copy;<script>document.write(new Date().getFullYear());</script>  | @Global.APP_NAME
+					<-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --
 				</div>
 			</div>
 		</div>
-	</footer>
+	</footer>-->
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -137,6 +190,7 @@
 	<script src="~/js/owl.carousel.min.js"></script>
 	<script src="~/js/main.js"></script>
 
+	@await RenderSectionAsync(name: "ValidateScript", required: false)
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

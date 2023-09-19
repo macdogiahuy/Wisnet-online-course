@@ -25,7 +25,9 @@ builder.Services
             .AddPageRoute("/User/VerifyEmail", "verify-email/{email}/{token}")
             .AddPageRoute("/User/SignIn", "signin")
             .AddPageRoute("/User/ExternalLogin", "external")
+            .AddPageRoute("/User/Register", "register")
             .AddPageRoute("/User/Profile", "profile")
+            .AddPageRoute("/User/ForgotPassword", "forgot-password")
             .AddPageRoute("/User/ResetPassword", "reset-password/{email}/{token}");
     })
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
@@ -40,9 +42,7 @@ app
     .UseHttpsRedirection()
     .UseResponseCompression()
     .UseStaticFiles()
-    .UseAuthentication()
     .UseRouting()
-    .UseAuthorization()
     .UseSession();
 
 app.MapRazorPages();

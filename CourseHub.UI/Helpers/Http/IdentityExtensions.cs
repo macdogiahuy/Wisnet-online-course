@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace CourseHub.UI.Helpers.Utils;
+namespace CourseHub.UI.Helpers.Http;
 
 public static class IdentityExtensions
 {
@@ -56,7 +56,7 @@ public static class IdentityExtensions
         if (accessToken is null)
             return client;
 
-        AddBearerHeader(client, accessToken);
+        client.AddBearerHeader(accessToken);
         return client;
     }
 
@@ -88,10 +88,10 @@ public static class IdentityExtensions
 
     // Storing data for next use
 
-    public static void SetAuthCookies(this HttpResponse response, AuthDto dto)
+    public static void SetAuthCookies(this HttpResponse response, AuthModel dto)
     {
-        SetAuthCookie(response, BEARER_COOKIE_NAME, dto.AccessToken);
-        SetAuthCookie(response, REFRESH_COOKIE_NAME, dto.RefreshToken);
+        response.SetAuthCookie(BEARER_COOKIE_NAME, dto.AccessToken);
+        response.SetAuthCookie(REFRESH_COOKIE_NAME, dto.RefreshToken);
     }
 
     public static void SetAuthCookie(this HttpResponse response, string name, string value)
@@ -118,13 +118,6 @@ public static class IdentityExtensions
 
     // Retrieving data
 
-    public static bool IsAuthenticated(this HttpContext context)
-    {
-        if (context.User.Identity is null)
-            return false;
-        return context.User.Identity.IsAuthenticated;
-    }
-
     public static string? GetAccessToken(this HttpContext context)
         => context.Request.Cookies[BEARER_COOKIE_NAME];
 
@@ -135,11 +128,18 @@ public static class IdentityExtensions
         => context.Request.Cookies[REMEMBER_COOKIE_NAME];
 
     public static async Task<UserFullModel?> GetClientData(this HttpContext context)
-    {
-        string? s_userInfo = context.Session.GetString(SESSION_USERINFO);
+	{
+        string? s_userInfo = null;
 
-        if (s_userInfo is null && GetRememberCookie(context) is not null)
+		try
+		{
+			s_userInfo = context.Session.GetString(SESSION_USERINFO);
+		}
+        catch { }
+
+        if (s_userInfo is null && context.GetRememberCookie() is not null)
         {
+            // without session but with access token
             string? accessToken = context.GetAccessToken();
             if (accessToken is null)
                 return null;
@@ -147,10 +147,10 @@ public static class IdentityExtensions
             var response = await client.GetAsync("api/users/client");
             string sResponse = await response.Content.ReadAsStringAsync();
             context.SetClientData(sResponse);
-            return JsonSerializer.Deserialize<UserFullModel>(sResponse)!;
+            return JsonSerializer.Deserialize<UserFullModel>(sResponse, SerializeOptions.JsonOptions)!;
         }
         return s_userInfo is not null
-            ? JsonSerializer.Deserialize<UserFullModel>(s_userInfo)
+            ? JsonSerializer.Deserialize<UserFullModel>(s_userInfo, SerializeOptions.JsonOptions)
             : null;
     }
 

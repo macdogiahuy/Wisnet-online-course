@@ -1,4 +1,4 @@
-﻿namespace CourseHub.UI.Helpers.Utils;
+﻿namespace CourseHub.UI.Helpers.Http;
 
 public static class FormFileHelper
 {

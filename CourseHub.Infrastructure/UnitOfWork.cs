@@ -34,6 +34,9 @@ public class UnitOfWork : IUnitOfWork
     private CategoryRepository? _categoryRepo;
     public ICategoryRepository CategoryRepo { get => _categoryRepo ??= new CategoryRepository(_context); }
 
+    private InstructorRepository? _instructorRepo;
+    public IInstructorRepository InstructorRepo { get => _instructorRepo ??= new InstructorRepository(_context); }
+
     private CourseRepository? _courseRepo;
     public ICourseRepository CourseRepo { get => _courseRepo ??= new CourseRepository(_context); }
 }

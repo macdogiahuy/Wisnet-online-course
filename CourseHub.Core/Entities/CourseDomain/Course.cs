@@ -29,14 +29,46 @@ public class Course : AuditedEntity
 
     // FKs
     public Guid LeafCategoryId { get; set; }
+    public Guid InstructorId { get; set; }
 
     // Navigations
     public User? Creator { get; set; }
+    public Instructor? Instructor { get; set; }
     public Category? LeafCategory { get; set; }
     public ICollection<Section> Sections { get; private set; }
     public ICollection<CourseMeta> Metas { get; private set; }
     public ICollection<CourseReview> Reviews { get; private set; }
     public ICollection<CourseCoupon> Coupons { get; private set; }
+
+
+
+    public Course()
+    {
+
+    }
+
+    /// <summary>
+    /// For creation (CourseStatus = Ongoing)
+    /// </summary>
+    public Course(Guid id, Guid creatorId, Guid instructorId, Guid leafCategoryId,
+        string title, string thumbUrl, string intro, string description, double price,
+        CourseLevel level, string outcomes, string requirements, List<Section> sections)
+    {
+        Id = id;
+        CreatorId = creatorId;
+        InstructorId = instructorId;
+        LeafCategoryId = leafCategoryId;
+        SetTitle(title);
+        ThumbUrl = thumbUrl;
+        Intro = intro;
+        Description = description;
+        Status = CourseStatus.Ongoing;
+        Price = price;
+        Level = level;
+        Outcomes = outcomes;
+        Requirements = requirements;
+        Sections = sections;
+    }
 
 #pragma warning restore CS8618
 
@@ -56,15 +88,5 @@ public class Course : AuditedEntity
             throw new Exception(CourseDomainMessages.INVALID_DISCOUNT_EXPIRY);
         Discount = discount;
         DiscountExpiry = expiry;
-    }
-
-    public void AddSections()
-    {
-
-    }
-
-    public void AddCoupons()
-    {
-
     }
 }

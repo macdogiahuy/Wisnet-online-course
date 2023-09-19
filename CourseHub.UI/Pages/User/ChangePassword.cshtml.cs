@@ -1,7 +1,7 @@
 using CourseHub.Core.Helpers.Validation;
 using CourseHub.Core.RequestDtos.User.UserDtos;
 using CourseHub.UI.Helpers;
-using CourseHub.UI.Helpers.Utils;
+using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -36,6 +36,9 @@ public class ChangePasswordModel : PageModel
 
     public async Task OnPost([FromServices] IUserApiService userApiService)
     {
+        if (!ModelState.IsValid)
+            return;
+
         UpdateUserDto dto = new()
         {
             CurrentPassword = CurrentPassword,
@@ -43,6 +46,11 @@ public class ChangePasswordModel : PageModel
         };
 
         var response = await userApiService.UpdateAsync(dto, HttpContext);
-        System.Diagnostics.Debug.WriteLine(response);
+
+        TempData[Global.ALERT_MESSAGE] = response.IsSuccessStatusCode
+            ? "Updated successfully."
+            : "Invalid password!";
+        TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
+        return;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper.QueryableExtensions;
 using CourseHub.Core.Entities.UserDomain;
+using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Interfaces.Repositories.UserRepos;
 using CourseHub.Core.Models.User.UserModels;
@@ -59,4 +60,13 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
     public async Task<User?> FindByEmail(string email) => await DbSet.FirstOrDefaultAsync(_ => _.Email == email);
 
     public async Task<User?> FindByUserName(string userName) => await DbSet.FirstOrDefaultAsync(_ => _.UserName == userName);
+
+
+
+    public async Task<List<UserModel>> GetAllAsync()
+    {
+        return await DbSet
+            .ProjectTo<UserModel>(UserMapperProfile.ModelConfig)
+            .ToListAsync();
+    }
 }

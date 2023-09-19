@@ -14,9 +14,19 @@ public class Instructor : TimeAuditedEntity
 
     // FKs
     public Guid CreatorId { get; set; }
-
+     
     // Navigations
+    public User? Creator { get; set; }
     public ICollection<Course> Courses { get; private set; }
+
+
+
+    public Instructor(string intro, string experience, Guid creatorId)
+    {
+        Intro = intro;
+        Experience = experience;
+        CreatorId = creatorId;
+    }
 }
 
 #pragma warning restore CS8618

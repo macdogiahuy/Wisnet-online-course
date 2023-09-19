@@ -7,7 +7,7 @@ namespace CourseHub.Infrastructure.AccessContext.EntitySeeding.UserDomain;
 
 internal class UserSeeding : DomainSeedingBase<User>
 {
-    internal override List<User> seedValues => new()
+    internal override List<User> SeedValues => new()
     {
         new User(new("0e322eb7-422d-4fc6-bfc4-8797538bec3c"), "Trần Thị Hương", "SkyDiver7")
         {

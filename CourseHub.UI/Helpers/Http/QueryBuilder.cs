@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
 
-namespace CourseHub.UI.Helpers.Utils;
+namespace CourseHub.UI.Helpers.Http;
 
 public static class QueryBuilder
 {

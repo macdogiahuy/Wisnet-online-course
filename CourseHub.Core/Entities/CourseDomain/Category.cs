@@ -1,4 +1,5 @@
 ﻿using CourseHub.Core.Helpers.Messaging.Messages;
+using System.Text.Json.Serialization;
 
 namespace CourseHub.Core.Entities.CourseDomain;
 
@@ -11,9 +12,9 @@ public class Category : Entity
     public string Description { get; set; }
     public bool IsLeaf { get; set; }
 
-    public Category(Guid id)
+    public Category()
     {
-        Id = id;
+
     }
 
     public Category(string title, string description, bool isLeaf, Category? parent = null)

@@ -6,7 +6,10 @@ using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.User.UserModels;
+using CourseHub.Core.RequestDtos.Aggregation;
+using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using CourseHub.Core.RequestDtos.User.UserDtos;
+using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Services.Domain.UserServices;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
@@ -87,6 +90,41 @@ public class UsersController : BaseController
 #pragma warning restore CS4014
 
         return result.AsResponse();
+    }
+
+    [HttpPost("instructor")]
+    public async Task<IActionResult> RegisterAsInstructorAsync(
+        [FromBody] AggregatedCreateInstructorDto dto, [FromServices] IInstructorService instructorService,
+        [FromServices] EmailService emailService, [FromServices] IOptions<AppInfoOptions> appInfo)
+    {
+        Guid id = Guid.NewGuid();
+        var userTask = _userService.CreateAsync(dto.UserDto, id);
+        var instructorTask = instructorService.CreateAsync(dto.InstructorDto, id);
+
+        await Task.WhenAll(userTask, instructorTask);
+        var userResult = userTask.Result;
+        var instructorResult = instructorTask.Result;
+        if (!userResult.IsSuccessful)
+            return userResult.AsResponse();
+        if (!instructorResult.IsSuccessful)
+            return instructorResult.AsResponse();
+
+        try
+        {
+            await _userService.ForceCommitAsync();
+
+            string link = $"{appInfo.Value.MainFrontendApp}/verify-email/{dto.UserDto.Email}/{userResult.Data}";
+#pragma warning disable CS4014
+            emailService.SendRegistrationEmail(dto.UserDto.Email, dto.UserDto.UserName, link);
+#pragma warning restore CS4014
+
+            return userResult.AsResponse();
+        }
+        catch (Exception e)
+        {
+            _logger.Warn(e.Message);
+            return StatusCode(500);
+        }
     }
 
     [HttpPost("verify")]

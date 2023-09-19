@@ -30,7 +30,9 @@ public static class DomainServiceExtensions
         services
             .AddScoped<IUserService, UserService>()
 
-            .AddScoped<ICategoryService, CategoryService>();
+            .AddScoped<ICategoryService, CategoryService>()
+            .AddScoped<IInstructorService, InstructorService>()
+            .AddScoped<ICourseService, CourseService>();
 
 
 

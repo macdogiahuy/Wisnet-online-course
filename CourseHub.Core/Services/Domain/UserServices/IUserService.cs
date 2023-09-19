@@ -17,12 +17,15 @@ public interface IUserService
     Task<ServiceResult<List<UserOverviewModel>>> GetOverviewAsync(List<Guid> ids);
 
     Task<ServiceResult<string>> CreateAsync(CreateUserDto dto);
+    Task<ServiceResult<string>> CreateAsync(CreateUserDto dto, Guid id);
     Task<ServiceResult> VerifyAsync(VerifyEmailDto dto);
     Task<ServiceResult<UserFullModel>> UpdateAsync(UpdateUserDto dto, Guid? userId);
     Task<ServiceResult<string>> GetPasswordResetTokenAsync(string email);
     Task<ServiceResult> ResetPasswordAsync(ResetPasswordDto dto);
 
-    Task<ServiceResult<AuthDto>> SignInAsync(SignInDto dto, ITokenService tokenService);
-    Task<ServiceResult<ClaimsPrincipal>> ExternalSignInAsync(ClaimsPrincipal claimsPrincipal, Role role);
-    Task<ServiceResult<AuthDto>> RefreshAsync(string? accessToken, string? refreshToken, ITokenService tokenService);
+    Task<ServiceResult<AuthModel>> SignInAsync(SignInDto dto, ITokenService tokenService);
+    Task<ServiceResult<ClaimAuthModel>> ExternalSignInAsync(ClaimsPrincipal claimsPrincipal, Role role);
+    Task<ServiceResult<AuthModel>> RefreshAsync(string? accessToken, string? refreshToken, ITokenService tokenService);
+
+    Task ForceCommitAsync();
 }

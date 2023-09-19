@@ -10,5 +10,6 @@ public interface IUnitOfWork
     IUserRepository UserRepo { get; }
 
     ICategoryRepository CategoryRepo { get; }
+    IInstructorRepository InstructorRepo { get; }
     ICourseRepository CourseRepo { get; }
 }

@@ -1,11 +1,14 @@
-﻿using CourseHub.Core.Models.User.UserModels;
+﻿using AutoMapper.Configuration;
 using CourseHub.Core.RequestDtos.User.UserDtos;
+using CourseHub.Core.Services.Domain.UserServices.TempModels;
 using CourseHub.UI.Helpers;
-using CourseHub.UI.Helpers.Utils;
+using CourseHub.UI.Helpers.AppStart;
+using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Net.Http.Headers;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 namespace CourseHub.UI.Pages.User;
@@ -15,23 +18,46 @@ public class SignInModel : PageModel
     private readonly IUserApiService _userApiService;
 
     [BindProperty]
-    public SignInDto SignInDto { get; set; }                // the page uses username only
+    public SignInDto Dto { get; set; }
     [BindProperty]
     public bool RememberMe { get; set; }
+
+    public string GoogleOAuthBasePath { get; set; }
 
     public SignInModel(IUserApiService userApiService)
     {
         _userApiService = userApiService;
     }
 
+    
+
+    public void OnGet()
+    {
+        GoogleOAuthBasePath = Configurer.GetApiClientOptions().ApiServerPath + "/api/auth/google-oauth/";
+    }
 
 
     public async Task<IActionResult> OnPostAsync()
     {
-        HttpResponseMessage response = await _userApiService.SignInAsync(SignInDto);
+        if (!ModelState.IsValid)
+            return Page();
+
+        // Defaults to UserName
+        if (Dto.UserName is null)
+            return Page();
+
+        if (IsEmailAddress(Dto.UserName))
+        {
+            Dto.Email = Dto.UserName;
+            Dto.UserName = null;
+        }
+
+
+
+        HttpResponseMessage response = await _userApiService.SignInAsync(Dto);
         if (!response.IsSuccessStatusCode)
         {
-            ModelState.AddModelError(string.Empty, "Lỗi đăng nhập.");
+            ModelState.AddModelError(string.Empty, "Error logging in");
             return Page();
         }
 
@@ -39,8 +65,8 @@ public class SignInModel : PageModel
         // if "RememberMe" is true, set userId in the cookie
 
         string sResponse = await response.Content.ReadAsStringAsync();
-        UserFullModel user = JsonSerializer.Deserialize<UserFullModel>(sResponse)!;
-        HttpContext.SetClientData(sResponse);
+        AuthModel authData = JsonSerializer.Deserialize<AuthModel>(sResponse, SerializeOptions.JsonOptions)!;
+        HttpContext.SetClientData(JsonSerializer.Serialize(authData.User));
 
         if (response.Headers.TryGetValues("Set-Cookie", out var cookies))
         {
@@ -50,7 +76,17 @@ public class SignInModel : PageModel
         }
 
         if (RememberMe)
-            Response.AddRememberCookie(user.Id);
+            Response.AddRememberCookie(authData.User!.Id);
         return RedirectToPage(Global.PAGE_INDEX);
+    }
+
+    private bool IsEmailAddress(string valueAsString)
+    {
+        int index = valueAsString.IndexOf('@');
+
+        return
+            index > 0 &&
+            index != valueAsString.Length - 1 &&
+            index == valueAsString.LastIndexOf('@');
     }
 }

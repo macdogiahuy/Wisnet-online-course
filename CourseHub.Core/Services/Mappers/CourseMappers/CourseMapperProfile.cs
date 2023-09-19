@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CourseHub.Core.Models.Course.CourseModels;
+using CourseHub.Core.RequestDtos.Course.CourseDtos;
 
 namespace CourseHub.Core.Services.Mappers.CourseMappers;
 

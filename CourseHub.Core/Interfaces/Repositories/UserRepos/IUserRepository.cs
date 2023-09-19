@@ -16,4 +16,7 @@ public interface IUserRepository : IRepository<User>
     Task<bool> EmailExisted(string email);
     Task<User?> FindByUserName(string userName);
     Task<User?> FindByEmail(string email);
+
+    //
+    Task<List<UserModel>> GetAllAsync();
 }

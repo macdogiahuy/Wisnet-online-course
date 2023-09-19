@@ -80,7 +80,7 @@ public class CoursesController : BaseController
     [Authorize]
     public async Task<IActionResult> Create([FromForm] CreateCourseDto dto)
     {
-        var clientId = HttpContext.GetClientId();
+        var clientId = (Guid)HttpContext.GetClientId()!;
         var result = await _courseService.CreateAsync(dto, clientId);
         return result.AsResponse();
     }
@@ -89,7 +89,7 @@ public class CoursesController : BaseController
     [Authorize]
     public async Task<IActionResult> Update([FromForm] UpdateCourseDto dto)
     {
-        var clientId = HttpContext.GetClientId();
+        var clientId = (Guid)HttpContext.GetClientId()!;
         var result = await _courseService.UpdateAsync(dto, clientId);
         return result.AsResponse();
     }
@@ -98,7 +98,7 @@ public class CoursesController : BaseController
     [Authorize]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var clientId = HttpContext.GetClientId();
+        var clientId = (Guid)HttpContext.GetClientId()!;
         var result = await _courseService.DeleteAsync(id, clientId);
         return result.AsResponse();
     }

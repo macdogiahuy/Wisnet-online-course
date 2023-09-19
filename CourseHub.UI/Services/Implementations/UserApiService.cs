@@ -1,8 +1,11 @@
 ﻿using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.User.UserDtos;
+using CourseHub.Core.Services.Domain.UserServices.TempModels;
+using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts;
+using System.Text.Json;
 
 namespace CourseHub.UI.Services.Implementations;
 
@@ -73,11 +76,13 @@ public class UserApiService : IUserApiService
         }
     }
 
-    public string GetAvatarApiUrl(Guid? id)
+    public string GetAvatarApiUrl(string avatarUrl, Guid userId)
     {
-        if (id is null)
-            return "/image/user/User_Empty.png";
-        return $"{_client.BaseAddress}api/users/avatar/{id}";
+        if (avatarUrl == string.Empty)
+            return "/img/User_Empty.png";
+        return ResourceHelper.IsRemote(avatarUrl)
+            ? avatarUrl
+            : $"{_client.BaseAddress}api/users/avatar/{userId}";
     }
 
 
@@ -122,9 +127,9 @@ public class UserApiService : IUserApiService
         if (dto.Avatar is not null)
         {
             if (dto.Avatar.File is not null)
-                content.Add(dto.Avatar.File.AsStreamContent(), nameof(dto.Avatar.File), dto.Avatar.File.FileName);
+                content.Add(dto.Avatar.File.AsStreamContent(), "Avatar.File", dto.Avatar.File.FileName);
             else if (dto.Avatar.Url is not null)
-                content.Add(new StringContent(dto.Avatar.Url), nameof(dto.Avatar.Url));
+                content.Add(new StringContent(dto.Avatar.Url), "Avatar.Url");
         }
         foreach (var pair in kvps)
         {
@@ -135,7 +140,10 @@ public class UserApiService : IUserApiService
         _client.AddBearerHeader(context);
         var response = await _client.PatchAsync("api/users", content);
         if (response.IsSuccessStatusCode)
-            context.SetClientData(await response.Content.ReadAsStringAsync());
+        {
+            string sResponse = await response.Content.ReadAsStringAsync();
+            context.SetClientData(sResponse);
+        }
         return response;
     }
 

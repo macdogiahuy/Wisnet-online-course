@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CourseHub.Core.Services.Domain.UserServices.TempModels;
+using CourseHub.UI.Helpers.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CourseHub.UI.Pages;
@@ -14,6 +15,5 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-
     }
 }

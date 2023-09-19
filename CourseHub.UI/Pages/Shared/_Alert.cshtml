@@ -1,0 +1,39 @@
+﻿@{
+    string? message = TempData[Global.ALERT_MESSAGE]?.ToString();
+    bool.TryParse(TempData[Global.ALERT_STATUS]?.ToString(), out bool status);
+}
+
+@if (message is not null)
+{
+    <!--Not dependent on bootstrap-->
+    <style>
+        #app-alert {
+            font-size: 10px;
+            border-radius: 15px;
+            margin-bottom: 5px;
+        }
+
+        #app-alert.alert-danger {
+            color: red;
+            background: pink;
+        }
+
+        #app-alert.alert-success{
+            color: #3c763d;
+            background-color: #dff0d8;
+        }
+
+    </style>
+
+    <div id="app-alert" class="alert @(status ? "alert-success" : "alert-danger") hide">
+        @message
+    </div>
+
+    <script>
+        var alert = document.getElementById('app-alert');
+        alert.classList.remove('hide');
+        setTimeout(function() {
+            alert.style.display = 'none';
+        }, 4000);
+    </script>
+}

@@ -2,7 +2,7 @@
 using CourseHub.UI.Helpers.AppStart;
 using System.Net;
 
-namespace CourseHub.UI.Helpers.Utils;
+namespace CourseHub.UI.Helpers.Http;
 
 public class RefreshTokenHandler : DelegatingHandler
 {
@@ -41,7 +41,7 @@ public class RefreshTokenHandler : DelegatingHandler
         return true;
     }
 
-    private async Task<(AuthDto?, HttpClient?)> TryGetNewAuthInfo(HttpContext? context, CancellationToken cancellationToken)
+    private async Task<(AuthModel?, HttpClient?)> TryGetNewAuthInfo(HttpContext? context, CancellationToken cancellationToken)
     {
         if (context is null)
             return (null, null);
@@ -61,8 +61,8 @@ public class RefreshTokenHandler : DelegatingHandler
 
         if (!refreshResponse.IsSuccessStatusCode)
             return (null, null);
-        AuthDto? authData = await refreshResponse.Content.ReadFromJsonAsync<AuthDto>(cancellationToken: cancellationToken);
-        
+        AuthModel? authData = await refreshResponse.Content.ReadFromJsonAsync<AuthModel>(cancellationToken: cancellationToken);
+
         if (authData is not null)
             context.Response.SetAuthCookies(authData);
         return (authData, client);
