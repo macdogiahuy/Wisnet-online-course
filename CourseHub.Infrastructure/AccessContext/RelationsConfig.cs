@@ -31,8 +31,8 @@ internal static class RelationsConfig
 
 
     internal const string ASSIGNMENT = "Assignments";
-    internal const string MCQ_QUESTION = "MCQQuestions";
-    internal const string MCQ_CHOICE = "MCQChoices";
+    internal const string MCQ_QUESTION = "McqQuestions";
+    internal const string MCQ_CHOICE = "McqChoices";
     internal const string SUBMISSION = "Submissions";
 
 

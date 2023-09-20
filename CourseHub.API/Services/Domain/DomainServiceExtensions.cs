@@ -1,6 +1,7 @@
 ﻿using CourseHub.API.Helpers.AppStart;
 using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Interfaces.Repositories;
+using CourseHub.Core.Services.Domain.CommonServices;
 using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Services.Domain.UserServices;
 using CourseHub.Infrastructure;
@@ -32,10 +33,13 @@ public static class DomainServiceExtensions
 
             .AddScoped<ICategoryService, CategoryService>()
             .AddScoped<IInstructorService, InstructorService>()
-            .AddScoped<ICourseService, CourseService>();
+            .AddScoped<ICourseService, CourseService>()
+            
+            .AddScoped<INotificationService, NotificationService>();
 
 
 
+        ExecuteColdQuery(connectionString);
         ExecuteColdQuery(connectionString);
 
         return services;

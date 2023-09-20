@@ -17,7 +17,7 @@ public interface IUserService
     Task<ServiceResult<List<UserOverviewModel>>> GetOverviewAsync(List<Guid> ids);
 
     Task<ServiceResult<string>> CreateAsync(CreateUserDto dto);
-    Task<ServiceResult<string>> CreateAsync(CreateUserDto dto, Guid id);
+    Task<ServiceResult<string>> CreateAdminAsync(CreateUserDto dto);
     Task<ServiceResult> VerifyAsync(VerifyEmailDto dto);
     Task<ServiceResult<UserFullModel>> UpdateAsync(UpdateUserDto dto, Guid? userId);
     Task<ServiceResult<string>> GetPasswordResetTokenAsync(string email);

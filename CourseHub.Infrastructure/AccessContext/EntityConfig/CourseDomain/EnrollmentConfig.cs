@@ -19,6 +19,7 @@ internal class EnrollmentConfig : SqlServerEntityConfiguration<Enrollment>
         builder
             .ToTable(RelationsConfig.ENROLLMENT)
             .SetEnumParsing(_ => _.Status)
+            .SetUnique(_ => _.BillId)
             .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE)
             .HasKey(_ => new { _.CreatorId, _.CourseId });
     }

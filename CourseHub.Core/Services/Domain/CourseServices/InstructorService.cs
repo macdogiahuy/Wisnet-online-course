@@ -23,12 +23,12 @@ public class InstructorService : DomainService, IInstructorService
     /// <summary>
     /// Not committed
     /// </summary>
-    public async Task<ServiceResult<Guid>> CreateAsync(CreateInstructorDto dto, Guid creatorId)
+    /*public async Task<ServiceResult<Guid>> CreateAsync(CreateInstructorDto dto, Guid creatorId)
     {
         var entity = Adapt(dto, creatorId);
         await _uow.InstructorRepo.Insert(entity);
         return Created(entity.Id);
-    }
+    }*/
 
     public Task<ServiceResult> UpdateAsync(UpdateInstructorDto dto)
     {
@@ -40,8 +40,8 @@ public class InstructorService : DomainService, IInstructorService
 
 
 
-    private Instructor Adapt(CreateInstructorDto dto, Guid creatorId)
+    /*private Instructor Adapt(CreateInstructorDto dto, Guid creatorId)
     {
-        return new Instructor(dto.Intro, dto.Experience, creatorId);
-    }
+        return new Instructor(Guid.NewGuid(), dto.Intro, dto.Experience, creatorId);
+    }*/
 }

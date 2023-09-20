@@ -21,10 +21,11 @@ public class Instructor : TimeAuditedEntity
 
 
 
-    public Instructor(string intro, string experience, Guid creatorId)
+    public Instructor(Guid id, Guid creatorId)
     {
-        Intro = intro;
-        Experience = experience;
+        Id = id;
+        Intro = string.Empty;
+        Experience = string.Empty;
         CreatorId = creatorId;
     }
 }

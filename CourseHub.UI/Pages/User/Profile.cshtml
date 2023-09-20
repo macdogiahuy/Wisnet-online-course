@@ -20,6 +20,7 @@
         { "UserName", "UserName" },
         { "AddUserName", "Add username" },
         { "Role", "Role" },
+        { "RequestInstructor", "Request to become an instructor" },
         { "IsVerified", "Verification status" },
         { "DateOfBirth", "Date of Birth" },
         { "JoinDate", "Join Date" },
@@ -92,7 +93,8 @@
                                 </div>
                             </div>
                             <div class="PhotoField_fieldBtn__TSg2A">
-                                <div id="app-avatar-btn" class="Button_fieldButton__B93oZ Button_fieldButtonDefault__7a6UD">@text["Edit"]</div></div>
+                                <div id="app-avatar-btn" class="Button_fieldButton__B93oZ Button_fieldButtonDefault__7a6UD">@text["Edit"]</div>
+                            </div>
                         </div>
                         <div class="FieldWrapper_wrapper__QcEfS">
                             <div class="InputField_fieldContent__iWttQ">
@@ -149,10 +151,17 @@
                                 <h3 class="InputField_fieldContentLabel__wJO4a">@text["Role"]</h3>
                                 <div>
                                     <div class="InputField_fieldContentEdit__KYEiF">
-                                        <input type="text" class="InputField_fieldContentInput__lO21W" disabled value="@Model.Client?.Role.ToString()">
+                                        <input type="text" class="InputField_fieldContentInput__lO21W" disabled
+                                            value="@Model.Client?.Role.ToString()">
                                     </div>
                                 </div>
                             </div>
+                            @if (Model.Client?.Role == Core.Entities.UserDomain.Enums.Role.Learner)
+                            {
+                                <div class="InputField_fieldBtn__OG6ZB">
+                                    <div id="app-instructor-btn" class="Button_fieldButton__B93oZ Button_fieldButtonDefault__7a6UD">@text["RequestInstructor"]</div>
+                                </div>
+                            }
                         </div>
 
                         <!--Readonly-->
@@ -248,5 +257,20 @@
     }
     confirmBtn.onclick = (e) => {
         form.submit();
+    }
+
+    
+    var requestInstructorBtn = document.getElementById('app-instructor-btn');
+    if (requestInstructorBtn) {
+        requestInstructorBtn.onclick = () => {
+            fetch("@Model.InstructorRequestPath", {
+                method: "POST",
+                credentials: "include",
+            }).then(res => {
+                if (res.ok) {
+                    requestInstructorBtn.innerHTML = "Pending...";
+                }
+            });
+        }
     }
 </script>

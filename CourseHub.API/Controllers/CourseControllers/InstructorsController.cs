@@ -1,8 +1,14 @@
 ﻿using CourseHub.API.Controllers.Shared;
+using CourseHub.Core.RequestDtos.Common.NotificationDtos;
 using CourseHub.Core.RequestDtos.Course.InstructorDtos;
+using CourseHub.Core.Services.Domain.CommonServices;
 using CourseHub.Core.Services.Domain.CourseServices;
+using CourseHub.Core.Entities.CommonDomain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
+using CourseHub.Core.Entities.UserDomain.Enums;
+using CourseHub.API.Helpers.Cookie;
 
 namespace CourseHub.API.Controllers.CourseControllers;
 
@@ -27,6 +33,16 @@ public class InstructorsController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = nameof(Role.Learner))]
+    public async Task<IActionResult> RequestInstructorRole([FromServices] INotificationService notificationService)
+    {
+        CreateNotificationDto dto = new() { Type = NotificationType.RequestToBecomeInstructor };
+        var client = HttpContext.GetClientId();
+        var result = await notificationService.CreateAsync(dto, client);
+        return result.AsResponse();
+    }
+
+    [HttpPatch]
     [ResponseCache(Duration = 60)]
     public async Task<IActionResult> Update(UpdateInstructorDto dto)
     {

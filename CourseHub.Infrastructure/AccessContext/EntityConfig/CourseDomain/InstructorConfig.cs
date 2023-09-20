@@ -1,4 +1,5 @@
 ﻿using CourseHub.Core.Entities.CourseDomain;
+using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Infrastructure.AccessContext.Shared;
 using CourseHub.Infrastructure.AccessContext.Shared.DbSupport;
 using Microsoft.EntityFrameworkCore;

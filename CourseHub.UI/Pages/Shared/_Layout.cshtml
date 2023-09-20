@@ -17,13 +17,13 @@
     <meta name="description" content="@Global.APP_NAME">
 	<meta name="keywords" content="@Global.APP_NAME, education, creative, course, learn">
     <title>@ViewData[Global.TITLE]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />-->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link href="~/img/favicon.png" rel="icon" />
+    <link href="@Global.FAVICON" rel="icon" />
 	<link href="~/lib/bootstrap/dist/css/fonts.css" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/css/owl.carousel.css" />
 	<link rel="stylesheet" href="~/css/style.css" />
@@ -53,7 +53,7 @@
 	<!-- Header section -->
 	@if (TempData[Global.DATA_IGNORE_NAV] is null)
 	{
-			<header class="header-section">
+		<header class="header-section">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 col-md-3">
@@ -82,7 +82,7 @@
 						}
 						<nav class="main-menu">
 							<ul>
-								<li><a href="#">Home</a></li>
+								<li><a href="@Global.PAGE_INDEX">Home</a></li>
 								<li><a href="#">About us</a></li>
 								<li><a href="#">Courses</a></li>
 								<li><a href="#">News</a></li>

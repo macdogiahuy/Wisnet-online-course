@@ -24,6 +24,7 @@ internal class SubmissionConfig : SqlServerEntityConfiguration<Submission>
 
         builder.OwnsMany(_ => _.Answers, answer =>
         {
+            answer.HasKey(_ => new { _.SubmissionId, _.MCQChoiceId });
             answer.HasOne(_ => _.Submission).WithMany(_ => _.Answers).OnDelete(DeleteBehavior.NoAction);
         });
         builder.HasOne(_ => _.Creator).WithMany().OnDelete(DeleteBehavior.NoAction);

@@ -14,6 +14,7 @@ public class Enrollment : CreationAuditedDomainObject
     public Guid? BillId { get; set; }
 
     // Navigation
+    public User? Creator { get; set; }
     public Course? Course { get; set; }
     public Bill? Bill { get; set; }
 }

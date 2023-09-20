@@ -61,16 +61,14 @@ public class UserService : DomainService, IUserService
 
 
     /// <summary>
-    /// All Registration needs verification (for Users : verify email, for Admins : need approval)
+    /// For Learner's Registration
     /// </summary>
     public async Task<ServiceResult<string>> CreateAsync(CreateUserDto dto)
     {
-        if (dto.Role == Role.SysAdmin)
-            return Forbidden<string>(UserDomainMessages.FORBIDDEN_NOT_APPROVED);
         if (await _uow.UserRepo.EmailExisted(dto.Email))
             return Conflict<string>(UserDomainMessages.CONFLICT_EMAIL);
 
-        User newUser = Adapt(dto);
+        User newUser = Adapt(dto, Role.Learner);
         try
         {
             await _uow.UserRepo.Insert(newUser);
@@ -84,17 +82,12 @@ public class UserService : DomainService, IUserService
         }
     }
 
-    /// <summary>
-    /// Not commited version
-    /// </summary>
-    public async Task<ServiceResult<string>> CreateAsync(CreateUserDto dto, Guid id)
+    public async Task<ServiceResult<string>> CreateAdminAsync(CreateUserDto dto)
     {
-        if (dto.Role == Role.SysAdmin)
-            return Forbidden<string>(UserDomainMessages.FORBIDDEN_NOT_APPROVED);
         if (await _uow.UserRepo.EmailExisted(dto.Email))
             return Conflict<string>(UserDomainMessages.CONFLICT_EMAIL);
 
-        User newUser = Adapt(dto, id);
+        User newUser = Adapt(dto, Role.Admin);
         try
         {
             await _uow.UserRepo.Insert(newUser);
@@ -309,9 +302,9 @@ public class UserService : DomainService, IUserService
 
 
 
-    private static User Adapt(CreateUserDto dto, Guid? id = null)
+    private static User Adapt(CreateUserDto dto, Role role)
     {
-        return new User(dto.UserName, dto.Password, dto.Email, dto.Role, id);
+        return new User(dto.UserName, dto.Password, dto.Email, role);
     }
 
     private async Task ApplyChanges(UpdateUserDto dto, User entity)

@@ -1,7 +1,7 @@
 using CourseHub.UI.Helpers.AppStart;
+using CourseHub.UI.Middlewares;
 using CourseHub.UI.Services;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 OneTimeRunner.InitConfig(builder);
@@ -43,7 +43,8 @@ app
     .UseResponseCompression()
     .UseStaticFiles()
     .UseRouting()
-    .UseSession();
+    .UseSession()
+    .UseAdminViewMiddleware();
 
 app.MapRazorPages();
 app.MapFallbackToPage("/Shared/404");

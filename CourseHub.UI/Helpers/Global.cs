@@ -21,4 +21,7 @@ public class Global
     public const string PAGE_SIGNOUT = "/User/SignOut";
     public const string PAGE_FORGOT_PASSWORD = "/forgot-password";
     public const string PAGE_CHANGE_PASSWORD = "/User/ChangePassword";
+
+    // static files
+    public const string FAVICON = "/img/favicon.png";
 }

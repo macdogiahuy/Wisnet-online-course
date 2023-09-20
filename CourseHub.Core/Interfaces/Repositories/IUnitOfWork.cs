@@ -1,4 +1,5 @@
-﻿using CourseHub.Core.Interfaces.Repositories.CourseRepos;
+﻿using CourseHub.Core.Interfaces.Repositories.CommonRepos;
+using CourseHub.Core.Interfaces.Repositories.CourseRepos;
 using CourseHub.Core.Interfaces.Repositories.UserRepos;
 
 namespace CourseHub.Core.Interfaces.Repositories;
@@ -12,4 +13,6 @@ public interface IUnitOfWork
     ICategoryRepository CategoryRepo { get; }
     IInstructorRepository InstructorRepo { get; }
     ICourseRepository CourseRepo { get; }
+
+    INotificationRepository NotificationRepo { get; }
 }

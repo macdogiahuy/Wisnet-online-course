@@ -21,6 +21,9 @@ internal static class UserDomainMessages
     internal const string FORBIDDEN_FAILED_EXCEED = "Access Failed Count exceed maximum";
     internal const string FORBIDDEN_NOT_APPROVED = "You are not approved";
 
+    // 404
+    internal const string NOT_FOUND = "User not found";
+
     // 409
     internal const string CONFLICT_EMAIL = "This email has already been used";
 }

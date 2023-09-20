@@ -34,7 +34,10 @@ public static class QueryBuilder
                 }
                 else
                 {
-                    kvps.Add($"{encodedName}={Uri.EscapeDataString(propertyValue.ToString()!)}");
+                    if (property.PropertyType.IsEnum)
+                        kvps.Add($"{encodedName}={Uri.EscapeDataString(((int)propertyValue).ToString()!)}");
+                    else
+                        kvps.Add($"{encodedName}={Uri.EscapeDataString(propertyValue.ToString()!)}");
                 }
             }
         }

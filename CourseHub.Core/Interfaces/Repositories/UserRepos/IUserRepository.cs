@@ -1,4 +1,5 @@
-﻿using CourseHub.Core.Interfaces.Repositories.Shared;
+﻿using CourseHub.Core.Entities.UserDomain.Enums;
+using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.User.UserModels;
 using System.Linq.Expressions;
 
@@ -16,6 +17,8 @@ public interface IUserRepository : IRepository<User>
     Task<bool> EmailExisted(string email);
     Task<User?> FindByUserName(string userName);
     Task<User?> FindByEmail(string email);
+
+    Task<bool> UpdateAsInstructor(Guid id, Guid instructorId);
 
     //
     Task<List<UserModel>> GetAllAsync();

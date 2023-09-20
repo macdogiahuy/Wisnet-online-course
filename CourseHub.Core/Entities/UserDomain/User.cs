@@ -1,5 +1,6 @@
 ﻿using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Helpers.Cryptography;
+using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Helpers.Text;
 
 namespace CourseHub.Core.Entities.UserDomain;
@@ -29,19 +30,29 @@ public class User : TimeAuditedEntity
     //public int SystemBalance { get; set; }
     //public int Point { get; set; }
 
+    // FKs
+    public Guid? InstructorId { get; set; }
+
     // Navigations
+    public Instructor? Instructor { get; set; }
     // public ICollection<Enrollment> Enrollments { get; private set; }
     public ICollection<PaymentAccount> PaymentAccounts { get; private set; }
     public ICollection<ConversationMember> ConversationMembers { get; private set; }
 
 #pragma warning disable CS8618
 
-    public User(Guid id, string fullName, string inputPassword)
+    // For seeding
+    public User(Guid id, string fullName, string inputPassword, bool isVerified, bool isApproved)
     {
         Id = id;
         SetFullName(fullName);
         SetPassword(inputPassword);
         SetCreationTime();
+        IsVerified = isVerified;
+        IsApproved = isApproved;
+        AvatarUrl = string.Empty;
+        Token = string.Empty;
+        RefreshToken = string.Empty;
     }
 
     public User(string userName, string inputPassword, string email, string fullName, Role role, DateTime dateOfBirth, string phone, Guid id)
@@ -65,11 +76,11 @@ public class User : TimeAuditedEntity
     }
 
     /// <summary>
-    /// Used for password registration
+    /// Used for registration
     /// </summary>
-    public User(string userName, string inputPassword, string email, Role role, Guid? id = null)
+    public User(string userName, string inputPassword, string email, Role role)
     {
-        Id = id is null ? Guid.NewGuid() : (Guid)id;
+        Id = Guid.NewGuid();
         UserName = userName;
         SetPassword(inputPassword);
         Email = email;
@@ -79,6 +90,9 @@ public class User : TimeAuditedEntity
         SetCreationTime();
         AvatarUrl = string.Empty;
         Bio = string.Empty;
+
+        if (Role == Role.Admin)
+            IsApproved = true;
     }
 
     /// <summary>
@@ -150,6 +164,14 @@ public class User : TimeAuditedEntity
     public bool IsNotApproved()
     {
         return Role == Role.Admin ? !IsApproved : !IsVerified;
+    }
+
+    public void SetInstructor(Guid instructorId)
+    {
+        if (Role > Role.Learner)
+            throw new Exception(UserDomainMessages.FORBIDDEN_NOT_APPROVED);
+        Role = Role.Instructor;
+        InstructorId = instructorId;
     }
 
     private void SetCreationTime()

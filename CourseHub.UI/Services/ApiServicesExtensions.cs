@@ -16,7 +16,8 @@ public static class ApiServicesExtensions
         services.AddTransient<RefreshTokenHandler>();
 
         services
-            .AddDomainServiceWithClient<IUserApiService, UserApiService>(config);
+            .AddDomainServiceWithClient<IUserApiService, UserApiService>(config)
+            .AddDomainServiceWithClient<INotificationApiService, NotificationApiService>(config);
 
         return services;
     }

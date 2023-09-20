@@ -63,6 +63,18 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
 
 
 
+    public async Task<bool> UpdateAsInstructor(Guid id, Guid instructorId)
+    {
+        var entity = await DbSet.FindAsync(id);
+        if (entity is null)
+            return false;
+        entity.Role = Role.Instructor;
+        entity.InstructorId = instructorId;
+        return true;
+    }
+
+
+
     public async Task<List<UserModel>> GetAllAsync()
     {
         return await DbSet

@@ -1,7 +1,9 @@
 ﻿using CourseHub.Core.Interfaces.Repositories;
+using CourseHub.Core.Interfaces.Repositories.CommonRepos;
 using CourseHub.Core.Interfaces.Repositories.CourseRepos;
 using CourseHub.Core.Interfaces.Repositories.UserRepos;
 using CourseHub.Infrastructure.AccessContext;
+using CourseHub.Infrastructure.Repositories.CommonRepos;
 using CourseHub.Infrastructure.Repositories.CourseRepos;
 using CourseHub.Infrastructure.Repositories.UserRepos;
 
@@ -39,4 +41,7 @@ public class UnitOfWork : IUnitOfWork
 
     private CourseRepository? _courseRepo;
     public ICourseRepository CourseRepo { get => _courseRepo ??= new CourseRepository(_context); }
+
+    private NotificationRepository? _notificationRepo;
+    public INotificationRepository NotificationRepo { get => _notificationRepo ??= new NotificationRepository(_context); }
 }

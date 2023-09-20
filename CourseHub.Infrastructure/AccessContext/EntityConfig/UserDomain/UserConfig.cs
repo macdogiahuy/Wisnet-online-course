@@ -1,4 +1,5 @@
-﻿using CourseHub.Core.Entities.UserDomain;
+﻿using CourseHub.Core.Entities.CourseDomain;
+using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Infrastructure.AccessContext.Shared;
 using CourseHub.Infrastructure.AccessContext.Shared.DbSupport;
 using Microsoft.EntityFrameworkCore;
@@ -40,5 +41,7 @@ internal class UserConfig : SqlServerEntityConfiguration<User>
             .SetEnumParsing(_ => _.Role)
             .SetUnique(_ => _.UserName, _ => _.Email, _ => _.Phone)
             .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE);
+
+        builder.HasOne(_ => _.Instructor).WithOne(_ => _.Creator).HasForeignKey<Instructor>(_ => _.CreatorId);
     }
 }

@@ -22,7 +22,7 @@
     <meta name="description" content="@Global.APP_NAME">
     <meta name="keywords" content="@Global.APP_NAME, education, creative, course, learn">
     <title>@ViewData[Global.TITLE]</title>
-    <link href="~/img/favicon.png" rel="icon" />
+    <link href="@Global.FAVICON" rel="icon" />
     <link rel="stylesheet" href="~/css/Profile/style.css">
     <link rel="stylesheet" href="~/css/Profile/styleProfile.css">
     <link rel="stylesheet" href="~/css/Profile/main.16480feb.css">
@@ -31,6 +31,8 @@
     <!--<link rel="stylesheet" type="text/css" href="~/css/Profile/821.2ca926ad.chunk.css">-->
     <!--<link rel="stylesheet" type="text/css" href="~/css/Profile/5619.c9f5bff3.chunk.css">-->
     <link rel="stylesheet" type="text/css" href="~/css/Profile/793.a40e2718.chunk.css">
+    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
 </head>
 <body style="overflow-y: auto; overflow-x: unset;">
     <div id="root">
@@ -139,6 +141,8 @@
         </div>
     </div>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/jquery-3.2.1.min.js"></script>
     @await RenderSectionAsync(name: "ValidateScript", required: false)
 </body>
 </html>
