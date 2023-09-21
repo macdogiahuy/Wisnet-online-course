@@ -77,14 +77,39 @@ public class CourseService : DomainService, ICourseService
         }
     }
 
-    public Task<ServiceResult> UpdateAsync(UpdateCourseDto dto, Guid client)
+    public async Task<ServiceResult> UpdateAsync(UpdateCourseDto dto, Guid client)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var instructorId = await _uow.InstructorRepo.GetIdByUserId(client);
+            if (instructorId == default)
+                return ServerError();
+
+            var entity = await _uow.CourseRepo.Find(dto.Id);
+            if (entity is null)
+                return BadRequest();
+            ApplyChanges(dto, entity, client);
+            await _uow.CommitAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return ServerError();
+        }
     }
 
-    public Task<ServiceResult> DeleteAsync(Guid id, Guid client)
+    public async Task<ServiceResult> DeleteAsync(Guid id, Guid client)
     {
-        throw new NotImplementedException();
+        var instructorId = await _uow.InstructorRepo.GetIdByUserId(client);
+        if (instructorId == default)
+            return ServerError<Guid>();
+
+        var entity = await _uow.CourseRepo.Find(id);
+        if (entity is null)
+            return BadRequest();
+        _uow.CourseRepo.Delete(entity);
+        await _uow.CommitAsync();
+        return Ok();
     }
 
 
@@ -112,6 +137,51 @@ public class CourseService : DomainService, ICourseService
         return new Course(id, creatorId, instructorId, dto.LeafCategoryId,
             dto.Title, thumbUrl, dto.Intro, dto.Description, dto.Price,
             dto.Level, dto.Outcomes, dto.Requirements, sections);
+    }
+
+    private async void ApplyChanges(UpdateCourseDto dto, Course entity, Guid client)
+    {
+        _mapper.Map(dto, entity);
+        if (dto.Title is not null)
+            entity.SetTitle(entity.Title);
+        if (dto.Discount is not null)
+            entity.SetDiscount(entity.Discount, entity.DiscountExpiry);
+        entity.LastModifierId = client;
+
+
+        // Thumb
+        if (dto.Thumb is not null)
+        {
+            if (dto.Thumb.File is not null)
+                entity.ThumbUrl = await SaveThumb(dto.Thumb.File, entity.Id);
+            else if (dto.Thumb.Url is not null)
+                entity.ThumbUrl = dto.Thumb.Url;
+        }
+
+        // Metas
+        if (dto.RemovedMetas != null)
+        {
+            for (int i = 0; i < entity.Metas.Count; i++)
+                entity.Metas.RemoveAll(_ => dto.RemovedMetas.Any(r => r.Type == _.Type));
+        }
+        if (dto.AddedMetas != null)
+        {
+            entity.Metas.AddRange(
+                dto.AddedMetas.Select(_ => new CourseMeta { Type = _.Type, Value = _.Value })
+            );
+        }
+
+        // Sections
+        if (dto.RemovedSections != null)
+        {
+            _uow.SectionRepo.RemoveRangeById(entity.Id, dto.RemovedSections);
+        }
+        if (dto.AddedSections != null)
+        {
+            _uow.CourseRepo.LoadSections(entity);
+            byte currentIndex = entity.Sections.Max(_ => _.Index);
+            entity.Sections.AddRange(dto.AddedSections.Select((_, index) => new Section((byte)(currentIndex + index + 1), _)));
+        }
     }
 
     private async Task<string> SaveThumb(IFormFile file, Guid courseId)

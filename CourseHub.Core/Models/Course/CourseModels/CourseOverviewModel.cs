@@ -5,6 +5,9 @@ namespace CourseHub.Core.Models.Course.CourseModels;
 
 public class CourseOverviewModel
 {
+    public Guid Id { get; set; }
+    public DateTime LastModificationTime { get; protected set; }
+
     public string Title { get; private set; }
     public string MetaTitle { get; private set; }
     public string ThumbUrl { get; set; }
@@ -23,6 +26,4 @@ public class CourseOverviewModel
     public Guid LeafCategoryId { get; set; }
 
     public UserMinModel Creator { get; set; }
-
-    public DateTime LastModificationTime { get; protected set; }
 }

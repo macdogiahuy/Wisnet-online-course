@@ -9,7 +9,11 @@ public class Section : TimeAuditedEntity
     public string Title { get; set; }
     public byte LectureCount { get; private set; }
 
+    // FKs
+    public Guid CourseId { get; set; }
+
     // Navigations
+    public Course Course { get; set; }
     public ICollection<Lecture> Lectures { get; private set; }
     //public Assignment? Assignment { get; private set; }
 

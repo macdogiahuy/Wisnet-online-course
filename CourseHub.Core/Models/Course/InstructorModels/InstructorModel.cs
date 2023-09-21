@@ -2,4 +2,6 @@
 
 public class InstructorModel
 {
+    public string Intro { get; set; }
+    public string Experience { get; set; }
 }

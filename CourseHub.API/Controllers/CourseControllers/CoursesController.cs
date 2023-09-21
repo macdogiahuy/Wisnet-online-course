@@ -43,14 +43,12 @@ public class CoursesController : BaseController
         return result.AsResponse();
     }
 
-    [HttpGet("Resource/{*media}")]
+    [HttpGet("Resource/{courseId}/{fileGuid}")]
     [ResponseCache(Duration = 60)]
-    public IActionResult GetResource(string media)
+    public IActionResult GetResource(Guid courseId, Guid fileGuid)
     {
-        if (IsRemote(media))
-            return Ok(media);
-
-        Stream? stream = ServerStorage.ReadAsStream(CourseStorage.GetCourseMediaPath(media));
+        string pathWithoutExtension = CourseStorage.GetCourseMediaPathWithoutExtension(courseId, fileGuid);
+        Stream? stream = ServerStorage.ReadAsStreamWithoutExtension(pathWithoutExtension);
         return stream is null ? NotFound() : new FileStreamResult(stream, "image/jpeg");
     }
 
@@ -101,15 +99,5 @@ public class CoursesController : BaseController
         var clientId = (Guid)HttpContext.GetClientId()!;
         var result = await _courseService.DeleteAsync(id, clientId);
         return result.AsResponse();
-    }
-
-
-
-
-
-
-    private static bool IsRemote(string media)
-    {
-        return media.StartsWith("http");
     }
 }

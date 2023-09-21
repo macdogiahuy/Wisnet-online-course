@@ -93,6 +93,7 @@ public class User : TimeAuditedEntity
 
         if (Role == Role.Admin)
             IsApproved = true;
+        DateOfBirth = new DateTime(2000, 1, 1);
     }
 
     /// <summary>
@@ -116,6 +117,8 @@ public class User : TimeAuditedEntity
         // IsApproved
         LoginProvider = loginProvider;
         ProviderKey = providerKey;
+
+        DateOfBirth = new DateTime(2000, 1, 1);
     }
 
 #pragma warning restore CS8618

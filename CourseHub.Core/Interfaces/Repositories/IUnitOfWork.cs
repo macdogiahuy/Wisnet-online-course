@@ -13,6 +13,12 @@ public interface IUnitOfWork
     ICategoryRepository CategoryRepo { get; }
     IInstructorRepository InstructorRepo { get; }
     ICourseRepository CourseRepo { get; }
+    ISectionRepository SectionRepo { get; }
+    ICourseCouponRepository CourseCouponRepo { get; }
+    ICourseReviewRepository CourseReviewRepo { get; }
+    ILectureRepository LectureRepo { get; }
 
     INotificationRepository NotificationRepo { get; }
+    ICommentRepository CommentRepo { get; }
+    IReactionRepository ReactionRepo { get; }
 }

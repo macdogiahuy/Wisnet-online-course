@@ -44,4 +44,21 @@ public class UnitOfWork : IUnitOfWork
 
     private NotificationRepository? _notificationRepo;
     public INotificationRepository NotificationRepo { get => _notificationRepo ??= new NotificationRepository(_context); }
+
+    public SectionRepository? _sectionRepo;
+    public ISectionRepository SectionRepo { get => _sectionRepo ??= new SectionRepository(_context); }
+
+    public ICourseCouponRepository CourseCouponRepo => throw new NotImplementedException();
+
+    public ICourseReviewRepository CourseReviewRepo => throw new NotImplementedException();
+
+    public ILectureRepository LectureRepo => throw new NotImplementedException();
+
+
+
+
+
+    public ICommentRepository CommentRepo => throw new NotImplementedException();
+
+    public IReactionRepository ReactionRepo => throw new NotImplementedException();
 }

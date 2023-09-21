@@ -9,4 +9,6 @@ public interface ICourseRepository : IRepository<Course>
     Task<CourseModel?> GetAsync(Guid id);
     IPagingQuery<Course, CourseOverviewModel> GetPagingQuery(Expression<Func<Course, bool>>? whereExpression, short pageIndex, byte pageSize);
     Task<List<CourseOverviewModel>> GetSimilar(Guid id);
+
+    void LoadSections(Course course);
 }

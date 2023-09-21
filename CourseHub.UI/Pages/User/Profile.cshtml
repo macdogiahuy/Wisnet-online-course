@@ -177,14 +177,14 @@
                         </div>
 
                         <!--Readonly-->
-                        <div class="FieldWrapper_wrapper__QcEfS">
+                        <!--<div class="FieldWrapper_wrapper__QcEfS">
                             <div class="InputField_fieldContent__iWttQ">
                                 <h3 class="InputField_fieldContentLabel__wJO4a" style="display: inline-block; margin-right: 20px">@text["IsVerified"]</h3>
                                 <input type="checkbox" class="InputField_fieldContentInput__lO21W" disabled style="width: unset"
-                                    value="@(Model.Client?.Role == Core.Entities.UserDomain.Enums.Role.Admin
-                                    ? !Model.Client.IsApproved : !Model.Client?.IsVerified)">
+                                    checked="@(Model.Client?.Role == Core.Entities.UserDomain.Enums.Role.Admin
+                                    ? Model.Client.IsApproved : Model.Client?.IsVerified)">
                             </div>
-                        </div>
+                        </div>-->
 
                         <!--
                         <div class="FieldWrapper_wrapper__QcEfS">
@@ -213,6 +213,7 @@
     </section>
 </div>
 
+<!--using bootstrap v4.1.3-->
 <div class="modal fade" id="app-confirm-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -225,7 +226,7 @@
             </div>
             <div class="modal-footer">
                 <button id="app-confirm-btn" type="button" class="btn btn-outline-danger">Có</button>
-                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Không</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Không</button>
             </div>
         </div>
     </div>

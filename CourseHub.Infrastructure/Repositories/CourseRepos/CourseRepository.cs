@@ -32,4 +32,8 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
     {
         throw new NotImplementedException();
     }
+
+
+
+    public void LoadSections(Course course) => Context.Entry(course).Collection(p => p.Sections).Load();
 }

@@ -7,7 +7,7 @@ public interface ILectureService
 {
     Task<ServiceResult<Lecture>> GetAsync(Guid lecture);
 
-    Task<ServiceResult<Guid>> CreateAsync(CreateLectureDto dto, Guid? client);
-    Task<ServiceResult> UpdateAsync(UpdateLectureDto dto, Guid? client);
-    Task<ServiceResult> DeleteAsync(Guid id, Guid? client);
+    Task<ServiceResult<Guid>> CreateAsync(CreateLectureDto dto, Guid client);
+    Task<ServiceResult> UpdateAsync(UpdateLectureDto dto, Guid client);
+    Task<ServiceResult> DeleteAsync(Guid id, Guid client);
 }

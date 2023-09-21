@@ -20,11 +20,11 @@ public class CreateCourseDto
 
     public Guid LeafCategoryId { get; set; }
     public List<string> SectionNames { get; set; }
-    public List<CreateCourseMetaDto>? Metas { get; set; }
+    public List<CUCourseMetaDto>? Metas { get; set; }
 
 
 
-    public class CreateCourseMetaDto
+    public class CUCourseMetaDto
     {
         public CourseMetaType Type { get; set; }
         public string Value { get; set; }

@@ -9,8 +9,20 @@ public class Lecture : TimeAuditedEntity
     public string Content { get; set; }
 
     // Navigations
-    public ICollection<LectureMaterial> Materials { get; set; }
-    public ICollection<Comment> Comments { get; set; }
-}
+    public List<LectureMaterial> Materials { get; set; }
+    public List<Comment> Comments { get; set; }
 
 #pragma warning restore CS8618
+
+    public Lecture()
+    {
+
+    }
+
+    public Lecture(string title, string content, List<LectureMaterial> materials)
+    {
+        Title = title;
+        Content = content;
+        Materials = materials;
+    }
+}

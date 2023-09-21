@@ -25,7 +25,6 @@ public class Course : AuditedEntity
     public int LearnerCount { get; set; }
     public int RatingCount { get; private set; }
     public long TotalRating { get; private set; }
-    public int BookmarkCount { get; set; }
 
     // FKs
     public Guid LeafCategoryId { get; set; }
@@ -35,10 +34,10 @@ public class Course : AuditedEntity
     public User? Creator { get; set; }
     public Instructor? Instructor { get; set; }
     public Category? LeafCategory { get; set; }
-    public ICollection<Section> Sections { get; private set; }
-    public ICollection<CourseMeta> Metas { get; private set; }
-    public ICollection<CourseReview> Reviews { get; private set; }
-    public ICollection<CourseCoupon> Coupons { get; private set; }
+    public List<Section> Sections { get; private set; }
+    public List<CourseMeta> Metas { get; private set; }
+    public List<CourseReview> Reviews { get; private set; }
+    public List<CourseCoupon> Coupons { get; private set; }
 
 
 
