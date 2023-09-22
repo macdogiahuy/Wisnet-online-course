@@ -29,7 +29,7 @@ public class LecturesController : BaseController
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> Create(CreateLectureDto dto)
+    public async Task<IActionResult> Create([FromForm] CreateLectureDto dto)
     {
         var clientId = (Guid)HttpContext.GetClientId()!;
         var result = await _lectureService.CreateAsync(dto, clientId);
@@ -38,7 +38,7 @@ public class LecturesController : BaseController
 
     [HttpPatch]
     [Authorize]
-    public async Task<IActionResult> Update(UpdateLectureDto dto)
+    public async Task<IActionResult> Update([FromForm] UpdateLectureDto dto)
     {
         var clientId = (Guid)HttpContext.GetClientId()!;
         var result = await _lectureService.UpdateAsync(dto, clientId);

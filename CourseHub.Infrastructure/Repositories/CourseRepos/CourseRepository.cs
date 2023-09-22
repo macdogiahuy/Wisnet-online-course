@@ -23,15 +23,32 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
             .FirstOrDefaultAsync();
     }
 
-    public IPagingQuery<Course, CourseOverviewModel> GetPagingQuery(Expression<Func<Course, bool>>? whereExpression, short pageIndex, byte pageSize)
+    public IPagingQuery<Course, CourseOverviewModel> GetPagingQuery(
+        Expression<Func<Course, bool>>? whereExpression, short pageIndex, byte pageSize,
+        params Expression<Func<Course, object?>>[]? includeExpressions)
     {
-        return GetPagingQuery<CourseOverviewModel>(CourseMapperProfile.OverviewModelConfig, whereExpression, pageIndex, pageSize);
+        if (includeExpressions is null)
+            return GetPagingQuery<CourseOverviewModel>(
+                CourseMapperProfile.OverviewModelConfig, whereExpression, pageIndex, pageSize);
+
+        return GetPagingQuery<CourseOverviewModel>(
+            CourseMapperProfile.OverviewModelConfig, whereExpression, pageIndex, pageSize,
+            includeExpressions: includeExpressions);
     }
 
     public Task<List<CourseOverviewModel>> GetSimilar(Guid id)
     {
         throw new NotImplementedException();
     }
+
+    public async Task<CourseMinModel?> GetMinAsync(Guid id)
+    {
+        return await DbSet
+            .Where(_ => _.Id == id)
+            .ProjectTo<CourseMinModel>(CourseMapperProfile.MinModelConfig)
+            .FirstOrDefaultAsync();
+    }
+
 
 
 

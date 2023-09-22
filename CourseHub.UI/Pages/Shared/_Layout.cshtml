@@ -5,7 +5,8 @@
 	{
 		{ "SignIn", "Sign In" },
 		{ "Profile", "Profile" },
-		{ "SignOut", "Sign Out" }
+		{ "SignOut", "Sign Out" },
+		{ "AdminView", "Admin View"}
 	};
 }
 
@@ -74,6 +75,10 @@
 								<div class="dropdown site-btn header-btn">
 									<div data-bs-toggle="dropdown" aria-expanded="false">@client?.FullName</div>
 									<ul class="dropdown-menu">
+										@if (client!.Role >= Core.Entities.UserDomain.Enums.Role.Admin)
+										{
+											<li><a href="@Global.PAGE_ADMIN">@text["AdminView"]</a></li>
+										}
 										<li><a href="@Global.PAGE_PROFILE">@text["Profile"]</a></li>
 										<li><a href="@Global.PAGE_SIGNOUT">@text["SignOut"]</a></li>
 									</ul>
@@ -85,7 +90,7 @@
 								<li><a href="@Global.PAGE_INDEX">Home</a></li>
 								<li><a href="#">About us</a></li>
 								<li><a href="#">Courses</a></li>
-								<li><a href="#">News</a></li>
+								<!--<li><a href="#">News</a></li>-->
 								<li><a href="#">Contact</a></li>
 							</ul>
 						</nav>

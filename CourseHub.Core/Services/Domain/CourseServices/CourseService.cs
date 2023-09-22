@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Helpers.Messaging;
+using CourseHub.Core.Helpers.Text;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Interfaces.Repositories.Shared;
@@ -30,9 +31,11 @@ public class CourseService : DomainService, ICourseService
         return ToQueryResult(result);
     }
 
-    public async Task<ServiceResult<List<CourseMinModel>>> GetMin(QueryCourseDto id)
+    public async Task<ServiceResult<List<CourseMinModel>>> GetMinAsync(QueryCourseDto id)
     {
         throw new NotImplementedException();
+        /*var result = await _uow.CourseRepo.GetMinAsync(id);
+        return ToQueryResult(result);*/
     }
 
     public Task<ServiceResult<PagedResult<CourseOverviewModel>>> GetMultiple(Guid[] ids)
@@ -42,8 +45,22 @@ public class CourseService : DomainService, ICourseService
 
     public async Task<ServiceResult<PagedResult<CourseOverviewModel>>> GetPagedAsync(QueryCourseDto dto)
     {
-        var query = _uow.CourseRepo.GetPagingQuery(GetPredicate(dto), dto.PageIndex, dto.PageSize);
-        var result = await query.ExecuteWithOrderBy(_ => _.LastModificationTime);
+        var query = _uow.CourseRepo.GetPagingQuery(GetPredicate(dto), dto.PageIndex, dto.PageSize, GetInclude(dto));
+
+        PagedResult<CourseOverviewModel> result;
+        if (dto.ByPrice is true)
+            result = await query.ExecuteWithOrderBy(_ => _.Price);
+        else if (dto.ByDiscount is true)
+            result = await query.ExecuteWithOrderBy(_ => _.Discount, ascending: false);
+        else if (dto.ByLearnerCount is true)
+            result = await query.ExecuteWithOrderBy(_ => _.LearnerCount, ascending: false);
+        else if (dto.ByAvgRating is true)
+            result = await query.ExecuteWithOrderBy(_ => _.TotalRating / _.RatingCount, ascending: false, isAnsiWarningTransaction: true);
+        else
+            result = await query.ExecuteWithOrderBy(_ => _.LastModificationTime, ascending: false);
+
+
+
         return ToQueryResult(result);
     }
 
@@ -119,6 +136,23 @@ public class CourseService : DomainService, ICourseService
 
     private Expression<Func<Course, bool>>? GetPredicate(QueryCourseDto dto)
     {
+        if (dto.Title is not null)
+            return _ => _.MetaTitle.Contains(TextHelper.Normalize(dto.Title));
+        if (dto.Status is not null)
+            return _ => _.Status == dto.Status;
+        if (dto.Level is not null)
+            return _ => _.Level == dto.Level;
+        if (dto.CategoryId is not null)
+            return _ => _.LeafCategory.Path.Contains(dto.CategoryId.ToString()!);
+        if (dto.InstructorId is not null)
+            return _ => _.InstructorId == dto.InstructorId;
+        return null;
+    }
+
+    private Expression<Func<Course, object?>>[]? GetInclude(QueryCourseDto dto)
+    {
+        if (dto.CategoryId is not null)
+            return new Expression<Func<Course, object?>>[] { _ => _.LeafCategory };
         return null;
     }
 
