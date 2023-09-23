@@ -3,11 +3,9 @@ using CourseHub.Core.RequestDtos.User.UserDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services;
 using CourseHub.UI.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Options;
 
 namespace CourseHub.UI.Pages.User;
 

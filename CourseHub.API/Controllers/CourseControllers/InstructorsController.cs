@@ -26,7 +26,7 @@ public class InstructorsController : BaseController
 
     [HttpGet]
     [ResponseCache(Duration = 60)]
-    public async Task<IActionResult> Get(QueryInstructorDto dto)
+    public async Task<IActionResult> Get([FromQuery] QueryInstructorDto dto)
     {
         var result = await _instructorService.GetAsync(dto);
         return result.AsResponse();

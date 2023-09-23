@@ -9,15 +9,16 @@ using CourseHub.Core.Helpers.Messaging.Messages;
 
 namespace CourseHub.Core.Services.Domain.CourseServices;
 
-internal class LectureService : DomainService, ILectureService
+public class LectureService : DomainService, ILectureService
 {
     public LectureService(IUnitOfWork unitOfWork, IMapper mapper, IAppLogger logger) : base(unitOfWork, mapper, logger)
     {
     }
 
-    public Task<ServiceResult<Lecture>> GetAsync(Guid lecture)
+    public async Task<ServiceResult<Lecture>> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _uow.LectureRepo.Find(id);
+        return ToQueryResult(result);
     }
 
     public async Task<ServiceResult<Guid>> CreateAsync(CreateLectureDto dto, Guid client)
@@ -99,7 +100,7 @@ internal class LectureService : DomainService, ILectureService
             });
         }
 
-        return new Lecture(dto.Title, dto.Content, materials);
+        return new Lecture(dto.SectionId, dto.Title, dto.Content, materials);
     }
 
     private async Task ApplyChanges(UpdateLectureDto dto, Lecture entity)

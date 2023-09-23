@@ -1,10 +1,12 @@
 ﻿using CourseHub.API.Controllers.Shared;
 using CourseHub.API.Helpers.Cookie;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
+using CourseHub.Core.Helpers.Http;
 using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 
 namespace CourseHub.API.Controllers.CourseControllers;
 
@@ -20,8 +22,8 @@ public class CoursesController : BaseController
 
 
     [HttpGet]
-    [ResponseCache(Duration = 60)]
-    public async Task<IActionResult> GetOverview([FromQuery] QueryCourseDto dto)
+    //[ResponseCache(Duration = 60)]
+    public async Task<IActionResult> GetPaged([FromQuery] QueryCourseDto dto)
     {
         var result = await _courseService.GetPagedAsync(dto);
         return result.AsResponse();
@@ -31,7 +33,7 @@ public class CoursesController : BaseController
     [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetMultiple([FromQuery] Guid[] ids)
     {
-        var result = await _courseService.GetMultiple(ids);
+        var result = await _courseService.GetMultipleAsync(ids);
         return result.AsResponse();
     }
 
@@ -43,13 +45,25 @@ public class CoursesController : BaseController
         return result.AsResponse();
     }
 
+    [HttpGet("Resource/{courseId}/local-thumb")]
+    [ResponseCache(Duration = 60)]
+    public IActionResult GetLocalThumb(Guid courseId)
+    {
+        string path = CourseStorage.GetCourseThumbPath(courseId);
+        Stream? stream = ServerStorage.ReadAsStream(path);
+        return stream is null ? NotFound() : new FileStreamResult(stream, "image/jpeg");
+    }
+
     [HttpGet("Resource/{courseId}/{fileGuid}")]
     [ResponseCache(Duration = 60)]
-    public IActionResult GetResource(Guid courseId, Guid fileGuid)
+    public IActionResult GetMedia(Guid courseId, Guid fileGuid)
     {
+        //... Authorize -> Enrollment where courseId && clientId
         string pathWithoutExtension = CourseStorage.GetCourseMediaPathWithoutExtension(courseId, fileGuid);
-        Stream? stream = ServerStorage.ReadAsStreamWithoutExtension(pathWithoutExtension);
-        return stream is null ? NotFound() : new FileStreamResult(stream, "image/jpeg");
+        var result = ServerStorage.ReadWithoutExtension(pathWithoutExtension);
+        return result.Item1 is null
+            ? NotFound()
+            : new FileStreamResult(result.Item1, MimeTypes.GetMimeType(result.Item2!));
     }
 
     [HttpGet("{id}/similar")]

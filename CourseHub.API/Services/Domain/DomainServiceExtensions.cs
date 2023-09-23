@@ -34,6 +34,7 @@ public static class DomainServiceExtensions
             .AddScoped<ICategoryService, CategoryService>()
             .AddScoped<IInstructorService, InstructorService>()
             .AddScoped<ICourseService, CourseService>()
+            .AddScoped<ILectureService, LectureService>()
             
             .AddScoped<INotificationService, NotificationService>();
 

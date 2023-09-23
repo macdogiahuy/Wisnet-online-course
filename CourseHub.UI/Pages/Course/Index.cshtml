@@ -1,0 +1,9 @@
+﻿@page
+@using System.Text.Json;
+@model CourseHub.UI.Pages.Course.IndexModel
+@{
+}
+
+@foreach (var item in Model.Courses.Items) {
+    <div>@JsonSerializer.Serialize(item)</div>
+}

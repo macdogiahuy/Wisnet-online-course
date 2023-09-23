@@ -17,7 +17,9 @@ public static class ApiServicesExtensions
 
         services
             .AddDomainServiceWithClient<IUserApiService, UserApiService>(config)
-            .AddDomainServiceWithClient<INotificationApiService, NotificationApiService>(config);
+            .AddDomainServiceWithClient<INotificationApiService, NotificationApiService>(config)
+            .AddDomainServiceWithClient<ICourseApiService, CourseApiService>(config)
+            .AddDomainServiceWithClient<ILectureApiService, LectureApiService>(config);
 
         return services;
     }

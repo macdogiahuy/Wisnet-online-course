@@ -48,11 +48,12 @@ public class UnitOfWork : IUnitOfWork
     public SectionRepository? _sectionRepo;
     public ISectionRepository SectionRepo { get => _sectionRepo ??= new SectionRepository(_context); }
 
+    public LectureRepository _lectureRepo;
+    public ILectureRepository LectureRepo { get => _lectureRepo ??= new LectureRepository(_context); }
+
     public ICourseCouponRepository CourseCouponRepo => throw new NotImplementedException();
 
     public ICourseReviewRepository CourseReviewRepo => throw new NotImplementedException();
-
-    public ILectureRepository LectureRepo => throw new NotImplementedException();
 
 
 

@@ -1,0 +1,41 @@
+﻿@page
+@using CourseHub.UI.Helpers.Utils;
+@model CourseHub.UI.Pages.Lecture.IndexModel
+@{
+    /*
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    // FKs
+    public Guid SectionId { get; set; }
+
+    // Navigations
+    public Section? Section { get; set; }
+    public List<LectureMaterial> Materials { get; set; }
+    public List<Comment> Comments { get; set; }*/
+}
+
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.7/plyr.css" />
+
+<p>@Model.Lecture.Title</p>
+<p>@Model.Lecture.Content</p>
+@foreach (var item in Model.Lecture.Materials) {
+    <p>@item.Type</p>
+    @if(item.Type == Core.Entities.CourseDomain.Enums.LectureMaterialType.Document)
+    {
+        <a href="@TextHelper.GetCourseResourcePath(item.Url)">View resource</a>
+    }
+}
+<p>@Model.Lecture.Title</p>
+
+<div style="width: 600px;">
+    <video width="800" height="600" id="player" playsinline controls data-poster="/img/video-thumb.gif">
+        <source src="ce7c409d-a615-4336-b430-8c5bd17d927c.mp4" type="video/mp4" />
+        <!--<track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />-->
+    </video>
+</div>
+
+<script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+<script>
+    const player = new Plyr('#player');
+</script>

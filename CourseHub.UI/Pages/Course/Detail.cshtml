@@ -1,0 +1,7 @@
+﻿@page
+@using System.Text.Json;
+@model CourseHub.UI.Pages.Course.DetailModel
+@{
+}
+
+<div>@JsonSerializer.Serialize(Model.Course)</div>

@@ -60,15 +60,15 @@ public static class ServerStorage
         return File.OpenRead(filePath);
     }
 
-    public static Stream? ReadAsStreamWithoutExtension(string filePath)
+    public static (Stream?, string?) ReadWithoutExtension(string filePath)
     {
         filePath = GetPhysicalPath(filePath);
         DirectoryInfo info = new(Path.GetDirectoryName(filePath)!);
-        FileInfo[] matchingFiles = info.GetFiles($"{filePath}.*");
+        FileInfo[] matchingFiles = info.GetFiles($"{Path.GetFileName(filePath)}.*");
 
         if (matchingFiles.Length == 0)
-            return null;
-        return matchingFiles[0].OpenRead();
+            return (null, null);
+        return (matchingFiles[0].OpenRead(), matchingFiles[0].Name);
     }
 
 

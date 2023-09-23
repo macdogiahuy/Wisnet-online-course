@@ -5,7 +5,7 @@ namespace CourseHub.Core.Services.Domain.CourseServices;
 
 public interface ILectureService
 {
-    Task<ServiceResult<Lecture>> GetAsync(Guid lecture);
+    Task<ServiceResult<Lecture>> GetAsync(Guid id);
 
     Task<ServiceResult<Guid>> CreateAsync(CreateLectureDto dto, Guid client);
     Task<ServiceResult> UpdateAsync(UpdateLectureDto dto, Guid client);

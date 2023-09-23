@@ -9,8 +9,8 @@ public interface ICourseService
 {
     Task<ServiceResult<CourseModel>> GetAsync(Guid id);
     Task<ServiceResult<PagedResult<CourseOverviewModel>>> GetPagedAsync(QueryCourseDto dto);
-    Task<ServiceResult<PagedResult<CourseOverviewModel>>> GetMultiple(Guid[] ids);
-    Task<ServiceResult<List<CourseOverviewModel>>> GetSimilar(Guid id);
+    Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids);
+    Task<ServiceResult<List<CourseOverviewModel>>> GetSimilarAsync(Guid id);
     Task<ServiceResult<List<CourseMinModel>>> GetMinAsync(QueryCourseDto id);
 
     Task<ServiceResult<Guid>> CreateAsync(CreateCourseDto dto, Guid client);

@@ -1,0 +1,19 @@
+﻿@page
+@model CourseHub.UI.Pages.Course.UpdateModel
+@{
+
+}
+
+<style>
+    form {
+        margin-top: 40px;
+    }
+</style>
+
+<form method="post" enctype="multipart/form-data" asp-page-handler="CreateLecture">
+    <input asp-for="CreateLectureDto.SectionId" hidden />
+    <input type="text" asp-for="CreateLectureDto.Title" placeholder="Title" />
+    <input type="text" asp-for="CreateLectureDto.Content" placeholder="Content" />
+    <input type="file" asp-for="Files" multiple />
+    <input type="submit" value="Submit" />
+</form>

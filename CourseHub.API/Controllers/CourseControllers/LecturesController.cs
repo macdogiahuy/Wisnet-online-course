@@ -2,6 +2,7 @@
 using CourseHub.API.Helpers.Cookie;
 using CourseHub.Core.RequestDtos.Course.LectureDtos;
 using CourseHub.Core.Services.Domain.CourseServices;
+using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
@@ -23,9 +24,15 @@ public class LecturesController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
+        //... client
         var result = await _lectureService.GetAsync(id);
         return result.AsResponse();
     }
+
+
+
+
+
 
     [HttpPost]
     [Authorize]

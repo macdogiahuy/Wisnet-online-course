@@ -21,7 +21,7 @@
     <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />-->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="@Global.FAVICON" rel="icon" />
-	<link href="~/lib/bootstrap/dist/css/fonts.css" rel="stylesheet">
+	<!--<link href="~/lib/bootstrap/dist/css/fonts.css" rel="stylesheet">-->
 
     <!-- Stylesheets -->
 	<link rel="stylesheet" href="~/css/bootstrap.min.css" />
@@ -89,7 +89,7 @@
 							<ul>
 								<li><a href="@Global.PAGE_INDEX">Home</a></li>
 								<li><a href="#">About us</a></li>
-								<li><a href="#">Courses</a></li>
+								<li><a href="@Global.PAGE_COURSE">Courses</a></li>
 								<!--<li><a href="#">News</a></li>-->
 								<li><a href="#">Contact</a></li>
 							</ul>
@@ -100,10 +100,12 @@
 		</header>
 	}
 	
+	
+
 	@if (TempData[Global.DATA_USE_BACKGROUND] is not null)
 	{
-		<div class="page-info-section set-bg" data-setbg="img/page-bg/2.jpg"
-			style="background-image: url(&quot;img/page-bg/2.jpg&quot;); height: 200px">
+		<div class="page-info-section set-bg" data-setbg="/img/page-bg/2.jpg"
+			style="background-image: url(&quot;/img/page-bg/2.jpg&quot;); height: 200px">
 			<div class="container">
 			</div>
 		</div>

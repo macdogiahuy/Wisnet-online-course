@@ -8,7 +8,11 @@ public class Lecture : TimeAuditedEntity
     public string Title { get; set; }
     public string Content { get; set; }
 
+    // FKs
+    public Guid SectionId { get; set; }
+
     // Navigations
+    public Section? Section { get; set; }
     public List<LectureMaterial> Materials { get; set; }
     public List<Comment> Comments { get; set; }
 
@@ -19,8 +23,9 @@ public class Lecture : TimeAuditedEntity
 
     }
 
-    public Lecture(string title, string content, List<LectureMaterial> materials)
+    public Lecture(Guid sectionId, string title, string content, List<LectureMaterial> materials)
     {
+        SectionId = sectionId;
         Title = title;
         Content = content;
         Materials = materials;

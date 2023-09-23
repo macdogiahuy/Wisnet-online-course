@@ -1,0 +1,9 @@
+﻿@page
+@using CourseHub.UI.Helpers;
+@model CourseHub.UI.Pages.Course.CreateModel
+@{
+}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" asp-for="Files" multiple />
+</form>

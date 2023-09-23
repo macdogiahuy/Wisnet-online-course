@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CourseHub.Infrastructure.Repositories.CourseRepos;
 
-internal class LectureRepository : BaseRepository<Lecture>, ILectureRepository
+public class LectureRepository : BaseRepository<Lecture>, ILectureRepository
 {
     public LectureRepository(DbContext context) : base(context)
     {
