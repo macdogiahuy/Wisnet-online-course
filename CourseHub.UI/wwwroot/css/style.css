@@ -120,6 +120,35 @@ ol {
 	margin-top: -15px;
 }
 
+.search-bar {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin-left: 30px;
+}
+
+.search-input {
+	width: 80%; /* Adjust as needed */
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px 0 0 5px;
+	font-size: 16px;
+}
+
+.search-button {
+	width: 20%; /* Adjust as needed */
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 0 5px 5px 0;
+	background-color: #f8f9fa;
+	cursor: pointer;
+}
+
+	.search-button i {
+		font-size: 18px;
+	}
+
+
 .section-title p {
 	margin-bottom: 0;
 	font-weight: 500;
@@ -306,6 +335,7 @@ ol {
 .header-btn {
 	float: right;
 	margin-right: 0;
+	margin-top: -5px;
 }
 
 .nav-switch {
@@ -348,9 +378,9 @@ ol {
 	font-size: 14px;
 }
 
-.intro-newslatter .site-btn {
+/*.intro-newslatter .site-btn {
 	min-width: 214px;
-}
+}*/
 
 /*------------------
   Categories section
@@ -437,7 +467,7 @@ ol {
 }
 
 .course-search-form .site-btn {
-	min-width: 198px;
+/*	min-width: 198px;*/
 	padding: 16px 10px;
 }
 
