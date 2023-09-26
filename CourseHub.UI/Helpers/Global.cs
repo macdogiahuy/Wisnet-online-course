@@ -25,8 +25,12 @@ public class Global
     public const string PAGE_FORGOT_PASSWORD = "/forgot-password";
     public const string PAGE_CHANGE_PASSWORD = "/User/ChangePassword";
 
-    public const string PAGE_COURSE = "/Course";
+	public const string PAGE_INSTRUCTOR = "/Instructor";
+
+	public const string PAGE_COURSE = "/Course/Search";
     public const string PAGE_COURSE_DETAIL = "/Course/Detail";
+
+    public const string PAGE_PAYMENT = "/Payment/Index";
 
     // static files
     public const string FAVICON = "/img/favicon.png";

@@ -15,4 +15,6 @@ public interface ICourseApiService
     Task<HttpResponseMessage> CreateAsync(CreateCourseDto dto, HttpContext context);
     Task<HttpResponseMessage> UpdateAsync(UpdateCourseDto dto, HttpContext context);
     Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context);
+
+    Task<bool> IsEnrolled(Guid courseId);
 }

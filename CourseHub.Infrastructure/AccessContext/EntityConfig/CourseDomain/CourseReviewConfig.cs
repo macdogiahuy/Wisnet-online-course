@@ -20,6 +20,7 @@ internal class CourseReviewConfig : SqlServerEntityConfiguration<CourseReview>
         builder
             .ToTable(RelationsConfig.COURSE_REVIEW)
             .SetColumnsTypes(Columns)
-            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE);
+            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE)
+            .SetDefaultSQL(_ => _.LastModificationTime, SQL_GETDATE);
     }
 }

@@ -11,6 +11,7 @@ public class Category : Entity
     public string Title { get; set; }
     public string Description { get; set; }
     public bool IsLeaf { get; set; }
+    public int CourseCount { get; set; }
 
     public Category()
     {

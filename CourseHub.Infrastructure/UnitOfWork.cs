@@ -1,10 +1,14 @@
 ﻿using CourseHub.Core.Interfaces.Repositories;
+using CourseHub.Core.Interfaces.Repositories.AssignmentRepos;
 using CourseHub.Core.Interfaces.Repositories.CommonRepos;
 using CourseHub.Core.Interfaces.Repositories.CourseRepos;
+using CourseHub.Core.Interfaces.Repositories.PaymentRepos;
+using CourseHub.Core.Interfaces.Repositories.SocialRepos;
 using CourseHub.Core.Interfaces.Repositories.UserRepos;
 using CourseHub.Infrastructure.AccessContext;
 using CourseHub.Infrastructure.Repositories.CommonRepos;
 using CourseHub.Infrastructure.Repositories.CourseRepos;
+using CourseHub.Infrastructure.Repositories.PaymentRepos;
 using CourseHub.Infrastructure.Repositories.UserRepos;
 
 namespace CourseHub.Infrastructure;
@@ -42,9 +46,6 @@ public class UnitOfWork : IUnitOfWork
     private CourseRepository? _courseRepo;
     public ICourseRepository CourseRepo { get => _courseRepo ??= new CourseRepository(_context); }
 
-    private NotificationRepository? _notificationRepo;
-    public INotificationRepository NotificationRepo { get => _notificationRepo ??= new NotificationRepository(_context); }
-
     public SectionRepository? _sectionRepo;
     public ISectionRepository SectionRepo { get => _sectionRepo ??= new SectionRepository(_context); }
 
@@ -55,11 +56,44 @@ public class UnitOfWork : IUnitOfWork
 
     public ICourseReviewRepository CourseReviewRepo => throw new NotImplementedException();
 
+    public EnrollmentRepository _enrollmentRepo;
+    public IEnrollmentRepository EnrollmentRepo { get => _enrollmentRepo ??= new EnrollmentRepository(_context); }
 
 
 
+
+
+
+    private NotificationRepository? _notificationRepo;
+    public INotificationRepository NotificationRepo { get => _notificationRepo ??= new NotificationRepository(_context); }
 
     public ICommentRepository CommentRepo => throw new NotImplementedException();
 
     public IReactionRepository ReactionRepo => throw new NotImplementedException();
+
+
+
+
+
+
+    private BillRepository? _billRepo;
+    public IBillRepository BillRepo { get => _billRepo ??= new BillRepository(_context); }
+
+
+
+
+
+
+    public IConversationRepository ConversationRepo => throw new NotImplementedException();
+
+    public IChatMessageRepository ChatMessageRepo => throw new NotImplementedException();
+
+    public ITagRepository TagRepo => throw new NotImplementedException();
+
+
+
+
+
+
+    public IAssignmentRepository AssignmentRepo => throw new NotImplementedException();
 }

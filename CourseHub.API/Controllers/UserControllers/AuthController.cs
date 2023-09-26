@@ -8,13 +8,13 @@ using CourseHub.API.Helpers.Cookie;
 using CourseHub.API.Controllers.Shared;
 using CourseHub.Core.RequestDtos.User.UserDtos;
 using CourseHub.Core.Services.Domain.UserServices.TempModels;
-using CourseHub.Core.Services.Domain.UserServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CourseHub.API.Services.AppInfo;
 using Microsoft.Extensions.Options;
 using CourseHub.Core.Entities.UserDomain.Enums;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CourseHub.Core.Services.Domain.UserServices.Contracts;
 
 namespace CourseHub.API.Controllers.UserControllers;
 

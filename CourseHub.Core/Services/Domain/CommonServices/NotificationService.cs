@@ -10,6 +10,7 @@ using CourseHub.Core.Entities.CommonDomain.Enums;
 using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Helpers.Messaging.Messages;
+using CourseHub.Core.Services.Domain.CommonServices.Contracts;
 
 namespace CourseHub.Core.Services.Domain.CommonServices;
 

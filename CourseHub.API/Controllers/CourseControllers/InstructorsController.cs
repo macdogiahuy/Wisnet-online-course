@@ -1,14 +1,14 @@
 ﻿using CourseHub.API.Controllers.Shared;
 using CourseHub.Core.RequestDtos.Common.NotificationDtos;
 using CourseHub.Core.RequestDtos.Course.InstructorDtos;
-using CourseHub.Core.Services.Domain.CommonServices;
-using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Entities.CommonDomain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.API.Helpers.Cookie;
+using CourseHub.Core.Services.Domain.CommonServices.Contracts;
+using CourseHub.Core.Services.Domain.CourseServices.Contracts;
 
 namespace CourseHub.API.Controllers.CourseControllers;
 

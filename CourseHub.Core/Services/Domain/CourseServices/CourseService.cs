@@ -7,6 +7,7 @@ using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
+using CourseHub.Core.Services.Domain.CourseServices.Contracts;
 using CourseHub.Core.Services.Storage;
 using CourseHub.Core.Services.Storage.Utils;
 using Microsoft.AspNetCore.Http;
@@ -31,11 +32,10 @@ public class CourseService : DomainService, ICourseService
         return ToQueryResult(result);
     }
 
-    public async Task<ServiceResult<List<CourseMinModel>>> GetMinAsync(QueryCourseDto id)
+    public async Task<ServiceResult<CourseMinModel>> GetMinAsync(Guid id)
     {
-        throw new NotImplementedException();
-        /*var result = await _uow.CourseRepo.GetMinAsync(id);
-        return ToQueryResult(result);*/
+        var result = await _uow.CourseRepo.GetMinAsync(id);
+        return ToQueryResult(result);
     }
 
     public Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids)

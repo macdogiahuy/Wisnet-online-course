@@ -40,7 +40,8 @@ internal class UserConfig : SqlServerEntityConfiguration<User>
             .SetColumnsTypes(Columns)
             .SetEnumParsing(_ => _.Role)
             .SetUnique(_ => _.UserName, _ => _.Email, _ => _.Phone)
-            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE);
+            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE)
+            .SetDefaultSQL(_ => _.LastModificationTime, SQL_GETDATE);
 
         builder.HasOne(_ => _.Instructor).WithOne(_ => _.Creator).HasForeignKey<Instructor>(_ => _.CreatorId);
     }

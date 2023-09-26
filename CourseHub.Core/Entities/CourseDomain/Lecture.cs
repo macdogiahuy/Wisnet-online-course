@@ -7,6 +7,7 @@ public class Lecture : TimeAuditedEntity
     // Attributes
     public string Title { get; set; }
     public string Content { get; set; }
+    public bool IsPreviewable { get; set; }
 
     // FKs
     public Guid SectionId { get; set; }

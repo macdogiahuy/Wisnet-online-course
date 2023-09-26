@@ -29,11 +29,6 @@
     };
 }
 
-@section ValidateScript {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
-
-
 <div class="Setting_pageWrapper__PM+M5">
     <section class="index-module_row__-AHgh">
         <section class="index-module_col__2EQm9 index-module_c-12__u7UXF index-module_m-12__2CxUL index-module_l-12__340Ve">
@@ -232,46 +227,53 @@
     </div>
 </div>
 
-<script>
-    var avatarInp = document.getElementById('app-avatar-inp');
-    var avatarImg = document.getElementById('app-avatar-img');
-    var avatarBtn = document.getElementById('app-avatar-btn');
-    var avatarChanged = false;
-    avatarInp.onchange = () => {
-        let files = avatarInp.files;
-        if (files.length > 0) {
-            avatarImg.src = URL.createObjectURL(files[0]);
-            avatarChanged = true;
+
+@section ValidateScript {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+@section Scripts {
+    <script>
+        var avatarInp = document.getElementById('app-avatar-inp');
+        var avatarImg = document.getElementById('app-avatar-img');
+        var avatarBtn = document.getElementById('app-avatar-btn');
+        var avatarChanged = false;
+        avatarInp.onchange = () => {
+            let files = avatarInp.files;
+            if (files.length > 0) {
+                avatarImg.src = URL.createObjectURL(files[0]);
+                avatarChanged = true;
+            }
         }
-    }
-    avatarBtn.onclick = () => {
-        avatarInp.click();
-    }
-
-
-
-    var openConfirmBtn = document.getElementById("app-open-confirm-btn");
-    var confirmBtn = document.getElementById("app-confirm-btn");
-    var form = document.getElementById("app-form");
-    openConfirmBtn.onclick = () => {
-        $("#app-confirm-modal").modal('show');
-    }
-    confirmBtn.onclick = (e) => {
-        form.submit();
-    }
-
-    
-    var requestInstructorBtn = document.getElementById('app-instructor-btn');
-    if (requestInstructorBtn) {
-        requestInstructorBtn.onclick = () => {
-            fetch("@Model.InstructorRequestPath", {
-                method: "POST",
-                credentials: "include",
-            }).then(res => {
-                if (res.ok) {
-                    requestInstructorBtn.innerHTML = "Pending...";
-                }
-            });
+        avatarBtn.onclick = () => {
+            avatarInp.click();
         }
-    }
-</script>
+
+
+
+        var openConfirmBtn = document.getElementById("app-open-confirm-btn");
+        var confirmBtn = document.getElementById("app-confirm-btn");
+        var form = document.getElementById("app-form");
+        openConfirmBtn.onclick = () => {
+            $("#app-confirm-modal").modal('show');
+        }
+        confirmBtn.onclick = (e) => {
+            form.submit();
+        }
+
+
+        var requestInstructorBtn = document.getElementById('app-instructor-btn');
+        if (requestInstructorBtn) {
+            requestInstructorBtn.onclick = () => {
+                fetch("@Model.InstructorRequestPath", {
+                    method: "POST",
+                    credentials: "include",
+                }).then(res => {
+                    if (res.ok) {
+                        requestInstructorBtn.innerHTML = "Pending...";
+                    }
+                });
+            }
+        }
+    </script>
+}

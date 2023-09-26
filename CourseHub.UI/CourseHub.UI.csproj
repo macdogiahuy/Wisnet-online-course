@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Course\Create.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Course\Create.cshtml" />
     <None Include="wwwroot\fonts\WEB BASED RESULT PUBLICATION SYSTEM FOR EDUCATION BOARDS.pdf" />
     <None Include="wwwroot\icon-fonts\fontawesome-webfont.svg" />
     <None Include="wwwroot\icon-fonts\fontawesome-webfont.woff2" />
@@ -19,14 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CourseHub.Core\CourseHub.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Course\Create.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Course\Create.cshtml" />
   </ItemGroup>
 
 </Project>

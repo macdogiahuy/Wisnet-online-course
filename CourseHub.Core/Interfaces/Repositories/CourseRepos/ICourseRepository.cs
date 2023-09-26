@@ -12,4 +12,7 @@ public interface ICourseRepository : IRepository<Course>
     Task<CourseMinModel?> GetMinAsync(Guid id);
 
     void LoadSections(Course course);
+
+    //...
+    Task<List<Course>> GetAllAsync();
 }

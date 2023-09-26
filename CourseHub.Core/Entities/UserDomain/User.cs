@@ -27,8 +27,7 @@ public class User : TimeAuditedEntity
     public string? Phone { get; set; }
 
     public int EnrollmentCount { get; set; }
-    //public int SystemBalance { get; set; }
-    //public int Point { get; set; }
+    public long SystemBalance { get; set; }
 
     // FKs
     public Guid? InstructorId { get; set; }
@@ -36,7 +35,6 @@ public class User : TimeAuditedEntity
     // Navigations
     public Instructor? Instructor { get; set; }
     // public ICollection<Enrollment> Enrollments { get; private set; }
-    public ICollection<PaymentAccount> PaymentAccounts { get; private set; }
     public ICollection<ConversationMember> ConversationMembers { get; private set; }
 
 #pragma warning disable CS8618

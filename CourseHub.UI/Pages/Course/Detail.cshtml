@@ -1,7 +1,686 @@
 ﻿@page
 @using System.Text.Json;
+@using CourseHub.Core.Helpers.Business;
 @model CourseHub.UI.Pages.Course.DetailModel
 @{
+    string avgRating = (Model.Course!.TotalRating / (double)Model.Course.RatingCount).ToString("0.00");
+    int postDiscount = CourseBusinessHelper.GetPostDiscount(Model.Course.Price, Model.Course.Discount, Model.Course.DiscountExpiry);
+
+    TempData[Global.TITLE] = Model.Course.Title;
 }
 
-<div>@JsonSerializer.Serialize(Model.Course)</div>
+<link rel="stylesheet" href="~/css/common-app-css.5b914d85e01ba6db2ad0.css" />
+<link rel="stylesheet" href="~/css/ud-5b914d85e01ba6db2ad0.css" />
+<link rel="stylesheet" href="~/css/ud-entry-main.af4286be4d337c43f610.css" />
+<link rel="stylesheet" href="~/css/ud-482c888e04ea1d274a2e.css" />
+
+<style>
+    body {
+        display: unset !important;
+    }
+
+    .tmp-main {
+        margin-top: 40px;
+    }
+
+    .app-container-course {
+        /*width: 90%;
+        max-width: 1800px;*/
+        width: 1280px;
+        margin: 0 auto;
+    }
+
+    .app-course-landing-page-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .app-course-landing-page {
+
+    }
+
+    .ud-btn-brand {
+        background-color: #d82a4e !important;
+    }
+
+    /*.ud-btn-brand :hover {
+        background-color: #d82a4e;
+    }*/
+
+    .paid-course-landing-page__body {
+        margin: 0 auto;
+
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .paid-course-landing-page__body .course-landing-page__main-content {
+        width: 60%;
+    }
+
+    .paid-course-landing-page__body img {
+        width: 400px;
+        aspect-ratio: 1;
+    }
+
+    .app-component-margin {
+        max-width: 50%;
+    }
+
+</style>
+
+
+
+
+<div class="app-container-course">
+
+
+    <div class="app-course-landing-page-container">
+        <div class="course-landing-page__main-content dark-background-inner-text-container">
+            <div class="ud-text-sm clp-lead">
+                <h1 class="ud-heading-xl clp-lead__title clp-lead__title--small" data-purpose="lead-title">@Model.Course.Title</h1>
+                <div class="clp-lead__badge-ratings-enrollment">
+                    <!--
+                    <div class="clp-lead__element-item">
+                        <div class="ud-badge ud-heading-xs course-badges-module--bestseller--2k308">Bestseller</div>
+                    </div>
+                    -->
+                    <div class="clp-lead__element-item clp-lead__element-item--row">
+                        <a href="#reviews" class="styles--rating-wrapper--ajCRv" data-purpose="rating">
+                            <span class="star-rating-module--star-wrapper--VHfnS star-rating-module--medium--3kDsb star-rating-module--dark-background--3p2UF">
+                                <span class="ud-sr-only">Rating: @avgRating out of 5</span>
+                                <span class="ud-heading-sm star-rating-module--rating-number--2xeHu" aria-hidden="true" data-purpose="rating-number">@avgRating</span>
+                                    <svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 70 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <mask id="u9-star-rating-mask--3" data-purpose="star-rating-mask">
+                                        <rect x="0" y="0" width="90%" height="100%" fill="white"></rect>
+                                    </mask>
+                                    <g class="star-rating-module--star-filled--3CnHc" mask="url(#u9-star-rating-mask--3)" data-purpose="star-filled">
+                                        <use xlink:href="#icon-rating-star" width="14" height="14" x="0"></use>
+                                        <use xlink:href="#icon-rating-star" width="14" height="14" x="14"></use>
+                                        <use xlink:href="#icon-rating-star" width="14" height="14" x="28"></use>
+                                        <use xlink:href="#icon-rating-star" width="14" height="14" x="42"></use>
+                                        <use xlink:href="#icon-rating-star" width="14" height="14" x="56"></use>
+                                    </g>
+                                    <g fill="transparent" class="star-rating-module--star-bordered--3WG_2" stroke-width="2" data-purpose="star-bordered">
+                                        <use xlink:href="#icon-rating-star" width="12" height="12" x="1" y="1"></use>
+                                        <use xlink:href="#icon-rating-star" width="12" height="12" x="15" y="1"></use>
+                                        <use xlink:href="#icon-rating-star" width="12" height="12" x="29" y="1"></use>
+                                        <use xlink:href="#icon-rating-star" width="12" height="12" x="43" y="1"></use>
+                                        <use xlink:href="#icon-rating-star" width="12" height="12" x="57" y="1"></use>
+                                    </g>
+                                </svg>
+                                </span>
+                                <span>(@Model.Course.RatingCount ratings)</span>
+                            </a>
+                        <div class="enrollment" data-purpose="enrollment">@Model.Course.LearnerCount learners</div>
+                    </div>
+                </div>
+                <div class="clp-lead__element-item">
+                    <div class="instructor-links--instructor-links--1NOgk"
+                        data-purpose="instructor-name-top">
+                        <span class="instructor-links--names--3U_NU">
+                            <span class="ud-text-sm">Created by</span>
+                            <a class="ud-btn ud-btn-large ud-btn-link ud-heading-md ud-text-sm ud-instructor-links" data-position="1" href="#instructor-1">
+                                <span>@Model.InstructorUser!.FullName</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="clp-lead__element-meta">
+                    <div class="clp-lead__element-item">
+                        <div class="last-update-date" data-purpose="last-update-date">
+                            <svg aria-hidden="true" focusable="false"
+                                class="ud-icon ud-icon-xsmall ud-icon-color-neutral last-update-date__icon">
+                                <use xlink:href="#icon-new"></use>
+                            </svg><span>Last updated @Model.Course.LastModificationTime</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="app-course-landing-page" @*class="course-landing-page_sidebar-container sidebar-container--fixed--8FX75"*@ data-purpose="sidebar-container">
+            <div class="smart-bar-spacer smart-bar-module--smart-bar-spacer--1bsoA" data-testid="smart-bar-spacer"></div>
+            <div class="sidebar-container--content--2KZyB">
+                <div class="sidebar-container--content-group---xK4q">
+                    <div class="sidebar-container--purchase-section--2DONZ" data-client-side-render-only="CSR: purchase_section">
+                        <div class="purchase-section-container--purchase-section-container--1wStb">
+                            <div class="generic-purchase-section--main-cta-container--1hRUq" data-purpose="purchase-section">
+                                <div class="generic-purchase-section--buy-box-main--2o6Au">
+                                    <div class="buy-box--buy-box--1j_Sf" data-purpose="buy-box">
+                                        <div class="buy-box--buy-box-item--2RETv"></div>
+                                        <div class="buy-box--buy-box-item--2RETv">
+                                            <div>
+                                                <div class="price-text--container--103D9 ud-clp-price-text" data-purpose="price-text-container">
+                                                    <div class="price-text--price-part--2npPm ud-clp-discount-price ud-heading-xxl" data-purpose="course-price-text">
+                                                        <span class="ud-sr-only">Current price</span>
+                                                        <span><span>₫@postDiscount</span></span>
+                                                    </div>
+                                                </div>
+                                                @if (Model.Course.Discount > 0 && Model.Course.DiscountExpiry > DateTime.UtcNow)
+                                                {
+                                                    <div class="price-text--price-part--2npPm ud-clp-percent-discount ud-text-sm" data-purpose="discount-percentage">
+                                                        <span class="ud-sr-only">Discount</span>
+                                                            <span>@(Model.Course.Discount * 100) % off</span>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="buy-box--buy-box-item--2RETv buy-box--discount-expiration--22scc">
+                                        </div>
+                                        <div class="buy-box--buy-box-item--2RETv buy-box--add-to-cart-button-wrapper--1C64H">
+                                            <div data-purpose="add-to-cart">
+                                                <a asp-page="@Global.PAGE_PAYMENT" asp-route-courseId="@Model.Course?.Id" type="button"
+                                                    data-testid="add-to-cart-button" class="ud-btn ud-btn-large ud-btn-brand ud-heading-md add-to-cart"
+                                                    style="width: 100%;">Buy this course</a>
+                                                <div role="status" class="ud-sr-only" data-purpose="screen-reader-message"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="generic-purchase-section--local-incentive--MC6kz">
+                                    <div data-purpose="money-back-guarantee" class="dark-bg-text money-back-guarantee--money-back-guarantee--264ri">
+                                        <span class="money-back">30-Day Money-Back Guarantee</span>
+                                    </div>
+                                </div>*@
+                                <div class="generic-purchase-section--available-coupons--3v8Ak">
+                                </div>
+                                <div class="generic-purchase-section--local-incentive--MC6kz"></div>
+                                <div class="generic-purchase-section--ctas--3dxVF">
+                                    <div class="generic-purchase-section--cta---ZDRQ" data-client-side-render-only="CSR: course_actions">
+                                        <div class="generic-purchase-section--cta-multiple--29hf5">
+                                            @*<button type="button" data-purpose="social-share-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral" aria-label="Share this course">
+                                                <span>Share</span>
+                                            </button>
+                                            <a aria-disabled="false" href="/gift/microsoft-excel-power-query-power-pivot-dax/?couponCode=KEEPLEARNING" data-purpose="gift-course" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
+                                                <span>Gift this course</span>
+                                            </a>*@
+                                            <button type="submit" data-purpose="no-coupon-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
+                                                <span>Apply Coupon</span>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <div class="redeem-coupon--add-coupon-button--gEFrS">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="paid-course-landing-page__body">
+        <div class="course-landing-page__main-content">
+            <div class="component-margin what-you-will-learn--what-will-you-learn--1nBIT">
+                <h2 class="ud-heading-xl what-you-will-learn--title--2ztwE">What you'll learn</h2>
+                <div class="what-you-will-learn--content-spacing--3n5NU">
+                    <ul class="ud-unstyled-list ud-block-list what-you-will-learn--objectives-list--eiLce what-you-will-learn--objectives-list-two-column-layout--rZLJy">
+                        <li>
+                            <div data-purpose="objective" class="ud-block-list-item ud-block-list-item-small ud-block-list-item-tight ud-block-list-item-neutral ud-text-sm">
+                                <svg aria-hidden="true" focusable="false" class="ud-icon ud-icon-xsmall ud-icon-color-neutral ud-block-list-item-icon">
+                                    <use xlink:href="#icon-tick"></use>
+                                </svg>
+                                <div class="ud-block-list-item-content">
+                                    <span class="what-you-will-learn--objective-item--3b4zX">
+                                        @Html.Raw(Model.Course.Outcomes)
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <img src="@Model.Course.ThumbUrl" alt="thumb">
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="app-component-margin component-margin">
+        <div data-purpose="course-curriculum">
+            <h2 class="ud-heading-xl curriculum--curriculum-header--3K2IZ" data-purpose="curriculum-header">Course content</h2>
+            <div class="curriculum--curriculum-sub-header--m_N_0">
+                <div class="ud-text-sm" data-purpose="curriculum-stats">
+                    <span class="curriculum--content-length--5Nict">@Model.Course.Sections.Count sections • @Model.Course.LectureCount lectures •
+                        <!--<span><span>7h&nbsp;19m</span> total length</span>-->
+                    </span>
+                </div>
+            </div>
+
+
+
+
+            <div>
+                @foreach (var courseSection in Model.Course!.Sections)
+                {
+                    <div class="accordion-panel-module--panel--3_kkG section--panel--1zoAn">
+                        <span id="u8-accordion-panel--@courseSection.Id" data-type="checkbox" data-checked @*="checked"*@ style="display: none;"></span>
+                            <div class="ud-btn ud-btn-large ud-btn-link ud-heading-md ud-accordion-panel-toggler accordion-panel-module--panel-toggler--1RjML accordion-panel-module--outer-panel-toggler--AgeEB" data-css-toggle-id="u8-accordion-panel--@courseSection.Id">
+                            <h3 class="ud-accordion-panel-heading section--section-title-container--2GvsG">
+                                <button type="button" aria-disabled="false" aria-expanded="true"
+                                    class="ud-btn ud-btn-large ud-btn-link ud-heading-md js-panel-toggler accordion-panel-module--panel-toggler--1RjML"
+                                    id="u8-accordion-panel-title--74">
+                                    <span class="ud-accordion-panel-title">
+                                        <span class="section--section-title--wcp90">@courseSection.Title</span>
+                                        <span class="ud-text-sm section--hidden-on-mobile--38HTe section--section-content--jXmra" data-purpose="section-content">
+                                            @courseSection.LectureCount lectures •
+                                            <!--<span>11min</span>-->
+                                        </span>
+                                    </span>
+                                </button>
+                            </h3>
+                            <svg aria-hidden="true" focusable="false"
+                                class="ud-icon ud-icon-small ud-icon-color-neutral accordion-panel-module--expand-icon--2DZax">
+                                <use xlink:href="#icon-expand"></use>
+                            </svg>
+                        </div>
+                        <div class="accordion-panel-module--content-wrapper--DIUt_"
+                            aria-labelledby="u8-accordion-panel-title--74" aria-hidden="false"
+                            role="group">
+
+                            <div class="ud-accordion-panel-content accordion-panel-module--content--jkZai">
+                                <ul class="ud-unstyled-list ud-block-list">
+                                    @foreach (var lecture in courseSection.Lectures)
+                                    {
+                                        <li>
+                                            <div class="section--previewable-item--oiDYR ud-block-list-item ud-block-list-item-small ud-block-list-item-link ud-text-sm">
+                                                <!--<svg aria-hidden="true" focusable="false"
+                                                    class="ud-icon ud-icon-xsmall ud-icon-color-neutral ud-block-list-item-icon">
+                                                    <use xlink:href="#icon-video"></use>
+                                                </svg>-->
+                                                <div class="ud-block-list-item-content">
+                                                    <div>
+                                                        <div class="section--row--3sLRB">
+                                                            <button type="button" class="ud-btn ud-btn-large ud-btn-link ud-text-sm section--item-title--6gdc6">
+                                                                <span>@lecture.Title</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <span class="section--hidden-on-mobile--38HTe" style="flex: 1 1 0%;"></span>
+                                                    @if (lecture.IsPreviewable)
+                                                    {
+                                                        <span class="section--hidden-on-mobile--38HTe section--preview-text--1zuA2">Preview</span>
+                                                    }
+                                                    <span class="section--hidden-on-mobile--38HTe section--item-content-summary--1DW7L">01:47</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="component-margin">
+        <h2 data-purpose="requirements-title" class="ud-heading-xl requirements--title--2wsPe">Requirements</h2>
+        @Html.Raw(Model.Course.Requirements)
+    </div>
+
+
+
+
+    <div class="ud-text-sm component-margin styles--description--33-vq" data-purpose="course-description">
+        <h2 data-purpose="description-title" class="ud-heading-xl styles--description__header--2Z7Vb">Description</h2>
+        <div class="show-more-module--container--2QPRN">
+            <span id="u9-show-more--6" data-type="checkbox" data-checked="" style="display:none"></span>
+            <div class="show-more-module--content--cjTh0 show-more-module--with-gradient--1ZDrA" style="max-height:22.1rem">
+                <div tabindex="-1">
+                    <div data-purpose="safely-set-inner-html:description:description">
+                        @Model.Course.Description
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div data-purpose="reviews" class="component-margin">
+        <div class="review-title--review-title--3kakg reviews--reviews-title--3Pqj_">
+            <svg aria-hidden="true" focusable="false"
+                class="ud-icon ud-icon-medium ud-icon-color-neutral review-title--star-rating-icon--1jHuA">
+                <use xlink:href="#icon-rating-star"></use>
+            </svg>
+            <span class="ud-heading-lg">@avgRating</span>
+            <svg aria-hidden="true" focusable="false"
+                class="ud-icon ud-icon-xsmall ud-icon-color-subdued review-title--bullet-separation--1h6Oq">
+                <use xlink:href="#icon-bullet"></use>
+            </svg>
+            <span class="ud-heading-lg">@Model.Course.RatingCount</span>
+        </div>
+
+
+        <div>
+            <div class="review-title--review-title--3kakg reviews--reviews-title--3Pqj_">
+                @foreach (var review in Model.Course.Reviews)
+                {
+                    <div class="review--review-container--knyTv reviews--review--3r_gc review--review-desktop-container--2Hxj6">
+                        <div class="review--review-heading--1p0l0">
+                            <div class="review--review-profile--F2vne">
+                                <div class="review--review-name-and-rating--3ALDo">
+                                    <p class="ud-heading-md">João O.</p>
+                                    <div class="review--rating-container--3jPka"><span
+                                            class="star-rating-module--star-wrapper--VHfnS star-rating-module--medium--3kDsb"><span
+                                                class="ud-sr-only">Rating: 4.0 out of 5</span><svg aria-hidden="true" width="100%"
+                                                height="100%" viewBox="0 0 70 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <mask id="u107-star-rating-mask--71" data-purpose="star-rating-mask">
+                                                    <rect x="0" y="0" width="80%" height="100%" fill="white"></rect>
+                                                </mask>
+                                                <g class="star-rating-module--star-filled--3CnHc" mask="url(#u107-star-rating-mask--71)"
+                                                    data-purpose="star-filled">
+                                                    <use xlink:href="#icon-rating-star" width="14" height="14" x="0"></use>
+                                                    <use xlink:href="#icon-rating-star" width="14" height="14" x="14"></use>
+                                                    <use xlink:href="#icon-rating-star" width="14" height="14" x="28"></use>
+                                                    <use xlink:href="#icon-rating-star" width="14" height="14" x="42"></use>
+                                                    <use xlink:href="#icon-rating-star" width="14" height="14" x="56"></use>
+                                                </g>
+                                                <g fill="transparent" class="star-rating-module--star-bordered--3WG_2" stroke-width="2"
+                                                    data-purpose="star-bordered">
+                                                    <use xlink:href="#icon-rating-star" width="12" height="12" x="1" y="1"></use>
+                                                    <use xlink:href="#icon-rating-star" width="12" height="12" x="15" y="1"></use>
+                                                    <use xlink:href="#icon-rating-star" width="12" height="12" x="29" y="1"></use>
+                                                    <use xlink:href="#icon-rating-star" width="12" height="12" x="43" y="1"></use>
+                                                    <use xlink:href="#icon-rating-star" width="12" height="12" x="57" y="1"></use>
+                                                </g>
+                                            </svg></span><span class="ud-heading-xs review--time-since--37KF5">a week ago</span></div>
+                                </div>
+                                <img data-purpose="avatar" src="@Model.InstructorUser.AvatarUrl" alt=""
+                                    class="review--avatar--2ZpAI ud-avatar ud-avatar-image" width="48" height="48" loading="lazy"
+                                    style="width: 4.8rem; height: 4.8rem;">
+                            </div>
+                            <div class="popper-module--popper--2BpLn"><button type="button" id="u107-dropdown-trigger--72"
+                                    aria-expanded="false" tabindex="0"
+                                    class="ud-btn ud-btn-large ud-btn-ghost ud-heading-md ud-btn-icon ud-btn-icon-large"><svg
+                                        aria-label="Additional actions for review by João O." role="img" focusable="false"
+                                        class="ud-icon ud-icon-medium ud-icon-color-neutral">
+                                        <use xlink:href="#icon-more"></use>
+                                    </svg></button>
+                                <div id="u107-popper-content--74" aria-labelledby="u107-dropdown-trigger--72"
+                                    class="popper-module--popper-content--3cLBV" style="top: 100%; right: 0px; width: auto;">
+                                    <div class="popper-module--animation-wrapper--2ogNt">
+                                        <div class="dropdown-module--menu--2O7pL dropdown-module--dropdown-menu--3HbSn"
+                                            style="max-height: 28rem;">
+                                            <ul class="ud-unstyled-list ud-block-list">
+                                                <li>
+                                                    <div
+                                                        class="review-report--menu-item--3sK1z ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm">
+                                                        <div class="ud-block-list-item-content"><button type="button"
+                                                                class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-heading-sm review-report--report-abuse-label--1eqCY"
+                                                                data-purpose="report-abuse-link"><span>Report</span></button></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ud-text-md review--review-content-with-modal-trigger--vsRaS review--with-show-more-button--3WiP8">
+                            <span>Good Course, Chris explain very well. I don't give 5 stars only because I missed that there was no
+                                comprehensive project that is developed throughout the classes so that at the end of the course the student
+                                has an example of a business dashboard to apply to a certain industry (for example retail, HR, Operations,
+                                etc.)</span></div><button type="button" data-purpose="show-reviews-modal-trigger-button"
+                            class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm show-more-button--button--1Eo3U ud-link-underline"><span>Show
+                                more</span></button>
+                        <div class="review--review-feedback-container--2RGzY">
+                            <div class="review-feedback--feedback-container--3UbE7"><span
+                                    class="ud-text-xs review-feedback--feedback-label--N5RGD">Helpful?</span>
+                                <div class="review-feedback--feedback-actions--LCidx"><button type="button" value="yes"
+                                        class="ud-btn ud-btn-small ud-btn-ghost ud-heading-sm ud-btn-icon ud-btn-icon-small"><svg
+                                            aria-label="Mark review by João O. as helpful" role="img" focusable="false"
+                                            class="ud-icon ud-icon-small ud-icon-color-neutral">
+                                            <use xlink:href="#icon-thumb-up"></use>
+                                        </svg></button><button type="button" value="no"
+                                        class="ud-btn ud-btn-small ud-btn-ghost ud-heading-sm ud-btn-icon ud-btn-icon-small"><svg
+                                            aria-label="Mark review by João O. as unhelpful" role="img" focusable="false"
+                                            class="ud-icon ud-icon-small ud-icon-color-neutral">
+                                            <use xlink:href="#icon-thumb-down"></use>
+                                        </svg></button></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="component-margin">
+        <div data-purpose="more-from-instructors-app">
+            <div class="styles--more-from-instructor--2avsV">
+                <h2 class="ud-heading-xl"
+                    data-purpose="safely-set-inner-html:more-courses-by-instructor:more-courses-link">
+                    More Courses by <a @*href="/user/maven-analytics/"*@>@Model.InstructorUser.FullName</a>
+                </h2>
+                <section aria-label="Carousel" class="carousel-module--container--27wzs">
+                    <div class="styles--desktop-container--29uOP carousel-module--scroll-port--28Dow carousel-module--scroll-lock--1Ys-j"
+                        data-purpose="scroll-port" id="u8-scroll-port--114"
+                        aria-live="polite">
+
+                        @foreach (var course in Model.MoreCourses)
+                        {
+                        <div data-index="0" class="carousel-module--scroll-item--2CpA_">
+                            <div class="course-card-module--container--2MTsr course-card-module--medium--3qi9R"
+                            data-purpose="container">
+                                <div class="course-card-module--image-container--20x0M">
+                                    <img src="@Model.InstructorUser.AvatarUrl" alt="" srcset="@Model.InstructorUser.AvatarUrl"
+                                    class="course-card-image-module--image--3V2QD course-card-module--course-image--2Pg51 browse-course-card--image--1-_Wa"
+                                    width="240" height="135" loading="lazy">
+                                </div>
+                                <div
+                                class="course-card-module--main-content--3Uvsz course-card-module--has-price-text--3EF7y">
+                                    <div class="course-card-module--title-container--1hd-P">
+                                        <div class="course-card-title-module--title--2C6ac">
+                                            <h3 data-purpose="course-title-url"
+                                            class="ud-heading-md course-card-title-module--course-title--3k0w_">
+                                                <a href="/course/microsoft-power-bi-up-running-with-power-bi-desktop/">Microsoft
+                                                    Power BI Desktop for Business Intelligence (2023)<div
+                                                    class="ud-sr-only"
+                                                    aria-hidden="true"><span
+                                                        data-purpose="seo-headline">Master
+                                                            Power BI Desktop for data
+                                                            analysis with hands-on
+                                                            assignments &amp; projects from
+                                                            top-rated Power BI
+                                                            instructors</span><span
+                                                        data-purpose="seo-rating">Rating:
+                                                            4.7 out of 5</span><span
+                                                        data-purpose="seo-num-reviews">102931
+                                                            reviews</span><span
+                                                        data-purpose="seo-content-info">15
+                                                            total hours</span><span
+                                                        data-purpose="seo-num-lectures">190
+                                                            lectures</span><span
+                                                        data-purpose="seo-instructional-level">All
+                                                            Levels</span><span
+                                                        data-purpose="seo-current-price">Current
+                                                            price: ₫2,499,000</span></div>
+                                                </a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="ud-text-xs"><span
+                                        class="ud-sr-only">Instructors:</span>
+                                        <div class="course-card-instructors-module--instructor-list--37tO6"
+                                        data-purpose="safely-set-inner-html:course-card:visible-instructors"
+                                        data-testid="safely-set-inner-html:course-card:visible-instructors">
+                                            Maven Analytics, Chris Dutton, Aaron Parry</div>
+                                    </div>
+                                    <div class="course-card-ratings-module--row--1EHHW">
+                                        <span
+                                        class="star-rating-module--star-wrapper--VHfnS star-rating-module--medium--3kDsb"><span
+                                            class="ud-sr-only">Rating: 4.7 out of
+                                                5</span><span
+                                            class="ud-heading-sm star-rating-module--rating-number--2xeHu"
+                                            aria-hidden="true"
+                                            data-purpose="rating-number">4.7</span><svg
+                                            aria-hidden="true" width="100%"
+                                            height="100%" viewBox="0 0 70 14"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                                <mask id="u8-star-rating-mask--115"
+                                                data-purpose="star-rating-mask">
+                                                    <rect x="0" y="0" width="90%"
+                                                    height="100%" fill="white"></rect>
+                                                </mask>
+                                                <g class="star-rating-module--star-filled--3CnHc"
+                                                mask="url(#u8-star-rating-mask--115)"
+                                                data-purpose="star-filled">
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="14" height="14" x="0"></use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="14" height="14" x="14"></use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="14" height="14" x="28"></use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="14" height="14" x="42"></use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="14" height="14" x="56"></use>
+                                                </g>
+                                                <g fill="transparent"
+                                                class="star-rating-module--star-bordered--3WG_2"
+                                                stroke-width="2"
+                                                data-purpose="star-bordered">
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="12" height="12" x="1" y="1">
+                                                    </use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="12" height="12" x="15" y="1">
+                                                    </use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="12" height="12" x="29" y="1">
+                                                    </use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="12" height="12" x="43" y="1">
+                                                    </use>
+                                                    <use xlink:href="#icon-rating-star"
+                                                    width="12" height="12" x="57" y="1">
+                                                    </use>
+                                                </g>
+                                            </svg></span><span aria-label="102931 reviews"
+                                        class="ud-text-xs course-card-ratings-module--reviews-text--1z047">(102,931)</span>
+                                    </div>
+                                    <div class="course-card-details-module--row--3sv2A">
+                                        <div data-purpose="course-meta-info"
+                                        class="course-card-details-module--row--3sv2A course-card-details-module--course-meta-info--2Yl_2 ud-text-xs">
+                                            <span
+                                            class="course-card-details-module--row--3sv2A">15
+                                                total hours</span><span
+                                            class="course-card-details-module--row--3sv2A">190
+                                                lectures</span><span
+                                            class="course-card-details-module--row--3sv2A">All
+                                                Levels</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                    class="course-card-module--price-text-container--2oBPb">
+                                        <div class="price-text--container--103D9 course-card-module--price-text-base-price-text-component--sHBbm"
+                                        data-purpose="price-text-container">
+                                            <div class="price-text--price-part--2npPm course-card-module--price-text-base-price-text-component-discount-price--2VEcP ud-heading-md"
+                                            data-purpose="course-price-text"><span
+                                                class="ud-sr-only">Current
+                                                    price</span><span><span>₫2,499,000</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                    class="course-card-module--badges-container--2ENVp">
+                                        <div
+                                        class="course-card-badges-module--course-badges--1RKli">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @{
+        await Html.RenderPartialAsync("_PartialDetailSvg");
+    }
+
+
+    <script nonce="vXQj7OudXUnfYaHdiAPT51fm69mCwankZ2wzZUA4fng=">
+        window.handleCSSToggleButtonClick = function (event) {
+            var target = event.currentTarget;
+            var cssToggleId = target && target.dataset && target.dataset.cssToggleId;
+            var input = cssToggleId && document.getElementById(cssToggleId);
+            if (input) {
+                if (input.dataset.type === 'checkbox') {
+                    input.dataset.checked = input.dataset.checked ? '' : 'checked';
+                } else {
+                    input.dataset.checked = input.dataset.allowToggle && input.dataset.checked ? '' : 'checked';
+                    var radios = document.querySelectorAll('[name="' + input.dataset.name + '"]');
+                    for (var i = 0; i < radios.length; i++) {
+                        if (radios[i] !== input) {
+                            radios[i].dataset.checked = '';
+                        }
+                    }
+                }
+            }
+        };
+        (function () {
+            var cssToggleButtons = document.querySelectorAll('[data-css-toggle-id');
+            for (var i = 0; i < cssToggleButtons.length; i++) {
+                cssToggleButtons[i].addEventListener('click', window.handleCSSToggleButtonClick);
+            }
+        })();
+    </script>
+
+</div>

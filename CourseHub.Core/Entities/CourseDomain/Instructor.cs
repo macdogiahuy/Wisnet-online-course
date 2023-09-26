@@ -11,6 +11,8 @@ public class Instructor : TimeAuditedEntity
     public string Intro { get; set; }
     public string Experience { get; set; }
     // public string Qualifications { get; set; }
+    public long Balance { get; set; }
+    public byte CourseCount { get; set; }
 
     // FKs
     public Guid CreatorId { get; set; }

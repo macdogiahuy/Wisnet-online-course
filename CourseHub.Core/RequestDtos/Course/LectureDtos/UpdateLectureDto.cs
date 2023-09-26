@@ -8,6 +8,7 @@ public class UpdateLectureDto
     public Guid CourseId { get; set; }
     public string? Title { get; set; }
     public string? Content { get; set; }
+    public bool? IsPreviewable { get; set; }
 
     public List<CreateLectureMaterialDto>? AddedMaterials { get; set; }
     public List<string>? RemovedMaterials { get; set; }

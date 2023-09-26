@@ -35,6 +35,7 @@ public class ProfileModel : PageModel
             return Redirect(Global.PAGE_SIGNIN);
 
         Avatar = _userApiService.GetAvatarApiUrl(Client.AvatarUrl, Client.Id);
+        TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();
     }
 
@@ -48,5 +49,6 @@ public class ProfileModel : PageModel
 
         Client = (await HttpContext.GetClientData())!;
         Avatar = _userApiService.GetAvatarApiUrl(Client.AvatarUrl, Client.Id);
+        TempData[Global.DATA_USE_BACKGROUND] = true;
     }
 }

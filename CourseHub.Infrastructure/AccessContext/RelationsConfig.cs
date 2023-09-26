@@ -41,4 +41,10 @@ internal static class RelationsConfig
     internal const string CONVERSATION_MEMBER = "ConversationMembers";
     internal const string CHAT_MESSAGE = "ChatMessages";
     internal const string ARTICLE = "Articles";
+
+
+
+    internal const string TRIGGER_onCourseInsertDelete = "onCourseInsertDelete";
+    internal const string TRIGGER_onLectureInsertDelete = "onLectureInsertDelete";
+    internal const string TRIGGER_onEnrollmentInsertDelete = "onEnrollmentInsertDelete";
 }

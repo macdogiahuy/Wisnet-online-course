@@ -8,6 +8,7 @@ public class CreateLectureDto
     public Guid SectionId { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
+    public bool? IsPreviewable { get; set; }
     public List<CreateLectureMaterialDto> Materials { get; set; }
 
     public class CreateLectureMaterialDto

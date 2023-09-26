@@ -31,6 +31,7 @@ public class ChangePasswordModel : PageModel
         var data = await HttpContext.GetClientData();
         if (data is null)
             return Redirect(Global.PAGE_SIGNIN);
+        TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();
     }
 
@@ -51,6 +52,7 @@ public class ChangePasswordModel : PageModel
             ? "Updated successfully."
             : "Invalid password!";
         TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
+        TempData[Global.DATA_USE_BACKGROUND] = true;
         return;
     }
 }

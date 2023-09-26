@@ -2,11 +2,11 @@
 using CourseHub.API.Helpers.Cookie;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
 using CourseHub.Core.Helpers.Http;
-using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
+using CourseHub.Core.Services.Domain.CourseServices.Contracts;
 
 namespace CourseHub.API.Controllers.CourseControllers;
 
@@ -22,7 +22,7 @@ public class CoursesController : BaseController
 
 
     [HttpGet]
-    //[ResponseCache(Duration = 60)]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetPaged([FromQuery] QueryCourseDto dto)
     {
         var result = await _courseService.GetPagedAsync(dto);
@@ -38,7 +38,7 @@ public class CoursesController : BaseController
     }
 
     [HttpGet("{id}")]
-    [ResponseCache(Duration = 60)]
+    //[ResponseCache(Duration = 60)]
     public async Task<IActionResult> Get(Guid id)
     {
         var result = await _courseService.GetAsync(id);
@@ -79,8 +79,9 @@ public class CoursesController : BaseController
     [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetMinimum([FromQuery] QueryCourseDto dto)
     {
-        var result = await _courseService.GetMinAsync(dto);
-        return result.AsResponse();
+        /*var result = await _courseService.GetMinAsync(dto);
+        return result.AsResponse();*/
+        throw new NotImplementedException();
     }
 
 

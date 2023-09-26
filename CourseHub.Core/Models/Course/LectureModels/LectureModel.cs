@@ -10,6 +10,7 @@ public class LectureModel
 
     public string Title { get; set; }
     public string Content { get; set; }
+    public bool IsPreviewable { get; set; }
     public List<LectureMaterial> Materials { get; set; }
     public List<CommentModel> Comments { get; set; }
 }

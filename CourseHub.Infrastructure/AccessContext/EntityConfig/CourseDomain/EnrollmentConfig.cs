@@ -17,7 +17,7 @@ internal class EnrollmentConfig : SqlServerEntityConfiguration<Enrollment>
     public override void Configure(EntityTypeBuilder<Enrollment> builder)
     {
         builder
-            .ToTable(RelationsConfig.ENROLLMENT)
+            .ToTable(RelationsConfig.ENROLLMENT, _ => _.HasTrigger(RelationsConfig.TRIGGER_onEnrollmentInsertDelete))
             .SetEnumParsing(_ => _.Status)
             .SetUnique(_ => _.BillId)
             .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE)

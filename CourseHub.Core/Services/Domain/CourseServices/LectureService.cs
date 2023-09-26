@@ -6,6 +6,7 @@ using CourseHub.Core.RequestDtos.Course.LectureDtos;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Http;
 using CourseHub.Core.Helpers.Messaging.Messages;
+using CourseHub.Core.Services.Domain.CourseServices.Contracts;
 
 namespace CourseHub.Core.Services.Domain.CourseServices;
 
@@ -109,6 +110,8 @@ public class LectureService : DomainService, ILectureService
             entity.Title = dto.Title;
         if (dto.Content is not null)
             entity.Content = dto.Content;
+        if (dto.IsPreviewable is not null)
+            entity.IsPreviewable = (bool)dto.IsPreviewable;
 
         // Materials
         if (dto.RemovedMaterials is not null)

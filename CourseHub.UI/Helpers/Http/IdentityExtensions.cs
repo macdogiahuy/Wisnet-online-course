@@ -147,11 +147,19 @@ public static class IdentityExtensions
             var response = await client.GetAsync("api/users/client");
             string sResponse = await response.Content.ReadAsStringAsync();
             context.SetClientData(sResponse);
-            return JsonSerializer.Deserialize<UserFullModel>(sResponse, SerializeOptions.JsonOptions)!;
+            try
+			{
+				return JsonSerializer.Deserialize<UserFullModel>(sResponse, SerializeOptions.JsonOptions);
+			}
+            catch
+            {
+                return null;
+            }
         }
-        return s_userInfo is not null
-            ? JsonSerializer.Deserialize<UserFullModel>(s_userInfo, SerializeOptions.JsonOptions)
-            : null;
+
+        if (string.IsNullOrEmpty(s_userInfo))
+            return null;
+        return JsonSerializer.Deserialize<UserFullModel>(s_userInfo, SerializeOptions.JsonOptions);
     }
 
 

@@ -56,6 +56,12 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
 
 
 
-
     public void LoadSections(Course course) => Context.Entry(course).Collection(p => p.Sections).Load();
+
+
+
+    public async Task<List<Course>> GetAllAsync()
+    {
+        return await DbSet.ToListAsync();
+    }
 }

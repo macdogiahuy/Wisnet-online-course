@@ -20,7 +20,8 @@ internal class SubmissionConfig : SqlServerEntityConfiguration<Submission>
         builder
             .ToTable(RelationsConfig.SUBMISSION)
             .SetColumnsTypes(Columns)
-            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE);
+            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE)
+            .SetDefaultSQL(_ => _.LastModificationTime, SQL_GETDATE);
 
         builder.OwnsMany(_ => _.Answers, answer =>
         {

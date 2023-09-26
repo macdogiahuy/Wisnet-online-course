@@ -32,10 +32,11 @@ internal class CourseConfig : SqlServerEntityConfiguration<Course>
     public override void Configure(EntityTypeBuilder<Course> builder)
     {
         builder
-            .ToTable(RelationsConfig.COURSE)
+            .ToTable(RelationsConfig.COURSE, _ => _.HasTrigger(RelationsConfig.TRIGGER_onCourseInsertDelete))
             .SetColumnsTypes(Columns)
             .SetEnumParsing(_ => _.Status).SetEnumParsing(_ => _.Level)
-            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE);
+            .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE)
+            .SetDefaultSQL(_ => _.LastModificationTime, SQL_GETDATE);
 
         builder.OwnsMany(_ => _.Metas, meta => meta.Property(_ => _.Value).HasColumnType(NVARCHAR100));
         builder.HasOne(_ => _.Creator).WithMany().OnDelete(DeleteBehavior.NoAction);

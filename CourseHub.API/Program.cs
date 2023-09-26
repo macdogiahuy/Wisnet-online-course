@@ -6,6 +6,7 @@ using CourseHub.API.Services.Email;
 using Serilog;
 using CourseHub.API.Services.AppInfo;
 using CourseHub.API.Services.Authentication;
+using CourseHub.API.Services.External.Payment;
 
 const string POLICY = "Policy";
 
@@ -23,6 +24,7 @@ builder.Services
     .AddAuthenticationServices()
     .AddEmailService()
     .AddDomainServices()
+    .AddPaymentService()
     .AddDocumentation()
     .AddControllers();
 

@@ -10,7 +10,7 @@ using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using CourseHub.Core.RequestDtos.User.UserDtos;
 using CourseHub.Core.Services.Domain.CourseServices;
-using CourseHub.Core.Services.Domain.UserServices;
+using CourseHub.Core.Services.Domain.UserServices.Contracts;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

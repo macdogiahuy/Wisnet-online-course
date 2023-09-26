@@ -36,7 +36,6 @@ namespace CourseHub.Infrastructure.AccessContext
                 .ApplyConfiguration(new CourseCouponConfig())
 
                 .ApplyConfiguration(new BillConfig())
-                .ApplyConfiguration(new PaymentAccountConfig())
 
                 .ApplyConfiguration(new AssignmentConfig())
                 .ApplyConfiguration(new McqQuestionConfig())

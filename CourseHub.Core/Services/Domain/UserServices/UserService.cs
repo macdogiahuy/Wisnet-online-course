@@ -8,6 +8,7 @@ using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.User.UserDtos;
+using CourseHub.Core.Services.Domain.UserServices.Contracts;
 using CourseHub.Core.Services.Domain.UserServices.TempModels;
 using CourseHub.Core.Services.Storage;
 using CourseHub.Core.Services.Storage.Utils;

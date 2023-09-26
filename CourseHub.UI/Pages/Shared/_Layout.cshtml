@@ -1,4 +1,5 @@
 ﻿@using CourseHub.UI.Helpers.Http;
+@using CourseHub.UI.Helpers.Utils;
 
 @{
 	Dictionary<string, string> text = new()
@@ -6,7 +7,8 @@
 		{ "SignIn", "Sign In" },
 		{ "Profile", "Profile" },
 		{ "SignOut", "Sign Out" },
-		{ "AdminView", "Admin View"}
+		{ "AdminView", "Admin View" },
+		{ "InstructorView", "Instructor View" }
 	};
 }
 
@@ -17,19 +19,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="@Global.APP_NAME">
 	<meta name="keywords" content="@Global.APP_NAME, education, creative, course, learn">
-    <title>@ViewData[Global.TITLE]</title>
-    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />-->
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link href="@Global.FAVICON" rel="icon" />
-	<!--<link href="~/lib/bootstrap/dist/css/fonts.css" rel="stylesheet">-->
+	<title>@ViewData[Global.TITLE]</title>
+	<link href="@Global.FAVICON" rel="icon" />
 
-    <!-- Stylesheets -->
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/css/owl.carousel.css" />
 	<link rel="stylesheet" href="~/css/style.css" />
 
+	<link rel="stylesheet" href="~/css/common-app-css.5b914d85e01ba6db2ad0.css" />
+	<link rel="stylesheet" href="~/css/ud-entry-main.af4286be4d337c43f610.css" />
+
+	@await RenderSectionAsync(name: "Style", required: false)
+
 	<style>
+		body {
+			display: unset;
+		}
+
 		.site-btn {
 			padding-left: 0px;
 			padding-right: 0px;
@@ -48,6 +57,35 @@
 			display: block;
 			padding: 16px;
 		}
+
+		.dropdown-menu {
+			font-size: unset;
+		}
+
+		/*.ud-search-form-autocomplete * {
+			box-sizing: unset;
+		}*/
+
+		.ud-search-form-autocomplete .ud-search-form-autocomplete-suggestions-with-image {
+			overflow: unset;
+		}
+
+		p, h1, h2, h3, h4, h5, h6, ul, ol {
+			max-width: unset;
+		}
+
+		.app-display-none {
+			display: none;
+		}
+
+		.ud-search-form-autocomplete-suggestion-block-list-item a {
+			margin: 0;
+		}
+
+		.ud-btn-icon-large {
+			transform: translateY(10px);
+		}
+
 	</style>
 </head>
 <body>
@@ -56,9 +94,11 @@
 	{
 		<header class="header-section">
 			<div class="container">
-				<div class="row">
+					<div class="row" style="align-items: center;">
 					<div class="col-lg-3 col-md-3">
-						<img src="~/img/Logo.png" alt="" style="pointer-events: none; user-select: none;">
+						<a href="@Global.PAGE_INDEX" style="display: block; height: 100%">
+							<img src="~/img/Logo.png" alt="" style="pointer-events: none; user-select: none;">
+						</a>
 						<div class="nav-switch">
 							<i class="fa fa-bars"></i>
 						</div>
@@ -79,20 +119,45 @@
 										{
 											<li><a href="@Global.PAGE_ADMIN">@text["AdminView"]</a></li>
 										}
+										else if (client!.Role == Core.Entities.UserDomain.Enums.Role.Instructor)
+										{
+											<li><a href="@Global.PAGE_INSTRUCTOR">@text["InstructorView"]</a></li>
+										}
 										<li><a href="@Global.PAGE_PROFILE">@text["Profile"]</a></li>
 										<li><a href="@Global.PAGE_SIGNOUT">@text["SignOut"]</a></li>
 									</ul>
 								</div>
 							}
 						}
-						<nav class="main-menu">
-							<ul>
+						<nav class="main-menu" style="max-width: 70%;">
+							<div locale="en_US" lang="en"
+								class="ud-search-form-autocomplete desktop-header-module--search-bar--2V17S ud-form-group"><label
+								class="ud-sr-only ud-form-label ud-heading-sm" for="u22-search-form-autocomplete--3">Search for anything</label>
+								<form class="ud-search-form-autocomplete-input-group ud-search-form-autocomplete-input-group-reversed">
+									<input type="hidden" name="src" value="ukw">
+									<input type="text" aria-invalid="false" name="q"
+										data-testid="search-input" placeholder="Search" autocomplete="off" role="combobox"
+										aria-autocomplete="both" aria-haspopup="true" aria-expanded="true"
+										aria-controls="u22-search-form-autocomplete--3-menu-content-items" id="u22-search-form-autocomplete--3"
+										class="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field">
+									<ul id="u22-search-form-autocomplete--3-menu-content-items" data-testid="menu-content-items"
+										class="app-display-none ud-unstyled-list ud-block-list js-suggestions ud-search-form-autocomplete-suggestions-with-image"
+										role="listbox"><li></li>
+									</ul>
+									<div class="ud-btn-large ud-btn-ghost ud-heading-md ud-btn-icon ud-btn-icon-large"><svg
+										aria-label="Submit search" role="img" focusable="false"
+										class="ud-icon ud-icon-medium ud-icon-color-neutral">
+											<use xlink:href="#icon-search"></use>
+										</svg></div>
+								</form>
+							</div>
+							@*<ul>
 								<li><a href="@Global.PAGE_INDEX">Home</a></li>
 								<li><a href="#">About us</a></li>
 								<li><a href="@Global.PAGE_COURSE">Courses</a></li>
 								<!--<li><a href="#">News</a></li>-->
 								<li><a href="#">Contact</a></li>
-							</ul>
+							</ul>*@
 						</nav>
 					</div>
 				</div>
@@ -199,5 +264,57 @@
 
 	@await RenderSectionAsync(name: "ValidateScript", required: false)
     @await RenderSectionAsync("Scripts", required: false)
+
+
+	<script>
+		var autocomplete = document.getElementById('u22-search-form-autocomplete--3');
+		var autocompleteUl = document.getElementById('u22-search-form-autocomplete--3-menu-content-items');
+		var autocompleteLi = autocompleteUl.childNodes[0];
+		console.log(autocompleteLi);
+
+		var baseDetailUrl = "@UIHelper.GetBaseCourseDetailPage()";
+
+		autocomplete.addEventListener('input', function() {
+			var inputVal = autocomplete.value;
+			if (inputVal.length >= 2) {
+				fetch("https://localhost:7277/api/courses")
+					.then(res => res.json())
+					.then(arr => {
+						autocompleteUl.classList.remove('app-display-none');
+						autocompleteLi.innerHTML = '';
+
+						let innerHTML = '';
+						if (!arr.items)
+							return;
+
+						for (var item of arr.items) {
+							innerHTML += `<div data-testid="result-with-image" class="ud-search-form-autocomplete-suggestion-block-list-item">
+								<a id="u22-search-form-autocomplete--3-0" aria-label="Search: python" aria-selected="false" role="option" href="${(baseDetailUrl + item.id)}"
+								class="ud-btn ud-btn-large ud-btn-ghost ud-text-sm ud-search-form-autocomplete-suggestion ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral">
+									<div class="ud-block-list-item-content">
+										<div aria-hidden="true" class="ud-search-form-autocomplete-group ud-search-form-autocomplete-group-search" data-testid="group-search">
+											<div data-testid="menu-content-icon" data-type="search_log" class="ud-search-form-autocomplete-group-icon">
+												<svg aria-hidden="true" focusable="false" data-testid="search" class="ud-icon ud-icon-medium ud-icon-color-neutral">
+													<use xlink:href="#icon-search"></use>
+												</svg>
+											</div>
+											<div class="ud-search-form-autocomplete-suggestion-content">
+												<div data-purpose="label" data-testid="label" class="ud-search-form-autocomplete-suggestion-content ud-heading-md">${item.title}</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>`
+						}
+
+						autocompleteLi.innerHTML = innerHTML;
+					})
+			}
+			else {
+				autocompleteUl.classList.add('app-display-none');
+			}
+
+		})
+	</script>
 </body>
 </html>
