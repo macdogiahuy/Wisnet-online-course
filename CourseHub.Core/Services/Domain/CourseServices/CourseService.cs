@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Helpers.Messaging;
+using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Helpers.Text;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
@@ -29,6 +30,16 @@ public class CourseService : DomainService, ICourseService
     public async Task<ServiceResult<CourseModel>> GetAsync(Guid id)
     {
         var result = await _uow.CourseRepo.GetAsync(id);
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<CourseOverviewModel>> GetBySectionAsync(Guid sectionId)
+    {
+        var section = await _uow.SectionRepo.GetWithCourse(sectionId);
+        if (section is null)
+            return BadRequest<CourseOverviewModel>(CourseDomainMessages.INVALID_SECTION);
+
+        var result = _mapper.Map<CourseOverviewModel>(section.Course);
         return ToQueryResult(result);
     }
 

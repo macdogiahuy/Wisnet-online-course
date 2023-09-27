@@ -8,6 +8,7 @@ namespace CourseHub.Core.Services.Domain.CourseServices.Contracts;
 public interface ICourseService
 {
     Task<ServiceResult<CourseModel>> GetAsync(Guid id);
+    Task<ServiceResult<CourseOverviewModel>> GetBySectionAsync(Guid sectionId);
     Task<ServiceResult<CourseMinModel>> GetMinAsync(Guid id);
     Task<ServiceResult<PagedResult<CourseOverviewModel>>> GetPagedAsync(QueryCourseDto dto);
     Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids);

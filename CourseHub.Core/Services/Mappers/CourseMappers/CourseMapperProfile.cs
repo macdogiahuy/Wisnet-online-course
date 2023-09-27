@@ -46,5 +46,7 @@ public class CourseMapperProfile : Profile
             .ForSourceMember(_ => _.AddedMetas, act => act.DoNotValidate())
             .ForSourceMember(_ => _.RemovedSections, act => act.DoNotValidate())
             .ForSourceMember(_ => _.AddedSections, act => act.DoNotValidate())*/;
+
+        CreateMap<Course, CourseOverviewModel>();
     }
 }

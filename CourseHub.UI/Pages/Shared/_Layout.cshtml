@@ -94,7 +94,17 @@
 	{
 		<header class="header-section">
 			<div class="container">
-					<div class="row" style="align-items: center;">
+				<div class="row main-menu" style="margin-bottom: 0;">
+					<ul style="margin: 0 auto;">
+						<li><a href="@Global.PAGE_INDEX">Home</a></li>
+						<!--<li><a href="#">About us</a></li>-->
+						<li><a href="@Global.PAGE_COURSE">Courses</a></li>
+						<li><a href="@Global.PAGE_SOCIAL">Learning Groups</a></li>
+						<!--<li><a href="#">News</a></li>-->
+						<!--<li><a href="#">Contact</a></li>-->
+					</ul>
+				</div>
+				<div class="row" style="align-items: center;">
 					<div class="col-lg-3 col-md-3">
 						<a href="@Global.PAGE_INDEX" style="display: block; height: 100%">
 							<img src="~/img/Logo.png" alt="" style="pointer-events: none; user-select: none;">
@@ -151,13 +161,6 @@
 										</svg></div>
 								</form>
 							</div>
-							@*<ul>
-								<li><a href="@Global.PAGE_INDEX">Home</a></li>
-								<li><a href="#">About us</a></li>
-								<li><a href="@Global.PAGE_COURSE">Courses</a></li>
-								<!--<li><a href="#">News</a></li>-->
-								<li><a href="#">Contact</a></li>
-							</ul>*@
 						</nav>
 					</div>
 				</div>
@@ -293,11 +296,11 @@
 								class="ud-btn ud-btn-large ud-btn-ghost ud-text-sm ud-search-form-autocomplete-suggestion ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral">
 									<div class="ud-block-list-item-content">
 										<div aria-hidden="true" class="ud-search-form-autocomplete-group ud-search-form-autocomplete-group-search" data-testid="group-search">
-											<div data-testid="menu-content-icon" data-type="search_log" class="ud-search-form-autocomplete-group-icon">
+											<!--<div data-testid="menu-content-icon" data-type="search_log" class="ud-search-form-autocomplete-group-icon">
 												<svg aria-hidden="true" focusable="false" data-testid="search" class="ud-icon ud-icon-medium ud-icon-color-neutral">
 													<use xlink:href="#icon-search"></use>
 												</svg>
-											</div>
+											</div>-->
 											<div class="ud-search-form-autocomplete-suggestion-content">
 												<div data-purpose="label" data-testid="label" class="ud-search-form-autocomplete-suggestion-content ud-heading-md">${item.title}</div>
 											</div>

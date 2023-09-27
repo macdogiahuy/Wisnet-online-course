@@ -1,4 +1,5 @@
 ﻿using CourseHub.Core.Entities.CourseDomain;
+using CourseHub.Core.Models.Course.LectureModels;
 using CourseHub.Core.RequestDtos.Course.LectureDtos;
 
 namespace CourseHub.UI.Services.Contracts;

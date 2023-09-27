@@ -2,8 +2,10 @@
 using CourseHub.Core.Models.Common.NotificationModels;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Common.NotificationDtos;
+using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts;
+using System.Text.Json;
 
 namespace CourseHub.UI.Services.Implementations;
 
@@ -27,5 +29,18 @@ public class NotificationApiService : INotificationApiService
         {
             return null;
         }
+    }
+
+    // notifications controller
+    public async Task<HttpResponseMessage> RequestInstructor(CreateInstructorDto dto, HttpContext context)
+    {
+        _client.AddBearerHeader(context);
+
+        CreateNotificationDto notification = new()
+        {
+            Message = JsonSerializer.Serialize(dto),
+            Type = Core.Entities.CommonDomain.Enums.NotificationType.RequestToBecomeInstructor
+        };
+        return await _client.PostAsJsonAsync("api/notifications", notification);
     }
 }

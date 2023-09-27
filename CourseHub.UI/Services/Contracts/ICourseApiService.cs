@@ -7,6 +7,7 @@ namespace CourseHub.UI.Services.Contracts;
 public interface ICourseApiService
 {
     Task<CourseModel?> GetAsync(Guid id);
+    Task<CourseOverviewModel?> GetBySectionIdAsync(Guid sectionId);
     Task<PagedResult<CourseOverviewModel>> GetPagedAsync(QueryCourseDto dto);
     Task<List<CourseOverviewModel>?> GetMultipleAsync(Guid[] ids);
     Task<List<CourseOverviewModel>?> GetSimilarAsync(Guid id);

@@ -7,6 +7,10 @@ namespace CourseHub.Core.Interfaces.Repositories.CourseRepos;
 public interface IInstructorRepository : IRepository<Instructor>
 {
     Task<Guid> GetIdByUserId(Guid userId);
+    Task<Instructor?> FindEntityByUserIdAsync(Guid userId);
+
     Task<InstructorModel?> GetAsync(Guid id);
+    Task<InstructorModel?> GetByUserIdAsync(Guid userId);
+
     IPagingQuery<Instructor, InstructorModel> GetPagingQuery(Expression<Func<User, bool>>? whereExpression, short pageIndex, byte pageSize);
 }

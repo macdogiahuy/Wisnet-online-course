@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Helpers.Http;
+﻿using CourseHub.Core.Helpers.Http;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
@@ -7,8 +6,6 @@ using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts;
-using Microsoft.Extensions.Options;
-using System.Text.Json;
 
 namespace CourseHub.UI.Services.Implementations;
 
@@ -32,6 +29,26 @@ public class CourseApiService : ICourseApiService
         {
             var result = await _client.GetFromJsonAsync<CourseModel>(
                 $"api/courses/{id}", SerializeOptions.JsonOptions);
+
+            if (result is null)
+                return null;
+
+            if (!ResourceHelper.IsRemote(result.ThumbUrl))
+                result.ThumbUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/courses/Resource/{result.Id}/local-thumb";
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public async Task<CourseOverviewModel?> GetBySectionIdAsync(Guid sectionId)
+    {
+        try
+        {
+            var result = await _client.GetFromJsonAsync<CourseOverviewModel>(
+                $"api/courses/BySection?sectionId={sectionId}", SerializeOptions.JsonOptions);
 
             if (result is null)
                 return null;

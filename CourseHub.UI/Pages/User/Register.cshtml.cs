@@ -15,24 +15,24 @@ public class RegisterModel : PageModel
     public string RePassword { get; set; }
 
 
-    public async Task<IActionResult> OnPost([FromServices] IUserApiService userApiService)
+    public async Task OnPost([FromServices] IUserApiService userApiService)
     {
         if (!ModelState.IsValid)
-            return Page();
+            return;
         if (RePassword != Dto.Password)
         {
             ModelState.AddModelError("RePassword", "Password and RePassword doesn't match");
-            return Page();
+            return;
         }
 
         var response = await userApiService.RegisterAsync(Dto);
 
+        TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
         if (!response.IsSuccessStatusCode)
         {
             TempData[Global.ALERT_MESSAGE] = "Cannot register!";
-            TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
-            return Page();
+            return;
         }
-        return Redirect(Global.PAGE_SIGNIN);
+        TempData[Global.ALERT_MESSAGE] = "Please check your confirmation email!";
     }
 }

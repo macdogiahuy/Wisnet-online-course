@@ -11,6 +11,8 @@ using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Services.Domain.CommonServices.Contracts;
+using CourseHub.Core.RequestDtos.Course.InstructorDtos;
+using System.Text.Json;
 
 namespace CourseHub.Core.Services.Domain.CommonServices;
 
@@ -82,8 +84,14 @@ public class NotificationService : DomainService, INotificationService
             var user = await _uow.UserRepo.Find(entity.CreatorId);
             if (user is null)
                 throw new Exception(UserDomainMessages.NOT_FOUND);
+
+            var instructorDto = JsonSerializer.Deserialize<CreateInstructorDto>(entity.Message);
+            if (instructorDto is null)
+                throw new Exception(CourseDomainMessages.INVALID_INSTRUCTOR);
+
             Guid instructorId = Guid.NewGuid();
-            await _uow.InstructorRepo.Insert(new Instructor(instructorId, user.Id));
+            Instructor instructorEntity = new(instructorId, user.Id, instructorDto.Intro, instructorDto.Experience);
+            await _uow.InstructorRepo.Insert(instructorEntity);
             user.SetInstructor(instructorId);
         }
         entity.Status = dto.Status;

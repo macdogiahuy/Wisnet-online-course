@@ -7,6 +7,7 @@ using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Http;
 using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Services.Domain.CourseServices.Contracts;
+using CourseHub.Core.Models.Course.LectureModels;
 
 namespace CourseHub.Core.Services.Domain.CourseServices;
 

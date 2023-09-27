@@ -1,4 +1,5 @@
-﻿using CourseHub.Core.Services.Mappers.UserMappers;
+﻿using CourseHub.Core.Services.Mappers.CourseMappers;
+using CourseHub.Core.Services.Mappers.UserMappers;
 
 namespace CourseHub.API.Services.Domain;
 
@@ -7,7 +8,8 @@ public static class MapperExtensions
     public static IServiceCollection AddMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(
-            typeof(UserMapperProfile)
+            typeof(UserMapperProfile),
+            typeof(CourseMapperProfile)
         );
 
         return services;

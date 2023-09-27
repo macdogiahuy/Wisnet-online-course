@@ -1,9 +1,10 @@
 ﻿@page
 @using System.Text.Json;
 @using CourseHub.Core.Helpers.Business;
+@using CourseHub.UI.Helpers.Utils;
 @model CourseHub.UI.Pages.Course.DetailModel
 @{
-    string avgRating = (Model.Course!.TotalRating / (double)Model.Course.RatingCount).ToString("0.00");
+    string avgRating = TextHelper.GetAverageRating(Model.Course.TotalRating, Model.Course.RatingCount);
     int postDiscount = CourseBusinessHelper.GetPostDiscount(Model.Course.Price, Model.Course.Discount, Model.Course.DiscountExpiry);
 
     TempData[Global.TITLE] = Model.Course.Title;
@@ -123,7 +124,8 @@
                         data-purpose="instructor-name-top">
                         <span class="instructor-links--names--3U_NU">
                             <span class="ud-text-sm">Created by</span>
-                            <a class="ud-btn ud-btn-large ud-btn-link ud-heading-md ud-text-sm ud-instructor-links" data-position="1" href="#instructor-1">
+                            <a asp-page="@Global.PAGE_USER" asp-route-id="@Model.InstructorUser.Id"
+                                class="ud-btn ud-btn-large ud-btn-link ud-heading-md ud-text-sm ud-instructor-links" data-position="1">
                                 <span>@Model.InstructorUser!.FullName</span>
                             </a>
                         </span>
@@ -282,63 +284,67 @@
             <div>
                 @foreach (var courseSection in Model.Course!.Sections)
                 {
-                    <div class="accordion-panel-module--panel--3_kkG section--panel--1zoAn">
-                        <span id="u8-accordion-panel--@courseSection.Id" data-type="checkbox" data-checked @*="checked"*@ style="display: none;"></span>
-                            <div class="ud-btn ud-btn-large ud-btn-link ud-heading-md ud-accordion-panel-toggler accordion-panel-module--panel-toggler--1RjML accordion-panel-module--outer-panel-toggler--AgeEB" data-css-toggle-id="u8-accordion-panel--@courseSection.Id">
-                            <h3 class="ud-accordion-panel-heading section--section-title-container--2GvsG">
-                                <button type="button" aria-disabled="false" aria-expanded="true"
-                                    class="ud-btn ud-btn-large ud-btn-link ud-heading-md js-panel-toggler accordion-panel-module--panel-toggler--1RjML"
-                                    id="u8-accordion-panel-title--74">
-                                    <span class="ud-accordion-panel-title">
-                                        <span class="section--section-title--wcp90">@courseSection.Title</span>
-                                        <span class="ud-text-sm section--hidden-on-mobile--38HTe section--section-content--jXmra" data-purpose="section-content">
+                    if (courseSection.Lectures.Count > 0)
+                    {
+                        <div class="accordion-panel-module--panel--3_kkG section--panel--1zoAn">
+                            <span id="u8-accordion-panel--@courseSection.Id" data-type="checkbox" data-checked @*="checked"*@ style="display: none;"></span>
+                                <div class="ud-btn ud-btn-large ud-btn-link ud-heading-md ud-accordion-panel-toggler accordion-panel-module--panel-toggler--1RjML accordion-panel-module--outer-panel-toggler--AgeEB" data-css-toggle-id="u8-accordion-panel--@courseSection.Id">
+                                <h3 class="ud-accordion-panel-heading section--section-title-container--2GvsG">
+                                    <button type="button" aria-disabled="false" aria-expanded="true"
+                                        class="ud-btn ud-btn-large ud-btn-link ud-heading-md js-panel-toggler accordion-panel-module--panel-toggler--1RjML"
+                                        id="u8-accordion-panel-title--74">
+                                        <span class="ud-accordion-panel-title">
+                                            <span class="section--section-title--wcp90">@courseSection.Title</span>
+                                            <span class="ud-text-sm section--hidden-on-mobile--38HTe section--section-content--jXmra" data-purpose="section-content">
                                             @courseSection.LectureCount lectures •
-                                            <!--<span>11min</span>-->
+                                                <!--<span>11min</span>-->
+                                            </span>
                                         </span>
-                                    </span>
-                                </button>
-                            </h3>
-                            <svg aria-hidden="true" focusable="false"
-                                class="ud-icon ud-icon-small ud-icon-color-neutral accordion-panel-module--expand-icon--2DZax">
-                                <use xlink:href="#icon-expand"></use>
-                            </svg>
-                        </div>
-                        <div class="accordion-panel-module--content-wrapper--DIUt_"
-                            aria-labelledby="u8-accordion-panel-title--74" aria-hidden="false"
-                            role="group">
-
-                            <div class="ud-accordion-panel-content accordion-panel-module--content--jkZai">
-                                <ul class="ud-unstyled-list ud-block-list">
+                                    </button>
+                                </h3>
+                                <svg aria-hidden="true" focusable="false"
+                                    class="ud-icon ud-icon-small ud-icon-color-neutral accordion-panel-module--expand-icon--2DZax">
+                                    <use xlink:href="#icon-expand"></use>
+                                </svg>
+                            </div>
+                            <div class="accordion-panel-module--content-wrapper--DIUt_"
+                                aria-labelledby="u8-accordion-panel-title--74" aria-hidden="false"
+                                role="group">
+                                <div class="ud-accordion-panel-content accordion-panel-module--content--jkZai">
+                                    <ul class="ud-unstyled-list ud-block-list">
                                     @foreach (var lecture in courseSection.Lectures)
                                     {
                                         <li>
-                                            <div class="section--previewable-item--oiDYR ud-block-list-item ud-block-list-item-small ud-block-list-item-link ud-text-sm">
-                                                <!--<svg aria-hidden="true" focusable="false"
-                                                    class="ud-icon ud-icon-xsmall ud-icon-color-neutral ud-block-list-item-icon">
-                                                    <use xlink:href="#icon-video"></use>
-                                                </svg>-->
-                                                <div class="ud-block-list-item-content">
-                                                    <div>
-                                                        <div class="section--row--3sLRB">
-                                                            <button type="button" class="ud-btn ud-btn-large ud-btn-link ud-text-sm section--item-title--6gdc6">
-                                                                <span>@lecture.Title</span>
-                                                            </button>
+                                            <a asp-page="@Global.PAGE_LECTURE" asp-route-id="@lecture.Id">
+                                                <div class="section--previewable-item--oiDYR ud-block-list-item ud-block-list-item-small ud-block-list-item-link ud-text-sm">
+                                                    <!--<svg aria-hidden="true" focusable="false"
+                                                        class="ud-icon ud-icon-xsmall ud-icon-color-neutral ud-block-list-item-icon">
+                                                        <use xlink:href="#icon-video"></use>
+                                                    </svg>-->
+                                                    <div class="ud-block-list-item-content">
+                                                        <div>
+                                                            <div class="section--row--3sLRB">
+                                                                <button type="button" class="ud-btn ud-btn-large ud-btn-link ud-text-sm section--item-title--6gdc6">
+                                                                    <span>@lecture.Title</span>
+                                                                </button>
+                                                            </div>
                                                         </div>
+                                                        <span class="section--hidden-on-mobile--38HTe" style="flex: 1 1 0%;"></span>
+                                                        @if (lecture.IsPreviewable)
+                                                        {
+                                                            <span class="section--hidden-on-mobile--38HTe section--preview-text--1zuA2">Preview</span>
+                                                        }
+                                                        <span class="section--hidden-on-mobile--38HTe section--item-content-summary--1DW7L">01:47</span>
                                                     </div>
-                                                    <span class="section--hidden-on-mobile--38HTe" style="flex: 1 1 0%;"></span>
-                                                    @if (lecture.IsPreviewable)
-                                                    {
-                                                        <span class="section--hidden-on-mobile--38HTe section--preview-text--1zuA2">Preview</span>
-                                                    }
-                                                    <span class="section--hidden-on-mobile--38HTe section--item-content-summary--1DW7L">01:47</span>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </li>
                                     }
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         </div>

@@ -4,5 +4,6 @@ namespace CourseHub.Core.Interfaces.Repositories.CourseRepos;
 
 public interface ISectionRepository : IRepository<Section>
 {
-    public void RemoveRangeById(Guid courseId, IEnumerable<Guid> removed);
+    Task<Section?> GetWithCourse(Guid id);
+    void RemoveRangeById(Guid courseId, IEnumerable<Guid> removed);
 }

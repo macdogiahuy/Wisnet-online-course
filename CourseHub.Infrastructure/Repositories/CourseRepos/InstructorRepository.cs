@@ -1,8 +1,10 @@
-﻿using CourseHub.Core.Entities.CourseDomain;
+﻿using AutoMapper.QueryableExtensions;
+using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Interfaces.Repositories.CourseRepos;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.InstructorModels;
+using CourseHub.Core.Services.Mappers.CourseMappers;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -18,12 +20,34 @@ internal class InstructorRepository : BaseRepository<Instructor>, IInstructorRep
 
     public async Task<Guid> GetIdByUserId(Guid userId)
     {
-        return await DbSet.Where(_ => _.CreatorId == userId).Take(1).Select(_ => _.Id).FirstOrDefaultAsync();
+        return await DbSet
+            .Where(_ => _.CreatorId == userId)
+            .Take(1)
+            .Select(_ => _.Id)
+            .FirstOrDefaultAsync();
     }
 
-    public Task<InstructorModel?> GetAsync(Guid id)
+    public async Task<Instructor?> FindEntityByUserIdAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        return await DbSet.FirstOrDefaultAsync(_ => _.CreatorId == userId);
+    }
+
+    public async Task<InstructorModel?> GetByUserIdAsync(Guid userId)
+    {
+        return await DbSet
+            .Where(_ => _.CreatorId == userId)
+            .Take(1)
+            .ProjectTo<InstructorModel>(InstructorMapperProfile.ModelConfig)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<InstructorModel?> GetAsync(Guid id)
+    {
+        return await DbSet
+            .Where(_ => _.Id == id)
+            .Take(1)
+            .ProjectTo<InstructorModel>(InstructorMapperProfile.ModelConfig)
+            .FirstOrDefaultAsync();
     }
 
     public IPagingQuery<Instructor, InstructorModel> GetPagingQuery(Expression<Func<User, bool>>? whereExpression, short pageIndex, byte pageSize)

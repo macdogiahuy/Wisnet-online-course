@@ -1,0 +1,289 @@
+﻿@page
+@using CourseHub.UI.Helpers.Utils;
+@model CourseHub.UI.Pages.Lecture.DetailModel
+@{
+    string avgRating = TextHelper.GetAverageRating(Model.Course.TotalRating, Model.Course.RatingCount);
+}
+
+@*
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.7/plyr.css" />
+
+<p>@Model.Lecture.Title</p>
+<p>@Model.Lecture.Content</p>
+
+@foreach (var item in Model.Lecture.Materials)
+{
+    @if (item.Type == Core.Entities.CourseDomain.Enums.LectureMaterialType.Video)
+    {
+        <div style="width: 600px;">
+            <video width="800" height="600" id="player" playsinline controls data-poster="/img/video-thumb.gif">
+                <source src="@item.Url" type="video/mp4" />
+                <!--<track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />-->
+            </video>
+        </div>
+    }
+}
+
+@foreach (var item in Model.Lecture.Materials)
+{
+    @if (item.Type == Core.Entities.CourseDomain.Enums.LectureMaterialType.Document)
+    {
+        <a href="@item.Url">View resource</a>
+    }
+}
+
+<script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+<script>
+    const player = new Plyr('#player');
+</script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://unica.vn/media/styles_v2018/bootstrap.css?v=1685849702">
+<link rel="stylesheet" href="https://unica.vn/media/styles_v2018/main.css?v=1695802896">
+<link rel="stylesheet" href="https://unica.vn/media/styles_v2018/font-awesome.css?v=1685849702">
+
+
+<main>
+
+    <div class="u-course-highlight">
+        <div class="container">
+            <div class="u-detail-block-title">
+                <h1 itemprop="itemReviewed">
+                    <span itemprop="name">@Model.Course.Title</span>
+                </h1>
+                <div class="u-detail-desc" itemprop="description">@Model.Lecture.Title</div>
+
+                <div class="u-detail-tea" itemprop="author">
+                    <img class="picture-teacher-circle" src="@Model.Course.Creator.AvatarUrl" align="" loading="lazy">
+                    <a asp-page="@Global.PAGE_INSTRUCTOR" asp-route-id="@Model.Course.Creator.Id">
+                        <span itemprop="name">@Model.Course.Creator.FullName</span>
+                    </a>
+                </div>
+                <!--<div class="u-detail-rate">
+                    <span class="star-rate">
+                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                    </span>
+                    <span>@Model.Course.RatingCount</span> Đánh giá
+                </div>
+                <div class="u-detail-students">
+                    <span><i class="fa fa-users" aria-hidden="true"></i> @Model.Course.LearnerCount Học viên </span>
+                </div>-->
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div>
+                <div class="scroll-bar-detail" style="display: none">
+                    <div class="container">
+                        <div class="u-detail-rate">
+                            <span class="star-rate">
+                                <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                <i class="fa fa-star co-or" aria-hidden="true"></i>
+                            </span>
+                            <span>@Model.Course.RatingCount</span>
+                            Đánh giá                        </div>
+                        <div class="u-detail-students">
+                            <span>
+                                &nbsp;<i class="fa fa-users" aria-hidden="true"></i> @Model.Course.LearnerCount Học viên                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="u-detail-course">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div class="u-detail-block-left">
+                        <div class="u-video">
+                            <div class="embed-responsive embed-responsive-16by9" style="">
+                                @foreach (var item in Model.Lecture.Materials)
+                                {
+                                    @if (item.Type == Core.Entities.CourseDomain.Enums.LectureMaterialType.Video)
+                                    {
+                                        <div style="width: 600px;">
+                                            <video width="800" height="600" id="player" playsinline controls data-poster="/img/video-thumb.gif">
+                                                <source src="@item.Url" type="video/mp4" />
+                                                <!--<track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />-->
+                                            </video>
+                                        </div>
+                                    }
+                                }
+
+                                @foreach (var item in Model.Lecture.Materials)
+                                {
+                                    @if (item.Type == Core.Entities.CourseDomain.Enums.LectureMaterialType.Document)
+                                    {
+                                        <a href="@item.Url">View resource</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="u-rate-hv" id="u-rate-hv">
+                            <p class="detail_h2_title">Đánh giá của học viên</p>
+                            <div class="urh-left">
+                                <div class="number-big-rate">@avgRating</div>
+                                <div class="star-big-rate">
+                                    <span class="star-rate">
+                                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                        <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                <div class="count-rate">@Model.Course.RatingCount Đánh giá</div>
+                            </div>
+                            <!--
+                            <div class="urh-right">
+                                <div class="u-rate-f1">
+                                    <div class="u-rate-f1-progress">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" style="width: 82%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="u-rate-f1-star">
+                                        <span class="star-rate">
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                        </span>
+                                        </div>
+                                        <div class="u-rate-f1-num">
+                                            <p>82%</p>
+                                        </div>
+                                    </div>
+                                                                    <div class="u-rate-f1">
+                                        <div class="u-rate-f1-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100" style="width: 14%;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="u-rate-f1-star">
+                                        <span class="star-rate">
+                                            <i class="fa fa-star co-or"></i><i class="fa fa-star co-or"></i><i class="fa fa-star co-or"></i><i class="fa fa-star co-or"></i>                                            <i class="fa fa-star-o co-or"></i>                                        </span>
+                                        </div>
+                                        <div class="u-rate-f1-num">
+                                            <p>14%</p>
+                                        </div>
+                                    </div>
+                                                                    <div class="u-rate-f1">
+                                        <div class="u-rate-f1-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="u-rate-f1-star">
+                                        <span class="star-rate">
+                                            <i class="fa fa-star co-or"></i><i class="fa fa-star co-or"></i><i class="fa fa-star co-or"></i>                                            <i class="fa fa-star-o co-or"></i><i class="fa fa-star-o co-or"></i>                                        </span>
+                                        </div>
+                                        <div class="u-rate-f1-num">
+                                            <p>0%</p>
+                                        </div>
+                                    </div>
+                                                                    <div class="u-rate-f1">
+                                        <div class="u-rate-f1-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100" style="width: 4%;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="u-rate-f1-star">
+                                        <span class="star-rate">
+                                            <i class="fa fa-star co-or"></i><i class="fa fa-star co-or"></i>                                            <i class="fa fa-star-o co-or"></i><i class="fa fa-star-o co-or"></i><i class="fa fa-star-o co-or"></i>                                        </span>
+                                        </div>
+                                        <div class="u-rate-f1-num">
+                                            <p>4%</p>
+                                        </div>
+                                    </div>
+                                                                    <div class="u-rate-f1">
+                                        <div class="u-rate-f1-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="u-rate-f1-star">
+                                        <span class="star-rate">
+                                            <i class="fa fa-star co-or"></i>                                            <i class="fa fa-star-o co-or"></i><i class="fa fa-star-o co-or"></i><i class="fa fa-star-o co-or"></i><i class="fa fa-star-o co-or"></i>                                        </span>
+                                        </div>
+                                        <div class="u-rate-f1-num">
+                                            <p>0%</p>
+                                        </div>
+                                    </div>
+                                                            </div>-->
+                        </div>
+                        <div class="u-cm-hv">
+                            <p class="detail_h2_title">Nhận xét của học viên</p>
+                            <div>
+                                <ul class="load_comment">
+                                    <li class="u-block-cmhv">
+                                        <div class="ava-hv">L</div>
+                                        <div class="block-hv">
+                                            <div class="block-inner user-rate-detail">
+                                                <span class="star-rate-detail" style="padding-top: 3px">
+                                                    <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                                    <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                                    <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                                    <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                                    <i class="fa fa-star co-or" aria-hidden="true"></i>
+                                                </span>
+                                                <div class="name-hv">Nguyễn Hữu Lộc</div>
+                                            </div>
+                                            <div class="cm-hv">
+                                                <div class="rate-hv">
+                                                    <p>Khóa học bổ ích, nhiều bài tập thực tế, có thể áp dụng cho nhiều lĩnh vực khác nhau.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <center>
+                                <a class="view-more" id="loadmore_comment" data-id="1623" href="javascript:void()">Xem thêm</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+<script>
+    const player = new Plyr('#player');
+</script>

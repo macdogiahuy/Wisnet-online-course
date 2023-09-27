@@ -26,6 +26,8 @@
         { "JoinDate", "Join Date" },
         { "EnrollmentCount", "Enrollment Count"},
         { "Save", "Save Changes" },
+        { "Confirm", "Confirm" },
+        { "ConfirmQuestion", "Update your profile?" }
     };
 }
 
@@ -151,12 +153,12 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (Model.Client?.Role == Core.Entities.UserDomain.Enums.Role.Learner)
+                            @*if (Model.Client?.Role == Core.Entities.UserDomain.Enums.Role.Learner)
                             {
                                 <div class="InputField_fieldBtn__OG6ZB">
                                     <div id="app-instructor-btn" class="Button_fieldButton__B93oZ Button_fieldButtonDefault__7a6UD">@text["RequestInstructor"]</div>
                                 </div>
-                            }
+                            }*@
                         </div>
 
                         <!--Readonly-->
@@ -213,15 +215,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-uppercase text-danger">Xác nhận</h5>
+                <h5 class="modal-title text-uppercase text-danger">@text["Confirm"]</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p class="text-primary">Cập nhật thông tin tài khoản?</p>
+                <p class="text-primary">@text["ConfirmQuestion"]</p>
             </div>
             <div class="modal-footer">
-                <button id="app-confirm-btn" type="button" class="btn btn-outline-danger">Có</button>
-                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Không</button>
+                <button id="app-confirm-btn" type="button" class="btn btn-outline-danger">Yes</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">No</button>
             </div>
         </div>
     </div>
@@ -262,7 +264,7 @@
         }
 
 
-        var requestInstructorBtn = document.getElementById('app-instructor-btn');
+        /*var requestInstructorBtn = document.getElementById('app-instructor-btn');
         if (requestInstructorBtn) {
             requestInstructorBtn.onclick = () => {
                 fetch("@Model.InstructorRequestPath", {
@@ -274,6 +276,6 @@
                     }
                 });
             }
-        }
+        }*/
     </script>
 }

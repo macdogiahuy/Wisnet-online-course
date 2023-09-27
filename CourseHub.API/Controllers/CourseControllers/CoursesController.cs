@@ -45,6 +45,15 @@ public class CoursesController : BaseController
         return result.AsResponse();
     }
 
+    [HttpGet("BySection")]
+    [ResponseCache(Duration = 60)]
+    public async Task<IActionResult> GetBySection([FromQuery] Guid sectionId)
+    {
+        var result = await _courseService.GetBySectionAsync(sectionId);
+        return result.AsResponse();
+    }
+
+
     [HttpGet("Resource/{courseId}/local-thumb")]
     [ResponseCache(Duration = 60)]
     public IActionResult GetLocalThumb(Guid courseId)
@@ -54,13 +63,12 @@ public class CoursesController : BaseController
         return stream is null ? NotFound() : new FileStreamResult(stream, "image/jpeg");
     }
 
-    [HttpGet("Resource/{courseId}/{fileGuid}")]
+    [HttpGet("Resource/Media/{*path}")]
     [ResponseCache(Duration = 60)]
-    public IActionResult GetMedia(Guid courseId, Guid fileGuid)
+    public IActionResult GetMedia(string path)
     {
         //... Authorize -> Enrollment where courseId && clientId
-        string pathWithoutExtension = CourseStorage.GetCourseMediaPathWithoutExtension(courseId, fileGuid);
-        var result = ServerStorage.ReadWithoutExtension(pathWithoutExtension);
+        var result = ServerStorage.ReadAsStreamWithName(path);
         return result.Item1 is null
             ? NotFound()
             : new FileStreamResult(result.Item1, MimeTypes.GetMimeType(result.Item2!));

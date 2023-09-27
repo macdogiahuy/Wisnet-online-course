@@ -4,5 +4,4 @@ public class CreateInstructorDto
 {
     public string Intro { get; set; }
     public string Experience { get; set; }
-    //public Guid CreatorId { get; set; }
 }

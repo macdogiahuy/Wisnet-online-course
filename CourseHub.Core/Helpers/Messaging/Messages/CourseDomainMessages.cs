@@ -10,4 +10,5 @@ internal static class CourseDomainMessages
     internal const string INVALID_SECTION = "Invalid section";
     internal const string INVALID_LECTURE = "Invalid lecture";
     internal const string INVALID_RATING = "The rating must be between 1 and 5";
+    internal const string INVALID_INSTRUCTOR = "Invalid instructor";
 }

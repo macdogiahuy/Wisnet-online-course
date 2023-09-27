@@ -1,7 +1,5 @@
 ﻿using CourseHub.API.Controllers.Shared;
 using CourseHub.API.Helpers.Cookie;
-using CourseHub.Core.Entities.CommonDomain;
-using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.RequestDtos.Common.NotificationDtos;
 using CourseHub.Core.Services.Domain.CommonServices.Contracts;
 using Microsoft.AspNetCore.Authorization;

@@ -19,6 +19,7 @@ public class UserMapperProfile : Profile
 
     public UserMapperProfile()
     {
+        CreateMap<User, UserMinModel>();
         CreateMap<User, UserFullModel>();
     }
 }

@@ -1,10 +1,9 @@
 ﻿using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.Helpers.Http;
 using CourseHub.Core.RequestDtos.Course.LectureDtos;
+using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts;
-using System;
 
 namespace CourseHub.UI.Services.Implementations;
 
@@ -22,9 +21,24 @@ public class LectureApiService : ILectureApiService
 
 
 
-    public Task<Lecture?> GetAsync(Guid id, HttpContext context)
+    public async Task<Lecture?> GetAsync(Guid id, HttpContext context)
     {
-        return _client.GetFromJsonAsync<Lecture>($"api/lectures/{id}");
+        try
+        {
+            _client.AddBearerHeader(context);
+            var result = await _client.GetFromJsonAsync<Lecture>($"api/lectures/{id}");
+
+            if (result == null)
+                return null;
+            foreach (var item in result.Materials)
+                item.Url = Configurer.GetApiClientOptions().ApiServerPath + $"/api/courses/Resource/Media/{item.Url}";
+
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     public async Task<HttpResponseMessage> Create(CreateLectureDto dto, HttpContext context)

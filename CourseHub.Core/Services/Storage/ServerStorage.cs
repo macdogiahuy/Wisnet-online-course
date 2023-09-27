@@ -60,6 +60,15 @@ public static class ServerStorage
         return File.OpenRead(filePath);
     }
 
+    public static (Stream?, string?) ReadAsStreamWithName(string filePath)
+    {
+        filePath = GetPhysicalPath(filePath);
+        if (!File.Exists(filePath))
+            return (null, null);
+
+        return (File.OpenRead(filePath), Path.GetExtension(filePath));
+    }
+
     public static (Stream?, string?) ReadWithoutExtension(string filePath)
     {
         filePath = GetPhysicalPath(filePath);
