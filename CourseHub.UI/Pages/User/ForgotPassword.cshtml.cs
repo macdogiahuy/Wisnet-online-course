@@ -1,5 +1,5 @@
 using CourseHub.UI.Helpers;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;

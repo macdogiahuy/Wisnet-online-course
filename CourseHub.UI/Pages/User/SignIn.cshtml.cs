@@ -4,7 +4,7 @@ using CourseHub.Core.Services.Domain.UserServices.TempModels;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Net.Http.Headers;

@@ -3,12 +3,12 @@ using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers;
-using CourseHub.UI.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.Models.Course.InstructorModels;
+using CourseHub.UI.Services.Contracts.CourseServices;
 
 namespace CourseHub.UI.Pages.Course;
 

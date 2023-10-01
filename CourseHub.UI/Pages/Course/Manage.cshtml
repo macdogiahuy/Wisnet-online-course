@@ -5,12 +5,34 @@
 @{
 }
 
+<style>
+    .app-btn-container {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-bottom: 20px;
+    }
+
+    .app-btn-container a {
+        width: 200px;
+        height: 50px;
+        text-align: center;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #dataTable th, #dataTable td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
 
 
 <div class="container-fluid" style="margin-top: 40px;">
 
-    <div>
-        <a asp-page=""></a>
+    <h1 style="font-size: 48px; text-align: center;">Manage Courses</h1>
+
+    <div class="app-btn-container">
+        <a asp-page="@Global.PAGE_COURSE_CREATE" class="btn btn-primary">Create a new course</a>
     </div>
 
     <div class="card shadow mb-4">
@@ -43,13 +65,13 @@
                             string avgRating = TextHelper.GetAverageRating(course.TotalRating, course.RatingCount);
 
                             <tr>
-                                <td><a asp-page="@Global.PAGE_COURSE_UPDATE" asp-route-id="@course.Id">@course.Title</a></td>
-                                <td style="width: 400px"><img src="@course.ThumbUrl" alt="thumb" style="aspect-ratio: 1.5" /></td>
+                                <td><a asp-page="@Global.PAGE_COURSE_UPDATE" asp-route-courseId="@course.Id">@course.Title</a></td>
+                                <td style="width: 300px"><img src="@course.ThumbUrl" alt="thumb" style="aspect-ratio: 1.5" /></td>
                                 <td>@course.Status.ToString()</td>
                                 <td>@course.Price</td>
                                 @if (CourseBusinessHelper.IsOnDiscount(course.Discount, course.DiscountExpiry))
                                 {
-                                    <td>@course.Discount %</td>
+                                    <td>@(course.Discount * 100) %</td>
                                     <td>@course.DiscountExpiry.ToString("dd/MM/yyyy")</td>
                                 }
                                 else

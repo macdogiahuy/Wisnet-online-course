@@ -18,18 +18,25 @@ public class EnrollmentService : DomainService, IEnrollmentService
         return ToQueryResult(result);
     }
 
-    public Task<ServiceResult> Enroll(Guid courseId, Guid client, Guid billId)
+    public async Task<ServiceResult> Enroll(Guid courseId, Guid client, Guid billId)
     {
-        throw new NotImplementedException();
+        var entity = new Enrollment { CourseId = courseId, CreatorId = client, BillId = billId };
+        await _uow.EnrollmentRepo.Insert(entity);
+        return Ok();
     }
 
-    public Task<ServiceResult> Unenroll(Guid courseId, Guid client)
+    public async Task<ServiceResult> Unenroll(Guid courseId, Guid client)
     {
-        throw new NotImplementedException();
+        var entity = await _uow.EnrollmentRepo.Find(courseId, client);
+        if (entity is null)
+            return BadRequest();
+
+        _uow.EnrollmentRepo.Delete(entity);
+        return Ok();
     }
 
-    public Task ForceCommitAsync()
+    public async Task ForceCommitAsync()
     {
-        throw new NotImplementedException();
+        await _uow.CommitAsync();
     }
 }

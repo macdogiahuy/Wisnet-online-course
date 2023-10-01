@@ -4,7 +4,8 @@ using CourseHub.Core.RequestDtos.Payment.BillDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.CourseServices;
+using CourseHub.UI.Services.Contracts.PaymentServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

@@ -6,6 +6,7 @@ using CourseHub.Core.Interfaces.Repositories.PaymentRepos;
 using CourseHub.Core.Interfaces.Repositories.SocialRepos;
 using CourseHub.Core.Interfaces.Repositories.UserRepos;
 using CourseHub.Infrastructure.AccessContext;
+using CourseHub.Infrastructure.Repositories.AssignmentRepos;
 using CourseHub.Infrastructure.Repositories.CommonRepos;
 using CourseHub.Infrastructure.Repositories.CourseRepos;
 using CourseHub.Infrastructure.Repositories.PaymentRepos;
@@ -46,17 +47,19 @@ public class UnitOfWork : IUnitOfWork
     private CourseRepository? _courseRepo;
     public ICourseRepository CourseRepo { get => _courseRepo ??= new CourseRepository(_context); }
 
-    public SectionRepository? _sectionRepo;
+    private SectionRepository? _sectionRepo;
     public ISectionRepository SectionRepo { get => _sectionRepo ??= new SectionRepository(_context); }
 
-    public LectureRepository _lectureRepo;
+    private LectureRepository _lectureRepo;
     public ILectureRepository LectureRepo { get => _lectureRepo ??= new LectureRepository(_context); }
 
-    public ICourseCouponRepository CourseCouponRepo => throw new NotImplementedException();
+    private CourseCouponRepository _courseCouponRepo;
+    public ICourseCouponRepository CourseCouponRepo { get => _courseCouponRepo ??= new CourseCouponRepository(_context); }
 
-    public ICourseReviewRepository CourseReviewRepo => throw new NotImplementedException();
+    private CourseReviewRepository _courseReviewRepo;
+    public ICourseReviewRepository CourseReviewRepo { get => _courseReviewRepo ??= new CourseReviewRepository(_context); }
 
-    public EnrollmentRepository _enrollmentRepo;
+    private EnrollmentRepository _enrollmentRepo;
     public IEnrollmentRepository EnrollmentRepo { get => _enrollmentRepo ??= new EnrollmentRepository(_context); }
 
 
@@ -67,9 +70,11 @@ public class UnitOfWork : IUnitOfWork
     private NotificationRepository? _notificationRepo;
     public INotificationRepository NotificationRepo { get => _notificationRepo ??= new NotificationRepository(_context); }
 
-    public ICommentRepository CommentRepo => throw new NotImplementedException();
+    private CommentRepository? _commentRepo;
+    public ICommentRepository CommentRepo { get => _commentRepo ??= new CommentRepository(_context); }
 
-    public IReactionRepository ReactionRepo => throw new NotImplementedException();
+    private ReactionRepository? _reactionRepo;
+    public IReactionRepository ReactionRepo { get => _reactionRepo ??= new ReactionRepository(_context); }
 
 
 
@@ -95,5 +100,9 @@ public class UnitOfWork : IUnitOfWork
 
 
 
-    public IAssignmentRepository AssignmentRepo => throw new NotImplementedException();
+    private AssignmentRepository _assignmentRepo;
+    public IAssignmentRepository AssignmentRepo { get => _assignmentRepo ??= new AssignmentRepository(_context); }
+
+    private McqQuestionRepository _mcqQuestionRepo;
+    public IMcqQuestionRepository McqQuestionRepo { get => _mcqQuestionRepo ??= new McqQuestionRepository(_context); }
 }

@@ -16,4 +16,10 @@
     <ProjectReference Include="..\CourseHub.Core\CourseHub.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Contracts\AssignmentServices\" />
+    <Folder Include="Services\Implementations\AssignmentServices\" />
+    <Folder Include="wwwroot\css\Chat\" />
+  </ItemGroup>
+
 </Project>

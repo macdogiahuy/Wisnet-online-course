@@ -2,7 +2,7 @@ using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.CourseServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;

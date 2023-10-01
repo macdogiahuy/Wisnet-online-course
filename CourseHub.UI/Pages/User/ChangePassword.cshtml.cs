@@ -2,7 +2,7 @@ using CourseHub.Core.Helpers.Validation;
 using CourseHub.Core.RequestDtos.User.UserDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;

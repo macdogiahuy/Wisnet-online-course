@@ -12,17 +12,22 @@ namespace CourseHub.Core.Services.Mappers.CourseMappers;
 
 public class CourseMapperProfile : Profile
 {
+    private const int REVIEW_TAKE = 3;
+
     public static readonly IConfigurationProvider ModelConfig = new MapperConfiguration(
         cfg =>
         {
             cfg.CreateMap<User, UserModel>();
             cfg.CreateMap<Instructor, InstructorModel>();
             cfg.CreateMap<CourseReview, CourseReviewModel>();
-            cfg.CreateMap<Comment, CommentModel>();
 
-            cfg.CreateMap<Lecture, LectureModel>();
+            cfg.CreateMap<Lecture, LectureModel>()
+                .ForMember(_ => _.Content, act => act.Ignore())
+                .ForMember(_ => _.Materials, act => act.Ignore())
+                .ForMember(_ => _.Comments, act => act.Ignore());
             cfg.CreateMap<Section, SectionModel>();
-            cfg.CreateMap<Course, CourseModel>();
+            cfg.CreateMap<Course, CourseModel>()
+                .ForMember(_ => _.Reviews, act => act.MapFrom(_ => _.Reviews.Take(REVIEW_TAKE)));
         }
     );
 

@@ -21,6 +21,6 @@ public class EnrollmentsController : BaseController
     {
         Guid client = (Guid)HttpContext.GetClientId()!;
         var result = await _enrollmentService.IsEnrolled(courseId, client);
-        return Ok(result);
+        return result.AsResponse();
     }
 }

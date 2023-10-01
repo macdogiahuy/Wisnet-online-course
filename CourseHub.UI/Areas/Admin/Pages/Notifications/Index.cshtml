@@ -67,7 +67,6 @@
     for (var i = 0; i < approveBtns.length; i++) {
         let btn = approveBtns[i];
         btn.onclick = () => {
-            console.log(btn);
             fetch("@Model.NotificationRequestPath", {
                 method: "PATCH",
                 body: JSON.stringify({ Id : btn.getAttribute('data-id'), Status: @((int)NotificationStatus.Approved) }),

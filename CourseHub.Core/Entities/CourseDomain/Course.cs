@@ -19,8 +19,8 @@ public class Course : AuditedEntity
     public double Discount { get; private set; }
     public DateTime DiscountExpiry { get; private set; }
     public CourseLevel Level { get; set; }
-    public string Outcomes { get; private set; }
-    public string Requirements { get; private set; }
+    public string Outcomes { get; set; }
+    public string Requirements { get; set; }
     public byte LectureCount { get; private set; }
     public int LearnerCount { get; set; }
     public int RatingCount { get; private set; }

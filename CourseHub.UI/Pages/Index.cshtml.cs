@@ -1,7 +1,7 @@
 ﻿using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.CourseServices;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CourseHub.UI.Pages;

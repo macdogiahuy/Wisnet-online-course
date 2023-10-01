@@ -7,6 +7,7 @@ using Serilog;
 using CourseHub.API.Services.AppInfo;
 using CourseHub.API.Services.Authentication;
 using CourseHub.API.Services.External.Payment;
+using Microsoft.Extensions.FileProviders;
 
 const string POLICY = "Policy";
 
@@ -39,7 +40,16 @@ app
     .UseHttpsRedirection()
     .UseCors(POLICY)
     .UseAuthentication()
-    .UseAuthorization();
+    .UseAuthorization()
+    .UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+        RequestPath = "/api/courses/Resource/Media",
+        OnPrepareResponse = context =>
+        {
+            System.Diagnostics.Debug.WriteLine(context.File);
+        }
+    });
 
 app.MapControllers();
 

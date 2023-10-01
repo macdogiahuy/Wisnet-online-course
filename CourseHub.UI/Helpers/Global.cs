@@ -35,6 +35,7 @@ public class Global
     public const string PAGE_COURSE_MANAGE = "/Course/Manage";
     public const string PAGE_COURSE_CREATE = "/Course/Create";
     public const string PAGE_COURSE_UPDATE = "/Course/Update";
+    public const string PAGE_SECTION_UPDATE = "/Section/Update";
     public const string PAGE_LECTURE = "/Lecture/Detail";
 
     public const string PAGE_PAYMENT = "/Payment/Index";

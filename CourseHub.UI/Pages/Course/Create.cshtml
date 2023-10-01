@@ -16,7 +16,7 @@
         { "CourseCategory", "Course category" },
         { "CourseSections", "Course sections" },
         { "AddSection", "Add section" },
-        { "Create", "Create" }
+        { "Create", "Create course" }
     };
 
     StringBuilder selectBuilder = new();
@@ -30,7 +30,7 @@
         }
     }
 
-    TempData[Global.TITLE] = "Create Course";
+    ViewData[Global.TITLE] = "Create Course";
 }
 
 
@@ -38,6 +38,10 @@
 <style>
     #sections-group>div {
         margin-top: 4px;
+    }
+
+    container form {
+        font-size: 2.4 rem;
     }
 </style>
 

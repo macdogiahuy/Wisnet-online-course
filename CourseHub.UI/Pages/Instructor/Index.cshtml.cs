@@ -3,7 +3,7 @@ using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.CourseServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

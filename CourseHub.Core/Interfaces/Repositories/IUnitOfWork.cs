@@ -33,4 +33,5 @@ public interface IUnitOfWork
     ITagRepository TagRepo { get; }
 
     IAssignmentRepository AssignmentRepo { get; }
+    IMcqQuestionRepository McqQuestionRepo { get; }
 }

@@ -1,8 +1,14 @@
 ﻿using CourseHub.Core.Services.Domain.UserServices;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services.Contracts;
-using CourseHub.UI.Services.Implementations;
+using CourseHub.UI.Services.Contracts.CommonServices;
+using CourseHub.UI.Services.Contracts.CourseServices;
+using CourseHub.UI.Services.Contracts.PaymentServices;
+using CourseHub.UI.Services.Contracts.UserServices;
+using CourseHub.UI.Services.Implementations.CommonServices;
+using CourseHub.UI.Services.Implementations.CourseServices;
+using CourseHub.UI.Services.Implementations.PaymentServices;
+using CourseHub.UI.Services.Implementations.UserServices;
 
 namespace CourseHub.UI.Services;
 
@@ -17,12 +23,15 @@ public static class ApiServicesExtensions
 
         services
             .AddDomainServiceWithClient<IUserApiService, UserApiService>(config)
+
             .AddDomainServiceWithClient<INotificationApiService, NotificationApiService>(config)
+            .AddDomainServiceWithClient<ICommentApiService, CommentApiService>(config)
 
             .AddDomainServiceWithClient<IInstructorApiService, InstructorApiService>(config)
             .AddDomainServiceWithClient<ICategoryApiService, CategoryApiService>(config)
             .AddDomainServiceWithClient<ICourseApiService, CourseApiService>(config)
             .AddDomainServiceWithClient<ILectureApiService, LectureApiService>(config)
+            .AddDomainServiceWithClient<ICourseReviewApiService, CourseReviewApiService>(config)
 
             .AddDomainServiceWithClient<IPaymentApiService, PaymentApiService>(config);
 

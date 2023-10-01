@@ -4,7 +4,7 @@ using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Common.NotificationDtos;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
-using CourseHub.UI.Services.Contracts;
+using CourseHub.UI.Services.Contracts.CommonServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

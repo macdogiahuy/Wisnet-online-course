@@ -3,7 +3,7 @@
 @model CourseHub.UI.Pages.Payment.IndexModel
 @{
     Guid courseId = Model.Course.Id;
-    TempData[Global.TITLE] = "Checkout";
+    ViewData[Global.TITLE] = "Checkout";
 }
 
 
@@ -149,7 +149,7 @@
     }
 
     .right-side-bar {
-        width: 40%;
+        width: 30%;
     }
 
     .cart-checkout-container
@@ -291,16 +291,17 @@
 
 
 <div style="display: flex; width: 70%; margin: 0 auto;">
-    <div class="main" style="width: 60%">
+    <div class="main" style="width: 60%; flex-grow: 1;">
         <div class="app-checkout-container">
             <div id="cart-lst" class="cart-lst">
                 <div class="cart-container">
                     <div class='cart-products-container'>
                         <div class="container-header">
-                            <h2>Course</h2>
+                            <h1>Course</h1>
                         </div>
                         <div class="container-body">
                             <div class="product-lst-header">
+                                <h3>Thumb</h3>
                                 <h3>Title</h3>
                                 <h3>Price</h3>
                                 <h3>Discount</h3>
@@ -313,6 +314,9 @@
                                                 <img src="@Model.Course.ThumbUrl" alt="">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="cart-item-unit-price">
+                                        <span>@Model.Course.Title</span>
                                     </div>
                                     <div class="cart-item-unit-price">
                                         <span>@Model.Course.Price</span>

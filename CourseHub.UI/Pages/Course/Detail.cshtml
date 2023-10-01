@@ -7,7 +7,7 @@
     string avgRating = TextHelper.GetAverageRating(Model.Course.TotalRating, Model.Course.RatingCount);
     int postDiscount = CourseBusinessHelper.GetPostDiscount(Model.Course.Price, Model.Course.Discount, Model.Course.DiscountExpiry);
 
-    TempData[Global.TITLE] = Model.Course.Title;
+    ViewData[Global.TITLE] = Model.Course.Title;
 }
 
 <link rel="stylesheet" href="~/css/common-app-css.5b914d85e01ba6db2ad0.css" />
@@ -64,11 +64,64 @@
 
     .paid-course-landing-page__body img {
         width: 400px;
-        aspect-ratio: 1;
+        aspect-ratio: 1.5;
     }
 
     .app-component-margin {
         max-width: 50%;
+    }
+
+    .app__review__item {
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .app__review__item__pic {
+      float: left;
+      margin-right: 20px;
+      position: relative;
+    }
+
+    .app__review__item__pic:before {
+      position: absolute;
+      right: -30px;
+      top: 15px;
+      border-top: 15px solid transparent;
+      border-left: 15px solid #1d1e39;
+      content: "";
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    .app__review__item__pic img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+    }
+
+    .app__review__item__text {
+      overflow: hidden;
+      background: #1d1e39;
+      padding: 18px 30px 16px 20px;
+      border-radius: 10px;
+    }
+
+    .app__review__item__text h6 {
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .app__review__item__text h6 span {
+      color: #b7b7b7;
+      font-weight: 400;
+    }
+
+    .app__review__item__text p {
+      color: #b7b7b7;
+      line-height: 23px;
+      margin-bottom: 0;
     }
 
 </style>
@@ -149,69 +202,71 @@
 
 
 
-
-        <div class="app-course-landing-page" @*class="course-landing-page_sidebar-container sidebar-container--fixed--8FX75"*@ data-purpose="sidebar-container">
-            <div class="smart-bar-spacer smart-bar-module--smart-bar-spacer--1bsoA" data-testid="smart-bar-spacer"></div>
-            <div class="sidebar-container--content--2KZyB">
-                <div class="sidebar-container--content-group---xK4q">
-                    <div class="sidebar-container--purchase-section--2DONZ" data-client-side-render-only="CSR: purchase_section">
-                        <div class="purchase-section-container--purchase-section-container--1wStb">
-                            <div class="generic-purchase-section--main-cta-container--1hRUq" data-purpose="purchase-section">
-                                <div class="generic-purchase-section--buy-box-main--2o6Au">
-                                    <div class="buy-box--buy-box--1j_Sf" data-purpose="buy-box">
-                                        <div class="buy-box--buy-box-item--2RETv"></div>
-                                        <div class="buy-box--buy-box-item--2RETv">
-                                            <div>
-                                                <div class="price-text--container--103D9 ud-clp-price-text" data-purpose="price-text-container">
-                                                    <div class="price-text--price-part--2npPm ud-clp-discount-price ud-heading-xxl" data-purpose="course-price-text">
-                                                        <span class="ud-sr-only">Current price</span>
-                                                        <span><span>₫@postDiscount</span></span>
+        @if (!Model.IsEnrolled)
+        {
+            <div class="app-course-landing-page" @*class="course-landing-page_sidebar-container sidebar-container--fixed--8FX75"*@ data-purpose="sidebar-container">
+                <div class="smart-bar-spacer smart-bar-module--smart-bar-spacer--1bsoA" data-testid="smart-bar-spacer"></div>
+                <div class="sidebar-container--content--2KZyB">
+                    <div class="sidebar-container--content-group---xK4q">
+                        <div class="sidebar-container--purchase-section--2DONZ" data-client-side-render-only="CSR: purchase_section">
+                            <div class="purchase-section-container--purchase-section-container--1wStb">
+                                <div class="generic-purchase-section--main-cta-container--1hRUq" data-purpose="purchase-section">
+                                    <div class="generic-purchase-section--buy-box-main--2o6Au">
+                                        <div class="buy-box--buy-box--1j_Sf" data-purpose="buy-box">
+                                            <div class="buy-box--buy-box-item--2RETv"></div>
+                                            <div class="buy-box--buy-box-item--2RETv">
+                                                <div>
+                                                    <div class="price-text--container--103D9 ud-clp-price-text" data-purpose="price-text-container">
+                                                        <div class="price-text--price-part--2npPm ud-clp-discount-price ud-heading-xxl" data-purpose="course-price-text">
+                                                            <span class="ud-sr-only">Current price</span>
+                                                            <span><span>₫@postDiscount</span></span>
+                                                        </div>
                                                     </div>
+                                                    @if (Model.Course.Discount > 0 && Model.Course.DiscountExpiry > DateTime.UtcNow)
+                                                    {
+                                                            <div class="price-text--price-part--2npPm ud-clp-percent-discount ud-text-sm" data-purpose="discount-percentage">
+                                                                <span class="ud-sr-only">Discount</span>
+                                                                    <span>@(Model.Course.Discount * 100) % off</span>
+                                                            </div>
+                                                    }
                                                 </div>
-                                                @if (Model.Course.Discount > 0 && Model.Course.DiscountExpiry > DateTime.UtcNow)
-                                                {
-                                                    <div class="price-text--price-part--2npPm ud-clp-percent-discount ud-text-sm" data-purpose="discount-percentage">
-                                                        <span class="ud-sr-only">Discount</span>
-                                                            <span>@(Model.Course.Discount * 100) % off</span>
-                                                    </div>
-                                                }
                                             </div>
-                                        </div>
-                                        <div class="buy-box--buy-box-item--2RETv buy-box--discount-expiration--22scc">
-                                        </div>
-                                        <div class="buy-box--buy-box-item--2RETv buy-box--add-to-cart-button-wrapper--1C64H">
-                                            <div data-purpose="add-to-cart">
-                                                <a asp-page="@Global.PAGE_PAYMENT" asp-route-courseId="@Model.Course?.Id" type="button"
+                                            <div class="buy-box--buy-box-item--2RETv buy-box--discount-expiration--22scc">
+                                            </div>
+                                            <div class="buy-box--buy-box-item--2RETv buy-box--add-to-cart-button-wrapper--1C64H">
+                                                <div data-purpose="add-to-cart">
+                                                    <a asp-page="@Global.PAGE_PAYMENT" asp-route-courseId="@Model.Course?.Id" type="button"
                                                     data-testid="add-to-cart-button" class="ud-btn ud-btn-large ud-btn-brand ud-heading-md add-to-cart"
                                                     style="width: 100%;">Buy this course</a>
-                                                <div role="status" class="ud-sr-only" data-purpose="screen-reader-message"></div>
+                                                    <div role="status" class="ud-sr-only" data-purpose="screen-reader-message"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                @*<div class="generic-purchase-section--local-incentive--MC6kz">
+                                    @*<div class="generic-purchase-section--local-incentive--MC6kz">
                                     <div data-purpose="money-back-guarantee" class="dark-bg-text money-back-guarantee--money-back-guarantee--264ri">
                                         <span class="money-back">30-Day Money-Back Guarantee</span>
                                     </div>
                                 </div>*@
-                                <div class="generic-purchase-section--available-coupons--3v8Ak">
-                                </div>
-                                <div class="generic-purchase-section--local-incentive--MC6kz"></div>
-                                <div class="generic-purchase-section--ctas--3dxVF">
-                                    <div class="generic-purchase-section--cta---ZDRQ" data-client-side-render-only="CSR: course_actions">
-                                        <div class="generic-purchase-section--cta-multiple--29hf5">
-                                            @*<button type="button" data-purpose="social-share-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral" aria-label="Share this course">
+                                    <div class="generic-purchase-section--available-coupons--3v8Ak">
+                                    </div>
+                                    <div class="generic-purchase-section--local-incentive--MC6kz"></div>
+                                    <div class="generic-purchase-section--ctas--3dxVF">
+                                        <div class="generic-purchase-section--cta---ZDRQ" data-client-side-render-only="CSR: course_actions">
+                                            <div class="generic-purchase-section--cta-multiple--29hf5">
+                                                @*<button type="button" data-purpose="social-share-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral" aria-label="Share this course">
                                                 <span>Share</span>
                                             </button>
                                             <a aria-disabled="false" href="/gift/microsoft-excel-power-query-power-pivot-dax/?couponCode=KEEPLEARNING" data-purpose="gift-course" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
                                                 <span>Gift this course</span>
                                             </a>*@
-                                            <button type="submit" data-purpose="no-coupon-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
-                                                <span>Apply Coupon</span>
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <div class="redeem-coupon--add-coupon-button--gEFrS">
+                                                <button type="submit" data-purpose="no-coupon-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
+                                                    <span>Apply Coupon</span>
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <div class="redeem-coupon--add-coupon-button--gEFrS">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -221,9 +276,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
+        }
     </div>
 
 
@@ -401,6 +454,63 @@
         </div>
 
 
+
+
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <div class="app__details__review">
+                    <div class="section-title mb-4">
+                        <h5>Đánh giá</h5>
+                    </div>
+                @if (Model.Comments.TotalCount == 0)
+                {
+                    <div class="alert alert-danger fs-3" role="alert">
+                        Chưa có bình luận
+                    </div>
+                }
+                else
+                {
+                    @foreach (var comment in Model.Comments.Items)
+                    {
+                        var user = Model.RelatedUsers.FirstOrDefault(_ => _.Id == comment.CreatorId);
+                        if (user is null)
+                            continue;
+
+                        <div class="app__review__item">
+                            <div class="app__review__item__pic">
+                                <img src="@user.AvatarUrl" alt="">
+                            </div>
+                            <div class="app__review__item__text">
+                                <h6 class="mt-3">@user.FullName - <span>@comment.LastModificationTime</span></h6>
+                                <p>@comment.Content</p>
+                            </div>
+                        </div>
+                    }
+                }
+                </div>
+                <div class="app__details__form">
+                @if (Model.Client is not null)
+                {
+                    <!-- See Script section -->
+                    <form id="app-form" method="post">
+                        <input asp-for="CreateCourseReviewDto.CourseId" value="@Model.Course.Id" readonly hidden />
+                        <textarea asp-for="CreateCourseReviewDto.Content" placeholder="Đánh giá vào đây"></textarea>
+                        <input id="app-rating-inp" asp-for="CreateCourseReviewDto.Rating" hidden />
+                        @await Html.PartialAsync("~/Pages/Shared/_PartialRating.cshtml")
+                        <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Đánh giá</button>
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-danger fs-3" role="alert">
+                        Tham gia khóa học để đánh giá
+                    </div>
+                }
+                </div>
+            </div>
+        </div>
+
+
         <div>
             <div class="review-title--review-title--3kakg reviews--reviews-title--3Pqj_">
                 @foreach (var review in Model.Course.Reviews)
@@ -500,159 +610,40 @@
 
 
 
-    <div class="component-margin">
-        <div data-purpose="more-from-instructors-app">
-            <div class="styles--more-from-instructor--2avsV">
-                <h2 class="ud-heading-xl"
+    @if (Model.MoreCourses.Count > 0)
+    {
+        <div class="component-margin">
+            <div data-purpose="more-from-instructors-app">
+                <div class="styles--more-from-instructor--2avsV">
+                    <h2 class="ud-heading-xl"
                     data-purpose="safely-set-inner-html:more-courses-by-instructor:more-courses-link">
-                    More Courses by <a @*href="/user/maven-analytics/"*@>@Model.InstructorUser.FullName</a>
-                </h2>
-                <section aria-label="Carousel" class="carousel-module--container--27wzs">
-                    <div class="styles--desktop-container--29uOP carousel-module--scroll-port--28Dow carousel-module--scroll-lock--1Ys-j"
+                        More Courses by <a @*href="/user/maven-analytics/"*@>@Model.InstructorUser.FullName</a>
+                    </h2>
+                    <section aria-label="Carousel" class="carousel-module--container--27wzs">
+                        <div class="styles--desktop-container--29uOP carousel-module--scroll-port--28Dow carousel-module--scroll-lock--1Ys-j"
                         data-purpose="scroll-port" id="u8-scroll-port--114"
                         aria-live="polite">
 
-                        @foreach (var course in Model.MoreCourses)
-                        {
-                        <div data-index="0" class="carousel-module--scroll-item--2CpA_">
-                            <div class="course-card-module--container--2MTsr course-card-module--medium--3qi9R"
-                            data-purpose="container">
-                                <div class="course-card-module--image-container--20x0M">
-                                    <img src="@Model.InstructorUser.AvatarUrl" alt="" srcset="@Model.InstructorUser.AvatarUrl"
-                                    class="course-card-image-module--image--3V2QD course-card-module--course-image--2Pg51 browse-course-card--image--1-_Wa"
-                                    width="240" height="135" loading="lazy">
-                                </div>
-                                <div
-                                class="course-card-module--main-content--3Uvsz course-card-module--has-price-text--3EF7y">
-                                    <div class="course-card-module--title-container--1hd-P">
-                                        <div class="course-card-title-module--title--2C6ac">
-                                            <h3 data-purpose="course-title-url"
-                                            class="ud-heading-md course-card-title-module--course-title--3k0w_">
-                                                <a href="/course/microsoft-power-bi-up-running-with-power-bi-desktop/">Microsoft
-                                                    Power BI Desktop for Business Intelligence (2023)<div
-                                                    class="ud-sr-only"
-                                                    aria-hidden="true"><span
-                                                        data-purpose="seo-headline">Master
-                                                            Power BI Desktop for data
-                                                            analysis with hands-on
-                                                            assignments &amp; projects from
-                                                            top-rated Power BI
-                                                            instructors</span><span
-                                                        data-purpose="seo-rating">Rating:
-                                                            4.7 out of 5</span><span
-                                                        data-purpose="seo-num-reviews">102931
-                                                            reviews</span><span
-                                                        data-purpose="seo-content-info">15
-                                                            total hours</span><span
-                                                        data-purpose="seo-num-lectures">190
-                                                            lectures</span><span
-                                                        data-purpose="seo-instructional-level">All
-                                                            Levels</span><span
-                                                        data-purpose="seo-current-price">Current
-                                                            price: ₫2,499,000</span></div>
-                                                </a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div class="ud-text-xs"><span
-                                        class="ud-sr-only">Instructors:</span>
-                                        <div class="course-card-instructors-module--instructor-list--37tO6"
-                                        data-purpose="safely-set-inner-html:course-card:visible-instructors"
-                                        data-testid="safely-set-inner-html:course-card:visible-instructors">
-                                            Maven Analytics, Chris Dutton, Aaron Parry</div>
-                                    </div>
-                                    <div class="course-card-ratings-module--row--1EHHW">
-                                        <span
-                                        class="star-rating-module--star-wrapper--VHfnS star-rating-module--medium--3kDsb"><span
-                                            class="ud-sr-only">Rating: 4.7 out of
-                                                5</span><span
-                                            class="ud-heading-sm star-rating-module--rating-number--2xeHu"
-                                            aria-hidden="true"
-                                            data-purpose="rating-number">4.7</span><svg
-                                            aria-hidden="true" width="100%"
-                                            height="100%" viewBox="0 0 70 14"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                                <mask id="u8-star-rating-mask--115"
-                                                data-purpose="star-rating-mask">
-                                                    <rect x="0" y="0" width="90%"
-                                                    height="100%" fill="white"></rect>
-                                                </mask>
-                                                <g class="star-rating-module--star-filled--3CnHc"
-                                                mask="url(#u8-star-rating-mask--115)"
-                                                data-purpose="star-filled">
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="14" height="14" x="0"></use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="14" height="14" x="14"></use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="14" height="14" x="28"></use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="14" height="14" x="42"></use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="14" height="14" x="56"></use>
-                                                </g>
-                                                <g fill="transparent"
-                                                class="star-rating-module--star-bordered--3WG_2"
-                                                stroke-width="2"
-                                                data-purpose="star-bordered">
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="12" height="12" x="1" y="1">
-                                                    </use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="12" height="12" x="15" y="1">
-                                                    </use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="12" height="12" x="29" y="1">
-                                                    </use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="12" height="12" x="43" y="1">
-                                                    </use>
-                                                    <use xlink:href="#icon-rating-star"
-                                                    width="12" height="12" x="57" y="1">
-                                                    </use>
-                                                </g>
-                                            </svg></span><span aria-label="102931 reviews"
-                                        class="ud-text-xs course-card-ratings-module--reviews-text--1z047">(102,931)</span>
-                                    </div>
-                                    <div class="course-card-details-module--row--3sv2A">
-                                        <div data-purpose="course-meta-info"
-                                        class="course-card-details-module--row--3sv2A course-card-details-module--course-meta-info--2Yl_2 ud-text-xs">
-                                            <span
-                                            class="course-card-details-module--row--3sv2A">15
-                                                total hours</span><span
-                                            class="course-card-details-module--row--3sv2A">190
-                                                lectures</span><span
-                                            class="course-card-details-module--row--3sv2A">All
-                                                Levels</span>
-                                        </div>
-                                    </div>
-                                    <div
-                                    class="course-card-module--price-text-container--2oBPb">
-                                        <div class="price-text--container--103D9 course-card-module--price-text-base-price-text-component--sHBbm"
-                                        data-purpose="price-text-container">
-                                            <div class="price-text--price-part--2npPm course-card-module--price-text-base-price-text-component-discount-price--2VEcP ud-heading-md"
-                                            data-purpose="course-price-text"><span
-                                                class="ud-sr-only">Current
-                                                    price</span><span><span>₫2,499,000</span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                    class="course-card-module--badges-container--2ENVp">
-                                        <div
-                                        class="course-card-badges-module--course-badges--1RKli">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @*
+                                        <span class="star-rate">
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                            <i class="fa fa-star co-or"></i>
+                                        </span>*@
+
+                            @foreach (var course in Model.MoreCourses)
+                            {
+                                @await Html.PartialAsync(Global.PARTIAL_COURSE_OVERVIEW, course)
+                            }
                         </div>
-                        }
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
+    }
+    
 
 
 

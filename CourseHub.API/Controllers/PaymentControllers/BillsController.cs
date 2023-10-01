@@ -99,10 +99,17 @@ public class BillsController : BaseController
             IsSuccessful = true
         };
 
-        var billTask = billService.Create(billId, dto, paymentResponse, (Guid)clientId);
-        var enrollmentTask = enrollmentService.Enroll(client, courseId, billId);
-        await Task.WhenAll(billTask, enrollmentTask);
-        await enrollmentService.ForceCommitAsync();
-        return Redirect(clientUrl + $"/Payment?courseId={courseId}&failed=false");
+        try
+        {
+            var billTask = billService.Create(billId, dto, paymentResponse, (Guid)clientId);
+            var enrollmentTask = enrollmentService.Enroll(courseId, client, billId);
+            await Task.WhenAll(billTask, enrollmentTask);
+            await enrollmentService.ForceCommitAsync();
+            return Redirect(clientUrl + $"/Course/Detail?id={courseId}");
+        }
+        catch
+        {
+            return Redirect(clientUrl + $"/Payment?courseId={courseId}&failed=false");
+        }
     }
 }

@@ -63,7 +63,7 @@ public class CoursesController : BaseController
         return stream is null ? NotFound() : new FileStreamResult(stream, "image/jpeg");
     }
 
-    [HttpGet("Resource/Media/{*path}")]
+    /*[HttpGet("Resource/Media/{*path}")]
     [ResponseCache(Duration = 60)]
     public IActionResult GetMedia(string path)
     {
@@ -72,7 +72,7 @@ public class CoursesController : BaseController
         return result.Item1 is null
             ? NotFound()
             : new FileStreamResult(result.Item1, MimeTypes.GetMimeType(result.Item2!));
-    }
+    }*/
 
     [HttpGet("{id}/similar")]
     [ResponseCache(Duration = 60)]

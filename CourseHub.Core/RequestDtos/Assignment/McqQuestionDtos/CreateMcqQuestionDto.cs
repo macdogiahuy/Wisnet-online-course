@@ -2,6 +2,7 @@
 
 public class CreateMcqQuestionDto
 {
+    public Guid AssignmentId { get; set; }
     public string Content { get; set; }
     public List<CreateMcqChoiceDto> Choices { get; set; }
 

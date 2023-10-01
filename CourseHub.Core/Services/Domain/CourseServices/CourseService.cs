@@ -186,11 +186,29 @@ public class CourseService : DomainService, ICourseService
 
     private async void ApplyChanges(UpdateCourseDto dto, Course entity, Guid client)
     {
-        _mapper.Map(dto, entity);
+        //... not using mapper
+        if (dto.Intro is not null)
+            entity.Intro = dto.Intro;
+        if (dto.Description is not null)
+            entity.Description = dto.Description;
+        if (dto.Status is not null)
+            entity.Status = (Entities.CourseDomain.Enums.CourseStatus)dto.Status;
+        if (dto.Price is not null)
+            entity.Price = (double)dto.Price;
+        if (dto.Level is not null)
+            entity.Level = (Entities.CourseDomain.Enums.CourseLevel)dto.Level;
+        if (dto.Outcomes is not null)
+            entity.Outcomes = dto.Outcomes;
+        if (dto.Requirements is not null)
+            entity.Requirements = dto.Requirements;
+        if (dto.LeafCategoryId is not null)
+            entity.LeafCategoryId = (Guid)dto.LeafCategoryId;
+
+
         if (dto.Title is not null)
-            entity.SetTitle(entity.Title);
+            entity.SetTitle(dto.Title);
         if (dto.Discount is not null)
-            entity.SetDiscount(entity.Discount, entity.DiscountExpiry);
+            entity.SetDiscount((double)dto.Discount, (DateTime)dto.DiscountExpiry!);
         entity.LastModifierId = client;
 
 

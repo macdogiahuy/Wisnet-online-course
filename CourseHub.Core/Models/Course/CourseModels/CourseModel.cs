@@ -32,6 +32,8 @@ public class CourseModel
     public DateTime DiscountExpiry { get; set; }
     public string Requirements { get; set; }
 
+    public Guid InstructorId { get; set; }
+
     public UserModel Creator { get; set; }
     public List<SectionModel> Sections { get; set; }
     public List<CourseMeta> Metas { get; set; }
