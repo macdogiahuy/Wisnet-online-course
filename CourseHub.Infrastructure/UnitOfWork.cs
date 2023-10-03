@@ -10,6 +10,7 @@ using CourseHub.Infrastructure.Repositories.AssignmentRepos;
 using CourseHub.Infrastructure.Repositories.CommonRepos;
 using CourseHub.Infrastructure.Repositories.CourseRepos;
 using CourseHub.Infrastructure.Repositories.PaymentRepos;
+using CourseHub.Infrastructure.Repositories.SocialRepos;
 using CourseHub.Infrastructure.Repositories.UserRepos;
 
 namespace CourseHub.Infrastructure;
@@ -89,9 +90,11 @@ public class UnitOfWork : IUnitOfWork
 
 
 
-    public IConversationRepository ConversationRepo => throw new NotImplementedException();
+    private ConversationRepository _conversationRepo;
+    public IConversationRepository ConversationRepo { get => _conversationRepo ??= new ConversationRepository(_context); }
 
-    public IChatMessageRepository ChatMessageRepo => throw new NotImplementedException();
+    private ChatMessageRepository _chatMessageRespo;
+    public IChatMessageRepository ChatMessageRepo { get => _chatMessageRespo ??= new ChatMessageRepository(_context); }
 
     public ITagRepository TagRepo => throw new NotImplementedException();
 

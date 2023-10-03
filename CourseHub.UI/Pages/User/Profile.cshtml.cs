@@ -4,6 +4,7 @@ using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts.UserServices;
+using CourseHub.UI.Services.Implementations.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -34,7 +35,7 @@ public class ProfileModel : PageModel
         if (Client is null)
             return Redirect(Global.PAGE_SIGNIN);
 
-        Avatar = _userApiService.GetAvatarApiUrl(Client.AvatarUrl, Client.Id);
+        Avatar = UserApiService.GetAvatarApiUrl(Client.AvatarUrl, Client.Id);
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();
     }
@@ -48,7 +49,7 @@ public class ProfileModel : PageModel
         TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
 
         Client = (await HttpContext.GetClientData())!;
-        Avatar = _userApiService.GetAvatarApiUrl(Client.AvatarUrl, Client.Id);
+        Avatar = UserApiService.GetAvatarApiUrl(Client.AvatarUrl, Client.Id);
         TempData[Global.DATA_USE_BACKGROUND] = true;
     }
 }

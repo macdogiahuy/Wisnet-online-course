@@ -40,7 +40,8 @@ public class Global
 
     public const string PAGE_PAYMENT = "/Payment/Index";
 
-    public const string PAGE_SOCIAL = "/Social";
+    public const string PAGE_GROUP = "/Group";
+    public const string PAGE_GROUP_CONVERSATION = "/Group/Conversation";
 
 
 

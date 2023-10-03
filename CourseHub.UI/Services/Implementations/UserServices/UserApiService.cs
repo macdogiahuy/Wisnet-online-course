@@ -1,11 +1,10 @@
 ﻿using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.User.UserDtos;
-using CourseHub.Core.Services.Domain.UserServices.TempModels;
+using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts.UserServices;
-using System.Text.Json;
 
 namespace CourseHub.UI.Services.Implementations.UserServices;
 
@@ -54,7 +53,13 @@ public class UserApiService : IUserApiService
 
         try
         {
-            return await _client.GetFromJsonAsync<List<UserOverviewModel>>(url);
+            var result = await _client.GetFromJsonAsync<List<UserOverviewModel>>(url);
+
+            foreach (var item in result)
+            {
+                item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
+            }
+            return result;
         }
         catch
         {
@@ -76,13 +81,13 @@ public class UserApiService : IUserApiService
         }
     }
 
-    public string GetAvatarApiUrl(string avatarUrl, Guid userId)
+    public static string GetAvatarApiUrl(string avatarUrl, Guid userId)
     {
         if (avatarUrl == string.Empty)
             return "/img/User_Empty.png";
         return ResourceHelper.IsRemote(avatarUrl)
             ? avatarUrl
-            : $"{_client.BaseAddress}api/users/avatar/{userId}";
+            : $"{Configurer.GetApiClientOptions().ApiServerPath}api/users/avatar/{userId}";
     }
 
 

@@ -20,9 +20,16 @@ public class ConversationService : DomainService, IConversationService
 
 
 
-    public Task<ServiceResult<ConversationModel>> Get(Guid id, Guid client)
+    public async Task<ServiceResult<ConversationModel>> Get(Guid id, Guid client)
     {
-        throw new NotImplementedException();
+        var result = await _uow.ConversationRepo.GetAsync(id);
+
+        if (result is null)
+            return NotFound<ConversationModel>();
+        if (!result.Members.Any(_ => _.CreatorId == client))
+            return Unauthorized<ConversationModel>();
+
+        return ToQueryResult(result);
     }
 
     public async Task<ServiceResult<PagedResult<ConversationModel>>> Get(QueryConversationDto dto, Guid client)
@@ -71,7 +78,7 @@ public class ConversationService : DomainService, IConversationService
         Guid id = Guid.NewGuid();
         string avatarUrl = string.Empty;
         List<ConversationMember> members = _.OtherParticipants
-            .Select(_ => new ConversationMember(id, client, _ == client))
+            .Select(_ => new ConversationMember(id, _, _ == client))
             .ToList();
 
 

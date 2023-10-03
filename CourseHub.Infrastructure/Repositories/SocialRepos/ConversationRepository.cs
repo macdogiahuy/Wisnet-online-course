@@ -1,4 +1,5 @@
-﻿using CourseHub.Core.Entities.SocialDomain;
+﻿using AutoMapper.QueryableExtensions;
+using CourseHub.Core.Entities.SocialDomain;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Interfaces.Repositories.SocialRepos;
 using CourseHub.Core.Models.Social;
@@ -12,6 +13,15 @@ public class ConversationRepository : BaseRepository<Conversation>, IConversatio
 {
     public ConversationRepository(DbContext context) : base(context)
     {
+    }
+
+    public async Task<ConversationModel?> GetAsync(Guid id)
+    {
+        return await DbSet
+            .Where(_ => _.Id == id)
+            .Include(_ => _.Members)
+            .ProjectTo<ConversationModel>(ConversationMapperProfile.ModelConfig)
+            .FirstOrDefaultAsync();
     }
 
     public IPagingQuery<Conversation, ConversationModel> GetPagingQuery(Expression<Func<Conversation, bool>>? whereExpression, short pageIndex, byte pageSize)

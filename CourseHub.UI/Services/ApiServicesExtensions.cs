@@ -4,10 +4,12 @@ using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts.CommonServices;
 using CourseHub.UI.Services.Contracts.CourseServices;
 using CourseHub.UI.Services.Contracts.PaymentServices;
+using CourseHub.UI.Services.Contracts.SocialServices;
 using CourseHub.UI.Services.Contracts.UserServices;
 using CourseHub.UI.Services.Implementations.CommonServices;
 using CourseHub.UI.Services.Implementations.CourseServices;
 using CourseHub.UI.Services.Implementations.PaymentServices;
+using CourseHub.UI.Services.Implementations.SocialServices;
 using CourseHub.UI.Services.Implementations.UserServices;
 
 namespace CourseHub.UI.Services;
@@ -22,23 +24,26 @@ public static class ApiServicesExtensions
         services.AddTransient<RefreshTokenHandler>();
 
         services
-            .AddDomainServiceWithClient<IUserApiService, UserApiService>(config)
+            .AddDomainService<IUserApiService, UserApiService>(config)
 
-            .AddDomainServiceWithClient<INotificationApiService, NotificationApiService>(config)
-            .AddDomainServiceWithClient<ICommentApiService, CommentApiService>(config)
+            .AddDomainService<INotificationApiService, NotificationApiService>(config)
+            .AddDomainService<ICommentApiService, CommentApiService>(config)
 
-            .AddDomainServiceWithClient<IInstructorApiService, InstructorApiService>(config)
-            .AddDomainServiceWithClient<ICategoryApiService, CategoryApiService>(config)
-            .AddDomainServiceWithClient<ICourseApiService, CourseApiService>(config)
-            .AddDomainServiceWithClient<ILectureApiService, LectureApiService>(config)
-            .AddDomainServiceWithClient<ICourseReviewApiService, CourseReviewApiService>(config)
+            .AddDomainService<IInstructorApiService, InstructorApiService>(config)
+            .AddDomainService<ICategoryApiService, CategoryApiService>(config)
+            .AddDomainService<ICourseApiService, CourseApiService>(config)
+            .AddDomainService<ILectureApiService, LectureApiService>(config)
+            .AddDomainService<ICourseReviewApiService, CourseReviewApiService>(config)
 
-            .AddDomainServiceWithClient<IPaymentApiService, PaymentApiService>(config);
+            .AddDomainService<IPaymentApiService, PaymentApiService>(config)
+            
+            .AddDomainService<IConversationApiService, ConversationApiService>(config)
+            .AddDomainService<IChatMessageApiService, ChatMessageApiService>(config);
 
         return services;
     }
 
-    private static IServiceCollection AddDomainServiceWithClient<TService, TImplementation>(this IServiceCollection services, Action<HttpClient> config)
+    private static IServiceCollection AddDomainService<TService, TImplementation>(this IServiceCollection services, Action<HttpClient> config)
             where TService : class
             where TImplementation : class, TService
     {

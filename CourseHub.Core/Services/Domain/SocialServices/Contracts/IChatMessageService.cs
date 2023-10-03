@@ -9,7 +9,7 @@ public interface IChatMessageService
 {
     Task<ServiceResult<PagedResult<ChatMessageModel>>> Get(QueryChatMessageDto dto, Guid client);
 
-    Task<ServiceResult<Guid>> Create(CreateChatMessageDto dto, Guid client);
+    Task<ServiceResult<ChatMessageModel>> Create(CreateChatMessageDto dto, Guid client);
     Task<ServiceResult> Update(UpdateChatMessageDto dto, Guid client);
     Task<ServiceResult> Delete(Guid id, Guid client);
 }

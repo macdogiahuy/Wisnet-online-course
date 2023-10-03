@@ -23,7 +23,7 @@ public class ChatMessageService : DomainService, IChatMessageService
 
     public async Task<ServiceResult<PagedResult<ChatMessageModel>>> Get(QueryChatMessageDto dto, Guid client)
     {
-        var conversation = await _uow.ConversationRepo.Find(dto.ConversationId);
+        var conversation = await _uow.ConversationRepo.GetAsync(dto.ConversationId);
         if (conversation is null)
             return BadRequest<PagedResult<ChatMessageModel>>(ConversationDomainMessages.INVALID_CONVERSATION);
         if (!conversation.Members.Any(_ => _.CreatorId == client))
@@ -38,18 +38,18 @@ public class ChatMessageService : DomainService, IChatMessageService
 
 
 
-    public async Task<ServiceResult<Guid>> Create(CreateChatMessageDto dto, Guid client)
+    public async Task<ServiceResult<ChatMessageModel>> Create(CreateChatMessageDto dto, Guid client)
     {
         var conversation = await _uow.ConversationRepo.Find(dto.ConversationId);
         if (conversation is null)
-            return BadRequest<Guid>(ConversationDomainMessages.INVALID_CONVERSATION);
+            return BadRequest<ChatMessageModel>(ConversationDomainMessages.INVALID_CONVERSATION);
         if (!conversation.Members.Any(_ => _.CreatorId == client))
-            return Unauthorized<Guid>();
+            return Unauthorized<ChatMessageModel>();
 
         var entity = Adapt(dto, client);
         await _uow.ChatMessageRepo.Insert(entity);
         await _uow.CommitAsync();
-        return Created(entity.Id);
+        return Created(_mapper.Map<ChatMessageModel>(entity));
     }
 
     public Task<ServiceResult> Update(UpdateChatMessageDto dto, Guid client)

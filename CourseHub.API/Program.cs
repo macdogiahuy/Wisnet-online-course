@@ -8,6 +8,7 @@ using CourseHub.API.Services.AppInfo;
 using CourseHub.API.Services.Authentication;
 using CourseHub.API.Services.External.Payment;
 using Microsoft.Extensions.FileProviders;
+using CourseHub.API.Realtime.Hubs;
 
 const string POLICY = "Policy";
 
@@ -28,6 +29,8 @@ builder.Services
     .AddPaymentService()
     .AddDocumentation()
     .AddControllers();
+builder.Services
+    .AddSignalR(_ => _.MaximumReceiveMessageSize = 128000);
 
 var app = builder.Build();
 
@@ -52,6 +55,7 @@ app
     });
 
 app.MapControllers();
+app.MapHub<AppHub>("/hub");
 
 app.Run();
 

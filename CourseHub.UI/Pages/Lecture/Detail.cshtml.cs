@@ -5,6 +5,7 @@ using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts.CourseServices;
 using CourseHub.UI.Services.Contracts.UserServices;
+using CourseHub.UI.Services.Implementations.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -38,7 +39,7 @@ public class DetailModel : PageModel
         if (!Lecture.IsPreviewable && !isEnrolled)
             return Unauthorized();
 
-        Course.Creator.AvatarUrl = userApiService.GetAvatarApiUrl(Course.Creator.AvatarUrl, Course.Id);
+        Course.Creator.AvatarUrl = UserApiService.GetAvatarApiUrl(Course.Creator.AvatarUrl, Course.Id);
 
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();

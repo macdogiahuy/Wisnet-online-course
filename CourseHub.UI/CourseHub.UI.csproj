@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Services\Contracts\AssignmentServices\" />
     <Folder Include="Services\Implementations\AssignmentServices\" />
-    <Folder Include="wwwroot\css\Chat\" />
   </ItemGroup>
 
 </Project>
