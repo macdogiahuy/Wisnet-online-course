@@ -57,14 +57,41 @@ public class ConversationService : DomainService, IConversationService
         return Created(entity.Id);
     }
 
-    public Task<ServiceResult> Update(UpdateConversationDto dto, Guid client)
+    public async Task<ServiceResult> Update(UpdateConversationDto dto, Guid client)
     {
-        throw new NotImplementedException();
+        var entity = await _uow.ConversationRepo.FindWithMembers(dto.Id);
+        if (entity is null)
+            return BadRequest();
+
+        var clientMember = entity.Members.FirstOrDefault(_ => _.CreatorId == client);
+        //...
+        if (clientMember is null)
+            return Unauthorized();
+
+        try
+        {
+            await ApplyChanges(dto, entity);
+            await _uow.CommitAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return ServerError();
+        }
     }
 
-    public Task<ServiceResult> Delete(Guid id, Guid client)
+    public async Task<ServiceResult> Delete(Guid id, Guid client)
     {
-        throw new NotImplementedException();
+        var entity = await _uow.ConversationRepo.FindWithMembers(id);
+        if (entity is null)
+            return BadRequest();
+        var clientMember = entity.Members.FirstOrDefault(_ => _.CreatorId == client);
+        if (clientMember is null || !clientMember.IsAdmin)
+            return Unauthorized();
+
+        _uow.ConversationRepo.Delete(entity);
+        await _uow.CommitAsync();
+        return Ok();
     }
 
 
@@ -96,6 +123,11 @@ public class ConversationService : DomainService, IConversationService
         return entity;
     }
 
+
+
+
+
+
     private Expression<Func<Conversation, bool>>? GetPredicate(QueryConversationDto dto, Guid client)
     {
         if (dto.ByClient)
@@ -108,5 +140,10 @@ public class ConversationService : DomainService, IConversationService
         // Where Contains
         //dto.ConversationIds
         return null;
+    }
+
+    private async Task ApplyChanges(UpdateConversationDto dto, Conversation entity)
+    {
+
     }
 }

@@ -18,7 +18,15 @@ public static class TextHelper
         return null;
     }*/
 
-    public static string GetAverageRating(long totalRating, int ratingCount)
+    public static double GetDoubleAverageRating(long totalRating, int ratingCount)
+	{
+        if (ratingCount == 0)
+            return 0;
+        return totalRating / (double)ratingCount;
+	}
+
+
+	public static string GetAverageRating(long totalRating, int ratingCount)
     {
         if (ratingCount == 0)
             return "0.00";

@@ -12,5 +12,5 @@ public interface IInstructorRepository : IRepository<Instructor>
     Task<InstructorModel?> GetAsync(Guid id);
     Task<InstructorModel?> GetByUserIdAsync(Guid userId);
 
-    IPagingQuery<Instructor, InstructorModel> GetPagingQuery(Expression<Func<User, bool>>? whereExpression, short pageIndex, byte pageSize);
+    IPagingQuery<Instructor, InstructorModel> GetPagingQuery(Expression<Func<Instructor, bool>>? whereExpression, short pageIndex, byte pageSize);
 }

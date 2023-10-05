@@ -15,6 +15,7 @@ public interface IUserService
     Task<ServiceResult<UserModel>> GetAsync(Guid id);
     Task<ServiceResult<PagedResult<UserModel>>> GetPagedAsync(QueryUserDto dto);
     Task<ServiceResult<List<UserOverviewModel>>> GetOverviewAsync(List<Guid> ids);
+    Task<ServiceResult<List<UserMinModel>>> GetMinAsync(List<Guid> ids);
 
     Task<ServiceResult<string>> CreateAsync(CreateUserDto dto);
     Task<ServiceResult<string>> CreateAdminAsync(CreateUserDto dto);

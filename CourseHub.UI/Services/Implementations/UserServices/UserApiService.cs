@@ -81,6 +81,26 @@ public class UserApiService : IUserApiService
         }
     }
 
+    public async Task<List<UserMinModel>> GetMinAsync(IEnumerable<Guid> ids)
+    {
+        string url = QueryBuilder.BuildWithArray("api/users/min?", "ids={0}&", ids.Select(_ => _.ToString()));
+
+        try
+        {
+            var result = await _client.GetFromJsonAsync<List<UserMinModel>>(url);
+
+            foreach (var item in result)
+            {
+                item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
+            }
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     public static string GetAvatarApiUrl(string avatarUrl, Guid userId)
     {
         if (avatarUrl == string.Empty)

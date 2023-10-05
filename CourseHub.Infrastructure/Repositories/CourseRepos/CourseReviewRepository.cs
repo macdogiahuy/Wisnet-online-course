@@ -2,6 +2,7 @@
 using CourseHub.Core.Interfaces.Repositories.CourseRepos;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseReviewModels;
+using CourseHub.Core.Services.Mappers.CourseMappers;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -15,6 +16,7 @@ public class CourseReviewRepository : BaseRepository<CourseReview>, ICourseRevie
 
     public IPagingQuery<CourseReview, CourseReviewModel> GetPagingQuery(Expression<Func<CourseReview, bool>>? whereExpression, short pageIndex, byte pageSize)
     {
-        throw new NotImplementedException();
+        return GetPagingQuery<CourseReviewModel>(
+            CourseReviewMapperProfile.ModelConfig, whereExpression, pageIndex, pageSize);
     }
 }

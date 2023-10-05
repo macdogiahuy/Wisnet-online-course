@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CourseHub.Core.Helpers.Messaging;
+using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Models.Assignment.McqQuestionModels;
@@ -23,6 +24,9 @@ public class McqQuestionService : DomainService, IMcqQuestionService
 
     public async Task<ServiceResult<Guid>> Create(CreateMcqQuestionDto dto)
     {
+        if (dto.AssignmentId is null || dto.AssignmentId == default)
+            return BadRequest<Guid>(AssignmentDomainMessage.INVALID_ASSIGNMENT);
+
         var entity = Adapt(dto);
         await _uow.McqQuestionRepo.Insert(entity);
         await _uow.CommitAsync();
@@ -44,6 +48,6 @@ public class McqQuestionService : DomainService, IMcqQuestionService
     private McqQuestion Adapt(CreateMcqQuestionDto dto)
     {
         var choiceList = dto.Choices.Select(_ => new McqChoice(_.Content, _.IsCorrect)).ToList();
-        return new McqQuestion(dto.Content, dto.AssignmentId, choiceList);
+        return new McqQuestion(dto.Content, (Guid)dto.AssignmentId!, choiceList);
     }
 }

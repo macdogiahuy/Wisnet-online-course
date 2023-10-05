@@ -56,6 +56,12 @@ public class UserService : DomainService, IUserService
         return ToQueryResult(result);
     }
 
+    public async Task<ServiceResult<List<UserMinModel>>> GetMinAsync(List<Guid> ids)
+    {
+        var result = await _uow.UserRepo.GetMinAsync(ids);
+        return ToQueryResult(result);
+    }
+
 
 
 

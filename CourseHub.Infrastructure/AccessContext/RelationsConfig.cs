@@ -47,4 +47,5 @@ internal static class RelationsConfig
     internal const string TRIGGER_onCourseInsertDelete = "onCourseInsertDelete";
     internal const string TRIGGER_onLectureInsertDelete = "onLectureInsertDelete";
     internal const string TRIGGER_onEnrollmentInsertDelete = "onEnrollmentInsertDelete";
+    internal const string TRIGGER_onCourseReviewInsertDelete = "onCourseReviewInsertDelete";
 }

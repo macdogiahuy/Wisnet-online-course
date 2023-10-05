@@ -21,4 +21,12 @@
     <Folder Include="Services\Implementations\AssignmentServices\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Course\_PartialCarousel.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Course\_PartialCarousel.cshtml" />
+  </ItemGroup>
+
 </Project>

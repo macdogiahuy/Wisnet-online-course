@@ -35,7 +35,7 @@ public class UsersController : BaseController
 
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserInfoAsync(Guid id)
+    public async Task<IActionResult> GetAsync(Guid id)
     {
         ServiceResult<UserModel> result = await _userService.GetAsync(id);
         return result.AsResponse();
@@ -51,16 +51,23 @@ public class UsersController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUsersAsync([FromQuery] QueryUserDto dto)
+    public async Task<IActionResult> GetAsync([FromQuery] QueryUserDto dto)
     {
         ServiceResult<PagedResult<UserModel>> result = await _userService.GetPagedAsync(dto);
         return result.AsResponse();
     }
 
     [HttpGet("multiple")]
-    public async Task<IActionResult> GetMultipleUsersAsync([FromQuery] List<Guid> ids)
+    public async Task<IActionResult> GetMultipleAsync([FromQuery] List<Guid> ids)
     {
         ServiceResult<List<UserOverviewModel>> result = await _userService.GetOverviewAsync(ids);
+        return result.AsResponse();
+    }
+
+    [HttpGet("min")]
+    public async Task<IActionResult> GetMinAsync([FromQuery] List<Guid> ids)
+    {
+        ServiceResult<List<UserMinModel>> result = await _userService.GetMinAsync(ids);
         return result.AsResponse();
     }
 

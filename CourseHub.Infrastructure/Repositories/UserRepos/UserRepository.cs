@@ -46,6 +46,14 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
         return GetPagingQuery<UserModel>(UserMapperProfile.ModelConfig, whereExpression, pageIndex, pageSize);
     }
 
+    public async Task<List<UserMinModel>> GetMinAsync(List<Guid> ids)
+    {
+        return await DbSet
+            .Where(_ => ids.Contains(_.Id))
+            .ProjectTo<UserMinModel>(UserMapperProfile.MinModelConfig)
+            .ToListAsync();
+    }
+
     public async Task<Guid> GetIdByProviderKey(string key)
     {
         return await DbSet.Where(_ => _.ProviderKey == key).Take(1).Select(_ => _.Id).FirstOrDefaultAsync();
@@ -72,6 +80,9 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
         entity.InstructorId = instructorId;
         return true;
     }
+
+
+
 
 
 

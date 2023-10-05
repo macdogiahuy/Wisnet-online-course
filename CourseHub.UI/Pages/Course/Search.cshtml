@@ -48,7 +48,7 @@
 
 
 
-               <div class="main-content" style="width: 100%;">
+               <div class="main-content" style="width: 100%; margin-top: 40px;">
                    <div class="u-all-course">
                        <section>
                            <div class="u-hot-cate hidden-xs">
@@ -105,32 +105,23 @@
 
 
 
-                         <section class="style-search" style="margin-left: 18px;">
-                            <div class="list-course a">
-                                @foreach (var course in Model.Courses.Items)
-                                {
-                                    @await Html.PartialAsync(Global.PARTIAL_COURSE_OVERVIEW, course)
-                                }
+                         <section class="style-search" style="margin-left: 18px; width:100%">
+                            <div class="list-course a" style="height: 100%">
+                                @await Html.PartialAsync(Global.PARTIAL_COURSE_OVERVIEW, (Model.Courses.Items, 12))
                             </div>
+
+                           <!--<div class="u-number-page text-center">
+                               <a href="javascript:void(0)" type="button" id="btn-load-more" class="btn">
+                                   <i class="fa fa-spinner fa-pulse fa-1x fa-fw" style="display: none;"></i>
+                                   SEE MORE
+                               </a>
+                           </div>-->
+                           @await Html.PartialAsync(Global.PARTIAL_PAGINATION, (Model.Courses.PageIndex, Model.Courses.PageSize, Model.Courses.PageCount, Global.PATTERN_COURSE_SEARCH))
                          </section>
 
                      </div>
                   </div>
                </div>
-
-
-
-
-               <div class="u-number-page text-center">
-                   <a href="javascript:void(0)" type="button" id="btn-load-more" class="btn">
-                       <i class="fa fa-spinner fa-pulse fa-1x fa-fw" style="display: none;"></i> SEE MORE</a>
-               </div>
-               <div class="container">
-                  <div class="row no-padding-xs">
-                     <div class="col-lg-12 no-padding-lg"></div>
-                  </div>
-               </div>
-               <div class="blog_content" style="background: none;"></div>
             </div>
          </div>
       </div>

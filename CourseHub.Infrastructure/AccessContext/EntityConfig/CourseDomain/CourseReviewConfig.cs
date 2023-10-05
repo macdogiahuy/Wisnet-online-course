@@ -18,7 +18,7 @@ internal class CourseReviewConfig : SqlServerEntityConfiguration<CourseReview>
     public override void Configure(EntityTypeBuilder<CourseReview> builder)
     {
         builder
-            .ToTable(RelationsConfig.COURSE_REVIEW)
+            .ToTable(RelationsConfig.COURSE_REVIEW, _ => _.HasTrigger(RelationsConfig.TRIGGER_onCourseReviewInsertDelete))
             .SetColumnsTypes(Columns)
             .SetDefaultSQL(_ => _.CreationTime, SQL_GETDATE)
             .SetDefaultSQL(_ => _.LastModificationTime, SQL_GETDATE);

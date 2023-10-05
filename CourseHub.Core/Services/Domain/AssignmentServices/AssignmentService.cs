@@ -38,6 +38,7 @@ public class AssignmentService : DomainService, IAssignmentService
 
         var entity = Adapt(dto, user);
         await _uow.AssignmentRepo.Insert(entity);
+        await _uow.CommitAsync();
         return Created(entity.Id);
     }
 

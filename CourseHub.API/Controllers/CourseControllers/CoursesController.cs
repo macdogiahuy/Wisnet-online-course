@@ -87,9 +87,8 @@ public class CoursesController : BaseController
     [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetMinimum([FromQuery] QueryCourseDto dto)
     {
-        /*var result = await _courseService.GetMinAsync(dto);
-        return result.AsResponse();*/
-        throw new NotImplementedException();
+        var result = await _courseService.GetMinAsync(dto);
+        return result.AsResponse();
     }
 
 

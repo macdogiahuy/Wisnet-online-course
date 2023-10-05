@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CourseHub.Core.Entities.UserDomain;
 using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Helpers.Text;
@@ -33,27 +32,6 @@ public class CourseService : DomainService, ICourseService
         return ToQueryResult(result);
     }
 
-    public async Task<ServiceResult<CourseOverviewModel>> GetBySectionAsync(Guid sectionId)
-    {
-        var section = await _uow.SectionRepo.GetWithCourse(sectionId);
-        if (section is null)
-            return BadRequest<CourseOverviewModel>(CourseDomainMessages.INVALID_SECTION);
-
-        var result = _mapper.Map<CourseOverviewModel>(section.Course);
-        return ToQueryResult(result);
-    }
-
-    public async Task<ServiceResult<CourseMinModel>> GetMinAsync(Guid id)
-    {
-        var result = await _uow.CourseRepo.GetMinAsync(id);
-        return ToQueryResult(result);
-    }
-
-    public Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<ServiceResult<PagedResult<CourseOverviewModel>>> GetPagedAsync(QueryCourseDto dto)
     {
         var query = _uow.CourseRepo.GetPagingQuery(GetPredicate(dto), dto.PageIndex, dto.PageSize, GetInclude(dto));
@@ -73,6 +51,48 @@ public class CourseService : DomainService, ICourseService
 
 
         return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<PagedResult<CourseMinModel>>> GetMinAsync(QueryCourseDto dto)
+    {
+        var query = _uow.CourseRepo.GetPagingQuery(GetPredicate(dto), dto.PageIndex, dto.PageSize);
+
+        PagedResult<CourseMinModel> result;
+        if (dto.ByPrice is true)
+            result = await query.ExecuteWithOrderBy(_ => _.Price);
+        else if (dto.ByDiscount is true)
+            result = await query.ExecuteWithOrderBy(_ => _.Discount, ascending: false);
+        else if (dto.ByLearnerCount is true)
+            result = await query.ExecuteWithOrderBy(_ => _.LearnerCount, ascending: false);
+        else if (dto.ByAvgRating is true)
+            result = await query.ExecuteWithOrderBy(_ => _.TotalRating / _.RatingCount, ascending: false, isAnsiWarningTransaction: true);
+        else
+            result = await query.ExecuteWithOrderBy(_ => _.LastModificationTime, ascending: false);
+
+
+
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<CourseMinModel>> GetMinAsync(Guid id)
+    {
+        var result = await _uow.CourseRepo.GetMinAsync(id);
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<CourseOverviewModel>> GetBySectionAsync(Guid sectionId)
+    {
+        var section = await _uow.SectionRepo.GetWithCourse(sectionId);
+        if (section is null)
+            return BadRequest<CourseOverviewModel>(CourseDomainMessages.INVALID_SECTION);
+
+        var result = _mapper.Map<CourseOverviewModel>(section.Course);
+        return ToQueryResult(result);
+    }
+
+    public Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<ServiceResult<List<CourseOverviewModel>>> GetSimilarAsync(Guid id)

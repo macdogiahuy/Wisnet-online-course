@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="~/css/ud-5b914d85e01ba6db2ad0.css" />
 <link rel="stylesheet" href="~/css/ud-entry-main.af4286be4d337c43f610.css" />
 <link rel="stylesheet" href="~/css/ud-482c888e04ea1d274a2e.css" />
+<link rel="stylesheet" href="~/css/search-main.css">
 
 <style>
     body {
@@ -260,9 +261,9 @@
                                             <a aria-disabled="false" href="/gift/microsoft-excel-power-query-power-pivot-dax/?couponCode=KEEPLEARNING" data-purpose="gift-course" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
                                                 <span>Gift this course</span>
                                             </a>*@
-                                                <button type="submit" data-purpose="no-coupon-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
+                                                @*<button type="submit" data-purpose="no-coupon-button" class="ud-btn ud-btn-medium ud-btn-ghost ud-heading-sm ud-link-underline ud-link-neutral">
                                                     <span>Apply Coupon</span>
-                                                </button>
+                                                </button>*@
                                             </div>
                                             <div>
                                                 <div class="redeem-coupon--add-coupon-button--gEFrS">
@@ -322,14 +323,14 @@
 
     <div class="app-component-margin component-margin">
         <div data-purpose="course-curriculum">
-            <h2 class="ud-heading-xl curriculum--curriculum-header--3K2IZ" data-purpose="curriculum-header">Course content</h2>
+            <!--<h2 class="ud-heading-xl curriculum--curriculum-header--3K2IZ" data-purpose="curriculum-header">Course content</h2>
             <div class="curriculum--curriculum-sub-header--m_N_0">
                 <div class="ud-text-sm" data-purpose="curriculum-stats">
                     <span class="curriculum--content-length--5Nict">@Model.Course.Sections.Count sections • @Model.Course.LectureCount lectures •
-                        <!--<span><span>7h&nbsp;19m</span> total length</span>-->
+                        !--<span><span>7h&nbsp;19m</span> total length</span>--
                     </span>
                 </div>
-            </div>
+            </div>-->
 
 
 
@@ -348,10 +349,10 @@
                                         id="u8-accordion-panel-title--74">
                                         <span class="ud-accordion-panel-title">
                                             <span class="section--section-title--wcp90">@courseSection.Title</span>
-                                            <span class="ud-text-sm section--hidden-on-mobile--38HTe section--section-content--jXmra" data-purpose="section-content">
+                                            <!--<span class="ud-text-sm section--hidden-on-mobile--38HTe section--section-content--jXmra" data-purpose="section-content">
                                             @courseSection.LectureCount lectures •
-                                                <!--<span>11min</span>-->
-                                            </span>
+                                                <--<span>11min</span>--
+                                            </span>-->
                                         </span>
                                     </button>
                                 </h3>
@@ -387,7 +388,7 @@
                                                         {
                                                             <span class="section--hidden-on-mobile--38HTe section--preview-text--1zuA2">Preview</span>
                                                         }
-                                                        <span class="section--hidden-on-mobile--38HTe section--item-content-summary--1DW7L">01:47</span>
+                                                        <!--<span class="section--hidden-on-mobile--38HTe section--item-content-summary--1DW7L">01:47</span>-->
                                                     </div>
                                                 </div>
                                             </a>
@@ -460,19 +461,19 @@
             <div class="col-lg-8 col-md-8">
                 <div class="app__details__review">
                     <div class="section-title mb-4">
-                        <h5>Đánh giá</h5>
+                        <h5>Reviews</h5>
                     </div>
-                @if (Model.Comments.TotalCount == 0)
+                @if (Model.Reviews.TotalCount == 0)
                 {
                     <div class="alert alert-danger fs-3" role="alert">
-                        Chưa có bình luận
+                        No reviews yet
                     </div>
                 }
                 else
                 {
-                    @foreach (var comment in Model.Comments.Items)
+                    @foreach (var review in Model.Reviews.Items)
                     {
-                        var user = Model.RelatedUsers.FirstOrDefault(_ => _.Id == comment.CreatorId);
+                        var user = Model.RelatedUsers.FirstOrDefault(_ => _.Id == review.CreatorId);
                         if (user is null)
                             continue;
 
@@ -481,30 +482,29 @@
                                 <img src="@user.AvatarUrl" alt="">
                             </div>
                             <div class="app__review__item__text">
-                                <h6 class="mt-3">@user.FullName - <span>@comment.LastModificationTime</span></h6>
-                                <p>@comment.Content</p>
+                                <h6 class="mt-3">@user.FullName - <span>@review.LastModificationTime</span></h6>
+                                <p>@review.Content</p>
                             </div>
                         </div>
                     }
                 }
                 </div>
                 <div class="app__details__form">
-                @if (Model.Client is not null)
+                @if (Model.Client is not null && Model.IsEnrolled)
                 {
                     <!-- See Script section -->
-                    <form id="app-form" method="post">
+                    <form id="app-form" method="post" asp-page-handler="CreateReview">
+                        <input asp-for="Id" hidden value="@Model.Course.Id" />
                         <input asp-for="CreateCourseReviewDto.CourseId" value="@Model.Course.Id" readonly hidden />
-                        <textarea asp-for="CreateCourseReviewDto.Content" placeholder="Đánh giá vào đây"></textarea>
-                        <input id="app-rating-inp" asp-for="CreateCourseReviewDto.Rating" hidden />
                         @await Html.PartialAsync("~/Pages/Shared/_PartialRating.cshtml")
-                        <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Đánh giá</button>
+                        <textarea asp-for="CreateCourseReviewDto.Content" placeholder="Review here"></textarea>
+                        <input id="app-rating-inp" asp-for="CreateCourseReviewDto.Rating" hidden />
+                        <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Create</button>
                     </form>
                 }
                 else
                 {
-                    <div class="alert alert-danger fs-3" role="alert">
-                        Tham gia khóa học để đánh giá
-                    </div>
+                    <div class="alert alert-danger fs-3" role="alert">Enroll in the course to review</div>
                 }
                 </div>
             </div>
@@ -612,31 +612,35 @@
 
     @if (Model.MoreCourses.Count > 0)
     {
+        <style>
+            .img-course img {
+                min-height: 130px;
+                max-height: 130px;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .course-box-slider {
+                width: 100%;
+            }
+
+            .styles--desktop-container--29uOP {
+                width: 75%;
+            }
+        </style>
+
         <div class="component-margin">
             <div data-purpose="more-from-instructors-app">
                 <div class="styles--more-from-instructor--2avsV">
                     <h2 class="ud-heading-xl"
                     data-purpose="safely-set-inner-html:more-courses-by-instructor:more-courses-link">
-                        More Courses by <a @*href="/user/maven-analytics/"*@>@Model.InstructorUser.FullName</a>
+                        More Courses by <a href="#">@Model.InstructorUser.FullName</a>
                     </h2>
-                    <section aria-label="Carousel" class="carousel-module--container--27wzs">
+                    <section style="width: 85%" aria-label="Carousel" class="carousel-module--container--27wzs">
                         <div class="styles--desktop-container--29uOP carousel-module--scroll-port--28Dow carousel-module--scroll-lock--1Ys-j"
                         data-purpose="scroll-port" id="u8-scroll-port--114"
                         aria-live="polite">
-
-                            @*
-                                        <span class="star-rate">
-                                            <i class="fa fa-star co-or"></i>
-                                            <i class="fa fa-star co-or"></i>
-                                            <i class="fa fa-star co-or"></i>
-                                            <i class="fa fa-star co-or"></i>
-                                            <i class="fa fa-star co-or"></i>
-                                        </span>*@
-
-                            @foreach (var course in Model.MoreCourses)
-                            {
-                                @await Html.PartialAsync(Global.PARTIAL_COURSE_OVERVIEW, course)
-                            }
+                            @await Html.PartialAsync(Global.PARTIAL_COURSE_OVERVIEW, (Model.MoreCourses, 4))
                         </div>
                     </section>
                 </div>
@@ -681,3 +685,25 @@
     </script>
 
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/star-rating.min.js" type="text/javascript"></script>
+    <script>
+        // see _PartialRating
+        window.appPartialRating = 0;
+        $("#app-rating").on('rating:change', function (e, value) {
+            window.appPartialRating = value;
+        })
+
+        // page-centric
+        window.appPartialRating = 0;
+        var form = document.getElementById('app-form');
+        if (form) {
+            form.onsubmit = (e) => {
+                e.preventDefault();
+                document.getElementById('app-rating-inp').value = window.appPartialRating;
+                form.submit();
+            }
+        }
+    </script>
+}

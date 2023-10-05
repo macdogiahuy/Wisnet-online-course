@@ -10,6 +10,7 @@ public interface IUserApiService
     Task<UserFullModel?> GetClientAsync(HttpContext context);
     Task<PagedResult<UserModel>> GetPagedAsync(QueryUserDto dto, HttpContext context);
     Task<List<UserOverviewModel>> GetOverviewAsync(IEnumerable<Guid> ids);
+    Task<List<UserMinModel>> GetMinAsync(IEnumerable<Guid> ids);
     //string GetAvatarApiUrl(string? avatarUrl, Guid userId);
 
     Task<HttpResponseMessage> RegisterAsync(CreateUserDto dto);

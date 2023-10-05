@@ -50,8 +50,9 @@ internal class InstructorRepository : BaseRepository<Instructor>, IInstructorRep
             .FirstOrDefaultAsync();
     }
 
-    public IPagingQuery<Instructor, InstructorModel> GetPagingQuery(Expression<Func<User, bool>>? whereExpression, short pageIndex, byte pageSize)
+    public IPagingQuery<Instructor, InstructorModel> GetPagingQuery(Expression<Func<Instructor, bool>>? whereExpression, short pageIndex, byte pageSize)
     {
-        throw new NotImplementedException();
+        return GetPagingQuery<InstructorModel>(
+            InstructorMapperProfile.ModelConfig, whereExpression, pageIndex, pageSize);
     }
 }

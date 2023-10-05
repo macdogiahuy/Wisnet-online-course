@@ -19,7 +19,7 @@ internal class RatingValidationAttribute : ValidationAttribute
         if (value is null)
             return true;
 
-        if (byte.TryParse(value.ToString(), out var result))
+        if (!byte.TryParse(value.ToString(), out var result))
             return false;
         return result > 0 && result < 6;
     }

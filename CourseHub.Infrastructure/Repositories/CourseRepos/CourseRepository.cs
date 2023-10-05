@@ -24,6 +24,7 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
             .Include(_ => _.Sections)
             .Include(_ => _.Metas)
             .Include(_ => _.Reviews)
+            .AsSplitQuery()
             .ProjectTo<CourseModel>(CourseMapperProfile.ModelConfig)
             .FirstOrDefaultAsync();
     }
@@ -46,6 +47,11 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
         throw new NotImplementedException();
     }
 
+    public IPagingQuery<Course, CourseMinModel> GetPagingQuery(Expression<Func<Course, bool>>? whereExpression, short pageIndex, byte pageSize)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<CourseMinModel?> GetMinAsync(Guid id)
     {
         return await DbSet
@@ -60,8 +66,13 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
 
 
 
+    /// <summary>
+    /// ...
+    /// </summary>
     public async Task<List<Course>> GetAllAsync()
     {
-        return await DbSet.ToListAsync();
+        return await DbSet
+            .Include(_ => _.Sections)
+            .ToListAsync();
     }
 }

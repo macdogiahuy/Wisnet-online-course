@@ -83,6 +83,7 @@
    <main>
 	  <input type="hidden" id="txtNumberPage" name="txtNumberPage" value="1">
 	  <div class="style-combo" style="padding:15px 0">
+			@*await Html.PartialAsync(Global.PARTIAL_COURSE_CAROUSEL, (Model.Courses.Items, 6))*@
 
 		  <div class="container">
 			  <div class="section-title mb-0" style="margin-top: 40px; margin-bottom: 40px !important;">
@@ -97,10 +98,7 @@
 					 <br>
 					 <section class="style-search" style="margin-left: 18px;">
 						<div class="list-course a">
-							@foreach (var course in Model.Courses.Items)
-							{
-								@await Html.PartialAsync(Global.PARTIAL_COURSE_OVERVIEW, course)
-							}
+							@await Html.PartialAsync(Global.PARTIAL_COURSE_OVERVIEW, (Model.Courses.Items, 12))
 						</div>
 					 </section>
 				  </div>
@@ -110,3 +108,30 @@
 	  </div>
    </main>
 </body>
+
+
+
+@section Scripts {
+	<script src="js/jquery.slicknav.js"></script>
+	<script>
+		'use strict';
+
+	(function ($) {
+		var hero_s = $(".hero__slider");
+		hero_s.owlCarousel({
+			loop: true,
+			margin: 0,
+			items: 1,
+			dots: true,
+			nav: true,
+			navText: ["<span class='arrow_carrot-left'></span>", "<span class='arrow_carrot-right'></span>"],
+			animateOut: 'fadeOut',
+			animateIn: 'fadeIn',
+			smartSpeed: 1200,
+			autoHeight: false,
+			autoplay: true,
+			mouseDrag: false
+		});
+	})(jQuery);
+	</script>
+}

@@ -23,7 +23,7 @@ public class CourseReviewApiService : ICourseReviewApiService
         try
         {
             var result = await _client.GetFromJsonAsync<PagedResult<CourseReviewModel>>(
-                $"api/CourseReviewa?{QueryBuilder.Build(dto)}", SerializeOptions.JsonOptions);
+                $"api/CourseReviews?{QueryBuilder.Build(dto)}", SerializeOptions.JsonOptions);
             return result;
         }
         catch
@@ -32,9 +32,11 @@ public class CourseReviewApiService : ICourseReviewApiService
         }
     }
 
-    public Task<HttpResponseMessage> CreateAsync(CreateCourseReviewDto dto, HttpContext context)
+    public async Task<HttpResponseMessage> CreateAsync(CreateCourseReviewDto dto, HttpContext context)
     {
-        throw new NotImplementedException();
+        _client.AddBearerHeader(context);
+        var result = await _client.PostAsJsonAsync("/api/CourseReviews", dto);
+        return result;
     }
 
     public Task<HttpResponseMessage> UpdateAsync(UpdateCourseReviewDto dto, HttpContext context)

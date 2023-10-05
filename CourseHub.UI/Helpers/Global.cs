@@ -47,9 +47,17 @@ public class Global
 
 	// Partials
 	public const string PARTIAL_COURSE_OVERVIEW = "~/Pages/Course/_PartialCourseOverview.cshtml";
+    public const string PARTIAL_COURSE_CAROUSEL = "~/Pages/Course/_PartialCarousel.cshtml";
+    public const string PARTIAL_PAGINATION = "~/Pages/Shared/_PartialPagination.cshtml";
 
 
 
-	// static files
-	public const string FAVICON = "/img/favicon.png";
+    // Parterns
+    public const string PATTERN_PAGE_INDEX = "{pageIndex}";
+    public const string PATTERN_COURSE_SEARCH = "/Course/Search?page={pageIndex}";
+
+
+
+    // static files
+    public const string FAVICON = "/img/favicon.png";
 }

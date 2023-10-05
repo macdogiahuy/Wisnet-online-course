@@ -6,6 +6,8 @@ namespace CourseHub.Core.Interfaces.Repositories.SocialRepos;
 
 public interface IConversationRepository : IRepository<Conversation>
 {
+    Task<Conversation?> FindWithMembers(Guid id);
+
     Task<ConversationModel?> GetAsync(Guid id);
 
     IPagingQuery<Conversation, ConversationModel> GetPagingQuery(Expression<Func<Conversation, bool>>? whereExpression, short pageIndex, byte pageSize);

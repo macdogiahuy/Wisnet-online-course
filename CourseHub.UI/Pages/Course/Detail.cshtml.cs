@@ -2,6 +2,7 @@ using CourseHub.Core.Entities.CommonDomain;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Common.CommentModels;
 using CourseHub.Core.Models.Course.CourseModels;
+using CourseHub.Core.Models.Course.CourseReviewModels;
 using CourseHub.Core.Models.Course.InstructorModels;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Course.CourseReviewDtos;
@@ -29,14 +30,21 @@ public class DetailModel : PageModel
 
 
 
-    public PagedResult<CommentModel> Comments { get; set; }
+    public PagedResult<CourseReviewModel> Reviews { get; set; }
     public List<CourseOverviewModel> MoreCourses { get; set; } = new();
     public List<UserMinModel> RelatedUsers { get; set; }
 
 
 
+    // Common for forms
+    [BindProperty]
+    public Guid Id { get; set; }
+
     [BindProperty]
     public CreateCourseReviewDto CreateCourseReviewDto { get; set; }
+
+
+
 
 
 
@@ -47,7 +55,27 @@ public class DetailModel : PageModel
 
     public async Task<IActionResult> OnGet(
         [FromQuery] Guid id,
-        [FromServices] IUserApiService userApiService, [FromServices] ICommentApiService commentApiService)
+        [FromServices] IUserApiService userApiService, [FromServices] ICourseReviewApiService reviewApiService)
+    {
+        return await RenderPage(id, userApiService, reviewApiService);
+    }
+
+	public async Task<IActionResult> OnPostCreateReview(
+        [FromServices] ICourseReviewApiService reviewApiService)
+	{
+        await reviewApiService.CreateAsync(CreateCourseReviewDto, HttpContext);
+
+        return Redirect(Request.Path + $"?id={Id}");
+    }
+
+
+
+
+
+
+    private async Task<IActionResult> RenderPage(
+        Guid id,
+        IUserApiService userApiService, ICourseReviewApiService reviewApiService)
     {
         if (id == default)
             return Redirect(Global.PAGE_404);
@@ -64,7 +92,7 @@ public class DetailModel : PageModel
         Course.Reviews = new();
         var instructorUserTask = userApiService.GetAsync(Course.Creator.Id);
         var isEnrolledTask = _courseApiService.IsEnrolled(Course.Id, HttpContext);
-        var commentsTask = commentApiService.GetAsync(new Core.RequestDtos.Common.CommentDtos.QueryCommentDto());
+        var reviewsTask = reviewApiService.GetAsync(new QueryCourseReviewDto { CourseId = Course.Id });
         var moreCoursesTask = _courseApiService.GetPagedAsync(
             new Core.RequestDtos.Course.CourseDtos.QueryCourseDto
             {
@@ -72,11 +100,16 @@ public class DetailModel : PageModel
                 InstructorId = Course.InstructorId
             });
 
-        await Task.WhenAll(instructorUserTask, isEnrolledTask, commentsTask, moreCoursesTask);
+        await Task.WhenAll(instructorUserTask, isEnrolledTask, reviewsTask, moreCoursesTask);
         InstructorUser = instructorUserTask.Result;
         IsEnrolled = isEnrolledTask.Result;
-        Comments = commentsTask.Result;
+        Reviews = reviewsTask.Result;
         MoreCourses = moreCoursesTask.Result.Items.Where(_ => _.Id != Course.Id).ToList();
+
+        if (Reviews.TotalCount > 0)
+        {
+            RelatedUsers = await userApiService.GetMinAsync(Reviews.Items.Select(_ => _.CreatorId).Distinct());
+        }
 
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();

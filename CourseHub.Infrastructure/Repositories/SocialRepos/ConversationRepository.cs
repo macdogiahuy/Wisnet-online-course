@@ -15,6 +15,14 @@ public class ConversationRepository : BaseRepository<Conversation>, IConversatio
     {
     }
 
+    public async Task<Conversation?> FindWithMembers(Guid id)
+    {
+        return await DbSet
+            .Where(_ => _.Id == id)
+            .Include(_ => _.Members)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<ConversationModel?> GetAsync(Guid id)
     {
         return await DbSet

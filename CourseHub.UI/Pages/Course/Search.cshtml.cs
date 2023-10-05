@@ -23,9 +23,9 @@ public class SearchModel : PageModel
         _categoryApiService = categoryApiService;
     }
 
-    public async Task OnGet([FromQuery] string sortBy, [FromQuery] Guid? category = null)
+    public async Task OnGet([FromQuery] string sortBy, [FromQuery] Guid? category = null, [FromQuery] byte page = 0)
     {
-        QueryCourseDto dto = new();
+        QueryCourseDto dto = new() { PageIndex = page, PageSize = 12 };
         switch (sortBy)
         {
             case "learnerCount":
