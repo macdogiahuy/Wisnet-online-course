@@ -867,12 +867,12 @@
                             <!-- Search -->
 
                             <div class="text-center hide-scrollbar d-flex my-7" data-horizontal-scroll="">
-                                @await RenderSectionAsync("RelatedUsers")
+                                @await RenderSectionAsync("RelatedUsers", required: false)
                             </div>
 
                             <!-- Chats -->
                             <nav class="nav d-block list-discussions-js mb-n6">
-                                @await RenderSectionAsync("Conversations")
+                                @await RenderSectionAsync("Conversations", required: false)
                             </nav>
                             <!-- Chats -->
                         </div>
@@ -1168,7 +1168,7 @@
     <!-- Sidebar -->
 
     <!-- Main Content -->
-    @await RenderSectionAsync("Main")
+    @await RenderSectionAsync("Main", required: false)
     <!-- Main Content -->
 
 </div>
