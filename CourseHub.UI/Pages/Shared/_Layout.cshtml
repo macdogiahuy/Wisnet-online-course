@@ -93,7 +93,7 @@
 	<!-- Header section -->
 	@if (TempData[Global.DATA_IGNORE_NAV] is null)
 	{
-		<header class="header-section">
+		@* <header class="header-section">
 			<div class="container">
 				<div class="row main-menu" style="margin-bottom: 0;">
 					<ul style="margin: 0 auto;">
@@ -167,7 +167,51 @@
 					</div>
 				</div>
 			</div>
+		</header> *@
+
+		<header class="header-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-3">
+						<img src="~/img/Logo.png" alt="" style="pointer-events: none; user-select: none; margin-top: -10px;">
+						<div class="nav-switch">
+							<i class="fa fa-bars"></i>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6">
+						<div class="search-bar">
+							<input type="text" class="search-input" placeholder="Search for anything">
+							<button class="search-button" onclick="#">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3">
+						@{
+							var client = await Context.GetClientData();
+							if (client is null)
+							{
+								<a href="@Global.PAGE_SIGNIN" class="site-btn header-btn">@text["SignIn"]</a>
+							}
+							else
+							{
+								<div class="dropdown site-btn header-btn">
+									<div data-bs-toggle="dropdown" aria-expanded="false">@client?.FullName</div>
+									<ul class="dropdown-menu">
+										<li><a href="@Global.PAGE_PROFILE">@text["Profile"]</a></li>
+										<li><a href="@Global.PAGE_SIGNOUT">@text["SignOut"]</a></li>
+									</ul>
+								</div>
+							}
+						}
+					</div>
+				</div>
+			</div>
 		</header>
+
+
+
+
 	}
 	
 	
@@ -196,6 +240,7 @@
 	<script src="~/js/circle-progress.min.js"></script>
 	<script src="~/js/owl.carousel.min.js"></script>
 	<script src="~/js/main.js"></script>
+
 
 	@await RenderSectionAsync(name: "ValidateScript", required: false)
     @await RenderSectionAsync("Scripts", required: false)
