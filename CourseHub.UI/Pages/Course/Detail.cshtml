@@ -152,11 +152,11 @@
     .review__submit-button:hover {
         cursor: pointer;
     }
-    .report_btn {
+
+        .report_btn {
         left: 20px;
         bottom: 20px;
     }
-
     .report_course button {
         padding: 5px;
         font-size: 18px;
@@ -176,11 +176,9 @@
         /* Ẩn popup mặc định */
         display: none;
     }
-
         .popup-box.show {
             display: block;
         }
-
     .box {
         position: absolute;
         top: 50%;
@@ -191,7 +189,6 @@
         border-radius: 5px;
         text-align: center;
     }
-
     .close-icon {
         position: absolute;
         right: 10px;
@@ -203,24 +200,20 @@
         text-align: center;
         cursor: pointer;
     }
-
     .box h2 {
         margin: 0 0 20px;
         border-bottom: 1px solid #ccc;
         padding: 0 0 5px;
         color: #333;
     }
-
     .box .content {
         margin: 20px 0;
     }
-
         .box .content p {
             margin: 0 0 5px;
             color: #333;
             font-size: 14px;
         }
-
     .box button {
         background: #5cb85c;
         width: 100%;
@@ -232,10 +225,8 @@
         border-radius: 5px;
         cursor: pointer;
     }
-
     /* Style cho nút đóng, nội dung */
 </style>
-
 
 
 
@@ -296,29 +287,26 @@
                     </div>
                 </div>
 
+
                 @*dev_reportButton*@
                 <div class="report_course">
                     <button id="reportBtn">Report</button>
                 </div>
-
                 @*dev_reportPopup*@
-
                 <div class="popup-box" id="popupBox">
                     <div class="box">
                         <span class="close-icon">x</span>
-
                         <h2>Report this group</h2>
-
                         <div class="content">
                             <p>This course violates community standards</p>
                             <p>This course was fake idol to earn money</p>
                             <p>This course was sent content don't available'</p>
                         </div>
-
                         <button type="submit">Submit report</button>
-
                     </div>
                 </div>
+
+
 
                 <div class="clp-lead__element-meta">
                     <div class="clp-lead__element-item">
@@ -846,14 +834,5 @@
                 form.submit();
             }
         }
-
-        const reportBtn = document.getElementById('reportBtn');
-        const popupBox = document.getElementById('popupBox');
-
-        reportBtn.addEventListener('click', () => {
-            popupBox.classList.add('show');
-        });
-
-        // Code đóng popup khi click nút Close
     </script>
 }

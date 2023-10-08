@@ -13,7 +13,7 @@ h5,
 h6 {
 	margin: 0;
 	font-weight: 600;
-	color: #494d58;
+	color: #474747;
 }
 
 h1 {
@@ -84,7 +84,8 @@ a:focus {
 ul,
 ol {
 	padding: 0;
-	margin-left: -60px;
+	margin: 0;
+	margin-left: 35px;
 }
 
 /*---------------------
@@ -98,50 +99,15 @@ ol {
 }
 
 .section-title h2 {
-	font-family: var(--font-stack-heading);
+	font-size: 48px;
 	font-weight: 600;
-	line-height: 1.2;
-	letter-spacing: -0.02rem;
-	font-size: 41px;
 	margin-bottom: 25px;
-	margin-top: -15px;
 }
-
-.search-bar {
-	display: flex;
-	align-items: center;
-	width: 100%;
-	margin-left: 30px;
-}
-
-.search-input {
-	width: 80%; /* Adjust as needed */
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px 0 0 5px;
-	font-size: 16px;
-}
-
-.search-button {
-	width: 20%; /* Adjust as needed */
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 0 5px 5px 0;
-	background-color: #f8f9fa;
-	cursor: pointer;
-}
-
-	.search-button i {
-		font-size: 18px;
-	}
-
 
 .section-title p {
 	margin-bottom: 0;
 	font-weight: 500;
-	margin-top: 15px;
-	margin-left: 3px;
-	text-align: justify
+	margin-top: -25px;
 }
 
 .set-bg {
@@ -294,10 +260,6 @@ ol {
 	display: inline-block;
 }
 
-.site-logo img {
-	width: 70%;
-}
-
 .main-menu ul {
 	list-style: none;
 }
@@ -307,7 +269,6 @@ ol {
 }
 
 .main-menu ul li a {
-
 	display: inline-block;
 	font-size: 16px;
 	color: #fff;
@@ -323,7 +284,6 @@ ol {
 .header-btn {
 	float: right;
 	margin-right: 0;
-	margin-top: -5px;
 }
 
 .nav-switch {
@@ -345,12 +305,8 @@ ol {
 }
 
 .hero-text h2 {
-	font-family: var(--font-stack-heading);
-	font-weight: 500;
-	line-height: 1.2;
-	letter-spacing: -0.02rem;
 	font-size: 60px;
-	max-width: 36em;
+	font-weight: 500;
 	margin-bottom: 20px;
 	margin-top: -40px;
 }
@@ -366,9 +322,9 @@ ol {
 	font-size: 14px;
 }
 
-/*.intro-newslatter .site-btn {
+.intro-newslatter .site-btn {
 	min-width: 214px;
-}*/
+}
 
 /*------------------
   Categories section
@@ -423,9 +379,9 @@ ol {
 ---------------------*/
 
 .search-warp {
-	background: #494d58;
+	background: #d82a4e;
 	padding-top: 60px;
-	padding-bottom: 30px;
+	padding-bottom: 50px;
 }
 
 .search-warp .section-title {
@@ -455,7 +411,7 @@ ol {
 }
 
 .course-search-form .site-btn {
-/*	min-width: 198px;*/
+	min-width: 198px;
 	padding: 16px 10px;
 }
 
@@ -505,7 +461,7 @@ ol {
 .course-warp {
 	max-width: 1559px;
 	padding: 0 15px;
-	margin-left: 60px;
+	margin: 0 auto -30px;
 }
 
 .course-item {
@@ -713,7 +669,7 @@ ol {
 .signup-form .file-up-btn,
 .contact-form .file-up-btn {
 	display: block;
-	background: #494d58;
+	background: #3e3e3e;
 	color: #fff;
 	max-width: 175px;
 	padding: 13px 5px;
