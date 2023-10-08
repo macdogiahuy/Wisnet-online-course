@@ -1,4 +1,5 @@
 ﻿@page
+@using CourseHub.Core.Entities.CommonDomain.Enums;
 @using CourseHub.UI.Helpers.Utils;
 @model CourseHub.UI.Pages.Lecture.DetailModel
 @{
@@ -38,6 +39,91 @@
 
     .u-course-highlight {
         margin-top: 20px;
+    }
+
+
+
+
+
+    .app__review__item {
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .app__review__item__pic {
+      float: left;
+      margin-right: 20px;
+      position: relative;
+    }
+
+    .app__review__item__pic:before {
+      position: absolute;
+      right: -30px;
+      top: 15px;
+      border-top: 15px solid transparent;
+      border-left: 15px solid #1d1e39;
+      content: "";
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    .app__review__item__pic img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+    }
+
+    .app__review__item__text {
+      overflow: hidden;
+      background: #1d1e39;
+      padding: 18px 30px 16px 20px;
+      border-radius: 10px;
+    }
+
+    .app__review__item__text h6 {
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .app__review__item__text h6 span {
+      color: #b7b7b7;
+      font-weight: 400;
+    }
+
+    .app__review__item__text p {
+      color: #b7b7b7;
+      line-height: 23px;
+      margin-bottom: 0;
+    }
+
+    #app-form textarea {
+        width: 100%;
+        font-size: 15px;
+        padding-left: 20px;
+        padding-top: 12px;
+        height: 110px;
+        border: none;
+        border-radius: 5px;
+        resize: none;
+    }
+
+    .review__submit-button {
+        font-size: 11px;
+        color: #ffffff;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: dodgerblue;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 2px;
+        float: right;
+    }
+
+    .review__submit-button:hover {
+        cursor: pointer;
     }
 </style>
 
@@ -134,8 +220,58 @@
                                 }
                             </div>
                         </div>
+
+
+
+                        <!-- Some css diff compared with reviews -->
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="app__details__review">
+                                    <div class="section-title mb-4">
+                                        <h5 style="font-size: 24px;">Comments</h5>
+                                    </div>
+                                @if (Model.Comments.TotalCount == 0)
+                                {
+                                    <div class="alert alert-danger fs-3" role="alert">
+                                        No comments yet
+                                    </div>
+                                }
+                                else
+                                {
+                                    @foreach (var comment in Model.Comments.Items)
+                                    {
+                                        var user = comment.Creator;
+                                        if (user is null)
+                                            continue;
+
+                                        <div class="app__review__item">
+                                            <div class="app__review__item__pic">
+                                                <img src="@user.AvatarUrl" alt="">
+                                            </div>
+                                            <div class="app__review__item__text">
+                                                <h6 class="mt-3">@user.FullName - <span>@comment.LastModificationTime</span></h6>
+                                                <p>@comment.Content</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                </div>
+                                <div class="app__details__form">
+                                <!-- See Script section -->
+                                <form id="app-form" method="post" asp-page-handler="CreateComment">
+                                    <input asp-for="Id" value="@Model.Lecture.Id" hidden />
+                                    <input asp-for="CreateCommentDto.SourceType" value="@((byte)CommentSourceEntityType.Lecture)" hidden />
+                                    <input asp-for="CreateCommentDto.SourceId" value="@Model.Lecture.Id" hidden />
+                                    <textarea asp-for="CreateCommentDto.Content" placeholder="Comment here"></textarea>
+                                    <!-- //... Medias -->
+                                    <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Create</button>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
                         
-                        <div class="u-cm-hv">
+                        <!--<div class="u-cm-hv">
                             <p class="detail_h2_title">Comments</p>
                             <div>
                                 <ul class="load_comment">
@@ -164,7 +300,7 @@
                             <center>
                                 <a class="view-more" id="loadmore_comment" data-id="1623" href="javascript:void()">Xem thêm</a>
                             </center>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

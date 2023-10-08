@@ -20,7 +20,7 @@ public class CourseReviewService : DomainService, ICourseReviewService
     public async Task<ServiceResult<PagedResult<CourseReviewModel>>> GetPagedAsync(QueryCourseReviewDto dto)
     {
         var query = _uow.CourseReviewRepo.GetPagingQuery(GetPredicate(dto), dto.PageIndex, dto.PageSize);
-        var result = await query.ExecuteWithOrderBy(_ => _.LastModificationTime);
+        var result = await query.ExecuteWithOrderBy(_ => _.LastModificationTime, ascending: false);
         return ToQueryResult(result);
     }
 

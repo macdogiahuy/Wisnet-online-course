@@ -28,5 +28,6 @@ public interface IUserService
     Task<ServiceResult<ClaimAuthModel>> ExternalSignInAsync(ClaimsPrincipal claimsPrincipal, Role role);
     Task<ServiceResult<AuthModel>> RefreshAsync(string? accessToken, string? refreshToken, ITokenService tokenService);
 
+    Task<ServiceResult> IsValidToken(string email, string token);
     Task ForceCommitAsync();
 }

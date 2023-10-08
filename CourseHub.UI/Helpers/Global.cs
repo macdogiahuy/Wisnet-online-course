@@ -26,7 +26,7 @@ public class Global
     public const string PAGE_SIGNOUT = "/User/SignOut";
     public const string PAGE_FORGOT_PASSWORD = "/forgot-password";
     public const string PAGE_CHANGE_PASSWORD = "/User/ChangePassword";
-    public const string PAGE_USER = "/User";
+    public const string PAGE_USER = "/User/Index";
 
 	public const string PAGE_INSTRUCTOR = "/Instructor";
     public const string PAGE_INSTRUCTOR_REQUEST = "/Instructor/Request";
@@ -35,6 +35,7 @@ public class Global
     public const string PAGE_COURSE_MANAGE = "/Course/Manage";
     public const string PAGE_COURSE_CREATE = "/Course/Create";
     public const string PAGE_COURSE_UPDATE = "/Course/Update";
+    public const string PAGE_COURSE_ENROLLED = "/Course/Enrolled";
     public const string PAGE_SECTION_UPDATE = "/Section/Update";
     public const string PAGE_LECTURE = "/Lecture/Detail";
 

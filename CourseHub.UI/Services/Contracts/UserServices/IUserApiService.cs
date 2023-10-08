@@ -21,4 +21,6 @@ public interface IUserApiService
 
     Task<HttpResponseMessage> SignInAsync(SignInDto dto);
     Task SignOutAsync();
+
+    Task<HttpResponseMessage> CheckValidityAsync(string email, string token);
 }

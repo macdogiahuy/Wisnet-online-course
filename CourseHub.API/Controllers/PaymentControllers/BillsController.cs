@@ -78,9 +78,12 @@ public class BillsController : BaseController
             return Redirect(clientUrl + "/404");
 
         List<Guid> identifiers = TextHelper.GetGuidsFromString(vnpResponse.vnp_OrderInfo, 2);
-		Guid client = identifiers[0];
+        if (identifiers.Count < 2)
+            return Redirect(clientUrl + $"/404");
+        Guid client = identifiers[0];
 		Guid courseId = identifiers[1];
-		if (identifiers.Count < 2)
+
+        if (string.IsNullOrEmpty(vnpResponse.vnp_BankTranNo))
             return Redirect(clientUrl + $"/Payment?courseId={courseId}&failed=true");
 
         Guid billId = Guid.NewGuid();

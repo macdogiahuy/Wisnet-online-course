@@ -227,7 +227,7 @@ public class CourseService : DomainService, ICourseService
 
         if (dto.Title is not null)
             entity.SetTitle(dto.Title);
-        if (dto.Discount is not null)
+        if (dto.Discount is not null && dto.DiscountExpiry is not null)
             entity.SetDiscount((double)dto.Discount, (DateTime)dto.DiscountExpiry!);
         entity.LastModifierId = client;
 

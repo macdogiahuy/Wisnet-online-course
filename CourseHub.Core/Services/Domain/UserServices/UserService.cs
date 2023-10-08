@@ -289,6 +289,7 @@ public class UserService : DomainService, IUserService
         try
         {
             user.SetPassword(dto.NewPassword);
+            user.GenerateToken();
             await _uow.CommitAsync();
             return Ok();
         }
@@ -297,6 +298,17 @@ public class UserService : DomainService, IUserService
             _logger.Warn(ex.Message);
             return ServerError();
         }
+    }
+
+    public async Task<ServiceResult> IsValidToken(string email, string token)
+    {
+        var user = await _uow.UserRepo.FindByEmail(email);
+
+        if (user is null)
+            return NotFound();
+        if (user.Token != token)
+            return NotFound();
+        return Ok();
     }
 
     public async Task ForceCommitAsync()

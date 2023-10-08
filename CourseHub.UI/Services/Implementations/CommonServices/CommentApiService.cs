@@ -1,4 +1,5 @@
-﻿using CourseHub.Core.Interfaces.Repositories.Shared;
+﻿using CourseHub.Core.Helpers.Http;
+using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Common.CommentModels;
 using CourseHub.Core.RequestDtos.Common.CommentDtos;
 using CourseHub.UI.Helpers.Http;
@@ -31,9 +32,11 @@ public class CommentApiService : ICommentApiService
         }
     }
 
-    public Task<HttpResponseMessage> CreateAsync(CreateCommentDto dto, HttpContext context)
+    public async Task<HttpResponseMessage> CreateAsync(CreateCommentDto dto, HttpContext context)
     {
-        throw new NotImplementedException();
+        _client.AddBearerHeader(context);
+        var result = await _client.PostAsync("/api/Comments", ToFormData(dto));
+        return result;
     }
 
     public Task<HttpResponseMessage> UpdateAsync(UpdateCommentDto dto, HttpContext context)
@@ -44,5 +47,25 @@ public class CommentApiService : ICommentApiService
     public Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context)
     {
         throw new NotImplementedException();
+    }
+
+
+
+
+
+
+    private MultipartFormDataContent ToFormData(CreateCommentDto dto)
+    {
+        FormDataHelper helper = new()
+        {
+            KeyValuePairs = new()
+            {
+                { nameof(dto.Content), dto.Content },
+                { nameof(dto.SourceType), ((byte)dto.SourceType).ToString() },
+                { nameof(dto.SourceId), dto.SourceId.ToString() }
+            }
+        };
+
+        return helper.ToFormData();
     }
 }

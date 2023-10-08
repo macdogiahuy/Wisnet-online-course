@@ -2,6 +2,7 @@
 using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
+using CourseHub.Core.Models.Course.EnrollmentModels;
 using CourseHub.Core.Services.Domain.CourseServices.Contracts;
 
 namespace CourseHub.Core.Services.Domain.CourseServices;
@@ -15,6 +16,12 @@ public class EnrollmentService : DomainService, IEnrollmentService
     public async Task<ServiceResult<bool>> IsEnrolled(Guid courseId, Guid client)
     {
         bool result = await _uow.EnrollmentRepo.IsEnrolled(client, courseId);
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<List<EnrollmentModel>>> Get(Guid client)
+    {
+        var result = await _uow.EnrollmentRepo.Get(client);
         return ToQueryResult(result);
     }
 

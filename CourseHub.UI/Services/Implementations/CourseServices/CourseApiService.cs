@@ -1,6 +1,8 @@
-﻿using CourseHub.Core.Helpers.Http;
+﻿using CourseHub.Core.Entities.CourseDomain;
+using CourseHub.Core.Helpers.Http;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
+using CourseHub.Core.Models.Course.EnrollmentModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
@@ -135,7 +137,8 @@ public class CourseApiService : ICourseApiService
         try
         {
             _client.AddBearerHeader(context);
-            var result = await _client.GetFromJsonAsync<bool>($"api/enrollments?courseId={courseId}", SerializeOptions.JsonOptions);
+            var result = await _client.GetFromJsonAsync<bool>(
+                $"api/enrollments?courseId={courseId}", SerializeOptions.JsonOptions);
             return result!;
         }
         catch
@@ -143,6 +146,27 @@ public class CourseApiService : ICourseApiService
             return false;
         }
     }
+
+    public async Task<List<EnrollmentModel>> GetEnrollmentAsync(HttpContext context)
+    {
+        try
+        {
+            _client.AddBearerHeader(context);
+            var result = await _client.GetFromJsonAsync<List<EnrollmentModel>>(
+                "api/enrollments/courses", SerializeOptions.JsonOptions);
+            return result!;
+        }
+        catch
+        {
+            return new();
+        }
+    }
+
+
+
+
+
+
 
     private MultipartFormDataContent ToFormData(CreateCourseDto dto)
     {
