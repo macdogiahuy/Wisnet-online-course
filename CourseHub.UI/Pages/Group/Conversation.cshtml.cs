@@ -17,23 +17,45 @@ public class ConversationModel : PageModel
     public UserFullModel Client { get; set; }
     public Dictionary<Guid, UserOverviewModel> RelatedUsers { get; set; }
     public List<Core.Models.Social.ConversationModel> Conversations { get; set; }
-    public Core.Models.Social.ConversationModel CurrentConversation { get; set; }
+    public Core.Models.Social.ConversationModel? CurrentConversation { get; set; }
     public List<ChatMessageModel> Messages { get; set; }
 
 
 
     public async Task<IActionResult> OnGet(
         [FromQuery] Guid id,
+        [FromQuery] Guid newTarget,
         [FromServices] IUserApiService userApiService,
         [FromServices] IConversationApiService conversationApiService,
         [FromServices] IChatMessageApiService chatMessageApiService)
     {
-        if (id == default)
+        if (id == default && newTarget == default)
             return Redirect(Global.PAGE_404);
 
         Client = await HttpContext.GetClientData();
         if (Client is null)
             return Redirect(Global.PAGE_SIGNIN);
+
+        if (id == default && newTarget != default)
+        {
+            try
+            {
+                CreateConversationDto createDto = new()
+                {
+                    OtherParticipants = new() { newTarget }
+                };
+                var result = await conversationApiService.CreateAsync(createDto, HttpContext);
+                if (result.IsSuccessStatusCode)
+                {
+                    string? createdConversation = await result.Content.ReadFromJsonAsync<string>();
+                    return Redirect(Request.Path + "?id=" + createdConversation);
+                }
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
 
 
 
@@ -44,12 +66,29 @@ public class ConversationModel : PageModel
         var conversations = await conversationApiService.GetAsync(dto, HttpContext);
         Conversations = conversations.Items;
 
+
+
+        CurrentConversation = conversations.Items.FirstOrDefault(_ => _.Id == id);
+        CurrentConversation ??= await conversationApiService.GetAsync(id, HttpContext);
+        if (CurrentConversation is null)
+            return Redirect(Global.PAGE_404);
+
+
+
         List<Guid> relatedUserIds = new();
         foreach (var conversation in Conversations)
             foreach (var member in conversation.Members)
                 relatedUserIds.Add(member.CreatorId);
         var relatedUsers = await userApiService.GetOverviewAsync(relatedUserIds);
         RelatedUsers = relatedUsers.ToDictionary(_ => _.Id);
+
+        if (CurrentConversation is null)
+        {
+            Messages = new();
+            return Page();
+        }
+
+
 
         foreach (var conversation in Conversations)
         {
@@ -67,7 +106,6 @@ public class ConversationModel : PageModel
             }
         }
 
-        CurrentConversation = conversations.Items.FirstOrDefault(_ => _.Id == id)!;
         QueryChatMessageDto queryChatMessageDto = new()
         {
             ConversationId = id

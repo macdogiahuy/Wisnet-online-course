@@ -7,8 +7,9 @@ namespace CourseHub.Core.Services.Domain.SocialServices.Contracts;
 
 public interface IConversationService
 {
-    Task<ServiceResult<ConversationModel>> Get(Guid id, Guid client);
-    Task<ServiceResult<PagedResult<ConversationModel>>> Get(QueryConversationDto dto, Guid client);
+    Task<ServiceResult<ConversationModel>> Get(Guid id, Guid? client);
+    Task<ServiceResult<PagedResult<ConversationModel>>> Get(QueryConversationDto dto, Guid? client);
+    Task<ServiceResult<PagedResult<ConversationModel>>> GetConversationsOrUsers(QueryConversationDto dto, Guid? client);
 
     Task<ServiceResult<Guid>> Create(CreateConversationDto dto, Guid client);
     Task<ServiceResult> Update(UpdateConversationDto dto, Guid client);

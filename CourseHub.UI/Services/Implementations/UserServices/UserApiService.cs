@@ -76,9 +76,13 @@ public class UserApiService : IUserApiService
     {
         try
         {
-            _client.AddBearerHeader(context);
+            //_client.AddBearerHeader(context);
             var result = await _client.GetFromJsonAsync<PagedResult<UserModel>>($"api/users?{QueryBuilder.Build(dto)}");
-            return result!;
+            foreach (var item in result!.Items)
+            {
+                item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
+            }
+            return result;
         }
         catch
         {

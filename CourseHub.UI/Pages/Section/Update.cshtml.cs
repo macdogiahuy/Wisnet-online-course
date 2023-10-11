@@ -1,10 +1,8 @@
 using CourseHub.Core.Entities.CourseDomain.Enums;
-using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.RequestDtos.Course.LectureDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -42,6 +40,14 @@ public class UpdateModel : PageModel
 
     public async Task<IActionResult> OnPostCreateLecture([FromServices] ILectureApiService lectureApiService)
     {
+        if (!ModelState.IsValid)
+        {
+            TempData[Global.DATA_USE_BACKGROUND] = true;
+            TempData[Global.ALERT_STATUS] = false;
+            TempData[Global.ALERT_MESSAGE] = "Cannot create lecture!";
+            return Page();
+        }
+
         CreateLectureDto.Materials = new();
         for (int i = 0; i < Files.Length; i++)
             CreateLectureDto.Materials.Add(new CreateLectureDto.CreateLectureMaterialDto
@@ -59,7 +65,6 @@ public class UpdateModel : PageModel
         }
 
         Guid sectionId = CreateLectureDto.SectionId;
-        CreateLectureDto = new();
-        return await OnGet(sectionId);
+        return Redirect(Request.Path + "?sectionId=" + sectionId);
     }
 }

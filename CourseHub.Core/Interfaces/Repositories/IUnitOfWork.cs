@@ -34,4 +34,6 @@ public interface IUnitOfWork
 
     IAssignmentRepository AssignmentRepo { get; }
     IMcqQuestionRepository McqQuestionRepo { get; }
+    IMcqChoiceRepository McqChoiceRepo { get; }
+    ISubmissionRepository SubmissionRepo { get; }
 }

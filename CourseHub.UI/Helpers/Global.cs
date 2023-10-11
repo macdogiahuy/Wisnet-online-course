@@ -28,7 +28,7 @@ public class Global
     public const string PAGE_CHANGE_PASSWORD = "/User/ChangePassword";
     public const string PAGE_USER = "/User/Index";
 
-	public const string PAGE_INSTRUCTOR = "/Instructor";
+    public const string PAGE_INSTRUCTOR = "/Instructor";
     public const string PAGE_INSTRUCTOR_REQUEST = "/Instructor/Request";
     public const string PAGE_COURSE = "/Course/Search";
     public const string PAGE_COURSE_DETAIL = "/Course/Detail";
@@ -43,11 +43,13 @@ public class Global
 
     public const string PAGE_GROUP = "/Group";
     public const string PAGE_GROUP_CONVERSATION = "/Group/Conversation";
+    public const string PAGE_GROUP_CREATE = "/Group/Create";
+    public const string PAGE_GROUP_CALL = "/Group/Call";
 
 
 
-	// Partials
-	public const string PARTIAL_COURSE_OVERVIEW = "~/Pages/Course/_PartialCourseOverview.cshtml";
+    // Partials
+    public const string PARTIAL_COURSE_OVERVIEW = "~/Pages/Course/_PartialCourseOverview.cshtml";
     public const string PARTIAL_COURSE_CAROUSEL = "~/Pages/Course/_PartialCarousel.cshtml";
     public const string PARTIAL_PAGINATION = "~/Pages/Shared/_PartialPagination.cshtml";
 

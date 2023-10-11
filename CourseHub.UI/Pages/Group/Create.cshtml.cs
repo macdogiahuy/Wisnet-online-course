@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using CourseHub.Core.Models.User.UserModels;
 using Microsoft.AspNetCore.Mvc;
 using CourseHub.UI.Services.Contracts.UserServices;
+using CourseHub.Core.RequestDtos.User.UserDtos;
 
 namespace CourseHub.UI.Pages.Group;
 
@@ -15,7 +16,13 @@ public class CreateModel : PageModel
 
     public UserFullModel Client { get; set; }
     public List<Core.Models.Social.ConversationModel> Conversations { get; set; }
-    public Dictionary<Guid, UserOverviewModel> RelatedUsers { get; set; }
+    public Dictionary<Guid, UserModel> RelatedUsers { get; set; }
+
+
+
+
+    [BindProperty]
+    public CreateConversationDto Dto { get; set; }
 
 
 
@@ -40,12 +47,12 @@ public class CreateModel : PageModel
         var conversations = await _conversationApiService.GetAsync(dto, HttpContext);
         Conversations = conversations.Items;
 
-        List<Guid> relatedUserIds = new();
+        /*List<Guid> relatedUserIds = new();
         foreach (var conversation in Conversations)
             foreach (var member in conversation.Members)
-                relatedUserIds.Add(member.CreatorId);
-        var relatedUsers = await userApiService.GetOverviewAsync(relatedUserIds);
-        RelatedUsers = relatedUsers.ToDictionary(_ => _.Id);
+                relatedUserIds.Add(member.CreatorId);*/
+        var relatedUsers = await userApiService.GetPagedAsync(new QueryUserDto(), HttpContext);
+        RelatedUsers = relatedUsers.Items.ToDictionary(_ => _.Id);
 
         foreach (var conversation in Conversations)
         {
@@ -64,5 +71,16 @@ public class CreateModel : PageModel
         }
 
         return Page();
+    }
+
+    public async Task<IActionResult> OnPost([FromServices] IConversationApiService conversationApiService)
+    {
+        var result = await conversationApiService.CreateAsync(Dto, HttpContext);
+        if (result.IsSuccessStatusCode)
+            return Redirect(Request.Path);
+
+        TempData[Global.ALERT_STATUS] = false;
+        TempData[Global.ALERT_MESSAGE] = "Cannot create conversation!";
+        return Redirect(Request.Path);
     }
 }

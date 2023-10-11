@@ -53,9 +53,20 @@ public class CommentService : DomainService, ICommentService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult> DeleteAsync(Guid id, Guid? client)
+    public async Task<ServiceResult> DeleteAsync(Guid id, Guid? client)
     {
-        throw new NotImplementedException();
+        if (client is null || client == default)
+            return Unauthorized();
+
+        var entity = await _uow.CommentRepo.Find(id);
+        if (entity is null)
+            return NotFound();
+        if (entity.CreatorId != client)
+            return Unauthorized();
+
+        _uow.CommentRepo.Delete(entity);
+        await _uow.CommitAsync();
+        return Ok();
     }
 
 
@@ -78,7 +89,7 @@ public class CommentService : DomainService, ICommentService
         Guid id = Guid.NewGuid();
 
         List<CommentMedia>? medias = null;
-        
+
         if (dto.Medias is not null)
         {
             medias = new();

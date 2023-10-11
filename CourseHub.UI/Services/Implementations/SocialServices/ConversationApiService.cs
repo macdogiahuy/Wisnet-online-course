@@ -1,5 +1,5 @@
-﻿using CourseHub.Core.Interfaces.Repositories.Shared;
-using CourseHub.Core.Models.Course.CourseModels;
+﻿using CourseHub.Core.Helpers.Http;
+using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Social;
 using CourseHub.Core.RequestDtos.Social.ConversationDtos;
 using CourseHub.UI.Helpers.AppStart;
@@ -33,7 +33,7 @@ public class ConversationApiService : IConversationApiService
                 if (string.IsNullOrEmpty(item.AvatarUrl))
                     continue;
                 if (!ResourceHelper.IsRemote(item.AvatarUrl))
-                    item.AvatarUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/conversations/Resource/{item.Id}/local-thumb";
+                    item.AvatarUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/conversations/Resource/{item.Id}";
             }
 
             return result;
@@ -44,9 +44,32 @@ public class ConversationApiService : IConversationApiService
         }
     }
 
-    public Task<HttpResponseMessage> CreateAsync(CreateConversationDto dto, HttpContext context)
+    public async Task<ConversationModel?> GetAsync(Guid id, HttpContext context)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _client.AddBearerHeader(context);
+            var result = await _client.GetFromJsonAsync<ConversationModel>(
+                $"api/conversations/{id}", SerializeOptions.JsonOptions);
+
+            if (string.IsNullOrEmpty(result!.AvatarUrl))
+                return result;
+            if (!ResourceHelper.IsRemote(result.AvatarUrl))
+                result.AvatarUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/conversations/Resource/{result.Id}";
+
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public async Task<HttpResponseMessage> CreateAsync(CreateConversationDto dto, HttpContext context)
+    {
+        _client.AddBearerHeader(context);
+        var result = await _client.PostAsync("/api/conversations", ToFormData(dto));
+        return result;
     }
 
     public Task<HttpResponseMessage> UpdateAsync(UpdateConversationDto dto, HttpContext context)
@@ -54,8 +77,43 @@ public class ConversationApiService : IConversationApiService
         throw new NotImplementedException();
     }
 
-    public Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context)
+    public async Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context)
     {
-        throw new NotImplementedException();
+        _client.AddBearerHeader(context);
+        var result = await _client.DeleteAsync($"/api/conversations/{id}");
+        return result;
+    }
+
+
+
+
+
+
+    private MultipartFormDataContent ToFormData(CreateConversationDto dto)
+    {
+        FormDataHelper helper = new()
+        {
+            KeyValuePairs = new()
+            {
+                { nameof(dto.Title), dto.Title },
+                { "Avatar.Url", dto.Avatar?.Url }
+            }
+        };
+
+        if (dto.OtherParticipants is not null && dto.OtherParticipants.Count > 0)
+        {
+            for (int i = 0; i < dto.OtherParticipants.Count; i++)
+                helper.KeyValuePairs.Add($"OtherParticipants[{i}]", dto.OtherParticipants[i].ToString());
+        }
+
+        if (dto.Avatar?.File is not null)
+        {
+            helper.Files = new List<(Stream, string, string)>
+            {
+                (dto.Avatar.File.OpenReadStream(), "Avatar.File", dto.Avatar.File.FileName)
+            };
+        }
+
+        return helper.ToFormData();
     }
 }

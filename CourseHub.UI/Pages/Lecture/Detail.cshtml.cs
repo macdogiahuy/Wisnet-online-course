@@ -3,12 +3,11 @@ using CourseHub.Core.Models.Common.CommentModels;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Common.CommentDtos;
-using CourseHub.Core.RequestDtos.Course.CourseReviewDtos;
 using CourseHub.UI.Helpers;
+using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts.CommonServices;
 using CourseHub.UI.Services.Contracts.CourseServices;
-using CourseHub.UI.Services.Contracts.UserServices;
 using CourseHub.UI.Services.Implementations.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,6 +20,9 @@ public class DetailModel : PageModel
     public UserFullModel Client { get; set; }
     public CourseOverviewModel Course { get; set; }
     public PagedResult<CommentModel> Comments { get; set; }
+    public string DeleteCommentApiPath { get; set; }
+
+
 
     [BindProperty]
     public Guid Id { get; set; }
@@ -61,6 +63,7 @@ public class DetailModel : PageModel
                 comment.Creator.AvatarUrl = UserApiService.GetAvatarApiUrl(comment.Creator.AvatarUrl, comment.Creator.Id);
         }
 
+        DeleteCommentApiPath = Configurer.GetApiClientOptions().ApiServerPath + "/api/comments";
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();
     }

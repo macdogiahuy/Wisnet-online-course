@@ -178,6 +178,7 @@
         // Autosize
         //
 
+        /*
         autosize(document.querySelectorAll('[data-autosize="true"]'));
 
         //
@@ -185,7 +186,7 @@
         //
 
         SVGInjector(document.querySelectorAll('img[data-inject-svg]'));
-
+        */
     });
 
 })(jQuery);

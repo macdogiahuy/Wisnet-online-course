@@ -6,6 +6,111 @@
 
 <link rel="stylesheet" href="~/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/chat.min.css" />
+<style>
+    .report_btn {
+        left: 20px;
+        bottom: 20px;
+    }
+
+    .report_group button {
+        padding: 5px;
+        font-size: 18px;
+        background-color: #d82a4e; /* màu đỏ */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+    }
+    /* Style cho popup */
+    .popup-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        /* Ẩn popup mặc định */
+        display: none;
+        z-index: 1;
+    }
+
+        .popup-box.show {
+            display: block;
+        }
+
+    .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .close-icon {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        width: 15px;
+        height: 15px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .box h2 {
+        margin: 0 0 20px;
+        border-bottom: 1px solid #ccc;
+        padding: 0 0 5px;
+        color: #333;
+    }
+
+    .box .content {
+        margin: 20px 0;
+        max-height: 150px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .box .content p {
+            margin: 0 0 5px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .box .content button {
+            width: 100%;
+            margin: 0 auto 10px;
+        }
+
+    .greenBtn {
+        background: #5cb85c;
+        width: 100%;
+        color: #fff;
+        border: 0;
+        outline: none;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .greenBtn:hover {
+            background-color: green;
+            color: white;
+        }
+    /*submit done css*/
+    .swal-modal {
+        font-family: sans-serif;
+    }
+
+    .swal-text {
+        text-align: center;
+    }
+</style>
 
 <body>
 
@@ -1577,6 +1682,25 @@
                     <!-- Chat: Content-->
                     <div class="chat-content px-lg-8">
                         <div class="container-xxl py-6 py-lg-10">
+                            <div class="popup-box" id="popupBox">
+                                <div class="box">
+                                    <button type="button" class="close" id="close" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+
+
+                                    <h2>Report this group</h2>
+
+                                    <div class="content">
+                                        <button class="greenBtn">This group violates community standards</button>
+                                        <button class="greenBtn">This group was fake idol to earn money</button>
+                                        <button class="greenBtn">This group was sent content don't available</button>
+                                    </div>
+
+                                    <button class="greenBtn" type="submit" id="submit">Submit report</button>
+
+                                </div>
+                            </div>
 
                             <!-- Message -->
                             <div class="message">
@@ -2100,6 +2224,11 @@
                                 </div>
                                 <h5>Bootstrap Themes</h5>
                                 <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML, CSS, and JS.</p>
+                                @*dev_reportButton*@
+
+                                <div class="report_group">
+                                    <button id="reportBtn">Report</button>
+                                </div>
                             </div>
 
                             <!-- Navs -->
@@ -3324,5 +3453,43 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/pages/chat-template.js"></script>
     <script src="~/js/pages/plugins.bundle.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        @*dev_reportButton*@
+
+                const reportBtn = document.getElementById('reportBtn');
+        const popupBox = document.getElementById('popupBox');
+
+        reportBtn.addEventListener('click', () => {
+            popupBox.classList.add('show');
+        });
+
+        // Code close popup when click button Close
+
+        function closePopup() {
+            popupBox.classList.remove('show');
+        }
+        const closeBtn = document.getElementById('close');
+
+        closeBtn.addEventListener('click', closePopup);
+
+        const submitbtn = document.getElementById('submit');
+
+        submitbtn.addEventListener('click', () => {
+            //notify when submit done
+            event.preventDefault();
+            swal({
+                title: "Success",
+                text:
+                    "Thanks for your support, we trying to improves user experience",
+                icon: "success",
+                buttons: {
+                    confirm: "Okay"
+                },
+                closeOnClickOutside: false
+            });
+            closePopup();
+        });
+    </script>
 </body>
 </html>
