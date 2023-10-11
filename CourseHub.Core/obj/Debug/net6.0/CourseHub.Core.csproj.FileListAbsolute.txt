@@ -1,0 +1,13 @@
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\bin\Debug\net6.0\CourseHub.Core.deps.json
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\bin\Debug\net6.0\CourseHub.Core.dll
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\bin\Debug\net6.0\CourseHub.Core.pdb
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\NuGet\B79254252140A3DAF064BD356FC00B94A44938FA\MimeTypes\2.4.1\MimeTypes.cs
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\CourseHub.Core.csproj.AssemblyReference.cache
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\CourseHub.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\CourseHub.Core.AssemblyInfoInputs.cache
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\CourseHub.Core.AssemblyInfo.cs
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\CourseHub.Core.csproj.CoreCompileInputs.cache
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\CourseHub.Core.dll
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\refint\CourseHub.Core.dll
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\CourseHub.Core.pdb
+D:\CODE\Dotnet\CourseHub\CourseHub.Core\obj\Debug\net6.0\ref\CourseHub.Core.dll

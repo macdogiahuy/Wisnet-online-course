@@ -1,0 +1,881 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\CourseHub.UI.bundle.scp.css",
+      "PackagePath": "staticwebassets\\CourseHub.UI.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\.gitignore",
+      "PackagePath": "staticwebassets\\.gitignore"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\Profile\\1643.ad151cd3.chunk.css",
+      "PackagePath": "staticwebassets\\css\\Profile\\1643.ad151cd3.chunk.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\Profile\\793.a40e2718.chunk.css",
+      "PackagePath": "staticwebassets\\css\\Profile\\793.a40e2718.chunk.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\Profile\\821.2ca926ad.chunk.css",
+      "PackagePath": "staticwebassets\\css\\Profile\\821.2ca926ad.chunk.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\Profile\\8282.7278d4b3.chunk.css",
+      "PackagePath": "staticwebassets\\css\\Profile\\8282.7278d4b3.chunk.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\Profile\\main.16480feb.css",
+      "PackagePath": "staticwebassets\\css\\Profile\\main.16480feb.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\Profile\\style.css",
+      "PackagePath": "staticwebassets\\css\\Profile\\style.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\Profile\\styleProfile.css",
+      "PackagePath": "staticwebassets\\css\\Profile\\styleProfile.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\SignInAndRegister\\style.css",
+      "PackagePath": "staticwebassets\\css\\SignInAndRegister\\style.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\chat.min.css",
+      "PackagePath": "staticwebassets\\css\\chat.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\common-app-css.5b914d85e01ba6db2ad0.css",
+      "PackagePath": "staticwebassets\\css\\common-app-css.5b914d85e01ba6db2ad0.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\font-awesome.min.css",
+      "PackagePath": "staticwebassets\\css\\font-awesome.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\owl.carousel.css",
+      "PackagePath": "staticwebassets\\css\\owl.carousel.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\sb-admin-2.min.css",
+      "PackagePath": "staticwebassets\\css\\sb-admin-2.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\search-main.css",
+      "PackagePath": "staticwebassets\\css\\search-main.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\ud-482c888e04ea1d274a2e.css",
+      "PackagePath": "staticwebassets\\css\\ud-482c888e04ea1d274a2e.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\ud-5b914d85e01ba6db2ad0.css",
+      "PackagePath": "staticwebassets\\css\\ud-5b914d85e01ba6db2ad0.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\css\\ud-entry-main.af4286be4d337c43f610.css",
+      "PackagePath": "staticwebassets\\css\\ud-entry-main.af4286be4d337c43f610.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\fonts\\Futura.woff",
+      "PackagePath": "staticwebassets\\fonts\\Futura.woff"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\fonts\\Futura1.woff",
+      "PackagePath": "staticwebassets\\fonts\\Futura1.woff"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\fonts\\WEB BASED RESULT PUBLICATION SYSTEM FOR EDUCATION BOARDS.pdf",
+      "PackagePath": "staticwebassets\\fonts\\WEB BASED RESULT PUBLICATION SYSTEM FOR EDUCATION BOARDS.pdf"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\fonts\\feather\\feather.bin",
+      "PackagePath": "staticwebassets\\fonts\\feather\\feather.bin"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\fonts\\feather\\feather.svg",
+      "PackagePath": "staticwebassets\\fonts\\feather\\feather.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\fonts\\feather\\feather.txt",
+      "PackagePath": "staticwebassets\\fonts\\feather\\feather.txt"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\icon-fonts\\fontawesome-webfont.eot",
+      "PackagePath": "staticwebassets\\icon-fonts\\fontawesome-webfont.eot"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\icon-fonts\\fontawesome-webfont.svg",
+      "PackagePath": "staticwebassets\\icon-fonts\\fontawesome-webfont.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\icon-fonts\\fontawesome-webfont.woff",
+      "PackagePath": "staticwebassets\\icon-fonts\\fontawesome-webfont.woff"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\icon-fonts\\fontawesome-webfont.woff2",
+      "PackagePath": "staticwebassets\\icon-fonts\\fontawesome-webfont.woff2"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\User_Empty.png",
+      "PackagePath": "staticwebassets\\img\\User_Empty.png"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\1.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\1.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\2.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\2.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\3.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\3.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\4.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\4.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\5.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\5.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\6.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\6.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\7.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\7.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\authors\\8.jpg",
+      "PackagePath": "staticwebassets\\img\\authors\\8.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\bg.jpg",
+      "PackagePath": "staticwebassets\\img\\bg.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\blog\\1.jpg",
+      "PackagePath": "staticwebassets\\img\\blog\\1.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\blog\\2.jpg",
+      "PackagePath": "staticwebassets\\img\\blog\\2.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\blog\\3.jpg",
+      "PackagePath": "staticwebassets\\img\\blog\\3.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\categories\\1.jpg",
+      "PackagePath": "staticwebassets\\img\\categories\\1.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\categories\\2.jpg",
+      "PackagePath": "staticwebassets\\img\\categories\\2.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\categories\\3.jpg",
+      "PackagePath": "staticwebassets\\img\\categories\\3.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\categories\\4.jpg",
+      "PackagePath": "staticwebassets\\img\\categories\\4.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\categories\\5.jpg",
+      "PackagePath": "staticwebassets\\img\\categories\\5.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\categories\\6.jpg",
+      "PackagePath": "staticwebassets\\img\\categories\\6.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\1.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\1.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\2.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\2.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\3.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\3.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\4.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\4.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\5.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\5.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\6.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\6.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\7.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\7.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\8.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\8.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\f-1.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\f-1.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\f-2.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\f-2.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\courses\\single.jpg",
+      "PackagePath": "staticwebassets\\img\\courses\\single.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\favicon.png",
+      "PackagePath": "staticwebassets\\img\\favicon.png"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\home.jpg",
+      "PackagePath": "staticwebassets\\img\\home.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\logo.png",
+      "PackagePath": "staticwebassets\\img\\logo.png"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\page-bg\\1.jpg",
+      "PackagePath": "staticwebassets\\img\\page-bg\\1.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\page-bg\\2.jpg",
+      "PackagePath": "staticwebassets\\img\\page-bg\\2.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\page-bg\\3.jpg",
+      "PackagePath": "staticwebassets\\img\\page-bg\\3.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\page-bg\\4.jpg",
+      "PackagePath": "staticwebassets\\img\\page-bg\\4.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\page-bg\\5.jpg",
+      "PackagePath": "staticwebassets\\img\\page-bg\\5.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\page-top-bg.jpg",
+      "PackagePath": "staticwebassets\\img\\page-top-bg.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\signin-register-bg.jpg",
+      "PackagePath": "staticwebassets\\img\\signin-register-bg.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\signup-bg.jpg",
+      "PackagePath": "staticwebassets\\img\\signup-bg.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\teacher.jpg",
+      "PackagePath": "staticwebassets\\img\\teacher.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\img\\video-thumb.gif",
+      "PackagePath": "staticwebassets\\img\\video-thumb.gif"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\apis\\hubGateway.js",
+      "PackagePath": "staticwebassets\\js\\apis\\hubGateway.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\chat\\chatHandler.js",
+      "PackagePath": "staticwebassets\\js\\chat\\chatHandler.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\chat\\videoHandler.js",
+      "PackagePath": "staticwebassets\\js\\chat\\videoHandler.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\circle-progress.min.js",
+      "PackagePath": "staticwebassets\\js\\circle-progress.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\common\\storage.js",
+      "PackagePath": "staticwebassets\\js\\common\\storage.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\common\\utilities.js",
+      "PackagePath": "staticwebassets\\js\\common\\utilities.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\constants.js",
+      "PackagePath": "staticwebassets\\js\\constants.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\demo\\chart-area-demo.js",
+      "PackagePath": "staticwebassets\\js\\demo\\chart-area-demo.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\demo\\chart-bar-demo.js",
+      "PackagePath": "staticwebassets\\js\\demo\\chart-bar-demo.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\demo\\chart-pie-demo.js",
+      "PackagePath": "staticwebassets\\js\\demo\\chart-pie-demo.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\demo\\datatables-demo.js",
+      "PackagePath": "staticwebassets\\js\\demo\\datatables-demo.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\jquery-3.2.1.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery-3.2.1.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\jquery.slicknav.js",
+      "PackagePath": "staticwebassets\\js\\jquery.slicknav.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\main.js",
+      "PackagePath": "staticwebassets\\js\\main.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\map.js",
+      "PackagePath": "staticwebassets\\js\\map.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\mixitup.min.js",
+      "PackagePath": "staticwebassets\\js\\mixitup.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\owl.carousel.min.js",
+      "PackagePath": "staticwebassets\\js\\owl.carousel.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\pages\\chat-template.js",
+      "PackagePath": "staticwebassets\\js\\pages\\chat-template.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\pages\\conversation.js",
+      "PackagePath": "staticwebassets\\js\\pages\\conversation.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\pages\\conversationElements.js",
+      "PackagePath": "staticwebassets\\js\\pages\\conversationElements.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\pages\\plugins.bundle.js",
+      "PackagePath": "staticwebassets\\js\\pages\\plugins.bundle.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\sb-admin-2.min.js",
+      "PackagePath": "staticwebassets\\js\\sb-admin-2.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\css\\fonts.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\fonts.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\datatables\\dataTables.bootstrap4.css",
+      "PackagePath": "staticwebassets\\lib\\datatables\\dataTables.bootstrap4.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\datatables\\dataTables.bootstrap4.js",
+      "PackagePath": "staticwebassets\\lib\\datatables\\dataTables.bootstrap4.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\datatables\\dataTables.bootstrap4.min.css",
+      "PackagePath": "staticwebassets\\lib\\datatables\\dataTables.bootstrap4.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\datatables\\dataTables.bootstrap4.min.js",
+      "PackagePath": "staticwebassets\\lib\\datatables\\dataTables.bootstrap4.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\datatables\\jquery.dataTables.js",
+      "PackagePath": "staticwebassets\\lib\\datatables\\jquery.dataTables.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\datatables\\jquery.dataTables.min.js",
+      "PackagePath": "staticwebassets\\lib\\datatables\\jquery.dataTables.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\all.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\all.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\all.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\all.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\brands.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\brands.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\brands.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\brands.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\fontawesome.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\fontawesome.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\fontawesome.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\fontawesome.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\regular.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\regular.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\regular.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\regular.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\solid.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\solid.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\solid.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\solid.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\svg-with-js.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\svg-with-js.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\svg-with-js.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\svg-with-js.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\v4-shims.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v4-shims.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\css\\v4-shims.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v4-shims.min.css"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\all.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\all.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\all.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\all.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\brands.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\brands.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\brands.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\brands.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\conflict-detection.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\conflict-detection.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\conflict-detection.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\conflict-detection.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\fontawesome.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\fontawesome.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\fontawesome.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\fontawesome.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\regular.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\regular.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\regular.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\regular.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\solid.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\solid.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\solid.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\solid.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\v4-shims.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\v4-shims.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\js\\v4-shims.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\v4-shims.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\sprites\\brands.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\sprites\\brands.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\sprites\\regular.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\sprites\\regular.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\sprites\\solid.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\sprites\\solid.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-brands-400.eot",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-brands-400.eot"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-brands-400.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-brands-400.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-brands-400.ttf",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-brands-400.ttf"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-brands-400.woff",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-brands-400.woff"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-brands-400.woff2",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-brands-400.woff2"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-regular-400.eot",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-regular-400.eot"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-regular-400.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-regular-400.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-regular-400.ttf",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-regular-400.ttf"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-regular-400.woff",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-regular-400.woff"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-regular-400.woff2",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-regular-400.woff2"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-solid-900.eot",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-solid-900.eot"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-solid-900.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-solid-900.svg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-solid-900.ttf",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-solid-900.ttf"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-solid-900.woff",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-solid-900.woff"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\font-awesome\\webfonts\\fa-solid-900.woff2",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-solid-900.woff2"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-easing\\jquery.easing.compatibility.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-easing\\jquery.easing.compatibility.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-easing\\jquery.easing.compatibility.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-easing\\jquery.easing.compatibility.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-easing\\jquery.easing.compatibility.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\jquery-easing\\jquery.easing.compatibility.min.js.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-easing\\jquery.easing.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-easing\\jquery.easing.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-easing\\jquery.easing.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-easing\\jquery.easing.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.UI\\wwwroot\\vendor\\@microsoft\\signalr\\signalr.min.js",
+      "PackagePath": "staticwebassets\\vendor\\@microsoft\\signalr\\signalr.min.js"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.CourseHub.UI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.CourseHub.UI.props",
+      "PackagePath": "build\\CourseHub.UI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.CourseHub.UI.props",
+      "PackagePath": "buildMultiTargeting\\CourseHub.UI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.CourseHub.UI.props",
+      "PackagePath": "buildTransitive\\CourseHub.UI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

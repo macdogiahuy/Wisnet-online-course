@@ -1,0 +1,216 @@
+﻿@page
+@using System.Text;
+@using CourseHub.Core.Entities.CourseDomain.Enums;
+@model CourseHub.UI.Pages.Course.UpdateModel
+@{
+    ViewData[Global.TITLE] = "Update Course";
+
+    Dictionary<string, string> text = new()
+    {
+        { "UpdateCourse", "Update course" },
+        { "CourseTitle", "Course title" },              //Tên khóa học
+        { "CourseThumb", "Course thumb" },
+        { "CourseIntro", "Course introduction" },
+        { "CourseDescription", "Course description" },
+        { "CoursePrice", "Course price" },
+        { "CourseDiscount", "Course discount" },
+        { "CourseDiscountExpiry", "Course discount expiry" },
+        { "CourseLevel", "Course level" },
+        { "CourseOutcomes", "Course outcomes" },
+        { "CourseRequirements", "Course requirements" },
+        { "CourseCategory", "Course category" },
+        { "CourseSections", "Course sections" },
+        { "AddSection", "Add section" },
+        { "Update", "Update" }
+    };
+
+    StringBuilder levelSelectBuilder = new();
+    foreach (var item in Enum.GetValues(typeof(CourseLevel)))
+    {
+        levelSelectBuilder.Append(
+            (byte)item != (byte)Model.Course.Level ?
+            $"<option value=\"{(byte)item}\">{item}</option>" :
+            $"<option value=\"{(byte)item}\" selected>{item}</option>"
+        );
+    }
+
+    StringBuilder categorySelectBuilder = new();
+    foreach (var item in Model.Categories)
+    {
+        if (item.IsLeaf)
+        {
+            categorySelectBuilder.Append(
+                item.Id == Model.Course.LeafCategoryId
+                    ? $"<option value=\"{item.Id}\" selected>{item.Title}</option>"
+                    : $"<option value=\"{item.Id}\">{item.Title}</option>"
+            );
+        }
+    }
+}
+
+<style>
+
+</style>
+
+<!--<style>
+    form {
+        margin-top: 40px;
+    }
+</style>
+
+<form method="post" enctype="multipart/form-data" asp-page-handler="CreateLecture">
+    <input asp-for="CourseId" hidden />
+    <input asp-for="CreateLectureDto.SectionId" hidden />
+    <input type="text" asp-for="CreateLectureDto.Title" placeholder="Title" />
+    <input type="text" asp-for="CreateLectureDto.Content" placeholder="Content" />
+    <input type="file" asp-for="Files" multiple />
+    <input type="submit" value="Submit" />
+</form>-->
+
+
+
+
+
+<style>
+    #sections-group>div {
+        margin-top: 4px;
+    }
+
+    .container form {
+        font-size: 2.4rem;
+    }
+
+    .container form .form-control {
+        height: calc(3.5rem + 2px);
+        font-size: 1.5rem;
+    }
+
+    .container form textarea {
+        height: 120px !important;
+    }
+
+    .container form .btn {
+        font-size: 18px;
+    }
+
+</style>
+
+
+@await Html.PartialAsync("Shared/_Alert")
+
+<div class="container mt-5" style="width: 50%">
+    <h1 class="mb-4" style="font-size: 36px; text-align:center">@text["UpdateCourse"]</h1>
+    <form method="post" asp-page-handler="UpdateCourse" enctype="multipart/form-data" style="display: flex; flex-direction: column">
+        <input type="hidden" asp-for="UpdateCourseDto.Id" value="@Model.UpdateCourseDto.Id" />
+        <div class="form-group">
+            <label>@text["CourseTitle"]</label>
+            <input type="text" class="form-control" asp-for="UpdateCourseDto.Title" value="@Model.Course.Title">
+        </div>
+        <div class="form-group">
+            <label>@text["CourseThumb"]</label>
+            <input type="file" class="form-control-file" asp-for="UpdateCourseDto.Thumb.File">
+        </div>
+        <div class="form-group">
+            <label>@text["CourseIntro"]</label>
+            <textarea class="form-control" name="UpdateCourseDto.Intro">@Model.Course.Intro</textarea>
+        </div>
+        <div class="form-group">
+            <label>@text["CourseDescription"]</label>
+            <textarea class="form-control" name="UpdateCourseDto.Description">@Model.Course.Description</textarea>
+        </div>
+
+
+
+        <div class="form-group">
+            <label>@text["CoursePrice"]</label>
+            <input type="number" class="form-control" asp-for="UpdateCourseDto.Price" value="@Model.Course.Price" >
+        </div>
+        <div class="form-group">
+            <label>@text["CourseDiscount"]</label>
+            <input type="number" class="form-control" asp-for="UpdateCourseDto.Discount" value="@Model.Course.Discount"
+                min="0" max="1" step="0.01">
+        </div>
+        <div class="form-group">
+            <label>@text["CourseDiscountExpiry"]</label>
+            <input type="date" class="form-control" asp-for="UpdateCourseDto.DiscountExpiry"
+            value="@(Model.Course.DiscountExpiry > DateTime.UtcNow ? Model.Course.DiscountExpiry.ToString("yyyy-MM-dd") : "")" >
+        </div>
+
+
+
+        <div class="form-group">
+            <label>@text["CourseLevel"]</label>
+            <select class="form-control" asp-for="UpdateCourseDto.Level">
+                @Html.Raw(levelSelectBuilder)
+            </select>
+        </div>
+        <div class="form-group">
+            <label>@text["CourseOutcomes"]</label>
+            <textarea class="form-control" name="UpdateCourseDto.Outcomes">@Model.Course.Outcomes</textarea>
+        </div>
+        <div class="form-group">
+            <label>@text["CourseRequirements"]</label>
+            <textarea class="form-control" name="UpdateCourseDto.Requirements">@Model.Course.Requirements</textarea>
+        </div>
+        <div class="form-group">
+            <label>@text["CourseCategory"]</label>
+            <select id="" class="form-control" asp-for="UpdateCourseDto.LeafCategoryId">
+                @Html.Raw(categorySelectBuilder)
+            </select>
+        </div>
+
+
+
+        <div class="form-group" id="sections-group">
+            <label class="control-label">@text["CourseSections"]</label>
+            @foreach (var cSection in Model.Course.Sections)
+            {
+                <div style="display: flex">
+                    <input type="text" class="form-control" value="@cSection.Title" >
+                    <a asp-page="@Global.PAGE_SECTION_UPDATE" asp-route-sectionId="@cSection.Id" style="margin: 0 20px;">Update</a>
+                    <a href="#" class="delete-anchor" data-id="@cSection.Id" style="margin: 0 20px;">Delete</a>
+                </div>
+            }
+        </div>
+        <button id="add-section-btn" type="button" class="btn btn-warning mb-4"
+            style="align-self: center">@text["AddSection"]</button>
+
+
+
+        <button type="submit" class="btn btn-primary mb-4" style="align-self: center; width: 50%">@text["Update"]</button>
+    </form>
+</div>
+
+
+<script>
+    var sectionsGroup = document.getElementById('sections-group');
+    var addSectionBtn = document.getElementById('add-section-btn');
+    addSectionBtn.onclick = addSection;
+
+    function addSection() {
+        let newDiv = document.createElement('div');
+        newDiv.innerHTML = '<input name="Dto.SectionNames" type="text" class="form-control">';
+        sectionsGroup.appendChild(newDiv);
+    }
+
+    var deleteButtons = document.getElementsByClassName('delete-anchor');
+    for (var btn of deleteButtons) {
+        btn.onclick = function (e) {
+            var sectionId = e.getAttribute('data-id');
+
+            fetch("@Model.DeleteSectionPath", {
+                method: "PATCH",
+                body: JSON.stringify({ Id : @Model.Course.Id, RemovedSections: [sectionId] }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: "include",
+            }).then(res => {
+                if (res.ok) {
+                    window.location.reload();
+                }
+            });
+        }
+    }
+
+</script>

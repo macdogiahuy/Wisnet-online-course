@@ -1,0 +1,17 @@
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\bin\Debug\net6.0\CourseHub.Infrastructure.deps.json
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\bin\Debug\net6.0\CourseHub.Infrastructure.runtimeconfig.json
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\bin\Debug\net6.0\CourseHub.Infrastructure.dll
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\bin\Debug\net6.0\CourseHub.Infrastructure.pdb
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\bin\Debug\net6.0\CourseHub.Core.dll
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\bin\Debug\net6.0\CourseHub.Core.pdb
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.csproj.AssemblyReference.cache
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.AssemblyInfoInputs.cache
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.AssemblyInfo.cs
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.csproj.CoreCompileInputs.cache
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.csproj.CopyComplete
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.dll
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\refint\CourseHub.Infrastructure.dll
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.pdb
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\CourseHub.Infrastructure.genruntimeconfig.cache
+D:\CODE\Dotnet\CourseHub\CourseHub.Infrastructure\obj\Debug\net6.0\ref\CourseHub.Infrastructure.dll

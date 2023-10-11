@@ -1,0 +1,81 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\Avatars\\13f775a8-1a79-45e4-9928-06b8b1a3d41b.jpg",
+      "PackagePath": "staticwebassets\\Avatars\\13f775a8-1a79-45e4-9928-06b8b1a3d41b.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\Avatars\\d64d7f23-fb28-4054-b472-02ba94eb5aef.jpg",
+      "PackagePath": "staticwebassets\\Avatars\\d64d7f23-fb28-4054-b472-02ba94eb5aef.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseMedia\\.gitignore",
+      "PackagePath": "staticwebassets\\CourseMedia\\.gitignore"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\247e6b51-dd19-4136-ab92-4752572a39fa.jpg",
+      "PackagePath": "staticwebassets\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\247e6b51-dd19-4136-ab92-4752572a39fa.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\accca829-a88d-46e0-a030-660efa68b37b.png",
+      "PackagePath": "staticwebassets\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\accca829-a88d-46e0-a030-660efa68b37b.png"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\af63abf1-ae38-4f58-86ba-500042c72e23.jpg",
+      "PackagePath": "staticwebassets\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\af63abf1-ae38-4f58-86ba-500042c72e23.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\be7c409d-a615-4336-b430-8c5bd17d927c.png",
+      "PackagePath": "staticwebassets\\CourseMedia\\69746c85-6109-4370-9334-1490cd2334b0\\be7c409d-a615-4336-b430-8c5bd17d927c.png"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseThumb\\78162be0-66f6-4043-9171-259b23ec4ce2.jpg",
+      "PackagePath": "staticwebassets\\CourseThumb\\78162be0-66f6-4043-9171-259b23ec4ce2.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseThumb\\96a8a5c9-7e75-4e5a-801f-1b3b4661c087.jpg",
+      "PackagePath": "staticwebassets\\CourseThumb\\96a8a5c9-7e75-4e5a-801f-1b3b4661c087.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseThumb\\a2b65442-7657-49a6-bab4-c1da12553281.jpg",
+      "PackagePath": "staticwebassets\\CourseThumb\\a2b65442-7657-49a6-bab4-c1da12553281.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseThumb\\aed3c4a6-cafa-4875-ad62-11b19fd706c5.jpg",
+      "PackagePath": "staticwebassets\\CourseThumb\\aed3c4a6-cafa-4875-ad62-11b19fd706c5.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseThumb\\c538b99b-f724-4788-879f-adfe3b1a90ea.jpg",
+      "PackagePath": "staticwebassets\\CourseThumb\\c538b99b-f724-4788-879f-adfe3b1a90ea.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\CourseThumb\\d326e811-a6cf-4e38-a654-69cc336b0cd9.jpg",
+      "PackagePath": "staticwebassets\\CourseThumb\\d326e811-a6cf-4e38-a654-69cc336b0cd9.jpg"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\emailTemplates\\confirmation.html",
+      "PackagePath": "staticwebassets\\emailTemplates\\confirmation.html"
+    },
+    {
+      "Id": "D:\\CODE\\Dotnet\\CourseHub\\CourseHub.API\\wwwroot\\emailTemplates\\passwordreset.html",
+      "PackagePath": "staticwebassets\\emailTemplates\\passwordreset.html"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.CourseHub.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.CourseHub.API.props",
+      "PackagePath": "build\\CourseHub.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.CourseHub.API.props",
+      "PackagePath": "buildMultiTargeting\\CourseHub.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.CourseHub.API.props",
+      "PackagePath": "buildTransitive\\CourseHub.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

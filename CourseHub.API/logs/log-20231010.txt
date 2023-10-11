@@ -1,0 +1,341 @@
+2023-10-10 03:08:47.042 +07:00 [INF] __Starting web host
+2023-10-10 03:08:49.501 +07:00 [INF] Now listening on: https://localhost:7277
+2023-10-10 03:08:49.504 +07:00 [INF] Now listening on: http://localhost:5063
+2023-10-10 03:08:49.506 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-10 03:08:49.506 +07:00 [INF] Hosting environment: Development
+2023-10-10 03:08:49.506 +07:00 [INF] Content root path: D:\CODE\Dotnet\CourseHub\CourseHub.API\
+2023-10-10 03:08:55.507 +07:00 [INF] Executed DbCommand (259ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Courses] AS [c]
+2023-10-10 03:08:56.013 +07:00 [INF] Executed DbCommand (269ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[LastModificationTime], [t].[Title], [t].[MetaTitle], [t].[ThumbUrl], [t].[Status], [t].[Price], [t].[Discount], [t].[DiscountExpiry], [t].[Level], [t].[LectureCount], [t].[LearnerCount], [t].[RatingCount], [t].[TotalRating], [t].[LeafCategoryId], CAST(0 AS bit), [u].[Id], [u].[FullName], [u].[AvatarUrl]
+FROM (
+    SELECT [c].[Id], [c].[CreatorId], [c].[Discount], [c].[DiscountExpiry], [c].[LastModificationTime], [c].[LeafCategoryId], [c].[LearnerCount], [c].[LectureCount], [c].[Level], [c].[MetaTitle], [c].[Price], [c].[RatingCount], [c].[Status], [c].[ThumbUrl], [c].[Title], [c].[TotalRating]
+    FROM [Courses] AS [c]
+    ORDER BY [c].[LastModificationTime] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[CreatorId] = [u].[Id]
+ORDER BY [t].[LastModificationTime] DESC
+2023-10-10 03:08:56.105 +07:00 [INF] HTTP GET /api/courses responded 200 in 5505.7826 ms
+2023-10-10 03:08:58.498 +07:00 [INF] HTTP GET /api/courses/Resource/c538b99b-f724-4788-879f-adfe3b1a90ea/local-thumb responded 200 in 1187.0114 ms
+2023-10-10 03:08:58.500 +07:00 [INF] HTTP GET /api/courses/Resource/aed3c4a6-cafa-4875-ad62-11b19fd706c5/local-thumb responded 200 in 1362.2158 ms
+2023-10-10 03:08:58.500 +07:00 [INF] HTTP GET /api/courses/Resource/78162be0-66f6-4043-9171-259b23ec4ce2/local-thumb responded 200 in 1312.0484 ms
+2023-10-10 03:09:09.841 +07:00 [INF] Executed DbCommand (26ms) [Parameters=[@__userName_0='?' (Size = 45) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AvatarUrl], [u].[Bio], [u].[CreationTime], [u].[DateOfBirth], [u].[Email], [u].[EnrollmentCount], [u].[FullName], [u].[InstructorId], [u].[IsApproved], [u].[IsVerified], [u].[LastModificationTime], [u].[LoginProvider], [u].[MetaFullName], [u].[Password], [u].[Phone], [u].[ProviderKey], [u].[RefreshToken], [u].[Role], [u].[SystemBalance], [u].[Token], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[UserName] = @__userName_0
+2023-10-10 03:09:10.397 +07:00 [INF] Executed DbCommand (247ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (Size = 100) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [LastModificationTime] = @p0, [RefreshToken] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2023-10-10 03:09:10.430 +07:00 [INF] HTTP POST /api/auth/SignIn responded 200 in 746.6248 ms
+2023-10-10 03:09:10.565 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Courses] AS [c]
+2023-10-10 03:09:10.577 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[LastModificationTime], [t].[Title], [t].[MetaTitle], [t].[ThumbUrl], [t].[Status], [t].[Price], [t].[Discount], [t].[DiscountExpiry], [t].[Level], [t].[LectureCount], [t].[LearnerCount], [t].[RatingCount], [t].[TotalRating], [t].[LeafCategoryId], CAST(0 AS bit), [u].[Id], [u].[FullName], [u].[AvatarUrl]
+FROM (
+    SELECT [c].[Id], [c].[CreatorId], [c].[Discount], [c].[DiscountExpiry], [c].[LastModificationTime], [c].[LeafCategoryId], [c].[LearnerCount], [c].[LectureCount], [c].[Level], [c].[MetaTitle], [c].[Price], [c].[RatingCount], [c].[Status], [c].[ThumbUrl], [c].[Title], [c].[TotalRating]
+    FROM [Courses] AS [c]
+    ORDER BY [c].[LastModificationTime] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[CreatorId] = [u].[Id]
+ORDER BY [t].[LastModificationTime] DESC
+2023-10-10 03:09:10.578 +07:00 [INF] HTTP GET /api/courses responded 200 in 36.2249 ms
+2023-10-10 03:09:18.982 +07:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 03:09:19.029 +07:00 [INF] Executed DbCommand (26ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:09:19.044 +07:00 [INF] HTTP GET /api/notifications responded 200 in 109.9140 ms
+2023-10-10 03:09:19.862 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 03:09:19.888 +07:00 [INF] Executed DbCommand (14ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:09:19.901 +07:00 [INF] HTTP GET /api/users responded 200 in 85.4353 ms
+2023-10-10 03:10:19.885 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 03:10:19.888 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:10:19.889 +07:00 [INF] HTTP GET /api/users responded 200 in 13.7203 ms
+2023-10-10 03:10:21.159 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 03:10:21.165 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:10:21.166 +07:00 [INF] HTTP GET /api/notifications responded 200 in 9.2481 ms
+2023-10-10 03:19:15.868 +07:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 03:19:15.875 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:19:15.878 +07:00 [INF] HTTP GET /api/users responded 200 in 176.3573 ms
+2023-10-10 03:19:15.940 +07:00 [INF] Executed DbCommand (87ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 03:19:15.958 +07:00 [INF] Executed DbCommand (17ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:19:15.963 +07:00 [INF] HTTP GET /api/notifications responded 200 in 994.4797 ms
+2023-10-10 03:19:16.271 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 03:19:16.273 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:19:16.273 +07:00 [INF] HTTP GET /api/notifications responded 200 in 4.5826 ms
+2023-10-10 03:27:24.551 +07:00 [INF] Executed DbCommand (159ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 03:27:24.624 +07:00 [INF] Executed DbCommand (72ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:27:24.626 +07:00 [INF] HTTP GET /api/users responded 200 in 987.4172 ms
+2023-10-10 03:27:27.901 +07:00 [INF] Executed DbCommand (59ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 03:27:27.932 +07:00 [INF] Executed DbCommand (30ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:27:27.939 +07:00 [INF] HTTP GET /api/notifications responded 200 in 100.6238 ms
+2023-10-10 03:27:33.370 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 03:27:33.372 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:27:33.374 +07:00 [INF] HTTP GET /api/users responded 200 in 8.8978 ms
+2023-10-10 03:28:31.760 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 03:28:31.764 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:28:31.768 +07:00 [INF] HTTP GET /api/users responded 200 in 15.0644 ms
+2023-10-10 03:35:03.740 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 03:35:03.746 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:35:03.753 +07:00 [INF] HTTP GET /api/users responded 200 in 89.7035 ms
+2023-10-10 03:35:04.771 +07:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 03:35:04.803 +07:00 [INF] Executed DbCommand (30ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 03:35:04.807 +07:00 [INF] HTTP GET /api/notifications responded 200 in 93.2443 ms
+2023-10-10 15:09:49.946 +07:00 [INF] __Starting web host
+2023-10-10 15:09:51.894 +07:00 [INF] Now listening on: https://localhost:7277
+2023-10-10 15:09:51.896 +07:00 [INF] Now listening on: http://localhost:5063
+2023-10-10 15:09:51.898 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-10 15:09:51.898 +07:00 [INF] Hosting environment: Development
+2023-10-10 15:09:51.898 +07:00 [INF] Content root path: D:\CODE\Dotnet\CourseHub\CourseHub.API\
+2023-10-10 15:10:02.896 +07:00 [INF] Executed DbCommand (215ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Courses] AS [c]
+2023-10-10 15:10:03.382 +07:00 [INF] Executed DbCommand (240ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[LastModificationTime], [t].[Title], [t].[MetaTitle], [t].[ThumbUrl], [t].[Status], [t].[Price], [t].[Discount], [t].[DiscountExpiry], [t].[Level], [t].[LectureCount], [t].[LearnerCount], [t].[RatingCount], [t].[TotalRating], [t].[LeafCategoryId], CAST(0 AS bit), [u].[Id], [u].[FullName], [u].[AvatarUrl]
+FROM (
+    SELECT [c].[Id], [c].[CreatorId], [c].[Discount], [c].[DiscountExpiry], [c].[LastModificationTime], [c].[LeafCategoryId], [c].[LearnerCount], [c].[LectureCount], [c].[Level], [c].[MetaTitle], [c].[Price], [c].[RatingCount], [c].[Status], [c].[ThumbUrl], [c].[Title], [c].[TotalRating]
+    FROM [Courses] AS [c]
+    ORDER BY [c].[LastModificationTime] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[CreatorId] = [u].[Id]
+ORDER BY [t].[LastModificationTime] DESC
+2023-10-10 15:10:03.444 +07:00 [INF] HTTP GET /api/courses responded 200 in 9340.4957 ms
+2023-10-10 15:10:08.727 +07:00 [INF] HTTP GET /api/courses/Resource/c538b99b-f724-4788-879f-adfe3b1a90ea/local-thumb responded 200 in 1006.7037 ms
+2023-10-10 15:10:08.727 +07:00 [INF] HTTP GET /api/courses/Resource/78162be0-66f6-4043-9171-259b23ec4ce2/local-thumb responded 200 in 1222.8452 ms
+2023-10-10 15:10:08.727 +07:00 [INF] HTTP GET /api/courses/Resource/aed3c4a6-cafa-4875-ad62-11b19fd706c5/local-thumb responded 200 in 1323.0169 ms
+2023-10-10 15:12:22.390 +07:00 [INF] Executed DbCommand (22ms) [Parameters=[@__userName_0='?' (Size = 45) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AvatarUrl], [u].[Bio], [u].[CreationTime], [u].[DateOfBirth], [u].[Email], [u].[EnrollmentCount], [u].[FullName], [u].[InstructorId], [u].[IsApproved], [u].[IsVerified], [u].[LastModificationTime], [u].[LoginProvider], [u].[MetaFullName], [u].[Password], [u].[Phone], [u].[ProviderKey], [u].[RefreshToken], [u].[Role], [u].[SystemBalance], [u].[Token], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[UserName] = @__userName_0
+2023-10-10 15:12:22.895 +07:00 [INF] Executed DbCommand (273ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (Size = 100) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [LastModificationTime] = @p0, [RefreshToken] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2023-10-10 15:12:22.914 +07:00 [INF] HTTP POST /api/auth/SignIn responded 200 in 618.8866 ms
+2023-10-10 15:12:23.026 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Courses] AS [c]
+2023-10-10 15:12:23.033 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[LastModificationTime], [t].[Title], [t].[MetaTitle], [t].[ThumbUrl], [t].[Status], [t].[Price], [t].[Discount], [t].[DiscountExpiry], [t].[Level], [t].[LectureCount], [t].[LearnerCount], [t].[RatingCount], [t].[TotalRating], [t].[LeafCategoryId], CAST(0 AS bit), [u].[Id], [u].[FullName], [u].[AvatarUrl]
+FROM (
+    SELECT [c].[Id], [c].[CreatorId], [c].[Discount], [c].[DiscountExpiry], [c].[LastModificationTime], [c].[LeafCategoryId], [c].[LearnerCount], [c].[LectureCount], [c].[Level], [c].[MetaTitle], [c].[Price], [c].[RatingCount], [c].[Status], [c].[ThumbUrl], [c].[Title], [c].[TotalRating]
+    FROM [Courses] AS [c]
+    ORDER BY [c].[LastModificationTime] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[CreatorId] = [u].[Id]
+ORDER BY [t].[LastModificationTime] DESC
+2023-10-10 15:12:23.034 +07:00 [INF] HTTP GET /api/courses responded 200 in 24.9137 ms
+2023-10-10 15:12:23.121 +07:00 [INF] HTTP GET /api/courses/Resource/78162be0-66f6-4043-9171-259b23ec4ce2/local-thumb responded 200 in 19.4270 ms
+2023-10-10 15:12:23.121 +07:00 [INF] HTTP GET /api/courses/Resource/aed3c4a6-cafa-4875-ad62-11b19fd706c5/local-thumb responded 200 in 19.4423 ms
+2023-10-10 15:12:23.121 +07:00 [INF] HTTP GET /api/courses/Resource/c538b99b-f724-4788-879f-adfe3b1a90ea/local-thumb responded 200 in 19.4408 ms
+2023-10-10 15:13:33.153 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 15:13:33.178 +07:00 [INF] Executed DbCommand (17ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 15:13:33.184 +07:00 [INF] HTTP GET /api/users responded 200 in 45.9722 ms
+2023-10-10 15:13:35.262 +07:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 15:13:35.286 +07:00 [INF] Executed DbCommand (16ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 15:13:35.292 +07:00 [INF] HTTP GET /api/notifications responded 200 in 63.2906 ms
+2023-10-10 15:18:21.579 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 15:18:21.581 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 15:18:21.583 +07:00 [INF] HTTP GET /api/users responded 200 in 9.3505 ms
+2023-10-10 15:18:26.546 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Courses] AS [c]
+2023-10-10 15:18:26.553 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[LastModificationTime], [t].[Title], [t].[MetaTitle], [t].[ThumbUrl], [t].[Status], [t].[Price], [t].[Discount], [t].[DiscountExpiry], [t].[Level], [t].[LectureCount], [t].[LearnerCount], [t].[RatingCount], [t].[TotalRating], [t].[LeafCategoryId], CAST(0 AS bit), [u].[Id], [u].[FullName], [u].[AvatarUrl]
+FROM (
+    SELECT [c].[Id], [c].[CreatorId], [c].[Discount], [c].[DiscountExpiry], [c].[LastModificationTime], [c].[LeafCategoryId], [c].[LearnerCount], [c].[LectureCount], [c].[Level], [c].[MetaTitle], [c].[Price], [c].[RatingCount], [c].[Status], [c].[ThumbUrl], [c].[Title], [c].[TotalRating]
+    FROM [Courses] AS [c]
+    ORDER BY [c].[LastModificationTime] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[CreatorId] = [u].[Id]
+ORDER BY [t].[LastModificationTime] DESC
+2023-10-10 15:18:26.556 +07:00 [INF] HTTP GET /api/courses responded 200 in 15.6163 ms
+2023-10-10 15:18:26.637 +07:00 [INF] HTTP GET /api/courses/Resource/c538b99b-f724-4788-879f-adfe3b1a90ea/local-thumb responded 200 in 2.6006 ms
+2023-10-10 15:18:26.638 +07:00 [INF] HTTP GET /api/courses/Resource/aed3c4a6-cafa-4875-ad62-11b19fd706c5/local-thumb responded 200 in 3.5147 ms
+2023-10-10 15:18:26.638 +07:00 [INF] HTTP GET /api/courses/Resource/78162be0-66f6-4043-9171-259b23ec4ce2/local-thumb responded 200 in 1.7023 ms
+2023-10-10 15:18:29.927 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Courses] AS [c]
+2023-10-10 15:18:29.933 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[LastModificationTime], [t].[Title], [t].[MetaTitle], [t].[ThumbUrl], [t].[Status], [t].[Price], [t].[Discount], [t].[DiscountExpiry], [t].[Level], [t].[LectureCount], [t].[LearnerCount], [t].[RatingCount], [t].[TotalRating], [t].[LeafCategoryId], CAST(0 AS bit), [u].[Id], [u].[FullName], [u].[AvatarUrl]
+FROM (
+    SELECT [c].[Id], [c].[CreatorId], [c].[Discount], [c].[DiscountExpiry], [c].[LastModificationTime], [c].[LeafCategoryId], [c].[LearnerCount], [c].[LectureCount], [c].[Level], [c].[MetaTitle], [c].[Price], [c].[RatingCount], [c].[Status], [c].[ThumbUrl], [c].[Title], [c].[TotalRating]
+    FROM [Courses] AS [c]
+    ORDER BY [c].[LastModificationTime] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[CreatorId] = [u].[Id]
+ORDER BY [t].[LastModificationTime] DESC
+2023-10-10 15:18:29.933 +07:00 [INF] HTTP GET /api/courses responded 200 in 8.1360 ms
+2023-10-10 15:18:30.039 +07:00 [INF] Executed DbCommand (102ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[CourseCount], [c].[Description], [c].[IsLeaf], [c].[Path], [c].[Title]
+FROM [Categories] AS [c]
+2023-10-10 15:18:30.054 +07:00 [INF] HTTP GET /api/categories responded 200 in 125.0047 ms
+2023-10-10 15:18:32.137 +07:00 [INF] Executed DbCommand (40ms) [Parameters=[@__client_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Conversations] AS [c]
+WHERE EXISTS (
+    SELECT 1
+    FROM [ConversationMembers] AS [c0]
+    WHERE [c].[Id] = [c0].[ConversationId] AND [c0].[CreatorId] = @__client_0)
+2023-10-10 15:18:32.204 +07:00 [INF] Executed DbCommand (40ms) [Parameters=[@__client_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreationTime], [t].[CreatorId], [t].[Title], [t].[IsPrivate], [t].[AvatarUrl], [c1].[CreatorId], [c1].[ConversationId], [c1].[CreationTime], [c1].[IsAdmin], [c1].[LastVisit]
+FROM (
+    SELECT [c].[Id], [c].[CreationTime], [c].[CreatorId], [c].[Title], [c].[IsPrivate], [c].[AvatarUrl]
+    FROM [Conversations] AS [c]
+    WHERE EXISTS (
+        SELECT 1
+        FROM [ConversationMembers] AS [c0]
+        WHERE [c].[Id] = [c0].[ConversationId] AND [c0].[CreatorId] = @__client_0)
+    ORDER BY [c].[CreationTime]
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [ConversationMembers] AS [c1] ON [t].[Id] = [c1].[ConversationId]
+ORDER BY [t].[CreationTime], [t].[Id], [c1].[CreatorId]
+2023-10-10 15:18:32.205 +07:00 [INF] HTTP GET /api/conversations responded 404 in 133.2211 ms
+2023-10-10 15:18:32.227 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[Bio], [u].[DateOfBirth]
+FROM [Users] AS [u]
+WHERE 0 = 1
+2023-10-10 15:18:32.228 +07:00 [INF] HTTP GET /api/users/multiple responded 200 in 17.6664 ms
+2023-10-10 15:19:10.982 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 15:19:10.984 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 15:19:10.985 +07:00 [INF] HTTP GET /api/users responded 200 in 5.7525 ms
+2023-10-10 15:19:25.370 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Notifications] AS [n]
+2023-10-10 15:19:25.373 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[CreationTime], [n].[CreatorId], [n].[Message], [n].[Type], [n].[Status], COALESCE([n].[ReceiverId], '00000000-0000-0000-0000-000000000000') AS [ReceiverId]
+FROM [Notifications] AS [n]
+ORDER BY [n].[CreationTime]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 15:19:25.374 +07:00 [INF] HTTP GET /api/notifications responded 200 in 8.4086 ms
+2023-10-10 15:19:26.735 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 15:19:26.738 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 15:19:26.738 +07:00 [INF] HTTP GET /api/users responded 200 in 5.1047 ms
+2023-10-10 15:20:02.070 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+2023-10-10 15:20:02.072 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Email], [u].[FullName], [u].[AvatarUrl], [u].[Role], [u].[LoginProvider], [u].[Bio], [u].[DateOfBirth], [u].[EnrollmentCount]
+FROM [Users] AS [u]
+ORDER BY [u].[UserName]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2023-10-10 15:20:02.073 +07:00 [INF] HTTP GET /api/users responded 200 in 5.7875 ms
