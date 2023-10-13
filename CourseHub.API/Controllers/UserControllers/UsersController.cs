@@ -150,4 +150,11 @@ public class UsersController : BaseController
         var result = await _userService.ResetPasswordAsync(dto);
         return result.AsResponse();
     }
+
+    [HttpGet("CheckValidity")]
+    public async Task<IActionResult> CheckValidity(string email, string token)
+    {
+        var result = await _userService.IsValidToken(email, token);
+        return result.AsResponse();
+    }
 }

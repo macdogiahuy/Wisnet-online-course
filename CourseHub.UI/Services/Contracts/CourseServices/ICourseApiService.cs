@@ -1,5 +1,7 @@
-﻿using CourseHub.Core.Interfaces.Repositories.Shared;
+﻿using CourseHub.Core.Entities.CourseDomain;
+using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
+using CourseHub.Core.Models.Course.EnrollmentModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
 
 namespace CourseHub.UI.Services.Contracts.CourseServices;
@@ -18,4 +20,5 @@ public interface ICourseApiService
     Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context);
 
     Task<bool> IsEnrolled(Guid courseId, HttpContext context);
+    Task<List<EnrollmentModel>> GetEnrollmentAsync(HttpContext context);
 }

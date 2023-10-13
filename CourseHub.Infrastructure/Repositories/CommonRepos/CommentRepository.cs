@@ -2,6 +2,7 @@
 using CourseHub.Core.Interfaces.Repositories.CommonRepos;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Common.CommentModels;
+using CourseHub.Core.Services.Mappers.CommonMappers;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -15,6 +16,8 @@ public class CommentRepository : BaseRepository<Comment>, ICommentRepository
 
     public IPagingQuery<Comment, CommentModel> GetPagingQuery(Expression<Func<Comment, bool>>? whereExpression, short pageIndex, byte pageSize)
     {
-        throw new NotImplementedException();
+        return GetPagingQuery<CommentModel>(
+            CommentMapperProfile.ModelConfig, whereExpression, pageIndex, pageSize,
+            asSplitQuery: true, _ => _.Medias, _ => _.Reactions);
     }
 }

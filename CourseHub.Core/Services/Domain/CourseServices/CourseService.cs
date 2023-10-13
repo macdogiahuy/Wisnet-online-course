@@ -227,7 +227,7 @@ public class CourseService : DomainService, ICourseService
 
         if (dto.Title is not null)
             entity.SetTitle(dto.Title);
-        if (dto.Discount is not null)
+        if (dto.Discount is not null && dto.DiscountExpiry is not null)
             entity.SetDiscount((double)dto.Discount, (DateTime)dto.DiscountExpiry!);
         entity.LastModifierId = client;
 
@@ -262,7 +262,9 @@ public class CourseService : DomainService, ICourseService
         if (dto.AddedSections != null)
         {
             _uow.CourseRepo.LoadSections(entity);
-            byte currentIndex = entity.Sections.Max(_ => _.Index);
+            byte currentIndex = entity.Sections.Count > 0
+                ? entity.Sections.Max(_ => _.Index)
+                : (byte)0;
             entity.Sections.AddRange(dto.AddedSections.Select((_, index) => new Section((byte)(currentIndex + index + 1), _)));
         }
     }

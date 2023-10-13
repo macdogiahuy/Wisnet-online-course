@@ -2,6 +2,7 @@
 using CourseHub.API.Helpers.Cookie;
 using CourseHub.Core.RequestDtos.Social.ConversationDtos;
 using CourseHub.Core.Services.Domain.SocialServices.Contracts;
+using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,17 +20,41 @@ public class ConversationsController : BaseController
 
 
     [HttpGet]
-    [Authorize]
-    public async Task<IActionResult> GetConversations([FromQuery] QueryConversationDto dto)
+    public async Task<IActionResult> Get([FromQuery] QueryConversationDto dto)
     {
         var client = HttpContext.GetClientId();
-        var result = await _conversationService.Get(dto, (Guid)client!);
+        var result = await _conversationService.Get(dto, client);
         return result.AsResponse();
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        var client = HttpContext.GetClientId();
+        var result = await _conversationService.Get(id, client);
+        return result.AsResponse();
+    }
+
+    [HttpGet("targets")]
+    public async Task<IActionResult> GetConversationTargets([FromQuery] QueryConversationDto dto)
+    {
+        var client = HttpContext.GetClientId();
+        var result = await _conversationService.GetConversationsOrUsers(dto, client);
+        return result.AsResponse();
+    }
+
+    [HttpGet("Resource/{resourceId}")]
+    public IActionResult GetAvatar(Guid resourceId)
+    {
+        Stream? stream = ServerStorage.ReadAsStream(SocialStorage.GetAvatarPath(resourceId));
+        return stream is null ? NotFound() : new FileStreamResult(stream, "image/jpeg");
+    }
+
+
+
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> CreateConversation(CreateConversationDto dto)
+    public async Task<IActionResult> CreateConversation([FromForm] CreateConversationDto dto)
     {
         var client = HttpContext.GetClientId();
         var result = await _conversationService.Create(dto, (Guid)client!);

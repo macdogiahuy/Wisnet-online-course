@@ -108,4 +108,10 @@ public class UnitOfWork : IUnitOfWork
 
     private McqQuestionRepository _mcqQuestionRepo;
     public IMcqQuestionRepository McqQuestionRepo { get => _mcqQuestionRepo ??= new McqQuestionRepository(_context); }
+
+    private McqChoiceRepository _mcqChoiceRepo;
+    public IMcqChoiceRepository McqChoiceRepo { get => _mcqChoiceRepo ?? new McqChoiceRepository(_context); }
+
+    private SubmissionRepository _submissionRepo;
+    public ISubmissionRepository SubmissionRepo { get => _submissionRepo ?? new SubmissionRepository(_context); }
 }

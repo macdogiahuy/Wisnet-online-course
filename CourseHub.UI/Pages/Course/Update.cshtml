@@ -48,27 +48,6 @@
     }
 }
 
-<style>
-
-</style>
-
-<!--<style>
-    form {
-        margin-top: 40px;
-    }
-</style>
-
-<form method="post" enctype="multipart/form-data" asp-page-handler="CreateLecture">
-    <input asp-for="CourseId" hidden />
-    <input asp-for="CreateLectureDto.SectionId" hidden />
-    <input type="text" asp-for="CreateLectureDto.Title" placeholder="Title" />
-    <input type="text" asp-for="CreateLectureDto.Content" placeholder="Content" />
-    <input type="file" asp-for="Files" multiple />
-    <input type="submit" value="Submit" />
-</form>-->
-
-
-
 
 
 <style>
@@ -93,6 +72,10 @@
         font-size: 18px;
     }
 
+    #app-delete-course-btn {
+        padding: 8px 12px;
+        font-size: 18px;
+    }
 </style>
 
 
@@ -100,6 +83,11 @@
 
 <div class="container mt-5" style="width: 50%">
     <h1 class="mb-4" style="font-size: 36px; text-align:center">@text["UpdateCourse"]</h1>
+
+    <div style="display: flex; justify-content: end;">
+        <button id="app-delete-course-btn" type="button" class="btn btn-danger">Delete Course</button>
+    </div>
+
     <form method="post" asp-page-handler="UpdateCourse" enctype="multipart/form-data" style="display: flex; flex-direction: column">
         <input type="hidden" asp-for="UpdateCourseDto.Id" value="@Model.UpdateCourseDto.Id" />
         <div class="form-group">
@@ -179,6 +167,8 @@
 
         <button type="submit" class="btn btn-primary mb-4" style="align-self: center; width: 50%">@text["Update"]</button>
     </form>
+
+    @await Html.PartialAsync("_PartialDeleteModal", ("course", Model.DeleteSectionPath))
 </div>
 
 
@@ -189,21 +179,23 @@
 
     function addSection() {
         let newDiv = document.createElement('div');
-        newDiv.innerHTML = '<input name="Dto.SectionNames" type="text" class="form-control">';
+        newDiv.innerHTML = '<input name="UpdateCourseDto.AddedSections" type="text" class="form-control">';
         sectionsGroup.appendChild(newDiv);
     }
 
     var deleteButtons = document.getElementsByClassName('delete-anchor');
-    for (var btn of deleteButtons) {
+    /* let */
+    for (let btn of deleteButtons) {
         btn.onclick = function (e) {
-            var sectionId = e.getAttribute('data-id');
+            var sectionId = btn.getAttribute('data-id');
+
+            let formData = new FormData();
+            formData.append('Id', '@Model.Course.Id');
+            formData.append('RemovedSections', sectionId);
 
             fetch("@Model.DeleteSectionPath", {
                 method: "PATCH",
-                body: JSON.stringify({ Id : @Model.Course.Id, RemovedSections: [sectionId] }),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                body: formData,
                 credentials: "include",
             }).then(res => {
                 if (res.ok) {
@@ -213,4 +205,10 @@
         }
     }
 
+    document.getElementById('app-delete-course-btn').onclick = () => {
+        window.showDeleteModal('@Model.Course?.Id');
+        window.postDelete = () => {
+            window.location.href = '@Global.PAGE_COURSE_MANAGE';
+        }
+    }
 </script>

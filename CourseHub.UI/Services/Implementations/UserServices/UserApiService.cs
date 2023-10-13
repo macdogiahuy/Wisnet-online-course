@@ -26,7 +26,12 @@ public class UserApiService : IUserApiService
     {
         try
         {
-            return await _client.GetFromJsonAsync<UserModel>($"api/users/{id}");
+            var user = await _client.GetFromJsonAsync<UserModel>($"api/users/{id}");
+            if (user is null)
+                return null;
+
+            user.AvatarUrl = GetAvatarApiUrl(user.AvatarUrl, user.Id);
+            return user;
         }
         catch
         {
@@ -71,9 +76,13 @@ public class UserApiService : IUserApiService
     {
         try
         {
-            _client.AddBearerHeader(context);
+            //_client.AddBearerHeader(context);
             var result = await _client.GetFromJsonAsync<PagedResult<UserModel>>($"api/users?{QueryBuilder.Build(dto)}");
-            return result!;
+            foreach (var item in result!.Items)
+            {
+                item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
+            }
+            return result;
         }
         catch
         {
@@ -180,5 +189,12 @@ public class UserApiService : IUserApiService
     public async Task<HttpResponseMessage> ResetPasswordAsync(ResetPasswordDto dto)
     {
         return await _client.PostAsJsonAsync("api/users/ResetPassword", dto);
+    }
+
+
+
+    public async Task<HttpResponseMessage> CheckValidityAsync(string email, string token)
+    {
+        return await _client.GetAsync($"api/users/CheckValidity?email={email}&token={token}");
     }
 }

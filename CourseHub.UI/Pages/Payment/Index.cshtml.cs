@@ -23,13 +23,6 @@ public class IndexModel : PageModel
         if (client is null)
             return Redirect(Global.PAGE_SIGNIN);
 
-        if (failed == true)
-		{
-			TempData[Global.ALERT_MESSAGE] = "Cannot Purchase Course!";
-			TempData[Global.ALERT_STATUS] = false;
-			return Page();
-		}
-
         var result = await courseApiService.GetAsync(courseId);
         if (result is null)
             return Redirect(Global.PAGE_404);
@@ -37,8 +30,11 @@ public class IndexModel : PageModel
         TempData[Global.DATA_USE_BACKGROUND] = true;
         Course = result;
 
-
-
+        if (failed == true)
+		{
+			TempData[Global.ALERT_MESSAGE] = "Transaction cancelled!";
+			TempData[Global.ALERT_STATUS] = false;
+		}
         return Page();
     }
 

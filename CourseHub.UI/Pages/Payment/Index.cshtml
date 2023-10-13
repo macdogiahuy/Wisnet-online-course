@@ -278,6 +278,11 @@
     p {
         margin: unset !important;
     }*/
+
+    #app-alert {
+        margin-bottom: 40px !important;
+        padding: 12px !important;
+    }
 </style>
 
 
@@ -285,10 +290,7 @@
 
 
 
-
-
-
-
+@await Html.PartialAsync("Shared/_Alert")
 
 <div style="display: flex; width: 70%; margin: 0 auto;">
     <div class="main" style="width: 60%; flex-grow: 1;">
@@ -349,8 +351,6 @@
             <div class="container-header">
                 <h1>Checkout</h1>
             </div>
-
-            @await Html.PartialAsync("Shared/_Alert")
 
             <div class="container-body">
                 <div>

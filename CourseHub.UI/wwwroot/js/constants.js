@@ -1,10 +1,14 @@
-﻿export { baseAddress, hubUrl }
+﻿export { baseAddress, hubUrl, signInPage }
 
 // Gateway.API
 const baseAddress = 'https://localhost:7277';
 const hubUrl = 'https://localhost:7277/hub';
 /*const baseAddress = '';
 const hubUrl = '/hub';*/
+
+
+
+const signInPage = '/signin.html';
 
 
 

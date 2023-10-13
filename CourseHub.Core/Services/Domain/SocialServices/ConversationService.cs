@@ -8,7 +8,11 @@ using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Social;
 using CourseHub.Core.RequestDtos.Social.ConversationDtos;
 using CourseHub.Core.Services.Domain.SocialServices.Contracts;
+using CourseHub.Core.Services.Storage.Utils;
+using CourseHub.Core.Services.Storage;
+using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
+using CourseHub.Core.Models.User.UserModels;
 
 namespace CourseHub.Core.Services.Domain.SocialServices;
 
@@ -20,19 +24,19 @@ public class ConversationService : DomainService, IConversationService
 
 
 
-    public async Task<ServiceResult<ConversationModel>> Get(Guid id, Guid client)
+    public async Task<ServiceResult<ConversationModel>> Get(Guid id, Guid? client)
     {
         var result = await _uow.ConversationRepo.GetAsync(id);
 
         if (result is null)
             return NotFound<ConversationModel>();
-        if (!result.Members.Any(_ => _.CreatorId == client))
-            return Unauthorized<ConversationModel>();
+        /*if (!result.Members.Any(_ => _.CreatorId == client))
+            return Unauthorized<ConversationModel>();*/
 
         return ToQueryResult(result);
     }
 
-    public async Task<ServiceResult<PagedResult<ConversationModel>>> Get(QueryConversationDto dto, Guid client)
+    public async Task<ServiceResult<PagedResult<ConversationModel>>> Get(QueryConversationDto dto, Guid? client)
     {
         var query = _uow.ConversationRepo.GetPagingQuery(GetPredicate(dto, client), dto.PageIndex, dto.PageSize);
 
@@ -40,6 +44,46 @@ public class ConversationService : DomainService, IConversationService
 
         return ToQueryResult(result);
     }
+
+    public async Task<ServiceResult<PagedResult<ConversationModel>>> GetConversationsOrUsers(QueryConversationDto dto, Guid? client)
+    {
+        var conversationQuery = _uow.ConversationRepo.GetPagingQuery(GetPredicate(dto, client), dto.PageIndex, dto.PageSize);
+
+        IPagingQuery<User, UserModel>? userQuery = null;
+        if (dto.Title is not null)
+        {
+            userQuery = _uow.UserRepo.GetPagingQuery(_ => _.MetaFullName.Contains(TextHelper.Normalize(dto.Title)), dto.PageIndex, dto.PageSize);
+        }
+
+        var conversations = await conversationQuery.ExecuteWithOrderBy(_ => _.CreationTime);
+        PagedResult<UserModel> users = dto.Title is not null
+            ? await userQuery!.ExecuteWithOrderBy(_ => _.MetaFullName)
+            : PagedResult<UserModel>.GetEmpty();
+
+
+        var privateConversations = users.Items.Select(_ => new ConversationModel
+        {
+            Id = Guid.Empty,
+            CreationTime = default,
+            CreatorId = _.Id,
+            Title = _.FullName,         /**/
+            IsPrivate = true,
+            AvatarUrl = _.AvatarUrl
+            /*Members*/
+        }).ToList();
+
+        PagedResult<ConversationModel> result = new(
+            conversations.TotalCount + privateConversations.Count,
+            dto.PageIndex,
+            dto.PageSize,
+            conversations.Items.Union(privateConversations).ToList()
+        );
+
+        return ToQueryResult(result);
+    }
+
+
+
 
 
 
@@ -100,10 +144,19 @@ public class ConversationService : DomainService, IConversationService
 
     private async Task<Conversation> Adapt(CreateConversationDto _, Guid client)
     {
+        Guid id = Guid.NewGuid();
+
         bool isPrivate = _.OtherParticipants.Count == 2;
 
-        Guid id = Guid.NewGuid();
         string avatarUrl = string.Empty;
+        if (_.Avatar is not null)
+        {
+            if (_.Avatar.File is not null)
+                avatarUrl = await SaveAvatar(_.Avatar.File, id);
+            else if (_.Avatar.Url is not null)
+                avatarUrl = _.Avatar.Url;
+        }
+
         List<ConversationMember> members = _.OtherParticipants
             .Select(_ => new ConversationMember(id, _, _ == client))
             .ToList();
@@ -128,7 +181,7 @@ public class ConversationService : DomainService, IConversationService
 
 
 
-    private Expression<Func<Conversation, bool>>? GetPredicate(QueryConversationDto dto, Guid client)
+    private Expression<Func<Conversation, bool>>? GetPredicate(QueryConversationDto dto, Guid? client)
     {
         if (dto.ByClient)
             return _ => _.Members.Any(_ => _.CreatorId == client);
@@ -145,5 +198,13 @@ public class ConversationService : DomainService, IConversationService
     private async Task ApplyChanges(UpdateConversationDto dto, Conversation entity)
     {
 
+    }
+
+    private async Task<string> SaveAvatar(IFormFile file, Guid courseId)
+    {
+        Stream stream = await new FileConverter().ToJpg(file);
+        string path = SocialStorage.GetAvatarPath(courseId);
+        await ServerStorage.SaveFile(stream, path, _logger);
+        return path;
     }
 }

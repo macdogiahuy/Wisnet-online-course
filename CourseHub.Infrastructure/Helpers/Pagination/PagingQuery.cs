@@ -2,7 +2,6 @@
 using AutoMapper.QueryableExtensions;
 using CourseHub.Core.Entities.Contracts;
 using CourseHub.Core.Interfaces.Repositories.Shared;
-using CourseHub.Infrastructure.AccessContext;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -59,7 +58,8 @@ public class PagingQuery<T, TDto> : IPagingQuery<T, TDto> where T : DomainObject
         _mappingConfig = mappingConfig;
     }
 
-    public async Task<PagedResult<TDto>> ExecuteWithOrderBy<TOrderBy>(Expression<Func<T, TOrderBy>> orderByExpression, bool ascending = true, bool isAnsiWarningTransaction = false)
+    public async Task<PagedResult<TDto>> ExecuteWithOrderBy<TOrderBy>(
+        Expression<Func<T, TOrderBy>> orderByExpression, bool ascending = true, bool isAnsiWarningTransaction = false, bool asNoTracking = false)
     {
         List<TDto> items = null;
         int total = 0;
@@ -72,14 +72,14 @@ public class PagingQuery<T, TDto> : IPagingQuery<T, TDto> where T : DomainObject
                 using var transaction = await _context.Database.BeginTransactionAsync();
                 await _context.Database.ExecuteSqlRawAsync("SET ANSI_WARNINGS OFF");
                 total = await GetTotal();
-                items = await GetItems(orderByExpression, ascending);
+                items = await GetItems(orderByExpression, ascending, asNoTracking);
                 //transaction.Commit();
             });
             return new PagedResult<TDto>(total, _pageIndex, _pageSize, items);
         }
 
         total = await GetTotal();
-        items = await GetItems(orderByExpression, ascending);
+        items = await GetItems(orderByExpression, ascending, asNoTracking);
         return new PagedResult<TDto>(total, _pageIndex, _pageSize, items);
     }
 
@@ -93,9 +93,11 @@ public class PagingQuery<T, TDto> : IPagingQuery<T, TDto> where T : DomainObject
         return await _unorderedQuery.CountAsync();
     }
 
-    private async Task<List<TDto>> GetItems<TOrderBy>(Expression<Func<T, TOrderBy>> orderByExpression, bool ascending)
+    private async Task<List<TDto>> GetItems<TOrderBy>(Expression<Func<T, TOrderBy>> orderByExpression, bool ascending, bool asNoTracking)
     {
         _orderedQuery = ascending ? _unorderedQuery.OrderBy(orderByExpression) : _unorderedQuery.OrderByDescending(orderByExpression);
+        if (asNoTracking)
+            _orderedQuery = _orderedQuery.AsNoTracking();
         return await _orderedQuery
             .Skip(_pageIndex * _pageSize).Take(_pageSize)
             .ProjectTo<TDto>(_mappingConfig).ToListAsync();

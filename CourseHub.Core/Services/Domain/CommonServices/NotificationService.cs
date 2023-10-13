@@ -36,7 +36,7 @@ public class NotificationService : DomainService, INotificationService
     public async Task<ServiceResult<PagedResult<NotificationModel>>> GetPagedAsync(QueryNotificationDto dto)
     {
         var query = _uow.NotificationRepo.GetPagingQuery(GetPredicate(dto), dto.PageIndex, dto.PageSize);
-        var result = await query.ExecuteWithOrderBy(_ => _.CreationTime);
+        var result = await query.ExecuteWithOrderBy(_ => _.CreationTime, ascending: false);
         return ToQueryResult(result);
     }
 

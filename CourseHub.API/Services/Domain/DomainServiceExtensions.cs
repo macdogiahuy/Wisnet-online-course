@@ -49,6 +49,7 @@ public static class DomainServiceExtensions
             .AddScoped<ICourseReviewService, CourseReviewService>()
 
             .AddScoped<INotificationService, NotificationService>()
+            .AddScoped<ICommentService, CommentService>()
             
             .AddScoped<IBillService, BillService>()
             

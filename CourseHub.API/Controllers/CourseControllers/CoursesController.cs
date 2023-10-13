@@ -1,12 +1,11 @@
 ﻿using CourseHub.API.Controllers.Shared;
 using CourseHub.API.Helpers.Cookie;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
-using CourseHub.Core.Helpers.Http;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MimeKit;
 using CourseHub.Core.Services.Domain.CourseServices.Contracts;
+using CourseHub.Core.Services.Domain.CourseServices;
 
 namespace CourseHub.API.Controllers.CourseControllers;
 

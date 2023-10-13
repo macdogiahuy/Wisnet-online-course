@@ -18,12 +18,12 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
     public async Task<CourseModel?> GetAsync(Guid id)
     {
         return await DbSet
-			.AsNoTracking()
 			.Where(_ => _.Id == id)
             .Include(_ => _.Creator)
             .Include(_ => _.Sections)
             .Include(_ => _.Metas)
             .Include(_ => _.Reviews)
+            .AsNoTracking()
             .AsSplitQuery()
             .ProjectTo<CourseModel>(CourseMapperProfile.ModelConfig)
             .FirstOrDefaultAsync();

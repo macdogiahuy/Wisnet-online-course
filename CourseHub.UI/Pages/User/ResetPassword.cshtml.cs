@@ -17,10 +17,17 @@ public class ResetPasswordModel : PageModel
     public string Email { get; set; }
     public string Token { get; set; }
 
-    public void OnGet([FromRoute] string email, [FromRoute] string token)
+    public async Task<IActionResult> OnGet(
+        [FromRoute] string email, [FromRoute] string token,
+        [FromServices] IUserApiService userApiService)
     {
+        var validity = await userApiService.CheckValidityAsync(email, token);
+        if (!validity.IsSuccessStatusCode)
+            return Unauthorized();
+
         Email = email;
         Token = token;
+        return Page();
     }
 
     public async Task<IActionResult> OnPost(

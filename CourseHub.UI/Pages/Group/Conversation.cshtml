@@ -4,6 +4,11 @@
 @model CourseHub.UI.Pages.Group.ConversationModel
 @{
     Layout = "_GroupLayout";
+
+    Core.Models.Social.ConversationModel? currentConversation = Model.CurrentConversation;
+    ViewData[Global.TITLE] = !string.IsNullOrEmpty(currentConversation.Title)
+        ? currentConversation.Title
+        : "Conversation";
 }
 
 
@@ -25,7 +30,7 @@
 @section Conversations {
     @foreach (var conversation in Model.Conversations)
     {
-        <a class="text-reset nav-link p-0 mb-6" asp-page="">
+        <a class="text-reset nav-link p-0 mb-6" asp-page="@Global.PAGE_GROUP_CONVERSATION" asp-route-id="@conversation.Id">
             <div class="card card-active-listener">
                 <div class="card-body">
                     <div class="media">
@@ -79,12 +84,12 @@
                                     <!-- Chat photo -->
                                     <div class="col-6 col-xl-6">
                                         <div class="media text-center text-xl-left">
-                                            <div class="avatar avatar-sm avatar-online d-none d-lg-inline-block mr-5">
-                                                <img src="@Model.CurrentConversation.AvatarUrl" class="avatar-img" alt="">
+                                            <div class="avatar avatar-sm d-none d-lg-inline-block mr-5">
+                                                <img src="@currentConversation.AvatarUrl" class="avatar-img" alt="">
                                             </div>
 
                                             <div class="media-body align-self-center text-truncate">
-                                                <h6 class="text-truncate mb-n1">@Model.CurrentConversation.Title</h6>
+                                                <h6 class="text-truncate mb-n1">@currentConversation.Title</h6>
                                                 <!--<span class="badge badge-dot badge-success d-inline-block d-xl-none mr-1"></span>
                                                 <small class="text-muted">Online</small>-->
                                             </div>
@@ -92,6 +97,15 @@
                                     </div>
 
                                     <!-- Chat toolbar -->
+                                    
+                                    <div class="col-3 col-xl-6 text-right">
+                                        <ul class="nav justify-content-end">
+                                            <a asp-page="@Global.PAGE_GROUP_CALL" asp-route-id="@Model.CurrentConversation?.Id" class="nav-link text-muted px-3" title="Join Group's Video Call">
+                                                <i class="fa fa-video-camera"></i>
+                                            </a>
+                                        </ul>
+                                    </div>
+
                                     @*<div class="col-3 col-xl-6 text-right">
                                         <ul class="nav justify-content-end">
                                             <li class="nav-item list-inline-item d-none d-xl-block mr-3">
@@ -133,115 +147,77 @@
                         </div>
                         <!-- Chat: Header -->
 
-                        <!-- Chat: Search -->
-                        @*<div class="collapse border-bottom px-lg-8" id="chat-2-search">
-                            <div class="container-xxl py-4 py-lg-6">
-
-                                <div class="input-group">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Search this chat" aria-label="Search this chat">
-
-                                    <div class="input-group-append">
-                                        <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
-                                            <i class="fe-search"></i>
-                                        </button>
-                                    </div>
+                        @if (Model.Conversations.Any(_ => _.Id == currentConversation.Id))
+                        {
+                            <!-- Chat: Content-->
+                            <div class="chat-content px-lg-8">
+                                <div id="app-message-lst" class="container-xxl py-6 py-lg-10">
                                 </div>
-
+                                <!-- Scroll to end -->
+                                <div class="end-of-chat"></div>
                             </div>
-                        </div>*@
-                        <!-- Chat: Search -->
+                            <!-- Chat: Content -->
 
-                        <!-- Chat: Content-->
-                        <div class="chat-content px-lg-8">
-                            <div id="app-message-lst" class="container-xxl py-6 py-lg-10">
-
-                                @*<!-- Message: Typing -->
-                                <div class="message">
-                                    <!-- Avatar -->
-                                    <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">
-                                        <img class="avatar-img" src="assets\images\avatars\10.jpg" alt="">
-                                    </a>
-
-                                    <!-- Message: body -->
-                                    <div class="message-body">
-
-                                        <!-- Message: row -->
-                                        <div class="message-row">
-                                            <div class="d-flex align-items-center">
-
-                                                <!-- Message: content -->
-                                                <div class="message-content bg-light">
-                                                    <div>Anna is typing<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></div>
-                                                </div>
-                                                <!-- Message: content -->
-
-                                            </div>
-                                        </div>
-                                        <!-- Message: row -->
-
-                                    </div>
-                                    <!-- Message: body -->
+                            <!-- Chat: DropzoneJS container -->
+                            <div class="chat-files hide-scrollbar px-lg-8">
+                                <div class="container-xxl">
+                                    <div class="dropzone-previews-js form-row py-4"></div>
                                 </div>
-                                <!-- Message: Typing -->*@
-
                             </div>
+                            <!-- Chat: DropzoneJS container -->
 
-                            <!-- Scroll to end -->
-                            <div class="end-of-chat"></div>
-                        </div>
-                        <!-- Chat: Content -->
+                            <!-- Chat: Footer -->
+                            <div class="chat-footer border-top py-4 py-lg-6 px-lg-8">
+                                <div class="container-xxl">
 
-                        <!-- Chat: DropzoneJS container -->
-                        <div class="chat-files hide-scrollbar px-lg-8">
-                            <div class="container-xxl">
-                                <div class="dropzone-previews-js form-row py-4"></div>
-                            </div>
-                        </div>
-                        <!-- Chat: DropzoneJS container -->
+                                    <form id="chat-id-2-form" data-emoji-form="">
+                                        <div class="form-row align-items-center">
+                                            <div class="col">
+                                                <div class="input-group">
 
-                        <!-- Chat: Footer -->
-                        <div class="chat-footer border-top py-4 py-lg-6 px-lg-8">
-                            <div class="container-xxl">
+                                                    <!-- Textarea -->
+                                                    <textarea id="app-chat-input" class="form-control bg-transparent border-0" placeholder="Type your message..." rows="1" data-emoji-input="" data-autosize="true" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 46px;"></textarea>
 
-                                <form id="chat-id-2-form" data-emoji-form="">
-                                    <div class="form-row align-items-center">
-                                        <div class="col">
-                                            <div class="input-group">
+                                                    <!-- Emoji button -->
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-ico btn-secondary btn-minimal bg-transparent border-0" type="button" data-emoji-btn="">
+                                                            <img src="" data-inject-svg="" alt="">
+                                                        </button>
+                                                    </div>
 
-                                                <!-- Textarea -->
-                                                <textarea id="app-chat-input" class="form-control bg-transparent border-0" placeholder="Type your message..." rows="1" data-emoji-input="" data-autosize="true" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 46px;"></textarea>
+                                                    <!-- Upload button -->
+                                                    <div class="input-group-append">
+                                                        <button id="chat-upload-btn-2" class="btn btn-ico btn-secondary btn-minimal bg-transparent border-0 dropzone-button-js dz-clickable" type="button">
+                                                            <img src="" data-inject-svg="" alt="">
+                                                        </button>
+                                                    </div>
 
-                                                <!-- Emoji button -->
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-ico btn-secondary btn-minimal bg-transparent border-0" type="button" data-emoji-btn="">
-                                                        <img src="" data-inject-svg="" alt="">
-                                                    </button>
-                                                </div>
-
-                                                <!-- Upload button -->
-                                                <div class="input-group-append">
-                                                    <button id="chat-upload-btn-2" class="btn btn-ico btn-secondary btn-minimal bg-transparent border-0 dropzone-button-js dz-clickable" type="button">
-                                                        <img src="" data-inject-svg="" alt="">
-                                                    </button>
                                                 </div>
 
                                             </div>
 
+                                            <!-- Submit button -->
+                                            <div class="col-auto">
+                                                <button id="app-send-btn" class="btn btn-ico btn-primary rounded-circle" type="button">
+                                                    <span class="fe-send"></span>
+                                                </button>
+                                            </div>
+
                                         </div>
 
-                                        <!-- Submit button -->
-                                        <div class="col-auto">
-                                            <button id="app-send-btn" class="btn btn-ico btn-primary rounded-circle" type="button">
-                                                <span class="fe-send"></span>
-                                            </button>
-                                        </div>
+                                    </form>
 
-                                    </div>
-
-                                </form>
-
+                                </div>
                             </div>
-                        </div>
+                            <!-- Chat: Footer -->
+                        }
+                        else {
+                            <!-- Chat: Content-->
+                            <div class="chat-content px-lg-8" style="display: flex; justify-content: center; align-items: center;">
+                                <h1>You are not in this conversation</h1>
+                            </div>
+                            <!-- Chat: Content -->
+                        }
                         <!-- Chat: Footer -->
                     </div>
                     <!-- Chat: body -->
@@ -634,6 +610,54 @@
                 </div>
                 <!-- Chat -->
             </div>
+
+
+
+
+
+            
+<!--Modal - Invite -->
+<div class="modal fade" id="app-invite-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pb-1">
+                <div class="modal-title d-flex">
+                    <i class="fas fa-user-friends"></i><h5 class="ml-2">Invite new members</h5>
+                </div>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-0">
+                <form>
+                    <div class="d-flex justify-content-around">
+                        <div class="form-group">
+                            <input id="app-invite-autocomplete-input" type="text" class="form-control form-control-lg" placeholder="Search for messages or users..." aria-label="Search for messages or users...">
+                            <div class="input-group-append">
+                                <a class="btn btn-lg btn-ico btn-secondary btn-minimal" href="#">
+                                    <i class="fe-search"></i>
+                                </a>
+                            </div>
+                            <ul id="app-invite-autocomplete-ul" class="app-autocomplete-ul">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-flex px-4">
+                        <span>+ Add another person</span>
+                        <span class="pl-4"><i class="fas fa-envelope mr-2"></i>Add custom message</span>
+                    </div>
+
+                    <hr class="mx-4 my-0">
+                    <p class="text-muted mt-3">You'll be charged a prorated amount for each new member. <span>See our billing guidlines</span></p>
+                </form>
+            </div>
+            <div class="modal-footer mt-1">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Invite</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 }
 
 @section Script {
@@ -642,7 +666,10 @@
         import { getClientData, setClientData, setUserInfo } from '/js/common/storage.js';
         import { ChatHandler } from '/js/chat/chatHandler.js';
 
-        window.conversationId = "@Model.CurrentConversation.Id";
+        @if (Model.CurrentConversation != null)
+        {
+            @Html.Raw("window.conversationId = '@Model.CurrentConversation.Id'");
+        }
 
         var client = @Html.Raw(JsonSerializer.Serialize(Model.Client, SerializeOptions.JsonCamelCaseOptions));
         /*var currentClient = getClientData();
@@ -669,6 +696,17 @@
             }
         }
     </script>
+
+    <script type="text/javascript">
+        var inviteAutocomplete = document.getElementById('app-invite-autocomplete-input');
+        var inviteAutocompleteUl = document.getElementById('app-invite-autocomplete-ul');
+        inviteAutocomplete.addEventListener('input', function() {
+            var inputVal = inviteAutocomplete.value;
+            if (inputVal.length >= 2) {
+            });
+        });
+    </script>
+
     <script src="~/vendor/@@microsoft/signalr/signalr.min.js"></script>
     <script type="module" src="/js/apis/hubGateway.js"></script>
     <script type="module" src="/js/pages/conversation.js"></script>

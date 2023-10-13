@@ -1,4 +1,5 @@
-﻿<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+﻿@using CourseHub.UI.Helpers;
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <li>
@@ -23,7 +24,7 @@
         </a>
 
         <a asp-page="@AdminGlobal.PAGE_CREATE_ADMIN_INDEX" class="nav-link">
-            <i class="fas fa-fw fa-book-open"></i>
+            <i class="fas fa-user"></i>
             <span>Create admin</span>
         </a>
 
@@ -37,10 +38,10 @@
             <span>Reported group</span>
         </a>
 
-        <!--<a asp-page="AdminGlobal.PAGE_SIGNOUT" class="nav-link">
+        <a asp-page="@Global.PAGE_SIGNOUT" class="nav-link">
             <i class="fas fa-user"></i>
             <span>Sign Out</span>
-        </a>-->
+        </a>
     </li>
 
     <!-- Divider -->

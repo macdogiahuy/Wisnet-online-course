@@ -57,14 +57,14 @@
         justify-content: space-between;
     }
 
-        .paid-course-landing-page__body .course-landing-page__main-content {
-            width: 60%;
-        }
+    .paid-course-landing-page__body .course-landing-page__main-content {
+        width: 60%;
+    }
 
-        .paid-course-landing-page__body img {
-            width: 400px;
-            aspect-ratio: 1.5;
-        }
+    .paid-course-landing-page__body img {
+        width: 400px;
+        aspect-ratio: 1.5;
+    }
 
     .app-component-margin {
         max-width: 50%;
@@ -81,23 +81,23 @@
         position: relative;
     }
 
-        .app__review__item__pic:before {
-            position: absolute;
-            right: -30px;
-            top: 15px;
-            border-top: 15px solid transparent;
-            border-left: 15px solid #1d1e39;
-            content: "";
-            -webkit-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-            transform: rotate(45deg);
-        }
+    .app__review__item__pic:before {
+        position: absolute;
+        right: -30px;
+        top: 15px;
+        border-top: 15px solid transparent;
+        border-left: 15px solid #1d1e39;
+        content: "";
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
 
-        .app__review__item__pic img {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-        }
+    .app__review__item__pic img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+    }
 
     .app__review__item__text {
         overflow: hidden;
@@ -106,22 +106,50 @@
         border-radius: 10px;
     }
 
-        .app__review__item__text h6 {
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+    .app__review__item__text h6 {
+        color: #ffffff;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
 
-            .app__review__item__text h6 span {
-                color: #b7b7b7;
-                font-weight: 400;
-            }
+    .app__review__item__text h6 span {
+        color: #b7b7b7;
+        font-weight: 400;
+    }
 
-        .app__review__item__text p {
-            color: #b7b7b7;
-            line-height: 23px;
-            margin-bottom: 0;
-        }
+    .app__review__item__text p {
+        color: #b7b7b7;
+        line-height: 23px;
+        margin-bottom: 0;
+    }
+
+    #app-form textarea {
+        width: 100%;
+        font-size: 15px;
+        padding-left: 20px;
+        padding-top: 12px;
+        height: 110px;
+        border: none;
+        border-radius: 5px;
+        resize: none;
+    }
+
+    .review__submit-button {
+        font-size: 11px;
+        color: #ffffff;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: #e53637;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 2px;
+        float: right;
+    }
+
+    .review__submit-button:hover {
+        cursor: pointer;
+    }
 
     .report_btn {
         left: 20px;
@@ -149,9 +177,9 @@
         z-index: 1;
     }
 
-        .popup-box.show {
-            display: block;
-        }
+    .popup-box.show {
+        display: block;
+    }
 
     .box {
         position: absolute;
@@ -163,7 +191,6 @@
         border-radius: 5px;
         text-align: center;
     }
-
     .close-icon {
         position: absolute;
         right: 10px;
@@ -190,17 +217,17 @@
         display: flex;
         flex-direction: column;
     }
+    
+    .box .content p {
+        margin: 0 0 5px;
+        color: #333;
+        font-size: 14px;
+    }
 
-        .box .content p {
-            margin: 0 0 5px;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .box .content button {
-            width: 100%;
-            margin: 0 auto 10px;
-        }
+    .box .content button {
+        width: 100%;
+        margin: 0 auto 10px;
+    }
 
     .greenBtn {
         background: #5cb85c;
@@ -214,10 +241,10 @@
         cursor: pointer;
     }
 
-        .greenBtn:hover {
-            background-color: green;
-            color: white;
-        }
+    .greenBtn:hover {
+        background-color: green;
+        color: white;
+    }
 
     /*submit done css*/
     .swal-modal {
@@ -228,7 +255,6 @@
         text-align: center;
     }
 </style>
-
 
 
 
@@ -289,13 +315,12 @@
                     </div>
                 </div>
 
+
                 @*dev_reportButton*@
                 <div class="report_course">
                     <button id="reportBtn">Report</button>
                 </div>
-
                 @*dev_reportPopup*@
-
                 <div class="popup-box" id="popupBox">
                     <div class="box">
                         <button type="button" class="close" id="close" aria-label="Close">
@@ -315,6 +340,8 @@
 
                     </div>
                 </div>
+
+
 
                 <div class="clp-lead__element-meta">
                     <div class="clp-lead__element-item">
@@ -572,7 +599,7 @@
 
 
 
-    <div data-purpose="reviews" class="component-margin">
+    <div id="reviews" data-purpose="reviews" class="component-margin">
         <div class="review-title--review-title--3kakg reviews--reviews-title--3Pqj_">
             <svg aria-hidden="true" focusable="false"
                  class="ud-icon ud-icon-medium ud-icon-color-neutral review-title--star-rating-icon--1jHuA">
@@ -593,7 +620,7 @@
             <div class="col-lg-8 col-md-8">
                 <div class="app__details__review">
                     <div class="section-title mb-4">
-                        <h5>Reviews</h5>
+                        <h5 style="font-size: 24px;">Reviews</h5>
                     </div>
                     @if (Model.Reviews.TotalCount == 0)
                     {
@@ -860,7 +887,7 @@
 
         @*dev_reportButton*@
 
-                const reportBtn = document.getElementById('reportBtn');
+        const reportBtn = document.getElementById('reportBtn');
         const popupBox = document.getElementById('popupBox');
 
         reportBtn.addEventListener('click', () => {
