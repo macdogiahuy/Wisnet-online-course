@@ -1,0 +1,338 @@
+﻿@page
+@model CourseHub.UI.Areas.Admin.Pages.ReportedGroupManagement.IndexModel
+@{
+}
+<!-- Content Row -->
+<style>
+    /* Style popup */
+    .popup-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        /* Ẩn popup mặc định */
+        display: none;
+        z-index: 1;
+    }
+
+        .popup-box.show {
+            display: block;
+        }
+
+    .popup-box1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        /* Ẩn popup mặc định */
+        display: none;
+        z-index: 1;
+    }
+
+        .popup-box1.show {
+            display: block;
+        }
+
+    .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .close-icon {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        width: 15px;
+        height: 15px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .box h2 {
+        margin: 0 0 20px;
+        border-bottom: 1px solid #ccc;
+        padding: 0 0 5px;
+        color: #333;
+    }
+
+    .box h3 {
+        margin: 0 0 20px;
+        border-bottom: 1px solid #ccc;
+        padding: 0 0 5px;
+        color: #333;
+    }
+
+    .greenBtn {
+        background: #5cb85c;
+        width: 100%;
+        color: #fff;
+        border: 0;
+        outline: none;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .greenBtn:hover {
+            background-color: green;
+            color: white;
+        }
+
+    .redBtn {
+        background: red;
+        width: 100%;
+        color: #fff;
+        border: 0;
+        outline: none;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .redBtn:hover {
+            background-color: #770000;
+            color: white;
+        }
+
+    .chosse {
+        display: flex;
+        justify-content: space-between;
+    }
+    .chosse button {
+        margin: 10px;
+    }
+
+    .greenBtn1 {
+        background: #5cb85c;
+        width: 100%;
+        color: #fff;
+        border: 0;
+        outline: none;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .greenBtn1:hover {
+            background-color: green;
+            color: white;
+        }
+
+    .redBtn1 {
+        background: red;
+        width: 100%;
+        color: #fff;
+        border: 0;
+        outline: none;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .redBtn1:hover {
+            background-color: #770000;
+            color: white;
+        }
+
+    .chosse1 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .chosse1 button {
+            margin: 10px;
+        }
+    .btn-block {
+        align-items: center;
+    }
+    /*hover*/
+    .btn-block:hover {
+        background-color: #770000;
+    }
+    /*Alert*/
+    .swal-modal {
+        font-family: sans-serif;
+    }
+
+    .swal-text {
+        text-align: center;
+    }
+
+    .btn-dismiss {
+        align-items: center;
+    }
+        /*hover*/
+        .btn-dismiss:hover {
+            background-color: #770000;
+        }
+
+    table td:last-child {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
+    <div class="container-fluid">
+    @*popup block-alert*@
+    <div class="popup-box" id="popupBox">
+        <div class="box">
+            <button type="button" class="close" id="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+   
+            <h2>Do you want to delete user (username)?</h2>
+            <div class="chosse">
+                <button class="greenBtn" type="submit" id="submit">Yes</button>
+                <button class="redBtn " type="submit" id="cancel">Cancel </button>
+            </div>
+    @*popup dismiss-alert
+            <div class="popup-box1" id="popupBox1">
+                <div class="box1">
+                    <button type="button" class="close1" id="close1" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+            <h3>Do you want to dismiss (username)?</h3>
+            <div class="chosse1">
+                <button class="greenBtn1" type="submit" id="submit1">Yes</button>
+                <button class="redBtn1 " type="submit" id="cancel1">Cancel </button>
+            </div>*@
+
+        </div>
+    </div>
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">User</th>
+                                <th class="text-center">Comment</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>HuynhGiang59</td>
+                                <td>This learning website will scam you!!!!</td>
+                                <td></td>
+                                <td>
+                                <div class="app-dismiss-btn btn btn-danger" id="btn-block">Block</div>
+                                <div class="app-approve-btn btn btn-primary" id="btn-dismiss">Dismiss</div>
+                                    @*<div class="app-approve-btn btn btn-primary">History action</div>*@
+                                </td>
+                             </tr>
+                            <tr>
+                                <td>HuynhGiang59</td>
+                                <td>This learning website will scam you!!!!</td>
+                                <td></td>
+                                <td>
+                                <div class="app-dismiss-btn btn btn-danger" id="btn-block">Block</div>
+                                <div class="app-approve-btn btn btn-primary" id="btn-dismiss">Dismiss</div>
+                                    @*<div class="app-approve-btn btn btn-primary">History action</div>*@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HuynhGiang59</td>
+                                <td>This learning website will scam you!!!!</td>
+                                <td></td>
+                                <td>
+                                <div class="app-dismiss-btn btn btn-danger" id="btn-block">Block</div>
+                                <div class="app-approve-btn btn btn-primary" id="btn-dismiss">Dismiss</div>
+                                    @*<div class="app-approve-btn btn btn-primary">History action</div>*@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HuynhGiang59</td>
+                                <td>This learning website will scam you!!!!</td>
+                                <td></td>
+                                <td>
+                                <div class="app-dismiss-btn btn btn-danger" id="btn-block">Block</div>
+                                <div class="app-approve-btn btn btn-primary" id="btn-dismiss">Dismiss</div>
+                                    @*<div class="app-approve-btn btn btn-primary">History action</div>*@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HuynhGiang59</td>
+                                <td>This learning website will scam you!!!!</td>
+                                <td></td>
+                                <td>
+                                <div class="app-dismiss-btn btn btn-danger" id="btn-block">Block</div>
+                                <div class="app-approve-btn btn btn-primary" id="btn-dismiss">Dismiss</div>
+                                    @*<div class="app-approve-btn btn btn-primary">History action</div>*@   
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+
+    document.getElementById('dataTable')
+        .addEventListener('click', handleClick);
+
+    function handleClick(e) {
+
+        if (e.target.classList.contains('btn-danger')) {
+            popupBox.classList.add('show');
+        }
+        if (e.target.classList.contains('btn-primary')) {
+            popupBox.classList.add('show');
+        }
+    }
+
+    const popupBox = document.getElementById('popupBox');
+    const closeBtn = document.getElementById('close');
+    const cancelBtn = document.getElementById('cancel');
+
+    function closePopup() {
+        popupBox.classList.remove('show');
+    }
+
+    closeBtn.addEventListener('click', closePopup);
+    cancelBtn.addEventListener('click', closePopup);
+
+    function showPopup() {
+        popupBox.classList.add('show');
+    }
+
+    const submitbtn = document.getElementById('submit');
+
+
+
+    submitbtn.addEventListener('click', () => {
+        //notify when submit done
+        event.preventDefault();
+        swal({
+            title: "Success",
+            text:
+                "Thanks for your support, we trying to improves user experience",
+            icon: "success",
+            buttons: {
+                confirm: "Okay"
+            },
+            closeOnClickOutside: false
+        });
+        closePopup();
+    });
+</script>
