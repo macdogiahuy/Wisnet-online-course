@@ -28,6 +28,15 @@ public class AssignmentService : DomainService, IAssignmentService
         return ToQueryResult(result);
     }
 
+    public async Task<ServiceResult<List<AssignmentMinModel>>> GetBySectionsAsync(IEnumerable<Guid> sections)
+    {
+        var result = await _uow.AssignmentRepo.GetBySectionsAsync(sections);
+        return ToQueryResult(result);
+    }
+
+
+
+
 
 
     public async Task<ServiceResult<Guid>> CreateAsync(CreateAssignmentDto dto, Guid client)

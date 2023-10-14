@@ -5,6 +5,7 @@ using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts.UserServices;
+using System;
 
 namespace CourseHub.UI.Services.Implementations.UserServices;
 
@@ -99,14 +100,31 @@ public class UserApiService : IUserApiService
             var result = await _client.GetFromJsonAsync<List<UserMinModel>>(url);
 
             foreach (var item in result)
-            {
                 item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
-            }
+
             return result;
         }
         catch
         {
             return null;
+        }
+    }
+
+    public async Task<List<UserMinModel>> GetAllMinAsync(HttpContext context)
+    {
+        try
+        {
+            _client.AddBearerHeader(context);
+            var result = await _client.GetFromJsonAsync<List<UserMinModel>>("api/users/all");
+
+            foreach (var item in result)
+                item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
+
+            return result;
+        }
+        catch
+        {
+            return new();
         }
     }
 
@@ -116,7 +134,7 @@ public class UserApiService : IUserApiService
             return "/img/User_Empty.png";
         return ResourceHelper.IsRemote(avatarUrl)
             ? avatarUrl
-            : $"{Configurer.GetApiClientOptions().ApiServerPath}api/users/avatar/{userId}";
+            : $"{Configurer.GetApiClientOptions().ApiServerPath}/api/users/avatar/{userId}";
     }
 
 

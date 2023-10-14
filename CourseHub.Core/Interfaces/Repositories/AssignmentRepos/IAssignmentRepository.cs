@@ -5,6 +5,7 @@ namespace CourseHub.Core.Interfaces.Repositories.AssignmentRepos;
 
 public interface IAssignmentRepository : IRepository<Assignment>
 {
-    Task<AssignmentModel> GetAsync(Guid id);
-    Task<AssignmentMinModel> GetMinAsync(Guid id);
+    Task<AssignmentModel?> GetAsync(Guid id);
+    Task<AssignmentMinModel?> GetMinAsync(Guid id);
+    Task<List<AssignmentMinModel>> GetBySectionsAsync(IEnumerable<Guid> sections);
 }

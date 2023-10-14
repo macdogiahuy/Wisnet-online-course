@@ -1,7 +1,7 @@
 ﻿import { signInPage } from "../constants.js";
 export { createDiv, createLi, redirectToSignin }
 
-const createDiv = (innerHTML, classList) => createElement("div", innerHTML, classList);
+const createDiv = (innerHTML, classList, id) => createElement("div", innerHTML, classList, id);
 const createLi = (innerHTML, classList) => createElement("li", innerHTML, classList);
 
 function redirectToSignin() {
@@ -14,11 +14,13 @@ function redirectToSignin() {
 
 
 
-function createElement(tag, innerHTML, classList) {
+function createElement(tag, innerHTML, classList, id) {
     var element = document.createElement(tag);
     element.innerHTML = innerHTML;
     if (classList)
         element.classList = classList;
+    if (id)
+        element.id = id;
     return element;
 }
 

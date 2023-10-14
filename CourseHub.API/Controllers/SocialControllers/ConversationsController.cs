@@ -43,6 +43,15 @@ public class ConversationsController : BaseController
         return result.AsResponse();
     }
 
+    /*[HttpGet("{id}/outsiders")]
+    [Authorize]
+    public async Task<IActionResult> GetConversationOutsiders(Guid id)
+    {
+        var client = HttpContext.GetClientId();
+        var result = await _conversationService.GetOutsiders(dto, client);
+        return result.AsResponse();
+    }*/
+
     [HttpGet("Resource/{resourceId}")]
     public IActionResult GetAvatar(Guid resourceId)
     {

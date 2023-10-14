@@ -30,4 +30,5 @@ public interface IUserService
 
     Task<ServiceResult> IsValidToken(string email, string token);
     Task ForceCommitAsync();
+    Task<ServiceResult<List<UserMinModel>>> GetAllMinAsync();
 }

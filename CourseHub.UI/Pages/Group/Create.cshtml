@@ -66,7 +66,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="small" for="new-chat-title">Name</label>
+                                                    <label class="small" for="new-chat-title">Title</label>
                                                     <input asp-for="Dto.Title" class="form-control form-control-lg" id="new-chat-title" type="text" placeholder="Conversation Name">
                                                 </div>
 
@@ -1066,7 +1066,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-uppercase text-danger">Add Members to the Group</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -1097,7 +1097,7 @@
                             }
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Ok</button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Ok</button>
                         </div>
                     </div>
                 </div>
@@ -1105,8 +1105,6 @@
 }
 
 @section Script {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/pages/plugins.bundle.js"></script>
     <script src="~/js/pages/chat-template.js"></script>
     <script type="module">

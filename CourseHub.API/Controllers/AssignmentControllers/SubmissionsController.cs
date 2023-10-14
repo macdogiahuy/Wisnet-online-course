@@ -27,12 +27,12 @@ public class SubmissionsController : BaseController
         return result.AsResponse();
     }
 
-    [HttpGet("{id}/min")]
+    [HttpGet("ByAssignment")]
     [Authorize]
     //[ResponseCache(Duration = 60)]
-    public async Task<IActionResult> GetMin(Guid id)
+    public async Task<IActionResult> GetByAssignmentId([FromQuery] Guid assignmentId)
     {
-        var result = await _submissionService.GetMinAsync(id);
+        var result = await _submissionService.GetByAssignmentId(assignmentId);
         return result.AsResponse();
     }
 

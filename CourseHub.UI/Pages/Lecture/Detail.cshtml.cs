@@ -21,6 +21,7 @@ public class DetailModel : PageModel
     public CourseOverviewModel Course { get; set; }
     public PagedResult<CommentModel> Comments { get; set; }
     public string DeleteCommentApiPath { get; set; }
+    public bool IsCreator { get; set; }
 
 
 
@@ -46,9 +47,14 @@ public class DetailModel : PageModel
         if (Course is null)
             return Redirect(Global.PAGE_404);
 
-        var isEnrolled = await courseApiService.IsEnrolled(Course.Id, HttpContext);
-        if (!Lecture.IsPreviewable && !isEnrolled)
-            return Redirect(Global.PAGE_SIGNIN);
+        if (Client is not null && Client.Id == Course.Creator.Id)
+            IsCreator = true;
+        if (!IsCreator)
+        {
+            var isEnrolled = await courseApiService.IsEnrolled(Course.Id, HttpContext);
+            if (!Lecture.IsPreviewable && !isEnrolled)
+                return Redirect(Global.PAGE_SIGNIN);
+        }
 
         QueryCommentDto dto = new()
         {

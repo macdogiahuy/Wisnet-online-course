@@ -92,4 +92,11 @@ internal class UserRepository : BaseRepository<User>, IUserRepository
             .ProjectTo<UserModel>(UserMapperProfile.ModelConfig)
             .ToListAsync();
     }
+
+    public async Task<List<UserMinModel>> GetAllMinAsync()
+    {
+        return await DbSet
+            .ProjectTo<UserMinModel>(UserMapperProfile.MinModelConfig)
+            .ToListAsync();
+    }
 }

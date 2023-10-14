@@ -316,6 +316,12 @@ public class UserService : DomainService, IUserService
         await _uow.CommitAsync();
     }
 
+    public async Task<ServiceResult<List<UserMinModel>>> GetAllMinAsync()
+    {
+        var result = await _uow.UserRepo.GetAllMinAsync();
+        return ToQueryResult(result);
+    }
+
 
 
 

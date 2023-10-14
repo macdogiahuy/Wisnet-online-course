@@ -52,14 +52,15 @@ public class ChatMessageService : DomainService, IChatMessageService
         return Created(_mapper.Map<ChatMessageModel>(entity));
     }
 
-    public Task<ServiceResult> Update(UpdateChatMessageDto dto, Guid client)
+    public async Task<ServiceResult> Delete(Guid id, Guid client)
     {
-        throw new NotImplementedException();
-    }
+        var entity = await _uow.ChatMessageRepo.Find(id);
+        if (entity is null)
+            return NotFound();
 
-    public Task<ServiceResult> Delete(Guid id, Guid client)
-    {
-        throw new NotImplementedException();
+        _uow.ChatMessageRepo.Delete(entity);
+        await _uow.CommitAsync();
+        return Ok();
     }
 
 

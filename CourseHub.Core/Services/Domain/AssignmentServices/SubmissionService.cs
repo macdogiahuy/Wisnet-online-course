@@ -15,6 +15,20 @@ public class SubmissionService : DomainService, ISubmissionService
     {
     }
 
+
+
+    public async Task<ServiceResult<SubmissionModel>> GetAsync(Guid id)
+    {
+        var result = await _uow.SubmissionRepo.Get(id);
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<List<SubmissionMinModel>>> GetByAssignmentId(Guid assignmentId)
+    {
+        var result = await _uow.SubmissionRepo.GetByAssignmentId(assignmentId);
+        return ToQueryResult(result);
+    }
+
     public async Task<ServiceResult<Guid>> CreateAsync(CreateSubmissionDto dto, Guid client)
     {
         try
@@ -24,6 +38,7 @@ public class SubmissionService : DomainService, ISubmissionService
 
             var entity = Adapt(dto, client, choices);
             await _uow.SubmissionRepo.Insert(entity);
+            await _uow.CommitAsync();
             return Created(entity.Id);
         }
         catch
@@ -32,31 +47,21 @@ public class SubmissionService : DomainService, ISubmissionService
         }
     }
 
-    public Task<ServiceResult> DeleteAsync(Guid id, Guid client)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResult<SubmissionModel>> GetAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResult<SubmissionMinModel>> GetMinAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<ServiceResult> UpdateAsync(UpdateSubmissionDto dto, Guid client)
     {
         throw new NotImplementedException();
     }
 
+    public Task<ServiceResult> DeleteAsync(Guid id, Guid client)
+    {
+        throw new NotImplementedException();
+    }
 
 
 
 
-    
+
+
     private Submission Adapt(CreateSubmissionDto _, Guid client, List<McqChoice> choices)
     {
         Guid id = Guid.NewGuid();

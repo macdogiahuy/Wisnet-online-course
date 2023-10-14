@@ -176,6 +176,25 @@ public class ConversationService : DomainService, IConversationService
         return entity;
     }
 
+    private async Task ApplyChanges(UpdateConversationDto _, Conversation entity)
+    {
+        //... dto
+
+        if (_.Title is not null)
+            entity.Title = _.Title;
+
+        if (_.Avatar is not null)
+        {
+            string avatarUrl = string.Empty;
+            if (_.Avatar.File is not null)
+                avatarUrl = await SaveAvatar(_.Avatar.File, entity.Id);
+            else if (_.Avatar.Url is not null)
+                avatarUrl = _.Avatar.Url;
+
+            entity.AvatarUrl = avatarUrl;
+        }
+    }
+
 
 
 
@@ -193,11 +212,6 @@ public class ConversationService : DomainService, IConversationService
         // Where Contains
         //dto.ConversationIds
         return null;
-    }
-
-    private async Task ApplyChanges(UpdateConversationDto dto, Conversation entity)
-    {
-
     }
 
     private async Task<string> SaveAvatar(IFormFile file, Guid courseId)

@@ -46,6 +46,11 @@ public class Global
     public const string PAGE_GROUP_CREATE = "/Group/Create";
     public const string PAGE_GROUP_CALL = "/Group/Call";
 
+    public const string PAGE_ASSIGNMENT_CREATE = "/Assignment/Create";
+    public const string PAGE_ASSIGNMENT_ATTEMPT = "/Assignment/Attempt";
+    public const string PAGE_ASSIGNMENT_OVERVIEW = "/Assignment/Overview";
+    public const string PAGE_ASSIGNMENT_REVIEW = "/Assignment/Review";
+
 
 
     // Partials

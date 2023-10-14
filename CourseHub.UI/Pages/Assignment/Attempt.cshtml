@@ -5,7 +5,7 @@
 }
 
 
-<link rel="stylesheet" href="~/css/Assignment/assignment.css" />
+<link rel="stylesheet" href="~/css/Assignment/yui.css" />
 
 <style>
     #page-header .card:before{
@@ -76,7 +76,8 @@
                                                 <a href="#" aria-current="page" title="Quiz">Practice Final Exam</a>
                                             </li>-->
                                             <li class="breadcrumb-item">
-                                                <a href="#" aria-current="page" title="Quiz">@Model.Assignment.Name</a>
+                                                <a asp-page="@Global.PAGE_ASSIGNMENT_OVERVIEW" asp-route-id="@Model.Assignment.Id"
+                                                    aria-current="page" title="Quiz">@Model.Assignment.Name</a>
                                             </li>
                                         </ol>
                                     </nav>
@@ -95,12 +96,15 @@
                                 <span class="notifications" id="user-notifications"></span>
                                 <div role="main">
                                     <form method="post" id="responseform">
+                                        <!-- //... -->
+                                        <input asp-for="Dto.TimeSpentInSec" type="text" id="time-left" hidden value="@Model.Assignment.Duration"/>
+                                        <input asp-for="Dto.AssignmentId" type="text" hidden value="@Model.Assignment.Id"/>
                                         <div>
                                             @for (int i = 0; i < Model.Assignment.Questions.Count; i++)
                                             {
                                                 var question = Model.Assignment.Questions[i];
 
-                                                    <div id="q1" class="que multichoice deferredfeedback notyetanswered">
+                                                <div id="q1" class="que multichoice deferredfeedback notyetanswered">
                                                     <div class="info">
                                                         <h3 class="no">Question <span class="qno">@(i + 1)</span></h3>
                                                     </div>
@@ -110,10 +114,12 @@
                                                             <div class="ablock">
                                                                 <!--<div class="prompt">Select one:</div>-->
                                                                 <div class="answer">
+                                                                    <!--Make radio array works-->
+                                                                    <input name="AnswerChoices.Index" type="hidden" value="@i" />
                                                                     @foreach (var choice in question.Choices)
                                                                     {
                                                                         <div class="r0">
-                                                                            <input type="radio" name="@choice.Id" value="0" id="@choice.Id" />
+                                                                                    <input type="radio" asp-for="AnswerChoices[i]" value="@choice.Id" />
                                                                             <label for="@choice.Id" class="m-l-1">
                                                                                 @choice.Content
                                                                             </label>
@@ -163,6 +169,7 @@
     <script type="text/javascript">
         var duration = @Model.Assignment.Duration;
         var timeLeftEle = document.getElementById('quiz-time-left');
+        var timeLeftInp = document.getElementById('time-left');
         var form = document.getElementById('responseform');
         var finishBtn = document.getElementById('finish-btn');
 
@@ -174,6 +181,7 @@
             if (duration > 0) {
                 duration--;
                 timeLeftEle.innerHTML = duration;
+                timeLeftInp.value = duration;
             }
             else {
                 submitAssignment();
@@ -181,7 +189,7 @@
         }, 1000);
 
         function submitAssignment() {
-            //form.submit();
+            form.submit();
         }
     </script>
 </body>

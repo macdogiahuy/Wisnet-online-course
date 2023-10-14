@@ -3,6 +3,8 @@
 @model CourseHub.UI.Pages.Social.IndexModel
 @{
     Layout = "_GroupLayout";
+
+    var defaultAvatar = "if(this.src!='/img/User_Empty.png')this.src='/img/User_Empty.png'";
 }
 
 @section RelatedUsers {
@@ -12,7 +14,7 @@
         {
             <a href="#" class="d-block text-reset mr-7 mr-lg-6">
                 <div class="avatar avatar-sm avatar-online mb-3">
-                    <img class="avatar-img" src="@user.Value.AvatarUrl" alt="Avatar">
+                    <img class="avatar-img" src="@user.Value.AvatarUrl" alt="Avatar" onerror="@defaultAvatar">
                 </div>
                 <div class="small">@user.Value.FullName</div>
             </a>
@@ -28,7 +30,7 @@
                 <div class="card-body">
                     <div class="media">
                         <div class="avatar mr-5">
-                            <img class="avatar-img" src="@conversation.AvatarUrl" alt="Bootstrap Themes">
+                            <img class="avatar-img" src="@conversation.AvatarUrl" alt="" onerror="@defaultAvatar">
                         </div>
                         <div class="media-body overflow-hidden">
                             <div class="d-flex align-items-center mb-1">
@@ -56,7 +58,7 @@
             <div class="container-xxl">
 
                 <div class="avatar avatar-lg mb-5">
-                    <img class="avatar-img" src="@UserApiService.GetAvatarApiUrl(Model.Client.AvatarUrl, Model.Client.Id)" alt="">
+                    <img class="avatar-img" src="@UserApiService.GetAvatarApiUrl(Model.Client.AvatarUrl, Model.Client.Id)" alt="" onerror="@defaultAvatar">
                 </div>
 
                 <h6>Hi, @Model.Client.FullName!</h6>

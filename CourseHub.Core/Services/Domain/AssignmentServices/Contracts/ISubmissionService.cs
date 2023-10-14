@@ -7,7 +7,7 @@ namespace CourseHub.Core.Services.Domain.AssignmentServices.Contracts;
 public interface ISubmissionService
 {
     Task<ServiceResult<SubmissionModel>> GetAsync(Guid id);
-    Task<ServiceResult<SubmissionMinModel>> GetMinAsync(Guid id);
+    Task<ServiceResult<List<SubmissionMinModel>>> GetByAssignmentId(Guid assignmentId);
 
     Task<ServiceResult<Guid>> CreateAsync(CreateSubmissionDto dto, Guid client);
     Task<ServiceResult> UpdateAsync(UpdateSubmissionDto dto, Guid client);

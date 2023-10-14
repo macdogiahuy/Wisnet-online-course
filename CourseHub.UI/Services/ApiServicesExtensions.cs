@@ -1,11 +1,13 @@
 ﻿using CourseHub.Core.Services.Domain.UserServices;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
+using CourseHub.UI.Services.Contracts.AssignmentServices;
 using CourseHub.UI.Services.Contracts.CommonServices;
 using CourseHub.UI.Services.Contracts.CourseServices;
 using CourseHub.UI.Services.Contracts.PaymentServices;
 using CourseHub.UI.Services.Contracts.SocialServices;
 using CourseHub.UI.Services.Contracts.UserServices;
+using CourseHub.UI.Services.Implementations.AssignmentServices;
 using CourseHub.UI.Services.Implementations.CommonServices;
 using CourseHub.UI.Services.Implementations.CourseServices;
 using CourseHub.UI.Services.Implementations.PaymentServices;
@@ -38,7 +40,10 @@ public static class ApiServicesExtensions
             .AddDomainService<IPaymentApiService, PaymentApiService>(config)
             
             .AddDomainService<IConversationApiService, ConversationApiService>(config)
-            .AddDomainService<IChatMessageApiService, ChatMessageApiService>(config);
+            .AddDomainService<IChatMessageApiService, ChatMessageApiService>(config)
+            
+            .AddDomainService<IAssignmentApiService, AssignmentApiService>(config)
+            .AddDomainService<ISubmissionApiService, SubmissionApiService>(config);
 
         return services;
     }

@@ -1,4 +1,6 @@
-﻿@using CourseHub.UI.Helpers.Http;
+﻿@using CourseHub.Core.Entities.CommonDomain.Enums;
+@using CourseHub.UI.Helpers.AppStart;
+@using CourseHub.UI.Helpers.Http;
 @using CourseHub.UI.Helpers.Utils;
 
 @{
@@ -11,6 +13,10 @@
 		{ "AdminView", "Admin View" },
 		{ "InstructorView", "Instructor View" }
 	};
+
+	var client = await Context.GetClientData();
+	string notificationPath = Configurer.GetApiClientOptions().ApiServerPath + "/api/notifications";
+	string notificationGetPath = notificationPath + $"?ReceiverId={client?.Id}";
 }
 
 <!DOCTYPE html>
@@ -40,32 +46,50 @@
 			display: unset;
 		}
 
-		.site-btn {
+		.app-dropdown {
 			padding-left: 0px;
 			padding-right: 0px;
 		}
 
-		.site-btn .dropdown-menu{
+		.app-dropdown .dropdown-menu{
 			width: 100%;
 			margin-top: 20px !important;
 		}
 
-		.site-btn .dropdown-menu li{
+		.app-dropdown .dropdown-menu li{
 			text-align: center;
 		}
 
-		.site-btn .dropdown-menu a{
+		.app-dropdown .dropdown-menu a{
 			display: block;
 			padding: 16px;
 		}
 
 		.dropdown-menu {
 			font-size: unset;
+			padding: 0;
+			border: 0;
 		}
 
-		/*.ud-search-form-autocomplete * {
-			box-sizing: unset;
-		}*/
+		.icon-dropdown .dropdown-menu {
+			transform: translate(-120px, 38px) !important;
+			width: 300px;
+		}
+
+		.icon-dropdown .dropdown-menu li {
+			height: 80px;
+			padding: 5%;
+		}
+
+		.notification-btn-lst {
+			display: flex;
+			justify-content: space-evenly;
+			margin-top: 4px;
+		}
+
+		.notification-btn-lst button {
+			width: 30%;
+		}
 
 		.ud-search-form-autocomplete .ud-search-form-autocomplete-suggestions-with-image {
 			overflow: unset !important;
@@ -88,100 +112,125 @@
 		.ud-btn-icon-large {
 			transform: translateY(10px);
 		}
+
+		.app-menu-btn {
+			height: 50px;
+			float: right;
+			text-align: center;
+			vertical-align: middle;
+			padding: 10px;
+			margin-left: 10px;
+
+			border-radius: 50%;
+			background-color: dodgerblue;
+		}
+
+		.app-menu-btn i {
+			color: #fff;
+			float: right;
+			font-size: 32px;
+		}
+
+		.app-menu-btn:hover {
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
 	<!-- Header section -->
 	@if (TempData[Global.DATA_IGNORE_NAV] is null)
 	{
-			<header class="header-section">
-				<div class="container">
-					<div class="row main-menu" style="margin-bottom: 0;">
-						<ul style="margin: 0 auto;">
-							<li><a href="@Global.PAGE_INDEX">Home</a></li>
-							<!--<li><a href="#">About us</a></li>-->
-							<li><a href="@Global.PAGE_COURSE">Courses</a></li>
-							<li><a href="@Global.PAGE_GROUP">Learning Groups</a></li>
-							<!--<li><a href="#">News</a></li>-->
-							<!--<li><a href="#">Contact</a></li>-->
-						</ul>
+		<header class="header-section">
+			<div class="container">
+				<div class="row main-menu" style="margin-bottom: 0;">
+					<ul style="margin: 0 auto;">
+						<li><a href="@Global.PAGE_INDEX">Home</a></li>
+						<!--<li><a href="#">About us</a></li>-->
+						<li><a href="@Global.PAGE_COURSE">Courses</a></li>
+						<li><a href="@Global.PAGE_GROUP">Learning Groups</a></li>
+						<!--<li><a href="#">News</a></li>-->
+						<!--<li><a href="#">Contact</a></li>-->
+					</ul>
+				</div>
+				<div class="row" style="align-items: center;">
+					<div class="col-lg-3 col-md-3">
+						<a href="@Global.PAGE_INDEX" style="display: block; height: 100%">
+							<img src="~/img/Logo.png" alt="" style="pointer-events: none; user-select: none;">
+						</a>
+						<div class="nav-switch">
+							<i class="fa fa-bars"></i>
+						</div>
 					</div>
-					<div class="row" style="align-items: center;">
-						<div class="col-lg-3 col-md-3">
-							<a href="@Global.PAGE_INDEX" style="display: block; height: 100%">
-								<img src="~/img/Logo.png" alt="" style="pointer-events: none; user-select: none;">
-							</a>
-							<div class="nav-switch">
-								<i class="fa fa-bars"></i>
-							</div>
-						</div>
-						<div class="col-lg-9 col-md-9">
-						@{
-							var client = await Context.GetClientData();
-							if (client is null)
-							{
-											<a href="@Global.PAGE_SIGNIN" class="site-btn header-btn">@text["SignIn"]</a>
-							}
-							else
-							{
-											<div class="dropdown site-btn header-btn">
-												<div data-bs-toggle="dropdown" aria-expanded="false">@client?.FullName</div>
-												<ul class="dropdown-menu">
-										@if (client!.Role >= Core.Entities.UserDomain.Enums.Role.Admin)
-										{
-															<li><a href="@Global.PAGE_ADMIN">@text["AdminView"]</a></li>
-										}
-										else if (client!.Role == Core.Entities.UserDomain.Enums.Role.Instructor)
-										{
-															<li><a href="@Global.PAGE_INSTRUCTOR">@text["InstructorView"]</a></li>
-										}
-													<li><a href="@Global.PAGE_PROFILE">@text["Profile"]</a></li>
-													<li><a href="@Global.PAGE_COURSE_ENROLLED">@text["Enrolled"]</a></li>
-													<li><a href="@Global.PAGE_SIGNOUT">@text["SignOut"]</a></li>
-												</ul>
-											</div>
-							}
+					<div class="col-lg-9 col-md-9">
+					@{
+						if (client is null)
+						{
+							<a href="@Global.PAGE_SIGNIN" class="site-btn header-btn">@text["SignIn"]</a>
 						}
-							<nav class="main-menu" style="max-width: 70%;">
-								<div locale="en_US" lang="en"
-								class="ud-search-form-autocomplete desktop-header-module--search-bar--2V17S ud-form-group"><label
-								class="ud-sr-only ud-form-label ud-heading-sm" for="u22-search-form-autocomplete--3">Search for anything</label>
-									<form class="ud-search-form-autocomplete-input-group ud-search-form-autocomplete-input-group-reversed">
-										<input type="hidden" name="src" value="ukw">
-										<input type="text" aria-invalid="false" name="q"
-										data-testid="search-input" placeholder="Search" autocomplete="off" role="combobox"
-										aria-autocomplete="both" aria-haspopup="true" aria-expanded="true"
-										aria-controls="u22-search-form-autocomplete--3-menu-content-items" id="u22-search-form-autocomplete--3"
-										class="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field">
-										<ul id="u22-search-form-autocomplete--3-menu-content-items" data-testid="menu-content-items"
-										class="app-display-none ud-unstyled-list ud-block-list js-suggestions ud-search-form-autocomplete-suggestions-with-image"
-										role="listbox"><li></li>
-										</ul>
-										<div class="ud-btn-large ud-btn-ghost ud-heading-md ud-btn-icon ud-btn-icon-large">
-											<svg
-										aria-label="Submit search" role="img" focusable="false"
-										class="ud-icon ud-icon-medium ud-icon-color-neutral">
-												<use xlink:href="#icon-search"></use>
-											</svg>
-										</div>
-									</form>
-								</div>
-							</nav>
-						</div>
+						else
+						{
+							<div id="app-notification-btn" class="app-menu-btn dropdown app-dropdown icon-dropdown" style="float: right">
+								<i class="fa fa-bell" data-bs-toggle="dropdown"></i>
+								<ul id="app-notification-dropdown" class="dropdown-menu"></ul>
+							</div>
+							<div class="dropdown site-btn header-btn app-dropdown">
+								<div data-bs-toggle="dropdown" aria-expanded="false">@client?.FullName</div>
+								<ul class="dropdown-menu">
+									@if (client!.Role >= Core.Entities.UserDomain.Enums.Role.Admin)
+									{
+										<li><a href="@Global.PAGE_ADMIN">@text["AdminView"]</a></li>
+									}
+									else if (client!.Role == Core.Entities.UserDomain.Enums.Role.Instructor)
+									{
+										<li><a href="@Global.PAGE_INSTRUCTOR">@text["InstructorView"]</a></li>
+									}
+									<li><a href="@Global.PAGE_PROFILE">@text["Profile"]</a></li>
+									<li><a href="@Global.PAGE_COURSE_ENROLLED">@text["Enrolled"]</a></li>
+									<li><a href="@Global.PAGE_SIGNOUT">@text["SignOut"]</a></li>
+								</ul>
+							</div>
+						}
+					}
+						<nav class="main-menu" style="max-width: 70%;">
+							<div locale="en_US" lang="en"
+							class="ud-search-form-autocomplete desktop-header-module--search-bar--2V17S ud-form-group"><label
+							class="ud-sr-only ud-form-label ud-heading-sm" for="u22-search-form-autocomplete--3">Search for anything</label>
+								<form class="ud-search-form-autocomplete-input-group ud-search-form-autocomplete-input-group-reversed">
+									<input type="hidden" name="src" value="ukw">
+									<input type="text" aria-invalid="false" name="q"
+									data-testid="search-input" placeholder="Search" autocomplete="off" role="combobox"
+									aria-autocomplete="both" aria-haspopup="true" aria-expanded="true"
+									aria-controls="u22-search-form-autocomplete--3-menu-content-items" id="u22-search-form-autocomplete--3"
+									class="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field">
+									<ul id="u22-search-form-autocomplete--3-menu-content-items" data-testid="menu-content-items"
+									class="app-display-none ud-unstyled-list ud-block-list js-suggestions ud-search-form-autocomplete-suggestions-with-image"
+									role="listbox"><li></li>
+									</ul>
+									<div class="ud-btn-large ud-btn-ghost ud-heading-md ud-btn-icon ud-btn-icon-large">
+										<svg
+									aria-label="Submit search" role="img" focusable="false"
+									class="ud-icon ud-icon-medium ud-icon-color-neutral">
+											<use xlink:href="#icon-search"></use>
+										</svg>
+									</div>
+								</form>
+							</div>
+						</nav>
 					</div>
 				</div>
-			</header>
+			</div>
+		</header>
 	}
 
 
 
 	@if (TempData[Global.DATA_USE_BACKGROUND] is not null)
 	{
-			<div class="page-info-section set-bg" data-setbg="/img/page-bg/2.jpg"
+		<div class="page-info-section set-bg" data-setbg="/img/page-bg/2.jpg"
 			style="background-image: url(&quot;/img/page-bg/2.jpg&quot;); height: 200px">
-				<div class="container">
-				</div>
+			<div class="container">
 			</div>
+		</div>
 	}
 
 	<div>
@@ -208,9 +257,16 @@
 		var autocomplete = document.getElementById('u22-search-form-autocomplete--3');
 		var autocompleteUl = document.getElementById('u22-search-form-autocomplete--3-menu-content-items');
 		var autocompleteLi = autocompleteUl.childNodes[0];
-		console.log(autocompleteLi);
+
+		var notificationBtn = document.getElementById('app-notification-btn');
+		var notificationEle = document.getElementById('app-notification-dropdown');
 
 		var baseDetailUrl = "@UIHelper.GetBaseCourseDetailPage()";
+
+
+
+
+
 
 		autocomplete.addEventListener('input', function() {
 			var inputVal = autocomplete.value;
@@ -253,8 +309,82 @@
 			else {
 				autocompleteUl.classList.add('app-display-none');
 			}
-
 		})
+
+		var notifications = [];
+		notificationBtn.addEventListener('click', () => {
+			var innerHTML = '';
+			notificationEle.innerHTML = innerHTML;
+
+			fetch("@notificationGetPath")
+				.then(res => {
+					if (res.ok) {
+						console.log(res);
+						return res.json();
+					}
+					else {
+						notificationEle.innerHTML = '<li>No notifications</li>';
+						console.log('empty');
+						return Promise.resolve();
+					}
+				})
+				.then(paged => {
+					if (paged) {
+						for (var item of paged.items) {
+							notifications.push(item);
+
+							var li = '';
+							switch (item.type) {
+								case @((byte)NotificationType.InviteMember):
+									switch (item.status) {
+										case @((byte)NotificationStatus.None):
+											li =
+											`<li>
+												<div>You are invited to the group</div>
+												<div class="notification-btn-lst">
+													<button onclick="approveNotification('${item.id}')" class="btn btn-outline-success" type="button">Accept</button>
+													<button onclick="dismissNotification('${item.id}')" class="btn btn-outline-danger" type="button">Dismiss</button>
+												</div>
+											</li>`;
+											break;
+										default:
+											li =
+											`<li>
+												<div>You are invited to the group</div>
+											</li>`;
+											break;
+									}
+									break;
+							}
+							innerHTML += li;
+						}
+						notificationEle.innerHTML = innerHTML;
+					}
+				})
+		});
+
+		function approveNotification(id) {
+			updateNotification(id, @((byte)NotificationStatus.Approved));
+		}
+
+		function dismissNotification(id) {
+			updateNotification(id, @((byte)NotificationStatus.Dismissed));
+		}
+
+		function updateNotification(id, status) {
+			fetch("@notificationPath", {
+				method: "PATCH",
+				body: JSON.stringify({ Id : id, Status: status }),
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: "include",
+			}).then(res => {
+				if (res.ok) {
+					window.location.reload();
+				}
+			});
+		}
 	</script>
 </body>
 </html>

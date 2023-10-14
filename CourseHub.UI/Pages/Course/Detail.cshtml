@@ -362,7 +362,7 @@
 
 
 
-        @if (!Model.IsEnrolled)
+        @if (!Model.IsEnrolled && !Model.IsCreator)
         {
             <div class="app-course-landing-page" @*class="course-landing-page_sidebar-container sidebar-container--fixed--8FX75"*@ data-purpose="sidebar-container">
                 <div class="smart-bar-spacer smart-bar-module--smart-bar-spacer--1bsoA" data-testid="smart-bar-spacer"></div>
@@ -497,7 +497,9 @@
             <div>
                 @foreach (var courseSection in Model.Course!.Sections)
                 {
-                    if (courseSection.Lectures.Count > 0)
+                    var sectionAssignments = Model.Assignments.Where(_ => _.Section?.Id == courseSection.Id).ToList();
+
+                    if (courseSection.Lectures.Count > 0 || sectionAssignments.Count > 0)
                     {
                         <div class="accordion-panel-module--panel--3_kkG section--panel--1zoAn">
                             <span id="u8-accordion-panel--@courseSection.Id" data-type="checkbox" data-checked @*="checked"*@ style="display: none;"></span>
@@ -537,9 +539,9 @@
                                                         <div class="ud-block-list-item-content">
                                                             <div>
                                                                 <div class="section--row--3sLRB">
-                                                                    <button type="button" class="ud-btn ud-btn-large ud-btn-link ud-text-sm section--item-title--6gdc6">
+                                                                    <div class="ud-btn ud-btn-large ud-btn-link ud-text-sm section--item-title--6gdc6">
                                                                         <span>@lecture.Title</span>
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <span class="section--hidden-on-mobile--38HTe" style="flex: 1 1 0%;"></span>
@@ -547,6 +549,30 @@
                                                             {
                                                                 <span class="section--hidden-on-mobile--38HTe section--preview-text--1zuA2">Preview</span>
                                                             }
+                                                            <!--<span class="section--hidden-on-mobile--38HTe section--item-content-summary--1DW7L">01:47</span>-->
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                        @foreach (var assignment in sectionAssignments)
+                                        {
+                                            <li>
+                                                <a asp-page="@Global.PAGE_ASSIGNMENT_OVERVIEW" asp-route-id="@assignment.Id">
+                                                    <div class="section--previewable-item--oiDYR ud-block-list-item ud-block-list-item-small ud-block-list-item-link ud-text-sm">
+                                                        <!--<svg aria-hidden="true" focusable="false"
+                                                            class="ud-icon ud-icon-xsmall ud-icon-color-neutral ud-block-list-item-icon">
+                                                            <use xlink:href="#icon-video"></use>
+                                                        </svg>-->
+                                                        <div class="ud-block-list-item-content">
+                                                            <div>
+                                                                <div class="section--row--3sLRB">
+                                                                    <div class="ud-btn ud-btn-large ud-btn-link ud-text-sm section--item-title--6gdc6">
+                                                                        <span>@assignment.Name</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <span class="section--hidden-on-mobile--38HTe" style="flex: 1 1 0%;"></span>
                                                             <!--<span class="section--hidden-on-mobile--38HTe section--item-content-summary--1DW7L">01:47</span>-->
                                                         </div>
                                                     </div>
@@ -885,16 +911,12 @@
             }
         }
 
-        @*dev_reportButton*@
-
         const reportBtn = document.getElementById('reportBtn');
         const popupBox = document.getElementById('popupBox');
 
         reportBtn.addEventListener('click', () => {
             popupBox.classList.add('show');
         });
-
-        // Code close popup when click button Close
 
         function closePopup() {
             popupBox.classList.remove('show');
@@ -910,8 +932,7 @@
             event.preventDefault();
             swal({
                 title: "Success",
-                text:
-                    "Thanks for your support, we trying to improves user experience",
+                text: "",
                 icon: "success",
                 buttons: {
                     confirm: "Okay"

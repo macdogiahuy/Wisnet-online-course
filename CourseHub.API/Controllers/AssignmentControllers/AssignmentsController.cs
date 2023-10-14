@@ -4,6 +4,7 @@ using CourseHub.Core.RequestDtos.Assignment.AssignmentDtos;
 using CourseHub.Core.Services.Domain.AssignmentServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CourseHub.API.Controllers.AssignmentControllers;
 
@@ -20,7 +21,7 @@ public class AssignmentsController : BaseController
 
     [HttpGet("{id}")]
     [Authorize]
-    //[ResponseCache(Duration = 60)]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> Get(Guid id)
     {
         var result = await _assignmentService.GetAsync(id);
@@ -28,13 +29,24 @@ public class AssignmentsController : BaseController
     }
 
     [HttpGet("{id}/min")]
-    [Authorize]
-    //[ResponseCache(Duration = 60)]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetMin(Guid id)
     {
         var result = await _assignmentService.GetMinAsync(id);
         return result.AsResponse();
     }
+
+    [HttpGet("BySections")]
+    public async Task<IActionResult> Get([FromQuery] List<Guid> sections)
+    {
+        var result = await _assignmentService.GetBySectionsAsync(sections);
+        return result.AsResponse();
+    }
+
+
+
+
+
 
     [HttpPost]
     [Authorize]

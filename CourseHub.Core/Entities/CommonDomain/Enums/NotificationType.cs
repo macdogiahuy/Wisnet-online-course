@@ -2,5 +2,8 @@
 
 public enum NotificationType : byte
 {
-    RequestToBecomeInstructor
+    RequestToBecomeInstructor,
+    ReportGroup,
+    ReportCourse,
+    InviteMember
 }

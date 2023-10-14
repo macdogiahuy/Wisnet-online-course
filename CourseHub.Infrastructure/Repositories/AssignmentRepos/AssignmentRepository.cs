@@ -1,6 +1,8 @@
-﻿using CourseHub.Core.Entities.AssignmentDomain;
+﻿using AutoMapper.QueryableExtensions;
+using CourseHub.Core.Entities.AssignmentDomain;
 using CourseHub.Core.Interfaces.Repositories.AssignmentRepos;
 using CourseHub.Core.Models.Assignment.AssignmentModels;
+using CourseHub.Core.Services.Mappers.AssignmentMappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseHub.Infrastructure.Repositories.AssignmentRepos;
@@ -11,13 +13,26 @@ public class AssignmentRepository : BaseRepository<Assignment>, IAssignmentRepos
     {
     }
 
-    public Task<AssignmentModel> GetAsync(Guid id)
+    public async Task<AssignmentModel?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await DbSet
+            .Include(_ => _.Questions).ThenInclude(_ => _.Choices)
+            .ProjectTo<AssignmentModel>(AssignmentMapperProfile.ModelConfig)
+            .FirstOrDefaultAsync(_ => _.Id == id);
     }
 
-    public Task<AssignmentMinModel> GetMinAsync(Guid id)
+    public async Task<AssignmentMinModel?> GetMinAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await DbSet
+            .ProjectTo<AssignmentMinModel>(AssignmentMapperProfile.MinModelConfig)
+            .FirstOrDefaultAsync(_ => _.Id == id);
+    }
+
+    public async Task<List<AssignmentMinModel>> GetBySectionsAsync(IEnumerable<Guid> sections)
+    {
+        return await DbSet
+            .Where(_ => sections.Contains(_.SectionId))
+            .ProjectTo<AssignmentMinModel>(AssignmentMapperProfile.MinModelConfig)
+            .ToListAsync();
     }
 }

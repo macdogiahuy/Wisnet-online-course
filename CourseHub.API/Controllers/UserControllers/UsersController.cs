@@ -7,9 +7,7 @@ using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.User.UserModels;
-using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using CourseHub.Core.RequestDtos.User.UserDtos;
-using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Services.Domain.UserServices.Contracts;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
@@ -70,6 +68,16 @@ public class UsersController : BaseController
         ServiceResult<List<UserMinModel>> result = await _userService.GetMinAsync(ids);
         return result.AsResponse();
     }
+
+    //...
+    [HttpGet("all")]
+    [Authorize]
+    public async Task<IActionResult> GetAllMinAsync()
+    {
+        ServiceResult<List<UserMinModel>> result = await _userService.GetAllMinAsync();
+        return result.AsResponse();
+    }
+
 
     [HttpGet("avatar/{resourceId}")]
     public IActionResult GetAvatar(Guid resourceId)

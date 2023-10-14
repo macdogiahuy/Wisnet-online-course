@@ -72,9 +72,11 @@ public class ConversationApiService : IConversationApiService
         return result;
     }
 
-    public Task<HttpResponseMessage> UpdateAsync(UpdateConversationDto dto, HttpContext context)
+    public async Task<HttpResponseMessage> UpdateAsync(UpdateConversationDto dto, HttpContext context)
     {
-        throw new NotImplementedException();
+        _client.AddBearerHeader(context);
+        var result = await _client.PatchAsync("/api/conversations", ToFormData(dto));
+        return result;
     }
 
     public async Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context)
@@ -105,6 +107,31 @@ public class ConversationApiService : IConversationApiService
             for (int i = 0; i < dto.OtherParticipants.Count; i++)
                 helper.KeyValuePairs.Add($"OtherParticipants[{i}]", dto.OtherParticipants[i].ToString());
         }
+
+        if (dto.Avatar?.File is not null)
+        {
+            helper.Files = new List<(Stream, string, string)>
+            {
+                (dto.Avatar.File.OpenReadStream(), "Avatar.File", dto.Avatar.File.FileName)
+            };
+        }
+
+        return helper.ToFormData();
+    }
+
+    private MultipartFormDataContent ToFormData(UpdateConversationDto dto)
+    {
+        FormDataHelper helper = new()
+        {
+            KeyValuePairs = new()
+            {
+                { nameof(dto.Id), dto.Id.ToString() },
+                { nameof(dto.Title), dto.Title },
+                { "Avatar.Url", dto.Avatar?.Url }
+
+                //...
+            }
+        };
 
         if (dto.Avatar?.File is not null)
         {

@@ -1,4 +1,6 @@
-﻿namespace CourseHub.Core.Models.Assignment.AssignmentModels;
+﻿using CourseHub.Core.Models.Course.SectionModels;
+
+namespace CourseHub.Core.Models.Assignment.AssignmentModels;
 
 public class AssignmentMinModel
 {
@@ -6,4 +8,6 @@ public class AssignmentMinModel
     public string Name { get; set; }
     public int Duration { get; set; }
     public int QuestionCount { get; set; }
+
+    public SectionMinModel? Section { get; set; }
 }

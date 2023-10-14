@@ -75,6 +75,7 @@ public class UpdateModel : PageModel
 
     public async Task<IActionResult> OnPostUpdateCourse()
     {
+        // ModelState
         var response = await _courseApiService.UpdateAsync(UpdateCourseDto, HttpContext);
 
         TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;

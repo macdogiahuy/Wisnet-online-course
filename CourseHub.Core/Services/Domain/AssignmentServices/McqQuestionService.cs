@@ -25,7 +25,7 @@ public class McqQuestionService : DomainService, IMcqQuestionService
     public async Task<ServiceResult<Guid>> Create(CreateMcqQuestionDto dto)
     {
         if (dto.AssignmentId is null || dto.AssignmentId == default)
-            return BadRequest<Guid>(AssignmentDomainMessage.INVALID_ASSIGNMENT);
+            return BadRequest<Guid>(AssignmentDomainMessages.INVALID_ASSIGNMENT);
 
         var entity = Adapt(dto);
         await _uow.McqQuestionRepo.Insert(entity);

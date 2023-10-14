@@ -23,9 +23,6 @@ public class ChangePasswordModel : PageModel
     [Compare(nameof(NewPassword), ErrorMessage = "Passwords do not match")]
     public string? RePassword { get; set; }
 
-    /// <summary>
-    /// Only for authenticated users
-    /// </summary>
     public async Task<IActionResult> OnGet()
     {
         var data = await HttpContext.GetClientData();

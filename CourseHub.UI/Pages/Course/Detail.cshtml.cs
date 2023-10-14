@@ -1,5 +1,6 @@
 using CourseHub.Core.Entities.CommonDomain;
 using CourseHub.Core.Interfaces.Repositories.Shared;
+using CourseHub.Core.Models.Assignment.AssignmentModels;
 using CourseHub.Core.Models.Common.CommentModels;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.Models.Course.CourseReviewModels;
@@ -8,11 +9,14 @@ using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Course.CourseReviewDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.Http;
+using CourseHub.UI.Services.Contracts.AssignmentServices;
 using CourseHub.UI.Services.Contracts.CommonServices;
 using CourseHub.UI.Services.Contracts.CourseServices;
 using CourseHub.UI.Services.Contracts.UserServices;
+using CourseHub.UI.Services.Implementations.AssignmentServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection;
 
 namespace CourseHub.UI.Pages.Course;
 
@@ -27,6 +31,8 @@ public class DetailModel : PageModel
     public InstructorModel? Instructor { get; set; } = new InstructorModel { };
     public UserModel? InstructorUser { get; set; } = new UserModel { };
     public bool IsEnrolled { get; set; }
+    public bool IsCreator { get; set; }
+    public List<AssignmentMinModel> Assignments { get; set; }
 
 
 
@@ -55,9 +61,10 @@ public class DetailModel : PageModel
 
     public async Task<IActionResult> OnGet(
         [FromQuery] Guid id,
+        [FromServices] IAssignmentApiService assignmentApiService,
         [FromServices] IUserApiService userApiService, [FromServices] ICourseReviewApiService reviewApiService)
     {
-        return await RenderPage(id, userApiService, reviewApiService);
+        return await RenderPage(id, assignmentApiService, userApiService, reviewApiService);
     }
 
 	public async Task<IActionResult> OnPostCreateReview(
@@ -75,6 +82,7 @@ public class DetailModel : PageModel
 
     private async Task<IActionResult> RenderPage(
         Guid id,
+        IAssignmentApiService assignmentApiService,
         IUserApiService userApiService, ICourseReviewApiService reviewApiService)
     {
         if (id == default)
@@ -88,10 +96,14 @@ public class DetailModel : PageModel
         if (Course is null)
             return Redirect(Global.PAGE_404);
 
+        if (Client is not null && Client.Id == Course.Creator.Id)
+            IsCreator = true;
+
         //...
         Course.Reviews = new();
         var instructorUserTask = userApiService.GetAsync(Course.Creator.Id);
         var isEnrolledTask = _courseApiService.IsEnrolled(Course.Id, HttpContext);
+        var assignmentsTask = assignmentApiService.GetBySectionsAsync(Course.Sections.Select(_ => _.Id));
         var reviewsTask = reviewApiService.GetAsync(new QueryCourseReviewDto { CourseId = Course.Id });
         var moreCoursesTask = _courseApiService.GetPagedAsync(
             new Core.RequestDtos.Course.CourseDtos.QueryCourseDto
@@ -100,9 +112,10 @@ public class DetailModel : PageModel
                 InstructorId = Course.InstructorId
             });
 
-        await Task.WhenAll(instructorUserTask, isEnrolledTask, reviewsTask, moreCoursesTask);
+        await Task.WhenAll(instructorUserTask, isEnrolledTask, assignmentsTask, reviewsTask, moreCoursesTask);
         InstructorUser = instructorUserTask.Result;
         IsEnrolled = isEnrolledTask.Result;
+        Assignments = assignmentsTask.Result;
         Reviews = reviewsTask.Result;
         MoreCourses = moreCoursesTask.Result.Items.Where(_ => _.Id != Course.Id).ToList();
 
