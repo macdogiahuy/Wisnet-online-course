@@ -98,6 +98,7 @@ public class UserService : DomainService, IUserService
         try
         {
             await _uow.UserRepo.Insert(newUser);
+            await _uow.CommitAsync();
             return Created(newUser.Token);
         }
         catch (Exception ex)
@@ -107,11 +108,11 @@ public class UserService : DomainService, IUserService
         }
     }
 
-    public async Task<ServiceResult<UserFullModel>> UpdateAsync(UpdateUserDto dto, Guid? userId)
+    public async Task<ServiceResult<UserFullModel>> UpdateAsync(UpdateUserDto dto, Guid? clientId)
     {
-        if (userId is null)
+        if (clientId == default)
             return Unauthorized<UserFullModel>();
-        User? entity = await _uow.UserRepo.Find(userId);
+        User? entity = await _uow.UserRepo.Find(clientId);
         if (entity is null)
             return Unauthorized<UserFullModel>();
 
@@ -162,10 +163,10 @@ public class UserService : DomainService, IUserService
 
         if (entity is null)
             return Unauthorized<AuthModel>(UserDomainMessages.UNAUTHORIZED_SIGNIN);
-        if (entity.AccessFailedCount > MAX_ACCESS_FAILED_COUNT)
-            return Forbidden<AuthModel>(UserDomainMessages.FORBIDDEN_FAILED_EXCEED);
         if (entity.IsNotApproved())
             return Forbidden<AuthModel>(UserDomainMessages.FORBIDDEN_NOT_APPROVED);
+        if (entity.AccessFailedCount > MAX_ACCESS_FAILED_COUNT)
+            return Forbidden<AuthModel>(UserDomainMessages.FORBIDDEN_FAILED_EXCEED);
 
         if (!User.IsMatchPasswords(dto.Password, entity.Password))
         {
@@ -299,6 +300,33 @@ public class UserService : DomainService, IUserService
             return ServerError();
         }
     }
+
+    public async Task<ServiceResult> BlockAsync(Guid userId)
+    {
+        if (userId == default)
+            return BadRequest();
+        User? entity = await _uow.UserRepo.Find(userId);
+        if (entity is null)
+            return BadRequest();
+
+        try
+        {
+            if (entity.Role < Role.Admin)
+                entity.Block();
+            await _uow.CommitAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.Warn(ex.Message);
+            return ServerError();
+        }
+    }
+
+
+
+
+
 
     public async Task<ServiceResult> IsValidToken(string email, string token)
     {

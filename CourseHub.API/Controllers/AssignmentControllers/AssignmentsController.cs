@@ -37,9 +37,16 @@ public class AssignmentsController : BaseController
     }
 
     [HttpGet("BySections")]
-    public async Task<IActionResult> Get([FromQuery] List<Guid> sections)
+    public async Task<IActionResult> GetBySections([FromQuery] List<Guid> sections)
     {
         var result = await _assignmentService.GetBySectionsAsync(sections);
+        return result.AsResponse();
+    }
+
+    [HttpGet("ByCourse")]
+    public async Task<IActionResult> GetByCourse([FromQuery] Guid courseId)
+    {
+        var result = await _assignmentService.GetByCourseAsync(courseId);
         return result.AsResponse();
     }
 

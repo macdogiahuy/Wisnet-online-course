@@ -97,7 +97,7 @@
                                 <div role="main">
                                     <form method="post" id="responseform">
                                         <!-- //... -->
-                                        <input asp-for="Dto.TimeSpentInSec" type="text" id="time-left" hidden value="@Model.Assignment.Duration"/>
+                                        <input asp-for="Dto.TimeSpentInSec" type="text" id="time-spent" hidden value="@Model.Assignment.Duration"/>
                                         <input asp-for="Dto.AssignmentId" type="text" hidden value="@Model.Assignment.Id"/>
                                         <div>
                                             @for (int i = 0; i < Model.Assignment.Questions.Count; i++)
@@ -168,8 +168,9 @@
 
     <script type="text/javascript">
         var duration = @Model.Assignment.Duration;
+        var timeLeft = duration;
         var timeLeftEle = document.getElementById('quiz-time-left');
-        var timeLeftInp = document.getElementById('time-left');
+        var timeUsedInp = document.getElementById('time-spent');
         var form = document.getElementById('responseform');
         var finishBtn = document.getElementById('finish-btn');
 
@@ -178,10 +179,10 @@
         }
 
         setInterval(() => {
-            if (duration > 0) {
-                duration--;
-                timeLeftEle.innerHTML = duration;
-                timeLeftInp.value = duration;
+            if (timeLeft > 0) {
+                timeLeft--;
+                timeLeftEle.innerHTML = timeLeft;
+                timeUsedInp.value = duration - timeLeft;
             }
             else {
                 submitAssignment();

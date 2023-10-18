@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CourseHub.Core.Helpers.Messaging;
-using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Interfaces.Repositories.Shared;
@@ -45,14 +44,27 @@ public class CourseReviewService : DomainService, ICourseReviewService
         }
     }
 
-    public Task<ServiceResult> UpdateAsync(UpdateCourseReviewDto dto, Guid? client)
+    public async Task<ServiceResult> UpdateAsync(UpdateCourseReviewDto dto, Guid? client)
     {
-        throw new NotImplementedException();
-    }
+        if (client is null)
+            return Unauthorized();
+        var author = await _uow.UserRepo.Find(client);
+        if (author is null)
+            return Unauthorized();
 
-    public Task<ServiceResult> DeleteAsync(Guid id, Guid? client)
-    {
-        throw new NotImplementedException();
+        var entity = await _uow.CourseReviewRepo.Find(dto.Id);
+        if (entity is null)
+            return NotFound();
+        ApplyChanges(dto, entity);
+        try
+        {
+            await _uow.CommitAsync();
+            return Ok();
+        }
+        catch
+        {
+            return ServerError();
+        }
     }
 
 
@@ -68,5 +80,13 @@ public class CourseReviewService : DomainService, ICourseReviewService
     private CourseReview Adapt(CreateCourseReviewDto dto, User author)
     {
         return new CourseReview(dto.Content, dto.Rating, dto.CourseId, author);
+    }
+
+    private void ApplyChanges(UpdateCourseReviewDto dto, CourseReview entity)
+    {
+        //...
+        //entity.Rating = dto.Rating;
+        entity.Content = dto.Content;
+        entity.LastModificationTime = DateTime.UtcNow;
     }
 }

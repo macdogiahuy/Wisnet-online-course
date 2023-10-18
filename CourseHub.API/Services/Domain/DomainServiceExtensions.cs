@@ -62,8 +62,8 @@ public static class DomainServiceExtensions
 
 
 
-        /*ExecuteColdQuery(connectionString);
-        ExecuteColdQuery(connectionString);*/
+        ExecuteColdQuery(connectionString);
+        ExecuteColdQuery(connectionString);
 
         return services;
     }

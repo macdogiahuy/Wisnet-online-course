@@ -18,7 +18,7 @@ public class User : TimeAuditedEntity
     public string Token { get; set; }
     public string RefreshToken { get; set; }
     public bool IsVerified { get; set; }
-    public bool IsApproved { get; private set; }        // for Admins
+    public bool IsApproved { get; private set; }
     public byte AccessFailedCount { get; private set; }
     public string? LoginProvider { get; set; }          // OAuth
     public string? ProviderKey { get; set; }            // OAuth
@@ -180,6 +180,17 @@ public class User : TimeAuditedEntity
         DateTime now = DateTime.UtcNow;
         CreationTime = now;
         LastModificationTime = now;
+    }
+
+    public void Block()
+    {
+        IsApproved = false;
+        AccessFailedCount = 100;
+    }
+
+    public bool IsBlocked()
+    {
+        return AccessFailedCount == 100;
     }
 
 

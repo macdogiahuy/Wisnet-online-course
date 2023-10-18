@@ -20,9 +20,10 @@ public interface IUserService
     Task<ServiceResult<string>> CreateAsync(CreateUserDto dto);
     Task<ServiceResult<string>> CreateAdminAsync(CreateUserDto dto);
     Task<ServiceResult> VerifyAsync(VerifyEmailDto dto);
-    Task<ServiceResult<UserFullModel>> UpdateAsync(UpdateUserDto dto, Guid? userId);
+    Task<ServiceResult<UserFullModel>> UpdateAsync(UpdateUserDto dto, Guid? clientId);
     Task<ServiceResult<string>> GetPasswordResetTokenAsync(string email);
     Task<ServiceResult> ResetPasswordAsync(ResetPasswordDto dto);
+    Task<ServiceResult> BlockAsync(Guid userId);
 
     Task<ServiceResult<AuthModel>> SignInAsync(SignInDto dto, ITokenService tokenService);
     Task<ServiceResult<ClaimAuthModel>> ExternalSignInAsync(ClaimsPrincipal claimsPrincipal, Role role);

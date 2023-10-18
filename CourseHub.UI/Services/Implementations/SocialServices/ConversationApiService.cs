@@ -65,6 +65,27 @@ public class ConversationApiService : IConversationApiService
         }
     }
 
+    public async Task<List<ConversationModel>> GetMultipleAsync(IEnumerable<Guid> ids, HttpContext context)
+    {
+        try
+        {
+            _client.AddBearerHeader(context);
+
+            string url = QueryBuilder.BuildWithArray("api/conversations/multiple?", "ids={0}&", ids.Select(_ => _.ToString()));
+            var result = await _client.GetFromJsonAsync<List<ConversationModel>>(url, SerializeOptions.JsonOptions);
+
+            foreach (var item in result!)
+                if (!ResourceHelper.IsRemote(item.AvatarUrl))
+                    item.AvatarUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/conversations/Resource/{item.Id}";
+
+            return result;
+        }
+        catch
+        {
+            return new();
+        }
+    }
+
     public async Task<HttpResponseMessage> CreateAsync(CreateConversationDto dto, HttpContext context)
     {
         _client.AddBearerHeader(context);

@@ -10,5 +10,7 @@ public interface IConversationRepository : IRepository<Conversation>
 
     Task<ConversationModel?> GetAsync(Guid id);
 
+    Task<List<ConversationModel>> GetMultipleAsync(IEnumerable<Guid> ids);
+
     IPagingQuery<Conversation, ConversationModel> GetPagingQuery(Expression<Func<Conversation, bool>>? whereExpression, short pageIndex, byte pageSize);
 }

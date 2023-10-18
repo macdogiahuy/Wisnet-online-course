@@ -42,12 +42,21 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
             includeExpressions: includeExpressions);
     }
 
-    public Task<List<CourseOverviewModel>> GetSimilar(Guid id)
+    public IPagingQuery<Course, CourseMinModel> GetPagingQuery(Expression<Func<Course, bool>>? whereExpression, short pageIndex, byte pageSize)
     {
         throw new NotImplementedException();
     }
 
-    public IPagingQuery<Course, CourseMinModel> GetPagingQuery(Expression<Func<Course, bool>>? whereExpression, short pageIndex, byte pageSize)
+    public async Task<List<CourseOverviewModel>> GetMultipleAsync(IEnumerable<Guid> ids)
+    {
+        return await DbSet
+            .Where(_ => ids.Contains(_.Id))
+            .Include(_ => _.Creator)
+            .ProjectTo<CourseOverviewModel>(CourseMapperProfile.OverviewModelConfig)
+            .ToListAsync();
+    }
+
+    public Task<List<CourseOverviewModel>> GetSimilar(Guid id)
     {
         throw new NotImplementedException();
     }

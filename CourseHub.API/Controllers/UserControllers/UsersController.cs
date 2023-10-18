@@ -109,7 +109,7 @@ public class UsersController : BaseController
 
     [HttpPost("admin")]
     [Authorize(Roles = nameof(Role.SysAdmin))]
-    public async Task<IActionResult> RegisterAsInstructorAsync(CreateUserDto dto)
+    public async Task<IActionResult> CreateAdminAsync(CreateUserDto dto)
     {
         var result = await _userService.CreateAdminAsync(dto);
         return result.AsResponse();
@@ -119,6 +119,14 @@ public class UsersController : BaseController
     public async Task<IActionResult> VerifyEmail(VerifyEmailDto dto)
     {
         var result = await _userService.VerifyAsync(dto);
+        return result.AsResponse();
+    }
+
+    [HttpPost("block/{id}")]
+    [Authorize(Roles = RoleConstants.ADMIN_OR_SYSADMIN)]
+    public async Task<IActionResult> Block(Guid id)
+    {
+        ServiceResult result = await _userService.BlockAsync(id);
         return result.AsResponse();
     }
 

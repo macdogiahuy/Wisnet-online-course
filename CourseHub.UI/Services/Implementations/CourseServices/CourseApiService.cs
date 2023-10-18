@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Helpers.Http;
+﻿using CourseHub.Core.Helpers.Http;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.Models.Course.EnrollmentModels;
@@ -86,9 +85,26 @@ public class CourseApiService : ICourseApiService
         }
     }
 
-    public Task<List<CourseOverviewModel>?> GetMultipleAsync(Guid[] ids)
+    public async Task<List<CourseOverviewModel>?> GetMultipleAsync(IEnumerable<Guid> ids)
     {
-        throw new NotImplementedException();
+        try
+        {
+            string url = QueryBuilder.BuildWithArray("api/courses/multiple?", "ids={0}&", ids.Select(_ => _.ToString()));
+
+            var result = await _client.GetFromJsonAsync<List<CourseOverviewModel>>(url, SerializeOptions.JsonOptions);
+
+            foreach (var item in result!)
+            {
+                if (!ResourceHelper.IsRemote(item.ThumbUrl))
+                    item.ThumbUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/courses/Resource/{item.Id}/local-thumb";
+            }
+
+            return result;
+        }
+        catch
+        {
+            return new();
+        }
     }
 
     public Task<List<CourseOverviewModel>?> GetSimilarAsync(Guid id)

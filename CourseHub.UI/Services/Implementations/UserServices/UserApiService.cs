@@ -5,7 +5,6 @@ using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts.UserServices;
-using System;
 
 namespace CourseHub.UI.Services.Implementations.UserServices;
 
@@ -207,6 +206,13 @@ public class UserApiService : IUserApiService
     public async Task<HttpResponseMessage> ResetPasswordAsync(ResetPasswordDto dto)
     {
         return await _client.PostAsJsonAsync("api/users/ResetPassword", dto);
+    }
+
+    public async Task<HttpResponseMessage> CreateAdminAsync(CreateUserDto dto, HttpContext context)
+    {
+        _client.AddBearerHeader(context);
+        var response = await _client.PostAsJsonAsync($"api/users/admin", dto);
+        return response;
     }
 
 

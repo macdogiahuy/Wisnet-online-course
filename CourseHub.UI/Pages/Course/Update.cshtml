@@ -21,7 +21,9 @@
         { "CourseCategory", "Course category" },
         { "CourseSections", "Course sections" },
         { "AddSection", "Add section" },
-        { "Update", "Update" }
+        { "Update", "Update" },
+        /*{ "Assignments", "Assignments" },*/
+        { "ViewAssignmentList", "View Assignment List"}
     };
 
     StringBuilder levelSelectBuilder = new();
@@ -154,9 +156,14 @@
             @foreach (var cSection in Model.Course.Sections)
             {
                 <div style="display: flex">
-                    <input type="text" class="form-control" value="@cSection.Title" >
-                    <a asp-page="@Global.PAGE_SECTION_UPDATE" asp-route-sectionId="@cSection.Id" style="margin: 0 20px;">Update</a>
-                    <a href="#" class="delete-anchor" data-id="@cSection.Id" style="margin: 0 20px;">Delete</a>
+                    <input type="text" value="@cSection.Title"
+                        class="form-control" style="flex: 1">
+                    <a asp-page="@Global.PAGE_SECTION_UPDATE" asp-route-sectionId="@cSection.Id"
+                        style="margin: 0 20px; font-size: 16px;">Update</a>
+                    <a href="#" class="delete-anchor" data-id="@cSection.Id"
+                        style="margin: 0 20px; font-size: 16px;">Delete</a>
+                    <a asp-page="@Global.PAGE_ASSIGNMENT_CREATE" asp-route-sectionId="@cSection.Id"
+                        style="margin: 0 20px; font-size: 16px;">Add Assignment</a>
                 </div>
             }
         </div>
@@ -166,6 +173,12 @@
 
 
         <button type="submit" class="btn btn-primary mb-4" style="align-self: center; width: 50%">@text["Update"]</button>
+
+
+
+        <div class="form-group" style="margin-top: 24px">
+            <a asp-page="@Global.PAGE_ASSIGNMENT_MANAGE" asp-route-courseId="@Model.Course.Id" class="btn btn-info mb-4">@text["ViewAssignmentList"]</a>
+        </div>
     </form>
 
     @await Html.PartialAsync("_PartialDeleteModal", ("course", Model.DeleteSectionPath))

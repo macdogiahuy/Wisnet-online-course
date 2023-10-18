@@ -19,4 +19,5 @@
     @*@await Html.PartialAsync("SharedPartial/_Logout")*@
 </div>
 
+@await RenderSectionAsync(name: "Script", required: false)
 @await RenderSectionAsync(name: "ValidateScript", required: false)

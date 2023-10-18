@@ -5,6 +5,8 @@
     string time = Model.Assignment.Duration + " seconds";
 
     ViewData[Global.TITLE] = name;
+
+    int passGrade = 8;
 }
 
 <link rel="stylesheet" href="~/css/Assignment/yui.css" />
@@ -57,18 +59,21 @@
                             <h2>@name</h2>
                             <div class="box quizinfo py-3">
                                 <p>Time limit: @time</p>
+                                <!-- //... -->
+                                <p>Grade to pass: @passGrade / 10</p>
                                 <!--<p>Grading method: Highest grade</p>-->
                             </div>
                             @if (Model.Submissions.Count > 0)
                             {
-                                <h3>Summary of your previous attempts</h3>
+                                <h3 style="text-align: center; font-weight: bold;">Summary of your previous attempts</h3>
                                 <table class="generaltable quizattemptsummary">
                                     <thead>
                                         <tr>
                                             <th class="header c0" style="text-align:center;" scope="col">Attempt</th>
                                             <th class="header c1" style="text-align:left;" scope="col">State</th>
                                             <th class="header c2" style="text-align:center;" scope="col">Grade</th>
-                                            <th class="header c3 lastcol" style="text-align:center;" scope="col">Review</th>
+                                            <th class="header c3" style="text-align:center;" scope="col">Time Spent</th>
+                                            <th class="header c4 lastcol" style="text-align:center;" scope="col">Review</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,6 +85,7 @@
                                                     <span class="statedetails">Submitted at @submission.LastModificationTime</span>
                                                 </td>
                                                 <td class="cell c3" style="text-align:center;">@submission.Mark</td>
+                                                <td class="cell c3" style="text-align:center;">@submission.TimeSpentInSec</td>
                                                 <td class="cell c4 lastcol" style="text-align:center;">
                                                     <a title="Review your responses to this attempt" asp-page="@Global.PAGE_ASSIGNMENT_REVIEW"
                                                         asp-route-assignmentId="@Model.Assignment.Id" asp-route-submissionId="@submission.Id">Review</a>
@@ -88,9 +94,25 @@
                                         }
                                     </tbody>
                                 </table>
-                                <!--<div id="feedback" class="box generalbox py-3">
-                                    <h3>Highest grade: 1.40 / 10.00.</h3>
-                                </div>-->
+                                @if(Model.Submissions.Count > 0)
+                                {
+                                    var highestGrade = Model.Submissions.Max(_ => _.Mark);
+
+                                    <div id="feedback" class="box generalbox py-3" style="text-align: center; margin-top: 40px;">
+                                        <h3>Highest grade: @(highestGrade.ToString("0.00")) / 10.00.</h3>
+                                        
+                                        <h3>Status:
+                                        @if (highestGrade < @passGrade)
+                                        {
+                                            <span style="color: red">Not Passed</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: forestgreen">Passed</span>
+                                        }
+                                        </h3>
+                                    </div>
+                                }
                             }
                             <div class="box quizattempt py-3">
                                 <div class="singlebutton quizstartbuttondiv">

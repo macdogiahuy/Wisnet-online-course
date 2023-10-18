@@ -1,22 +1,18 @@
-using CourseHub.Core.Entities.CommonDomain;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Assignment.AssignmentModels;
-using CourseHub.Core.Models.Common.CommentModels;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.Models.Course.CourseReviewModels;
 using CourseHub.Core.Models.Course.InstructorModels;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Course.CourseReviewDtos;
 using CourseHub.UI.Helpers;
+using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts.AssignmentServices;
-using CourseHub.UI.Services.Contracts.CommonServices;
 using CourseHub.UI.Services.Contracts.CourseServices;
 using CourseHub.UI.Services.Contracts.UserServices;
-using CourseHub.UI.Services.Implementations.AssignmentServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Reflection;
 
 namespace CourseHub.UI.Pages.Course;
 
@@ -39,6 +35,8 @@ public class DetailModel : PageModel
     public PagedResult<CourseReviewModel> Reviews { get; set; }
     public List<CourseOverviewModel> MoreCourses { get; set; } = new();
     public List<UserMinModel> RelatedUsers { get; set; }
+    public string ReportPath { get; set; }
+    public string ReviewPath { get; set; }
 
 
 
@@ -123,6 +121,10 @@ public class DetailModel : PageModel
         {
             RelatedUsers = await userApiService.GetMinAsync(Reviews.Items.Select(_ => _.CreatorId).Distinct());
         }
+
+        var apiServerPath = Configurer.GetApiClientOptions().ApiServerPath;
+        ReportPath = apiServerPath + "/api/notifications";
+        ReviewPath = apiServerPath + "/api/CourseReviews";
 
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();

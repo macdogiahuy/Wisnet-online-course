@@ -9,6 +9,7 @@ public interface IConversationService
 {
     Task<ServiceResult<ConversationModel>> Get(Guid id, Guid? client);
     Task<ServiceResult<PagedResult<ConversationModel>>> Get(QueryConversationDto dto, Guid? client);
+    Task<ServiceResult<List<ConversationModel>>> GetMultiple(List<Guid> ids);
     Task<ServiceResult<PagedResult<ConversationModel>>> GetConversationsOrUsers(QueryConversationDto dto, Guid? client);
 
     Task<ServiceResult<Guid>> Create(CreateConversationDto dto, Guid client);

@@ -32,6 +32,15 @@ public class ConversationRepository : BaseRepository<Conversation>, IConversatio
             .FirstOrDefaultAsync();
     }
 
+    public async Task<List<ConversationModel>> GetMultipleAsync(IEnumerable<Guid> ids)
+    {
+        return await DbSet
+            .Where(_ => ids.Contains(_.Id))
+            .Include(_ => _.Members)
+            .ProjectTo<ConversationModel>(ConversationMapperProfile.ModelConfig)
+            .ToListAsync();
+    }
+
     public IPagingQuery<Conversation, ConversationModel> GetPagingQuery(Expression<Func<Conversation, bool>>? whereExpression, short pageIndex, byte pageSize)
     {
         return GetPagingQuery<ConversationModel>(

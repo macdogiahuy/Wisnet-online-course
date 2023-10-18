@@ -30,6 +30,7 @@ public class Global
 
     public const string PAGE_INSTRUCTOR = "/Instructor";
     public const string PAGE_INSTRUCTOR_REQUEST = "/Instructor/Request";
+    public const string PAGE_INSTRUCTOR_WITHDRAW = "/Instructor/Withdraw";
     public const string PAGE_COURSE = "/Course/Search";
     public const string PAGE_COURSE_DETAIL = "/Course/Detail";
     public const string PAGE_COURSE_MANAGE = "/Course/Manage";
@@ -46,10 +47,12 @@ public class Global
     public const string PAGE_GROUP_CREATE = "/Group/Create";
     public const string PAGE_GROUP_CALL = "/Group/Call";
 
-    public const string PAGE_ASSIGNMENT_CREATE = "/Assignment/Create";
     public const string PAGE_ASSIGNMENT_ATTEMPT = "/Assignment/Attempt";
     public const string PAGE_ASSIGNMENT_OVERVIEW = "/Assignment/Overview";
     public const string PAGE_ASSIGNMENT_REVIEW = "/Assignment/Review";
+    public const string PAGE_ASSIGNMENT_CREATE = "/Assignment/Create";
+    public const string PAGE_ASSIGNMENT_MANAGE = "/Assignment/Manage";
+    public const string PAGE_ASSIGNMENT_UPDATE = "/Assignment/Update";
 
 
 

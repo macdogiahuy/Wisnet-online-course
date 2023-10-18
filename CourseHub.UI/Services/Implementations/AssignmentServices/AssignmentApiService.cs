@@ -60,20 +60,40 @@ public class AssignmentApiService : IAssignmentApiService
         }
     }
 
-
-
-    public Task<HttpResponseMessage> CreateAsync(CreateAssignmentDto dto, HttpContext context)
+    public async Task<List<AssignmentMinModel>?> GetByCourseAsync(Guid courseId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _client.GetFromJsonAsync<List<AssignmentMinModel>>(
+                $"api/assignments/ByCourse?courseId={courseId}");
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
-    public Task<HttpResponseMessage> UpdateAsync(UpdateAssignmentDto dto, HttpContext context)
+
+
+    public async Task<HttpResponseMessage> CreateAsync(CreateAssignmentDto dto, HttpContext context)
     {
-        throw new NotImplementedException();
+        _client.AddBearerHeader(context);
+        var result = await _client.PostAsJsonAsync("/api/assignments", dto);
+        return result;
     }
 
-    public Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context)
+    public async Task<HttpResponseMessage> UpdateAsync(UpdateAssignmentDto dto, HttpContext context)
     {
-        throw new NotImplementedException();
+        _client.AddBearerHeader(context);
+        var result = await _client.PatchAsync("/api/assignments", JsonContent.Create(dto));
+        return result;
+    }
+
+    public async Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context)
+    {
+        _client.AddBearerHeader(context);
+        var result = await _client.DeleteAsync($"/api/assignments/{id}");
+        return result;
     }
 }

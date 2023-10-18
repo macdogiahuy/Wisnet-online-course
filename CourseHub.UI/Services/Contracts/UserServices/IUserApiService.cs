@@ -24,4 +24,5 @@ public interface IUserApiService
     Task SignOutAsync();
 
     Task<HttpResponseMessage> CheckValidityAsync(string email, string token);
+    Task<HttpResponseMessage> CreateAdminAsync(CreateUserDto dto, HttpContext context);
 }

@@ -8,6 +8,7 @@ public interface IAssignmentApiService
     Task<AssignmentModel?> GetAsync(Guid id, HttpContext context);
     Task<AssignmentMinModel?> GetMinAsync(Guid id);
     Task<List<AssignmentMinModel>> GetBySectionsAsync(IEnumerable<Guid> sections);
+    Task<List<AssignmentMinModel>?> GetByCourseAsync(Guid courseId);
 
     Task<HttpResponseMessage> CreateAsync(CreateAssignmentDto dto, HttpContext context);
     Task<HttpResponseMessage> UpdateAsync(UpdateAssignmentDto dto, HttpContext context);

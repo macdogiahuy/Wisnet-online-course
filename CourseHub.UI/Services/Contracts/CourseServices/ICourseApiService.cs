@@ -1,5 +1,4 @@
-﻿using CourseHub.Core.Entities.CourseDomain;
-using CourseHub.Core.Interfaces.Repositories.Shared;
+﻿using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.Models.Course.EnrollmentModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
@@ -11,7 +10,7 @@ public interface ICourseApiService
     Task<CourseModel?> GetAsync(Guid id);
     Task<CourseOverviewModel?> GetBySectionIdAsync(Guid sectionId);
     Task<PagedResult<CourseOverviewModel>> GetPagedAsync(QueryCourseDto dto);
-    Task<List<CourseOverviewModel>?> GetMultipleAsync(Guid[] ids);
+    Task<List<CourseOverviewModel>?> GetMultipleAsync(IEnumerable<Guid> ids);
     Task<List<CourseOverviewModel>?> GetSimilarAsync(Guid id);
     Task<List<CourseMinModel>?> GetMinAsync(QueryCourseDto id);
 

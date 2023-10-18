@@ -1,5 +1,6 @@
 ﻿using CourseHub.API.Controllers.Shared;
 using CourseHub.API.Helpers.Cookie;
+using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.RequestDtos.Social.ConversationDtos;
 using CourseHub.Core.Services.Domain.SocialServices.Contracts;
 using CourseHub.Core.Services.Storage;
@@ -32,6 +33,14 @@ public class ConversationsController : BaseController
     {
         var client = HttpContext.GetClientId();
         var result = await _conversationService.Get(id, client);
+        return result.AsResponse();
+    }
+
+    [HttpGet("multiple")]
+    [Authorize(Roles = RoleConstants.ADMIN_OR_SYSADMIN)]
+    public async Task<IActionResult> GetMultiple([FromQuery] List<Guid> ids)
+    {
+        var result = await _conversationService.GetMultiple(ids);
         return result.AsResponse();
     }
 

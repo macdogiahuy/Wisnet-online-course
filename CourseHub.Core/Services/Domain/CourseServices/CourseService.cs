@@ -90,9 +90,11 @@ public class CourseService : DomainService, ICourseService
         return ToQueryResult(result);
     }
 
-    public Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids)
+    public async Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids)
     {
-        throw new NotImplementedException();
+        var result = await _uow.CourseRepo.GetMultipleAsync(ids);
+
+        return ToQueryResult(result);
     }
 
     public async Task<ServiceResult<List<CourseOverviewModel>>> GetSimilarAsync(Guid id)

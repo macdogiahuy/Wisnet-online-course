@@ -11,5 +11,4 @@ public interface ICourseReviewService
 
     Task<ServiceResult<Guid>> CreateAsync(CreateCourseReviewDto dto, Guid? client);
     Task<ServiceResult> UpdateAsync(UpdateCourseReviewDto dto, Guid? client);
-    Task<ServiceResult> DeleteAsync(Guid id, Guid? client);
 }

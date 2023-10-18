@@ -506,7 +506,6 @@
                 }
             </div>
             <button class="greenBtn" type="submit" id="submit">Submit report</button>
-
         </div>
     </div>
 
@@ -767,7 +766,7 @@
 
         var selectedReportMessage = '';
         var reportMessageBtns = document.getElementsByClassName('report-message');
-        for (var btn of reportMessageBtns) {
+        for (let btn of reportMessageBtns) {
             btn.onclick = () => {
                 selectedReportMessage = btn.getAttribute('data-message');
             }
@@ -791,6 +790,7 @@
         submitbtn.addEventListener('click', () => {
             event.preventDefault();
 
+            /* CreateConversationReportDto */
             var jsonMessage = {
                 "Message" : selectedReportMessage,
                 "Conversation": "@Model.CurrentConversation?.Id"

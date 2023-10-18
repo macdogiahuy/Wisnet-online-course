@@ -312,7 +312,8 @@
 		})
 
 		var notifications = [];
-		notificationBtn.addEventListener('click', () => {
+		if (notificationBtn) {
+			notificationBtn.addEventListener('click', () => {
 			var innerHTML = '';
 			notificationEle.innerHTML = innerHTML;
 
@@ -361,7 +362,8 @@
 						notificationEle.innerHTML = innerHTML;
 					}
 				})
-		});
+			});
+		}
 
 		function approveNotification(id) {
 			updateNotification(id, @((byte)NotificationStatus.Approved));

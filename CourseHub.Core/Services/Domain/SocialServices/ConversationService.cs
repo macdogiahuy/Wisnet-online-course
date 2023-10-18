@@ -28,9 +28,9 @@ public class ConversationService : DomainService, IConversationService
     {
         var result = await _uow.ConversationRepo.GetAsync(id);
 
-        if (result is null)
+        /*if (result is null)
             return NotFound<ConversationModel>();
-        /*if (!result.Members.Any(_ => _.CreatorId == client))
+        if (!result.Members.Any(_ => _.CreatorId == client))
             return Unauthorized<ConversationModel>();*/
 
         return ToQueryResult(result);
@@ -41,6 +41,13 @@ public class ConversationService : DomainService, IConversationService
         var query = _uow.ConversationRepo.GetPagingQuery(GetPredicate(dto, client), dto.PageIndex, dto.PageSize);
 
         PagedResult<ConversationModel> result = await query.ExecuteWithOrderBy(_ => _.CreationTime);
+
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<List<ConversationModel>>> GetMultiple(List<Guid> ids)
+    {
+        var result = await _uow.ConversationRepo.GetMultipleAsync(ids);
 
         return ToQueryResult(result);
     }
