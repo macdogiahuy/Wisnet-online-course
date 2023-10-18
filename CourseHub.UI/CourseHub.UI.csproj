@@ -17,11 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Contracts\AssignmentServices\" />
-    <Folder Include="Services\Implementations\AssignmentServices\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="Pages\Course\_PartialCarousel.cshtml" />
   </ItemGroup>
 

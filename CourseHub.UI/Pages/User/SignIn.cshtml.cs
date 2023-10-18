@@ -57,7 +57,18 @@ public class SignInModel : PageModel
         HttpResponseMessage response = await _userApiService.SignInAsync(Dto);
         if (!response.IsSuccessStatusCode)
         {
-            ModelState.AddModelError(string.Empty, "Error logging in");
+            string? responseMessage = await response.Content.ReadFromJsonAsync<string>();
+            if (responseMessage is not null)
+            {
+                if (responseMessage.StartsWith("400") ||
+                    responseMessage.StartsWith("401") ||
+                    responseMessage.StartsWith("403"))
+                    ModelState.AddModelError(string.Empty, responseMessage.Substring(5));
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error logging in.");
+            }
             return Page();
         }
 

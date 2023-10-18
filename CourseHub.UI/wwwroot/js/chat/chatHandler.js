@@ -38,6 +38,5 @@ class ChatHandler {
     addMessage(message) {
         this.#messages.push(message);
         this.#messagesContainer.appendChild(this.#createMessageCallback(message));
-        console.log(this.#messages);
     }
 }

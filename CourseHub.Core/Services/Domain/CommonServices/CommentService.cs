@@ -48,9 +48,25 @@ public class CommentService : DomainService, ICommentService
         }
     }
 
-    public Task<ServiceResult> UpdateAsync(UpdateCommentDto dto, Guid? client)
+    public async Task<ServiceResult> UpdateAsync(UpdateCommentDto dto, Guid? client)
     {
-        throw new NotImplementedException();
+        if (client is null)
+            return Unauthorized();
+        var author = await _uow.UserRepo.Find(client);
+        if (author is null)
+            return Unauthorized();
+
+        var entity = await _uow.CommentRepo.Find(dto.Id);
+        await ApplyChanges(dto, entity);
+        try
+        {
+            await _uow.CommitAsync();
+            return Ok();
+        }
+        catch
+        {
+            return ServerError();
+        }
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id, Guid? client)
@@ -107,6 +123,11 @@ public class CommentService : DomainService, ICommentService
         }
 
         return new Comment(id, author, dto.Content, dto.SourceType, dto.SourceId, medias);
+    }
+
+    private async Task ApplyChanges(UpdateCommentDto dto, Comment entity)
+    {
+        entity.Content = dto.Content;
     }
 
     private async Task<string> SaveMedia(IFormFile file, Guid commentId, Guid fileName)

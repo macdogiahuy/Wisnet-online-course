@@ -9,16 +9,26 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using CourseHub.Core.Models.Social;
 using CourseHub.Core.RequestDtos.Social.ChatMessageDtos;
 using CourseHub.UI.Services.Implementations.UserServices;
+using CourseHub.UI.Helpers.AppStart;
 
 namespace CourseHub.UI.Pages.Group;
 
 public class ConversationModel : PageModel
 {
     public UserFullModel Client { get; set; }
-    public Dictionary<Guid, UserOverviewModel> RelatedUsers { get; set; }
+    public Dictionary<Guid, UserMinModel> RelatedUsers { get; set; }
     public List<Core.Models.Social.ConversationModel> Conversations { get; set; }
     public Core.Models.Social.ConversationModel? CurrentConversation { get; set; }
+    public List<Guid> MemberIds { get; set; }
+    public List<Guid> Admins { get; set; }
     public List<ChatMessageModel> Messages { get; set; }
+
+    public string ReportPath { get; set; }
+    public string InviteMemberPath { get; set; }
+    public string DeleteMessagePath { get; set; }
+
+    [BindProperty]
+    public UpdateConversationDto UpdateDto { get; set; }
 
 
 
@@ -53,7 +63,7 @@ public class ConversationModel : PageModel
             }
             catch
             {
-                return NotFound();
+                return Redirect(Global.PAGE_404);
             }
         }
 
@@ -75,12 +85,37 @@ public class ConversationModel : PageModel
 
 
 
-        List<Guid> relatedUserIds = new();
+        MemberIds = new();
+        Admins = new();
         foreach (var conversation in Conversations)
             foreach (var member in conversation.Members)
-                relatedUserIds.Add(member.CreatorId);
-        var relatedUsers = await userApiService.GetOverviewAsync(relatedUserIds);
-        RelatedUsers = relatedUsers.ToDictionary(_ => _.Id);
+            {
+                MemberIds.Add(member.CreatorId);
+                if (member.IsAdmin)
+                    Admins.Add(member.CreatorId);
+            }
+
+        // CurrentConversation
+        if (CurrentConversation.IsPrivate)
+        {
+            Admins.AddRange(CurrentConversation.Members.Select(_ => _.CreatorId));
+        }
+        else
+        {
+            foreach (var member in CurrentConversation.Members)
+                if (member.IsAdmin)
+                    Admins.Add(member.CreatorId);
+        }
+
+        var allUsers = await userApiService.GetAllMinAsync(HttpContext);
+        RelatedUsers = allUsers.ToDictionary(_ => _.Id);
+
+
+
+        var apiServerPath = Configurer.GetApiClientOptions().ApiServerPath;
+        ReportPath = apiServerPath + "/api/notifications";
+        InviteMemberPath = apiServerPath + "/api/notifications/multiple";
+        DeleteMessagePath = apiServerPath + "/api/chatmessages";
 
         if (CurrentConversation is null)
         {
@@ -115,5 +150,18 @@ public class ConversationModel : PageModel
 
         Client.AvatarUrl = UserApiService.GetAvatarApiUrl(Client.AvatarUrl, Client.Id);
         return Page();
+    }
+
+    public async Task<IActionResult> OnPostEdit([FromServices] IConversationApiService conversationApiService)
+    {
+        if (!ModelState.IsValid)
+        {
+            return Redirect(Request.Path + "?id=" + UpdateDto.Id);
+        }
+
+        var response = await conversationApiService.UpdateAsync(UpdateDto, HttpContext);
+        // Alert
+
+        return Redirect(Request.Path + "?id=" + UpdateDto.Id);
     }
 }

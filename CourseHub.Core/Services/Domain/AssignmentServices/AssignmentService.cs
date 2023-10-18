@@ -28,6 +28,25 @@ public class AssignmentService : DomainService, IAssignmentService
         return ToQueryResult(result);
     }
 
+    public async Task<ServiceResult<List<AssignmentMinModel>>> GetBySectionsAsync(IEnumerable<Guid> sections)
+    {
+        var result = await _uow.AssignmentRepo.GetBySectionsAsync(sections);
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<List<AssignmentMinModel>>> GetByCourseAsync(Guid courseId)
+    {
+        var course = await _uow.CourseRepo.GetAsync(courseId);
+        if (course is null)
+            return NotFound<List<AssignmentMinModel>>();
+
+        var result = await _uow.AssignmentRepo.GetBySectionsAsync(course.Sections.Select(_ => _.Id));
+        return ToQueryResult(result);
+    }
+
+
+
+
 
 
     public async Task<ServiceResult<Guid>> CreateAsync(CreateAssignmentDto dto, Guid client)
@@ -47,9 +66,18 @@ public class AssignmentService : DomainService, IAssignmentService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult> DeleteAsync(Guid id, Guid client)
+    public async Task<ServiceResult> DeleteAsync(Guid id, Guid client)
     {
-        throw new NotImplementedException();
+        var entity = await _uow.AssignmentRepo.Find(id);
+        if (entity is null)
+            return NotFound();
+        if (entity.CreatorId != client)
+            return Forbidden();
+
+        _uow.AssignmentRepo.Delete(entity);
+        //...
+        //await _uow.CommitAsync();
+        return Ok();
     }
 
 

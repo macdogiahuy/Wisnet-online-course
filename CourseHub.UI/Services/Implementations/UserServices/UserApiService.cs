@@ -99,14 +99,31 @@ public class UserApiService : IUserApiService
             var result = await _client.GetFromJsonAsync<List<UserMinModel>>(url);
 
             foreach (var item in result)
-            {
                 item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
-            }
+
             return result;
         }
         catch
         {
             return null;
+        }
+    }
+
+    public async Task<List<UserMinModel>> GetAllMinAsync(HttpContext context)
+    {
+        try
+        {
+            _client.AddBearerHeader(context);
+            var result = await _client.GetFromJsonAsync<List<UserMinModel>>("api/users/all");
+
+            foreach (var item in result)
+                item.AvatarUrl = GetAvatarApiUrl(item.AvatarUrl, item.Id);
+
+            return result;
+        }
+        catch
+        {
+            return new();
         }
     }
 
@@ -116,7 +133,7 @@ public class UserApiService : IUserApiService
             return "/img/User_Empty.png";
         return ResourceHelper.IsRemote(avatarUrl)
             ? avatarUrl
-            : $"{Configurer.GetApiClientOptions().ApiServerPath}api/users/avatar/{userId}";
+            : $"{Configurer.GetApiClientOptions().ApiServerPath}/api/users/avatar/{userId}";
     }
 
 
@@ -189,6 +206,13 @@ public class UserApiService : IUserApiService
     public async Task<HttpResponseMessage> ResetPasswordAsync(ResetPasswordDto dto)
     {
         return await _client.PostAsJsonAsync("api/users/ResetPassword", dto);
+    }
+
+    public async Task<HttpResponseMessage> CreateAdminAsync(CreateUserDto dto, HttpContext context)
+    {
+        _client.AddBearerHeader(context);
+        var response = await _client.PostAsJsonAsync($"api/users/admin", dto);
+        return response;
     }
 
 

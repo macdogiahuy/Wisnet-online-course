@@ -18,6 +18,8 @@ public class IndexModel : PageModel
 
     public string NotificationRequestPath { get; set; }
 
+
+
     public IndexModel(INotificationApiService notificationApiService)
     {
         _notificationApiService = notificationApiService;

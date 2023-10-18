@@ -1,5 +1,6 @@
 ﻿using CourseHub.API.Controllers.Shared;
 using CourseHub.API.Helpers.Cookie;
+using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.RequestDtos.Social.ConversationDtos;
 using CourseHub.Core.Services.Domain.SocialServices.Contracts;
 using CourseHub.Core.Services.Storage;
@@ -35,6 +36,14 @@ public class ConversationsController : BaseController
         return result.AsResponse();
     }
 
+    [HttpGet("multiple")]
+    [Authorize(Roles = RoleConstants.ADMIN_OR_SYSADMIN)]
+    public async Task<IActionResult> GetMultiple([FromQuery] List<Guid> ids)
+    {
+        var result = await _conversationService.GetMultiple(ids);
+        return result.AsResponse();
+    }
+
     [HttpGet("targets")]
     public async Task<IActionResult> GetConversationTargets([FromQuery] QueryConversationDto dto)
     {
@@ -42,6 +51,15 @@ public class ConversationsController : BaseController
         var result = await _conversationService.GetConversationsOrUsers(dto, client);
         return result.AsResponse();
     }
+
+    /*[HttpGet("{id}/outsiders")]
+    [Authorize]
+    public async Task<IActionResult> GetConversationOutsiders(Guid id)
+    {
+        var client = HttpContext.GetClientId();
+        var result = await _conversationService.GetOutsiders(dto, client);
+        return result.AsResponse();
+    }*/
 
     [HttpGet("Resource/{resourceId}")]
     public IActionResult GetAvatar(Guid resourceId)

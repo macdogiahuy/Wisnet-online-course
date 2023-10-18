@@ -90,9 +90,11 @@ public class CourseService : DomainService, ICourseService
         return ToQueryResult(result);
     }
 
-    public Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids)
+    public async Task<ServiceResult<List<CourseOverviewModel>>> GetMultipleAsync(Guid[] ids)
     {
-        throw new NotImplementedException();
+        var result = await _uow.CourseRepo.GetMultipleAsync(ids);
+
+        return ToQueryResult(result);
     }
 
     public async Task<ServiceResult<List<CourseOverviewModel>>> GetSimilarAsync(Guid id)
@@ -150,11 +152,11 @@ public class CourseService : DomainService, ICourseService
     {
         var instructorId = await _uow.InstructorRepo.GetIdByUserId(client);
         if (instructorId == default)
-            return ServerError<Guid>();
+            return ServerError();
 
         var entity = await _uow.CourseRepo.Find(id);
         if (entity is null)
-            return BadRequest();
+            return NotFound();
         _uow.CourseRepo.Delete(entity);
         await _uow.CommitAsync();
         return Ok();

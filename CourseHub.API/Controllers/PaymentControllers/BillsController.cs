@@ -30,19 +30,19 @@ public class BillsController : BaseController
 
         switch (dto.Action)
         {
-            case PaymentDomainMessage.ACTION_PAY_COURSE:
+            case PaymentDomainMessages.ACTION_PAY_COURSE:
 				if (!Guid.TryParse(dto.Note, out var courseId))
-					return BadRequest(PaymentDomainMessage.INVALID_NOTE);
+					return BadRequest(PaymentDomainMessages.INVALID_NOTE);
 				var courseResult = await courseService.GetMinAsync(courseId);
 				if (!courseResult.IsSuccessful)
-					return BadRequest(PaymentDomainMessage.INVALID_NOTE);
+					return BadRequest(PaymentDomainMessages.INVALID_NOTE);
 
 				var course = courseResult.Data!;
                 amount = CourseBusinessHelper.GetPostDiscount(course.Price, course.Discount, course.DiscountExpiry);
                 orderInfo = $"{client}'s payment for course #{courseId}";
                 break;
             default:
-                return BadRequest(PaymentDomainMessage.INVALID_ACTION);
+                return BadRequest(PaymentDomainMessages.INVALID_ACTION);
 		}
 
         var request = new VNPayHelper.VNPayRequest
@@ -89,9 +89,9 @@ public class BillsController : BaseController
         Guid billId = Guid.NewGuid();
         CreateBillDto dto = new()
         {
-            Action = PaymentDomainMessage.ACTION_PAY_COURSE,
+            Action = PaymentDomainMessages.ACTION_PAY_COURSE,
             Note = vnpResponse.vnp_OrderInfo,
-            Gateway = PaymentDomainMessage.GATEWAY_VNPAY
+            Gateway = PaymentDomainMessages.GATEWAY_VNPAY
         };
         PaymentResponse paymentResponse = new()
         {

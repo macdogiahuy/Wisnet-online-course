@@ -15,7 +15,7 @@ public class AdminViewMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        if (context.Request.Path.ToString().Contains("/Admin"))
+        if (context.Request.Path.ToString().ToLower().Contains("/admin"))
         {
             var clientData = await context.GetClientData();
             if (clientData is null)

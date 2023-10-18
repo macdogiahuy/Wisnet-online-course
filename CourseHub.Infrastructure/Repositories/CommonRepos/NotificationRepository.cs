@@ -18,4 +18,9 @@ internal class NotificationRepository : BaseRepository<Notification>, INotificat
     {
         return GetPagingQuery<NotificationModel>(NotificationMapperProfile.ModelConfig, whereExpression, pageIndex, pageSize);
     }
+
+    public async Task Insert(IEnumerable<Notification> entities)
+    {
+        await DbSet.AddRangeAsync(entities);
+    }
 }

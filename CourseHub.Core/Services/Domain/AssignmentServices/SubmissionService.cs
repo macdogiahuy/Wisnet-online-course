@@ -15,15 +15,40 @@ public class SubmissionService : DomainService, ISubmissionService
     {
     }
 
+
+
+    public async Task<ServiceResult<SubmissionModel>> GetAsync(Guid id)
+    {
+        var result = await _uow.SubmissionRepo.Get(id);
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<List<SubmissionMinModel>>> GetByAssignmentId(Guid assignmentId)
+    {
+        var result = await _uow.SubmissionRepo.GetByAssignmentId(assignmentId);
+        return ToQueryResult(result);
+    }
+
     public async Task<ServiceResult<Guid>> CreateAsync(CreateSubmissionDto dto, Guid client)
     {
         try
         {
+            // A lot of queries
             //...
+            var assignment = await _uow.AssignmentRepo.Find(dto.AssignmentId);
+            if (assignment is null)
+                return NotFound<Guid>();
             var choices = await _uow.McqChoiceRepo.GetMultiple(dto.Answers.Select(_ => _.MCQChoiceId));
 
-            var entity = Adapt(dto, client, choices);
+            var entity = Adapt(dto, client, choices, assignment);
             await _uow.SubmissionRepo.Insert(entity);
+            await _uow.CommitAsync();
+
+            /*var section = await _uow.SectionRepo.GetWithCourse(assignment.SectionId);
+            var passed = await _uow.SubmissionRepo.Get
+            var course = await _uow.CourseRepo.GetAsync
+            section.Course.Id*/
+
             return Created(entity.Id);
         }
         catch
@@ -32,32 +57,22 @@ public class SubmissionService : DomainService, ISubmissionService
         }
     }
 
-    public Task<ServiceResult> DeleteAsync(Guid id, Guid client)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResult<SubmissionModel>> GetAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResult<SubmissionMinModel>> GetMinAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<ServiceResult> UpdateAsync(UpdateSubmissionDto dto, Guid client)
     {
         throw new NotImplementedException();
     }
 
+    public Task<ServiceResult> DeleteAsync(Guid id, Guid client)
+    {
+        throw new NotImplementedException();
+    }
 
 
 
 
-    
-    private Submission Adapt(CreateSubmissionDto _, Guid client, List<McqChoice> choices)
+
+
+    private Submission Adapt(CreateSubmissionDto _, Guid client, List<McqChoice> choices, Assignment assignment)
     {
         Guid id = Guid.NewGuid();
 
@@ -79,7 +94,7 @@ public class SubmissionService : DomainService, ISubmissionService
             AssignmentId = _.AssignmentId,
             TimeSpentInSec = _.TimeSpentInSec,
             Answers = answers,
-            Mark = correctChoices / choices.Count
+            Mark = (correctChoices / (double)assignment.QuestionCount) * 10
         };
     }
 }

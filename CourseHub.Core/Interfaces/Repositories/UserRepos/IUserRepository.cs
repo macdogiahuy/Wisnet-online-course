@@ -22,4 +22,5 @@ public interface IUserRepository : IRepository<User>
 
     //
     Task<List<UserModel>> GetAllAsync();
+    Task<List<UserMinModel>> GetAllMinAsync();
 }

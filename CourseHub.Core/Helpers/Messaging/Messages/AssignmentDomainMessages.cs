@@ -1,6 +1,6 @@
 ﻿namespace CourseHub.Core.Helpers.Messaging.Messages;
 
-public class AssignmentDomainMessage
+public class AssignmentDomainMessages
 {
     public const string INVALID_ASSIGNMENT = "Invalid assignment";
 }

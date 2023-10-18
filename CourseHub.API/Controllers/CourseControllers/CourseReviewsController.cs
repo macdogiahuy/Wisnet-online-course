@@ -46,12 +46,12 @@ public class CourseReviewsController : BaseController
         return result.AsResponse();
     }
 
-    [HttpDelete("{id}")]
+    /*[HttpDelete("{id}")]
     [Authorize]
     public async Task<IActionResult> Delete(Guid id)
     {
         var clientId = HttpContext.GetClientId();
         var result = await _courseReviewService.DeleteAsync(id, clientId);
         return result.AsResponse();
-    }
+    }*/
 }

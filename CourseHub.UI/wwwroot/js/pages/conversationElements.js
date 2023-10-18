@@ -16,64 +16,65 @@ function createMessage(message) {
     var senderAvatar = isClientMessage ? client.avatarUrl : sender.avatarUrl;
     var senderName = isClientMessage ? client.fullName : sender.fullName;
 
-    console.log(message);
     if (!message.lastModificationTime)
         message.lastModificationTime = new Date().toLocaleString();
 
+    /*onclick="openDelete('${message.id}')"*/
     if (!isClientMessage) {
         return createDiv(
             `<!-- Message -->
-                        <!-- Avatar -->
-                        <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">
-                            <img class="avatar-img" src="${senderAvatar}" alt="">
-                        </a>
+                <!-- Avatar -->
+                <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">
+                    <img class="avatar-img" src="${senderAvatar}" alt="">
+                </a>
 
-                        <!-- Message: body -->
-                        <div class="message-body">
+                <!-- Message: body -->
+                <div class="message-body">
 
-                            <!-- Message: row -->
-                            <div class="message-row">
-                                <div class="d-flex align-items-center">
+                    <!-- Message: row -->
+                    <div class="message-row">
+                        <div class="d-flex align-items-center">
 
-                                    <!-- Message: content -->
-                                    <div class="message-content bg-light">
-                                        <h6 class="mb-2">${senderName}</h6>
-                                        <div>${message.content}</div>
+                            <!-- Message: content -->
+                            <div class="message-content bg-light">
+                                <h6 class="mb-2">${senderName}</h6>
+                                <div>${message.content}</div>
 
-                                        <div class="mt-1">
-                                            <small class="opacity-65">${message.lastModificationTime}</small>
-                                        </div>
-                                    </div>
-                                    <!-- Message: content -->
-
-                                    <!-- Message: dropdown -->
-                                    <div class="dropdown">
-                                        <a class="text-muted opacity-60 ml-3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fe-more-vertical"></i>
-                                        </a>
-
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                                Edit <span class="ml-auto fe-edit-3"></span>
-                                            </a>
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                                Share <span class="ml-auto fe-share-2"></span>
-                                            </a>
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                                Delete <span class="ml-auto fe-trash-2"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- Message: dropdown -->
-
+                                <div class="mt-1">
+                                    <small class="opacity-65">${message.lastModificationTime}</small>
                                 </div>
                             </div>
-                            <!-- Message: row -->
+                            <!-- Message: content -->
+
+                            <!-- Message: dropdown -->
+                            <div class="dropdown">
+                                <a class="app-dropdown-btn text-muted opacity-60 ml-3" href="#" onclick="openDelete('${message.id}')"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fe-more-vertical"></i>
+                                </a>
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        Edit <span class="ml-auto fe-edit-3"></span>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        Share <span class="ml-auto fe-share-2"></span>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        Delete <span class="ml-auto fe-trash-2"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Message: dropdown -->
 
                         </div>
-                        <!-- Message: Body -->
-                    <!-- Message -->`, 'message'
-                );
+                    </div>
+                    <!-- Message: row -->
+
+                </div>
+                <!-- Message: Body -->
+            <!-- Message -->`, 'message', `app-msg-${message.id}`
+        );
     }
 
     return createDiv(
@@ -85,7 +86,8 @@ function createMessage(message) {
                 <div class="message-row">
                     <div class="d-flex align-items-center justify-content-end">
                         <div class="dropdown">
-                            <a class="text-muted opacity-60 mr-3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="text-muted opacity-60 mr-3" href="#" onclick="openDelete('${message.id}')"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fe-more-vertical"></i>
                             </a>
                             <div class="dropdown-menu">
@@ -113,6 +115,6 @@ function createMessage(message) {
                         </div>
                     </div>
                 </div>
-            </div>`, 'message message-right'
+            </div>`, 'message message-right', `app-msg-${message.id}`
     );
 }

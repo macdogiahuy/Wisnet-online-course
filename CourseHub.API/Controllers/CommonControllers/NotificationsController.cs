@@ -34,6 +34,15 @@ public class NotificationsController : BaseController
         return result.AsResponse();
     }
 
+    [HttpPost("multiple")]
+    [Authorize]
+    public async Task<IActionResult> CreateMultiple(CreateMultipleNotificationDto dto)
+    {
+        var client = HttpContext.GetClientId();
+        var result = await _notificationService.CreateAsync(dto, client);
+        return result.AsResponse();
+    }
+
     [HttpPatch]
     [Authorize]
     public async Task<IActionResult> Update(UpdateNotificationDto dto)

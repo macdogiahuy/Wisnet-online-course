@@ -28,9 +28,9 @@ public class ConversationService : DomainService, IConversationService
     {
         var result = await _uow.ConversationRepo.GetAsync(id);
 
-        if (result is null)
+        /*if (result is null)
             return NotFound<ConversationModel>();
-        /*if (!result.Members.Any(_ => _.CreatorId == client))
+        if (!result.Members.Any(_ => _.CreatorId == client))
             return Unauthorized<ConversationModel>();*/
 
         return ToQueryResult(result);
@@ -41,6 +41,13 @@ public class ConversationService : DomainService, IConversationService
         var query = _uow.ConversationRepo.GetPagingQuery(GetPredicate(dto, client), dto.PageIndex, dto.PageSize);
 
         PagedResult<ConversationModel> result = await query.ExecuteWithOrderBy(_ => _.CreationTime);
+
+        return ToQueryResult(result);
+    }
+
+    public async Task<ServiceResult<List<ConversationModel>>> GetMultiple(List<Guid> ids)
+    {
+        var result = await _uow.ConversationRepo.GetMultipleAsync(ids);
 
         return ToQueryResult(result);
     }
@@ -176,6 +183,25 @@ public class ConversationService : DomainService, IConversationService
         return entity;
     }
 
+    private async Task ApplyChanges(UpdateConversationDto _, Conversation entity)
+    {
+        //... dto
+
+        if (_.Title is not null)
+            entity.Title = _.Title;
+
+        if (_.Avatar is not null)
+        {
+            string avatarUrl = string.Empty;
+            if (_.Avatar.File is not null)
+                avatarUrl = await SaveAvatar(_.Avatar.File, entity.Id);
+            else if (_.Avatar.Url is not null)
+                avatarUrl = _.Avatar.Url;
+
+            entity.AvatarUrl = avatarUrl;
+        }
+    }
+
 
 
 
@@ -193,11 +219,6 @@ public class ConversationService : DomainService, IConversationService
         // Where Contains
         //dto.ConversationIds
         return null;
-    }
-
-    private async Task ApplyChanges(UpdateConversationDto dto, Conversation entity)
-    {
-
     }
 
     private async Task<string> SaveAvatar(IFormFile file, Guid courseId)

@@ -8,7 +8,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh; /* Đảm bảo nó chiếm toàn bộ chiều cao của viewport */
+        height: 100vh;
     }
 
     div.form_create_admin {
@@ -32,11 +32,10 @@
         cursor: pointer;
     }
 
-        .greenBtn:hover {
-            background-color: green;
-            color: white;
-        }
-
+    .greenBtn:hover {
+        background-color: green;
+        color: white;
+    }
 
     form {
         display: flex;
@@ -61,11 +60,11 @@
         transition: border-color 0.3s ease;
     }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        input[type="email"]:focus {
-            border-color: #007BFF;
-        }
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus {
+        border-color: #007BFF;
+    }
 
     input[type="submit"] {
         padding: 10px 15px;
@@ -89,35 +88,32 @@
 
 <div class="container-fluid">
     <div class="form_create_admin">
-        <form action="/create-admin-account" method="post">
+        <form method="post">
             <label for="username">User Name:</label>
-            <input type="text" id="username" name="username" required><br><br>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br><br>
-
-            <label for="re_enter_password">Re-enter Password:</label>
-            <input type="password" id="re_enter_password" name="re_enter_password" required><br><br>
+            <input type="text" id="username" asp-for="Dto.UserName" required><br><br>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br><br>
+            <input type="email" id="email" asp-for="Dto.Email" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" asp-for="Dto.Password" required><br><br>
+
+            <label for="re_enter_password">Re-enter Password:</label>
+            <input type="password" id="re_enter_password" asp-for="RePassword" required><br><br>
 
             <button id="create" type="submit" class="greenBtn">Create admin account</button>
         </form>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/star-rating.min.js" type="text/javascript"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
+<!--<script>
     const submitbtn = document.getElementById('create');
 
     submitbtn.addEventListener('click', () => {
-        //notify when submit done
         event.preventDefault();
         swal({
             title: "Success",
-            text:
-                "We were sent email, notify to admin check this mail for verify account",
+            text: "Created admin account",
             icon: "success",
             buttons: {
                 confirm: "Okay"
@@ -127,4 +123,4 @@
         closePopup();
     });
 
-</script>
+</script>-->

@@ -29,7 +29,8 @@
                         }
                         else
                         {
-                            foreach (var item in Model.Data.Items)
+                            foreach (var item in Model.Data.Items
+                                .Where(_ => _.Type != NotificationType.ReportGroup && _.Type != NotificationType.ReportCourse))
                             {
                                 <tr>
                                     <td>@item.Type.ToString()</td>

@@ -7,9 +7,7 @@ using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.User.UserModels;
-using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using CourseHub.Core.RequestDtos.User.UserDtos;
-using CourseHub.Core.Services.Domain.CourseServices;
 using CourseHub.Core.Services.Domain.UserServices.Contracts;
 using CourseHub.Core.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
@@ -71,6 +69,16 @@ public class UsersController : BaseController
         return result.AsResponse();
     }
 
+    //...
+    [HttpGet("all")]
+    [Authorize]
+    public async Task<IActionResult> GetAllMinAsync()
+    {
+        ServiceResult<List<UserMinModel>> result = await _userService.GetAllMinAsync();
+        return result.AsResponse();
+    }
+
+
     [HttpGet("avatar/{resourceId}")]
     public IActionResult GetAvatar(Guid resourceId)
     {
@@ -101,7 +109,7 @@ public class UsersController : BaseController
 
     [HttpPost("admin")]
     [Authorize(Roles = nameof(Role.SysAdmin))]
-    public async Task<IActionResult> RegisterAsInstructorAsync(CreateUserDto dto)
+    public async Task<IActionResult> CreateAdminAsync(CreateUserDto dto)
     {
         var result = await _userService.CreateAdminAsync(dto);
         return result.AsResponse();
@@ -111,6 +119,14 @@ public class UsersController : BaseController
     public async Task<IActionResult> VerifyEmail(VerifyEmailDto dto)
     {
         var result = await _userService.VerifyAsync(dto);
+        return result.AsResponse();
+    }
+
+    [HttpPost("block/{id}")]
+    [Authorize(Roles = RoleConstants.ADMIN_OR_SYSADMIN)]
+    public async Task<IActionResult> Block(Guid id)
+    {
+        ServiceResult result = await _userService.BlockAsync(id);
         return result.AsResponse();
     }
 

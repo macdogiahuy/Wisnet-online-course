@@ -21,9 +21,16 @@
     .container form .btn {
         font-size: 18px;
     }
+
+    h2 {
+        margin-top: 40px;
+        font-size: 32px;
+    }
 </style>
 
 <div class="container">
+    <h2>Add Lecture</h2>
+
     <div class="row" style="justify-content: center">
         @await Html.PartialAsync("Shared/_Alert")
 
@@ -63,7 +70,11 @@
                 <input asp-for="Files" type="file" class="form-control-file" />
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Lecture</button>
+            <button type="submit" class="btn btn-primary">Add Lecture</button>
         </form>
     </div>
+
+    <!--
+    <h2>Add Assignment</h2>
+    <a href="@Global.PAGE_ASSIGNMENT_CREATE" class="btn btn-primary">Add Assignment</a>-->
 </div>

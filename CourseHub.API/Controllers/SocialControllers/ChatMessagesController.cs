@@ -36,15 +36,6 @@ public class ChatMessagesController : BaseController
         return result.AsResponse();
     }
 
-    [HttpPut]
-    [Authorize]
-    public async Task<IActionResult> UpdateMessage(UpdateChatMessageDto dto)
-    {
-        var client = HttpContext.GetClientId();
-        var result = await _chatMessageService.Update(dto, (Guid)client!);
-        return result.AsResponse();
-    }
-
     [HttpDelete("{id}")]
     [Authorize]
     public async Task<IActionResult> DeleteMessage(Guid id)

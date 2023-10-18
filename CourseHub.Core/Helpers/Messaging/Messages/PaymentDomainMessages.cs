@@ -1,6 +1,6 @@
 ﻿namespace CourseHub.Core.Helpers.Messaging.Messages;
 
-public class PaymentDomainMessage
+public class PaymentDomainMessages
 {
     //...
     public const string ACTION_PAY_COURSE = "Pay for course";

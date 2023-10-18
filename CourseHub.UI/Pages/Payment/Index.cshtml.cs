@@ -45,9 +45,9 @@ public class IndexModel : PageModel
 
         CreateBillDto dto = new()
         {
-            Action = PaymentDomainMessage.ACTION_PAY_COURSE,
+            Action = PaymentDomainMessages.ACTION_PAY_COURSE,
             Note = courseId.ToString(),
-            Gateway = PaymentDomainMessage.GATEWAY_VNPAY,
+            Gateway = PaymentDomainMessages.GATEWAY_VNPAY,
         };
 
         var response = await paymentApiService.GetUrl(dto, HttpContext);

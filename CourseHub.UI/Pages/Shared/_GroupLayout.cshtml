@@ -1,6 +1,5 @@
 ﻿@{
     Layout = null;
-
 }
 
 
@@ -45,6 +44,8 @@
             color: dodgerblue;
         }
     </style>
+
+    @await RenderSectionAsync("Style", required: false)
 </head>
 <body>
     <div class="layout">
@@ -176,7 +177,8 @@
                                     <div class="input-group">
                                         <input id="app-autocomplete-input" type="text" class="form-control form-control-lg" placeholder="Search for messages or users..." aria-label="Search for messages or users...">
                                         <div class="input-group-append">
-                                            <a class="btn btn-lg btn-ico btn-secondary btn-minimal" href="#">
+                                            <!-- Removed btn-secondary -->
+                                            <a class="btn btn-lg btn-ico btn-minimal" href="#">
                                                 <i class="fe-search"></i>
                                             </a>
                                         </div>
@@ -217,26 +219,9 @@
                                     </div>
                                 </form>
 
-                                <!-- Card -->
-                                <div class="card mb-6">
-                                    <div class="card-body">
-                                        <div class="media align-items-center">
-                                            <div class="mr-5">
-                                                <img src="assets\images\brand.svg" class="fill-primary" data-inject-svg="" alt="" style="height: 46px; width: 46px;">
-                                            </div>
-                                            <div class="media-body">
-                                                <h5 class="mb-0">
-                                                    <a href="documentation\index.html" class="text-basic-inverse stretched-link">Documentation</a>
-                                                </h5>
-                                                <p>Quick setup and build tools.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card -->
-
                                 <h5 class="my-6">Chat Pages:</h5>
 
+                                @*
                                 <!-- Card -->
                                 <div class="card mb-6">
                                     <img class="card-img-top" alt="" src="assets\images\demos\chat.jpg">
@@ -327,7 +312,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Card -->
+                                <!-- Card -->*@
 
                             </div>
                         </div>
@@ -357,6 +342,7 @@
                                 </form>
                                 <!-- Search -->
 
+                                @*
                                 <!-- Card -->
                                 <div class="card mb-6">
                                     <div class="card-body">
@@ -472,7 +458,7 @@
                                             <span class="fe-log-out ml-auto"></span>
                                         </button>
                                     </div>
-                                </div>
+                                </div>*@
 
                             </div>
                         </div>
@@ -577,6 +563,10 @@
     </div>
     <!-- Modal: Invite friends -->
 
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var autocomplete = document.getElementById('app-autocomplete-input');
         var autocompleteUl = document.getElementById('app-autocomplete-ul');
