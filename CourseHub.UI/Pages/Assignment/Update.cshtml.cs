@@ -49,6 +49,6 @@ public class UpdateModel : PageModel
         TempData[Global.ALERT_STATUS] = true;
         TempData[Global.ALERT_MESSAGE] = "Updated Assignment!";
         TempData[Global.DATA_USE_BACKGROUND] = true;
-        return Page();
+        return Redirect(Request.Path + "?id=" + Dto.Id);
     }
 }

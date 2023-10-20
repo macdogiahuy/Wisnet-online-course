@@ -26,11 +26,11 @@ public class ReviewModel : PageModel
 
         var assignmentTask = assignmentApiService.GetAsync(assignmentId, HttpContext);
         var submissionTask = submissionApiService.GetAsync(submissionId, HttpContext);
+        await Task.WhenAll(assignmentTask, submissionTask);
 #pragma warning disable CS8601
         Assignment = assignmentTask.Result;
         Submission = submissionTask.Result;
 #pragma warning restore CS8601
-        await Task.WhenAll(assignmentTask, submissionTask);
         if (Assignment is null || Submission is null ||
             Submission.AssignmentId != Assignment.Id || Submission.CreatorId != Client.Id)
             return Redirect(Global.PAGE_404);
