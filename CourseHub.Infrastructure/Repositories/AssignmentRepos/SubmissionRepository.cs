@@ -19,7 +19,7 @@ public class SubmissionRepository : BaseRepository<Submission>, ISubmissionRepos
             .Include(_ => _.Answers)
             .AsNoTracking()
             .ProjectTo<SubmissionModel>(SubmissionMapperProfile.ModelConfig)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(_ => _.Id == id);
     }
 
     public async Task<List<SubmissionMinModel>> GetByAssignmentId(Guid assignmentId)

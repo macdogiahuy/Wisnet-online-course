@@ -4,6 +4,8 @@
     Layout = "_GroupLayout";
 
     ViewData[Global.TITLE] = "Create conversation";
+
+    var defaultAvatar = "if(this.src!='/img/User_Empty.png')this.src='/img/User_Empty.png'";
 }
 
 
@@ -1077,7 +1079,7 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="avatar mr-5">
-                                                <img class="avatar-img" src="@member.AvatarUrl" alt="@member.FullName">
+                                                <img class="avatar-img" src="@member.AvatarUrl" alt="@member.FullName" onerror="@defaultAvatar">
                                             </div>
                                             <div class="media-body align-self-center mr-6">
                                                 <h6 class="mb-0">@member.FullName</h6>

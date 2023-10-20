@@ -656,7 +656,7 @@
 
         @if (Model.CurrentConversation != null)
         {
-            @Html.Raw("window.conversationId = '@Model.CurrentConversation.Id'");
+            @Html.Raw("window.conversationId = '" + Model.CurrentConversation.Id + "'");
         }
 
         var client = @Html.Raw(JsonSerializer.Serialize(Model.Client, SerializeOptions.JsonCamelCaseOptions));
@@ -704,8 +704,10 @@
 
 
         var editEle = document.getElementById('app-edit-btn');
-        editEle.onclick = () => {
-            $("#app-edit-modal").modal('toggle');
+        if (editEle) {
+            editEle.onclick = () => {
+                $("#app-edit-modal").modal('toggle');
+            }
         }
 
 
@@ -760,9 +762,11 @@
         const closeBtn = document.getElementById('close');
         const submitbtn = document.getElementById('submit');
 
-        reportBtn.addEventListener('click', () => {
-            popupBox.classList.add('show');
-        });
+        if (reportBtn) {
+            reportBtn.addEventListener('click', () => {
+                popupBox.classList.add('show');
+            });
+        }
 
         var selectedReportMessage = '';
         var reportMessageBtns = document.getElementsByClassName('report-message');
