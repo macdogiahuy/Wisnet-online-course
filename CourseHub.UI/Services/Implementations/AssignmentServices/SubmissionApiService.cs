@@ -54,9 +54,4 @@ public class SubmissionApiService : ISubmissionApiService
         var result = await _client.PostAsJsonAsync("/api/submissions", dto);
         return result;
     }
-
-    public Task<HttpResponseMessage> UpdateAsync(UpdateSubmissionDto dto, HttpContext context)
-    {
-        throw new NotImplementedException();
-    }
 }

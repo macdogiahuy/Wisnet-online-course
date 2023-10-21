@@ -25,9 +25,17 @@ public class EnrollmentService : DomainService, IEnrollmentService
         return ToQueryResult(result);
     }
 
+    public async Task<ServiceResult<EnrollmentFullModel>> GetFull(Guid courseId, Guid client)
+    {
+        var result = await _uow.EnrollmentRepo.Get(courseId, client);
+        return ToQueryResult(result);
+    }
+
+
+
     public async Task<ServiceResult> Enroll(Guid courseId, Guid client, Guid billId)
     {
-        var entity = new Enrollment { CourseId = courseId, CreatorId = client, BillId = billId };
+        var entity = new Enrollment(courseId, client, billId);
         await _uow.EnrollmentRepo.Insert(entity);
         return Ok();
     }
@@ -41,6 +49,8 @@ public class EnrollmentService : DomainService, IEnrollmentService
         _uow.EnrollmentRepo.Delete(entity);
         return Ok();
     }
+
+
 
     public async Task ForceCommitAsync()
     {

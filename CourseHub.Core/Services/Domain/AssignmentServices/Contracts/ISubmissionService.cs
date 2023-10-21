@@ -10,6 +10,4 @@ public interface ISubmissionService
     Task<ServiceResult<List<SubmissionMinModel>>> GetByAssignmentId(Guid assignmentId);
 
     Task<ServiceResult<Guid>> CreateAsync(CreateSubmissionDto dto, Guid client);
-    Task<ServiceResult> UpdateAsync(UpdateSubmissionDto dto, Guid client);
-    Task<ServiceResult> DeleteAsync(Guid id, Guid client);
 }

@@ -24,6 +24,15 @@ public class EnrollmentsController : BaseController
         return result.AsResponse();
     }
 
+    [HttpGet("ByCourse/{id}")]
+    [Authorize]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        Guid client = (Guid)HttpContext.GetClientId()!;
+        var result = await _enrollmentService.GetFull(id, client);
+        return result.AsResponse();
+    }
+
     [HttpGet("courses")]
     [Authorize]
     public async Task<IActionResult> GetEnrolledCourses()

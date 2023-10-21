@@ -7,4 +7,5 @@ public interface IEnrollmentRepository : IRepository<Enrollment>
 {
     Task<bool> IsEnrolled(Guid userId, Guid courseId);
     Task<List<EnrollmentModel>> Get(Guid creatorId);
+    Task<EnrollmentFullModel?> Get(Guid courseId, Guid creatorId);
 }

@@ -37,6 +37,7 @@ public class Global
     public const string PAGE_COURSE_CREATE = "/Course/Create";
     public const string PAGE_COURSE_UPDATE = "/Course/Update";
     public const string PAGE_COURSE_ENROLLED = "/Course/Enrolled";
+    public const string PAGE_COURSE_CERTIFICATION = "/Course/Certification";
     public const string PAGE_SECTION_UPDATE = "/Section/Update";
     public const string PAGE_LECTURE = "/Lecture/Detail";
 

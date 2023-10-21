@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
-using CourseHub.Core.Entities.AssignmentDomain;
+using CourseHub.Core.Entities.CourseDomain.Enums;
 using CourseHub.Core.Helpers.Messaging;
+using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Models.Assignment.SubmissionModels;
+using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.RequestDtos.Assignment.SubmissionDtos;
 using CourseHub.Core.Services.Domain.AssignmentServices.Contracts;
+using System.Text.Json;
 
 namespace CourseHub.Core.Services.Domain.AssignmentServices;
 
@@ -42,12 +45,28 @@ public class SubmissionService : DomainService, ISubmissionService
 
             var entity = Adapt(dto, client, choices, assignment);
             await _uow.SubmissionRepo.Insert(entity);
-            await _uow.CommitAsync();
 
-            /*var section = await _uow.SectionRepo.GetWithCourse(assignment.SectionId);
-            var passed = await _uow.SubmissionRepo.Get
-            var course = await _uow.CourseRepo.GetAsync
-            section.Course.Id*/
+            // Trigger
+            if (entity.Mark > assignment.GradeToPass)
+            {
+                var courseSections = await _uow.CourseRepo.GetCourseSections(assignment.SectionId);
+                /*var section = await _uow.SectionRepo.GetWithCourse(assignment.SectionId);
+                if (section is null)
+                    return ServerError<Guid>(AssignmentDomainMessages.INVALID_SECTION);
+                var course = await _uow.CourseRepo.GetMinAsync(section.CourseId);
+                if (course is null)
+                    return ServerError<Guid>(AssignmentDomainMessages.INVALID_COURSE);*/
+
+                if (courseSections is null)
+                    return ServerError<Guid>(AssignmentDomainMessages.INVALID_SECTION);
+
+                var enrollment = await _uow.EnrollmentRepo.Find(client, courseSections.Id);
+                if (enrollment is null)
+                    return ServerError<Guid>(AssignmentDomainMessages.INVALID_ENROLLMENT);
+                await AddAssignmentMilestone(enrollment, assignment.Id, courseSections);
+            }
+
+            await _uow.CommitAsync();
 
             return Created(entity.Id);
         }
@@ -55,16 +74,6 @@ public class SubmissionService : DomainService, ISubmissionService
         {
             return ServerError<Guid>();
         }
-    }
-
-    public Task<ServiceResult> UpdateAsync(UpdateSubmissionDto dto, Guid client)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ServiceResult> DeleteAsync(Guid id, Guid client)
-    {
-        throw new NotImplementedException();
     }
 
 
@@ -94,7 +103,39 @@ public class SubmissionService : DomainService, ISubmissionService
             AssignmentId = _.AssignmentId,
             TimeSpentInSec = _.TimeSpentInSec,
             Answers = answers,
-            Mark = (correctChoices / (double)assignment.QuestionCount) * 10
+            Mark = GetMarkByChoices(correctChoices, assignment.QuestionCount)
         };
+    }
+
+    private double GetMarkByChoices(int correctChoices, int questionCount)
+    {
+        return (correctChoices / (double)questionCount) * 10;
+    }
+
+    private async Task AddAssignmentMilestone(Enrollment enrollment, Guid assignmentId, CourseSectionsModel courseSections)
+    {
+        List<Guid> currentMilestones;
+        if (string.IsNullOrEmpty(enrollment.AssignmentMilestones))
+        {
+            currentMilestones = new() { assignmentId };
+            enrollment.AssignmentMilestones = JsonSerializer.Serialize(currentMilestones);
+        }
+        else
+        {
+            currentMilestones = JsonSerializer.Deserialize<List<Guid>>(enrollment.AssignmentMilestones);
+            if (currentMilestones is null)
+                throw new Exception(CourseDomainMessages.INTERNAL_BAD_MILESTONES);
+            if (!currentMilestones.Contains(assignmentId))
+            {
+                currentMilestones.Add(assignmentId);
+                enrollment.AssignmentMilestones = JsonSerializer.Serialize(currentMilestones);
+            }
+        }
+
+        //... delete case
+        var allAssignments = await _uow.AssignmentRepo.GetIdsBySectionsAsync(courseSections.Sections);
+        var allAssignmentsIsCompleted = !allAssignments.Except(currentMilestones).Any();
+        if (allAssignmentsIsCompleted)
+            enrollment.Status = CourseStatus.Completed;
     }
 }

@@ -6,6 +6,7 @@ public class Assignment : Entity
     public string Name { get; set; }
     public int Duration { get; set; }
     public int QuestionCount { get; set; }
+    public double GradeToPass { get; set; }
 
     // FKs
     public Guid SectionId { get; set; }
@@ -23,12 +24,13 @@ public class Assignment : Entity
 
     }
 
-    public Assignment(Guid id, string name, int duration, Guid sectionId, User? creator, List<McqQuestion> questions)
+    public Assignment(Guid id, string name, int duration, double gradeToPass, Guid sectionId, User? creator, List<McqQuestion> questions)
     {
         Id = id;
         Name = name;
         Duration = duration;
         QuestionCount = questions.Count;
+        GradeToPass = gradeToPass;
         SectionId = sectionId;
         Creator = creator;
         Questions = questions;

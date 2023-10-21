@@ -71,6 +71,15 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
 
 
 
+    public async Task<CourseSectionsModel?> GetCourseSections(Guid sectionId)
+    {
+        return await DbSet
+            .Include(_ => _.Sections)
+            .Where(_ => _.Sections.Count(_ => _.Id == sectionId) > 0)
+            .ProjectTo<CourseSectionsModel>(CourseMapperProfile.CourseSectionsModelConfig)
+            .FirstOrDefaultAsync();
+    }
+
     public void LoadSections(Course course) => Context.Entry(course).Collection(p => p.Sections).Load();
 
 

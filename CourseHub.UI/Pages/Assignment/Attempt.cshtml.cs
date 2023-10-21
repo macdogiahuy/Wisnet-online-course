@@ -63,7 +63,7 @@ public class AttemptModel : PageModel
         {
             TempData[Global.DATA_USE_BACKGROUND] = true;
             //...
-            return Redirect(Request.Path);
+            return Redirect(Request.Path + $"?id={Dto.AssignmentId}");
         }
 
         return Redirect($"{Global.PAGE_ASSIGNMENT_OVERVIEW}?id={Dto.AssignmentId}");

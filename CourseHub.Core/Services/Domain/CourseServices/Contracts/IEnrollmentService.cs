@@ -8,6 +8,7 @@ public interface IEnrollmentService
     Task<ServiceResult<bool>> IsEnrolled(Guid courseId, Guid client);
 
     Task<ServiceResult<List<EnrollmentModel>>> Get(Guid client);
+    Task<ServiceResult<EnrollmentFullModel>> GetFull(Guid courseId, Guid client);
 
     /// <summary>
     /// Not commited operation

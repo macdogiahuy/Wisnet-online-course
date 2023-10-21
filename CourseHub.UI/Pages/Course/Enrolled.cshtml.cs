@@ -19,7 +19,7 @@ public class EnrolledModel : PageModel
         if (client is null)
             return Redirect(Global.PAGE_SIGNIN);
 
-        Enrollments = await courseApiService.GetEnrollmentAsync(HttpContext);
+        Enrollments = await courseApiService.GetEnrollmentsAsync(HttpContext);
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();
     }

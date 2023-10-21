@@ -13,6 +13,7 @@ public interface ICourseRepository : IRepository<Course>
     Task<List<CourseOverviewModel>> GetSimilar(Guid id);
     Task<CourseMinModel?> GetMinAsync(Guid id);
 
+    Task<CourseSectionsModel?> GetCourseSections(Guid sectionId);
     void LoadSections(Course course);
 
     //...

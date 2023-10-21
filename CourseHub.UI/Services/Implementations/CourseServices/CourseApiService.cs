@@ -163,7 +163,7 @@ public class CourseApiService : ICourseApiService
         }
     }
 
-    public async Task<List<EnrollmentModel>> GetEnrollmentAsync(HttpContext context)
+    public async Task<List<EnrollmentModel>> GetEnrollmentsAsync(HttpContext context)
     {
         try
         {
@@ -178,6 +178,20 @@ public class CourseApiService : ICourseApiService
         }
     }
 
+    public async Task<EnrollmentFullModel?> GetEnrollmentAsync(HttpContext context, Guid courseId)
+    {
+        try
+        {
+            _client.AddBearerHeader(context);
+            var result = await _client.GetFromJsonAsync<EnrollmentFullModel>(
+                $"api/enrollments/ByCourse/{courseId}", SerializeOptions.JsonOptions);
+            return result!;
+        }
+        catch
+        {
+            return null;
+        }
+    }
 
 
 

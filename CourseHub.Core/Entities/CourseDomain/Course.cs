@@ -37,7 +37,7 @@ public class Course : AuditedEntity
     public List<Section> Sections { get; private set; }
     public List<CourseMeta> Metas { get; private set; }
     public List<CourseReview> Reviews { get; private set; }
-    public List<CourseCoupon> Coupons { get; private set; }
+    //public List<CourseCoupon> Coupons { get; private set; }
 
 
 

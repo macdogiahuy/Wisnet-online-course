@@ -8,4 +8,5 @@ public class UpdateAssignmentDto
     public string? Name { get; set; }
     public int? Duration { get; set; }
     public List<CreateMcqQuestionDto>? Questions { get; set; }
+    public double? GradeToPass { get; set; }
 }

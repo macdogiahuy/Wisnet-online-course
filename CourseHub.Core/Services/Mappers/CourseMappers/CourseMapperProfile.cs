@@ -39,6 +39,14 @@ public class CourseMapperProfile : Profile
         }
     );
 
+    public static readonly IConfigurationProvider CourseSectionsModelConfig = new MapperConfiguration(
+        cfg =>
+        {
+            cfg.CreateMap<Course, CourseSectionsModel>()
+                .ForMember(_ => _.Sections, act => act.MapFrom(_ => _.Sections.Select(_ => _.Id)));
+        }
+    );
+
     public static readonly IConfigurationProvider MinModelConfig = new MapperConfiguration(
         cfg => cfg.CreateMap<Course, CourseMinModel>()
     );

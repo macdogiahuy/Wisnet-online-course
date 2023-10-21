@@ -12,6 +12,9 @@ internal class EnrollmentConfig : SqlServerEntityConfiguration<Enrollment>
     protected override Dictionary<Expression<Func<Enrollment, object?>>, string> Columns => new()
     {
         // Status below
+        { _ => _.LectureMilestones, VARCHAR1000 },
+        { _ => _.AssignmentMilestones, VARCHAR1000 },
+        { _ => _.SectionMilestones, VARCHAR1000 }
     };
 
     public override void Configure(EntityTypeBuilder<Enrollment> builder)

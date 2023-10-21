@@ -16,4 +16,14 @@ public class EnrollmentMapperProfile : Profile
             cfg.CreateMap<Enrollment, EnrollmentModel>();
         }
     );
+
+    public static readonly IConfigurationProvider FullModelConfig = new MapperConfiguration(
+        cfg =>
+        {
+            cfg.CreateMap<User, UserMinModel>();
+            cfg.CreateMap<Course, CourseOverviewModel>();
+
+            cfg.CreateMap<Enrollment, EnrollmentFullModel>();
+        }
+    );
 }

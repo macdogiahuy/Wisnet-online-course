@@ -75,8 +75,7 @@ public class AssignmentService : DomainService, IAssignmentService
             return Forbidden();
 
         _uow.AssignmentRepo.Delete(entity);
-        //...
-        //await _uow.CommitAsync();
+        await _uow.CommitAsync();
         return Ok();
     }
 
@@ -96,6 +95,6 @@ public class AssignmentService : DomainService, IAssignmentService
                 _.Choices.Select(_ => new McqChoice(_.Content, _.IsCorrect)).ToList()
             )
         ).ToList();
-        return new Assignment(assignmentId, dto.Name, dto.Duration, dto.SectionId, creator, questions);
+        return new Assignment(assignmentId, dto.Name, dto.Duration, dto.GradeToPass, dto.SectionId, creator, questions);
     }
 }

@@ -1,7 +1,9 @@
+using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Assignment.AssignmentModels;
 using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.Models.Course.CourseReviewModels;
+using CourseHub.Core.Models.Course.EnrollmentModels;
 using CourseHub.Core.Models.Course.InstructorModels;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Course.CourseReviewDtos;
@@ -13,6 +15,7 @@ using CourseHub.UI.Services.Contracts.CourseServices;
 using CourseHub.UI.Services.Contracts.UserServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace CourseHub.UI.Pages.Course;
 
@@ -29,6 +32,8 @@ public class DetailModel : PageModel
     public bool IsEnrolled { get; set; }
     public bool IsCreator { get; set; }
     public List<AssignmentMinModel> Assignments { get; set; }
+    public EnrollmentFullModel Enrollment { get; set; }
+    public List<Guid> AssignmentMilestones { get; set; }
 
 
 
@@ -108,7 +113,8 @@ public class DetailModel : PageModel
             {
                 PageSize = 4,
                 InstructorId = Course.InstructorId
-            });
+            }
+        );
 
         await Task.WhenAll(instructorUserTask, isEnrolledTask, assignmentsTask, reviewsTask, moreCoursesTask);
         InstructorUser = instructorUserTask.Result;
@@ -116,6 +122,17 @@ public class DetailModel : PageModel
         Assignments = assignmentsTask.Result;
         Reviews = reviewsTask.Result;
         MoreCourses = moreCoursesTask.Result.Items.Where(_ => _.Id != Course.Id).ToList();
+        
+        if (IsEnrolled)
+        {
+            var enrollment = await _courseApiService.GetEnrollmentAsync(HttpContext, Course.Id);
+            if (enrollment is not null)
+            {
+                Enrollment = enrollment;
+                if (!string.IsNullOrEmpty(enrollment.AssignmentMilestones))
+                    AssignmentMilestones = JsonSerializer.Deserialize<List<Guid>>(enrollment.AssignmentMilestones);
+            }
+        }
 
         if (Reviews.TotalCount > 0)
         {

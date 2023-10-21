@@ -272,6 +272,10 @@
     .swal-text {
         text-align: center;
     }
+
+    .complete-flag {
+        color: springgreen;
+    }
 </style>
 
 
@@ -285,7 +289,15 @@
     <div class="app-course-landing-page-container">
         <div class="course-landing-page__main-content dark-background-inner-text-container">
             <div class="ud-text-sm clp-lead">
-                <h1 class="ud-heading-xl clp-lead__title clp-lead__title--small" data-purpose="lead-title">@Model.Course.Title</h1>
+                <h1 class="ud-heading-xl clp-lead__title clp-lead__title--small" data-purpose="lead-title">
+                    @Model.Course.Title
+                    @if (Model.Enrollment.Status == Core.Entities.CourseDomain.Enums.CourseStatus.Completed)
+                    {
+                        <i class="fa fa-flag-checkered complete-flag"></i>
+                        <a asp-page="@Global.PAGE_COURSE_CERTIFICATION" asp-route-courseId="@Model.Course.Id"
+                            class="btn btn-outline-info">View certification</a>
+                    }
+                </h1>
                 <div class="clp-lead__badge-ratings-enrollment">
                     <!--
                     <div class="clp-lead__element-item">
@@ -585,6 +597,10 @@
                                                                 <div class="section--row--3sLRB">
                                                                     <div class="ud-btn ud-btn-large ud-btn-link ud-text-sm section--item-title--6gdc6">
                                                                         <span>@assignment.Name</span>
+                                                                        @if (Model.AssignmentMilestones is not null && Model.AssignmentMilestones.Contains(assignment.Id))
+                                                                        {
+                                                                            <i class="fa fa-flag-checkered complete-flag"></i>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                             </div>

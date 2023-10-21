@@ -9,5 +9,4 @@ public interface ISubmissionApiService
     Task<List<SubmissionMinModel>> GetByAssignmentAsync(Guid assignmentId, HttpContext context);
 
     Task<HttpResponseMessage> CreateAsync(CreateSubmissionDto dto, HttpContext context);
-    Task<HttpResponseMessage> UpdateAsync(UpdateSubmissionDto dto, HttpContext context);
 }

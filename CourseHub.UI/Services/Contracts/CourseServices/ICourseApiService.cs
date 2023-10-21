@@ -19,5 +19,6 @@ public interface ICourseApiService
     Task<HttpResponseMessage> DeleteAsync(Guid id, HttpContext context);
 
     Task<bool> IsEnrolled(Guid courseId, HttpContext context);
-    Task<List<EnrollmentModel>> GetEnrollmentAsync(HttpContext context);
+    Task<List<EnrollmentModel>> GetEnrollmentsAsync(HttpContext context);
+    Task<EnrollmentFullModel?> GetEnrollmentAsync(HttpContext context, Guid courseId);
 }

@@ -7,5 +7,7 @@ public interface IAssignmentRepository : IRepository<Assignment>
 {
     Task<AssignmentModel?> GetAsync(Guid id);
     Task<AssignmentMinModel?> GetMinAsync(Guid id);
-    Task<List<AssignmentMinModel>> GetBySectionsAsync(IEnumerable<Guid> sections);
+
+    Task<List<Guid>> GetIdsBySectionsAsync(IEnumerable<Guid> sectionIds);
+    Task<List<AssignmentMinModel>> GetBySectionsAsync(IEnumerable<Guid> sectionIds);
 }

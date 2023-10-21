@@ -28,10 +28,18 @@ public class AssignmentRepository : BaseRepository<Assignment>, IAssignmentRepos
             .FirstOrDefaultAsync(_ => _.Id == id);
     }
 
-    public async Task<List<AssignmentMinModel>> GetBySectionsAsync(IEnumerable<Guid> sections)
+    public async Task<List<Guid>> GetIdsBySectionsAsync(IEnumerable<Guid> sectionIds)
     {
         return await DbSet
-            .Where(_ => sections.Contains(_.SectionId))
+            .Where(_ => sectionIds.Contains(_.SectionId))
+            .Select(_ => _.Id)
+            .ToListAsync();
+    }
+
+    public async Task<List<AssignmentMinModel>> GetBySectionsAsync(IEnumerable<Guid> sectionIds)
+    {
+        return await DbSet
+            .Where(_ => sectionIds.Contains(_.SectionId))
             .ProjectTo<AssignmentMinModel>(AssignmentMapperProfile.MinModelConfig)
             .ToListAsync();
     }
