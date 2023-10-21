@@ -31,8 +31,8 @@
 <div class="container">
     <h2>Add Lecture</h2>
 
+    @await Html.PartialAsync("Shared/_Alert")
     <div class="row" style="justify-content: center">
-        @await Html.PartialAsync("Shared/_Alert")
 
         <form method="post" asp-page-handler="CreateLecture" enctype="multipart/form-data" style="width: 30%">
             <div class="form-group">

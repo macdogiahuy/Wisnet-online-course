@@ -291,7 +291,7 @@
             <div class="ud-text-sm clp-lead">
                 <h1 class="ud-heading-xl clp-lead__title clp-lead__title--small" data-purpose="lead-title">
                     @Model.Course.Title
-                    @if (Model.Enrollment.Status == Core.Entities.CourseDomain.Enums.CourseStatus.Completed)
+                    @if (Model.Enrollment is not null && Model.Enrollment.Status == Core.Entities.CourseDomain.Enums.CourseStatus.Completed)
                     {
                         <i class="fa fa-flag-checkered complete-flag"></i>
                         <a asp-page="@Global.PAGE_COURSE_CERTIFICATION" asp-route-courseId="@Model.Course.Id"

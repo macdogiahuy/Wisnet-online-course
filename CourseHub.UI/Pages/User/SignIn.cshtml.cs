@@ -27,14 +27,10 @@ public class SignInModel : PageModel
     public SignInModel(IUserApiService userApiService)
     {
         _userApiService = userApiService;
-    }
 
-    
-
-    public void OnGet()
-    {
         GoogleOAuthBasePath = Configurer.GetApiClientOptions().ApiServerPath + "/api/auth/google-oauth/";
     }
+
 
 
     public async Task<IActionResult> OnPostAsync()

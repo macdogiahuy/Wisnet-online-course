@@ -40,14 +40,6 @@ public class UpdateModel : PageModel
 
     public async Task<IActionResult> OnPostCreateLecture([FromServices] ILectureApiService lectureApiService)
     {
-        if (!ModelState.IsValid)
-        {
-            TempData[Global.DATA_USE_BACKGROUND] = true;
-            TempData[Global.ALERT_STATUS] = false;
-            TempData[Global.ALERT_MESSAGE] = "Cannot create lecture!";
-            return Page();
-        }
-
         CreateLectureDto.Materials = new();
         for (int i = 0; i < Files.Length; i++)
             CreateLectureDto.Materials.Add(new CreateLectureDto.CreateLectureMaterialDto
@@ -56,12 +48,21 @@ public class UpdateModel : PageModel
                 File = Files[i]
             });
 
+        if (string.IsNullOrWhiteSpace(CreateLectureDto.Content))
+            CreateLectureDto.Content = CreateLectureDto.Title;
+
         var response = await lectureApiService.Create(CreateLectureDto, HttpContext);
 
         TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
         if (!response.IsSuccessStatusCode)
         {
+            TempData[Global.ALERT_STATUS] = false;
             TempData[Global.ALERT_MESSAGE] = "Cannot create lecture!";
+        }
+        else
+        {
+            TempData[Global.ALERT_STATUS] = true;
+            TempData[Global.ALERT_MESSAGE] = "Created lecture!";
         }
 
         Guid sectionId = CreateLectureDto.SectionId;
