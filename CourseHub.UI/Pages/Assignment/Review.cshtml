@@ -115,7 +115,7 @@
                                                                 @foreach (var choice in question.Choices)
                                                                 {
                                                                     <div class="r0">
-                                                                        <input type="radio" value="@choice.Id" @Html.Raw(choices.Contains(choice.Id) ? "checked" : "")/>
+                                                                        <input type="radio" value="@choice.Id" @Html.Raw(Model.Submission.Answers.Any(_ => _.MCQChoiceId == choice.Id) ? "checked" : "")/>
                                                                         <label for="@choice.Id" class="m-l-1">
                                                                             @choice.Content
                                                                         </label>

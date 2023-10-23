@@ -683,6 +683,10 @@
                                     <img src="@user.AvatarUrl" alt="">
                                 </div>
                                 <div class="app__review__item__text" id="app-review-text-@review.Id">
+                                    @for (int displayStar = 0; displayStar < review.Rating; displayStar++)
+                                    {
+                                        <i class="fa fa-star" style="color: gold"></i>
+                                    }
                                     <h6 class="mt-3">@user.FullName - <span>@review.LastModificationTime</span></h6>
                                     <p>@review.Content</p>
                                 </div>
@@ -699,7 +703,7 @@
                     }
                 </div>
                 <div class="app__details__form">
-                    @if (Model.Reviews.Items.Any(_ => _.CreatorId != Model.Client?.Id))
+                    @if (Model.Reviews.Items.Any(_ => _.CreatorId == Model.Client?.Id))
                     {
                         <div class="alert alert-success fs-3" role="alert">You've already reviewed this course. Consider edit your review.</div>
                     }

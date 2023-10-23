@@ -41,7 +41,7 @@ function send() {
     // add as client-sent message
     let message = new ChatMessage(_chatInp.value, null);
     message.setCreationData(_client.id);
-    _chatStateHandler.addMessage(message);
+    //_chatStateHandler.addMessage(message);
 
     // send message
     _messagingHandler.createChatMessage(_conversationId, _chatInp.value, null);
