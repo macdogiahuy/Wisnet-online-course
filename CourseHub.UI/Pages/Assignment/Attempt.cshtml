@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="~/css/Assignment/yui.css" />
 
 <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+    }
+
     #page-header .card:before {
         width: 0 !important;
     }
@@ -44,31 +49,58 @@
     }
 
     div[role="main"] {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* căn chỉnh từ phần trên xuống */
-        align-items: center;
-        padding-top: 50px; /* tạo khoảng cách từ phần trên */
-        width: 60%; /* chiếm 60% chiều rộng của viewport */
-        margin: 0 auto; /* căn giữa theo chiều ngang */
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin: 50px auto;
+        padding: 40px;
+        width: 80%;
+        max-width: 1000px;
     }
 
     #finish-btn {
         padding: 12px 25px;
-        background-color: #2f6473;
+        background-color: #0074E1;
         color: #fff;
         border-radius: 5px;
         transition: background-color 0.3s;
         text-decoration: none;
-        margin-top: 20px; /* tạo khoảng cách từ phần trên */
-        font-weight: bold; /* làm chữ đậm hơn */
-        padding: 3px;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 30px;
     }
 
-    #finish-btn:hover {
-        background-color: #1f4c63;
-        cursor: pointer;
+        #finish-btn:hover {
+            background-color: #005bb5;
+        }
+
+    .que {
+        margin-bottom: 30px;
     }
+
+    .answer {
+        margin-left: 20px;
+    }
+
+    #user-notifications {
+        margin-bottom: 20px;
+    }
+
+    .submission-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* căn giữa theo chiều ngang */
+        justify-content: center; /* căn giữa theo chiều dọc */
+        margin-top: 40px; /* tạo khoảng cách từ phần trên */
+    }
+
+    #quiz-timer {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #0074E1;
+    }
+
 
 </style>
 
@@ -153,9 +185,11 @@
                                 <div class="card-body p-3">
                                     <div class="card-text content mt-3">
                                         <div class="othernav">
-                                            <a href="#" id="finish-btn">Finish attempt</a>
-                                            <div id="quiz-timer" role="timer" aria-atomic="true" aria-relevant="text">
-                                                Time left: <span id="quiz-time-left"></span>
+                                            <div class="submission-area">
+                                                <a href="#" id="finish-btn">Finish attempt</a>
+                                                <div id="quiz-timer" role="timer" aria-atomic="true" aria-relevant="text">
+                                                    Time left: <span id="quiz-time-left"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
