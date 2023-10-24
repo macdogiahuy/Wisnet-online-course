@@ -26,9 +26,9 @@ public class SubmissionService : DomainService, ISubmissionService
         return ToQueryResult(result);
     }
 
-    public async Task<ServiceResult<List<SubmissionMinModel>>> GetByAssignmentId(Guid assignmentId)
+    public async Task<ServiceResult<List<SubmissionMinModel>>> GetByAssignmentId(Guid assignmentId, Guid clientId)
     {
-        var result = await _uow.SubmissionRepo.GetByAssignmentId(assignmentId);
+        var result = await _uow.SubmissionRepo.GetByAssignmentId(assignmentId, clientId);
         return ToQueryResult(result);
     }
 

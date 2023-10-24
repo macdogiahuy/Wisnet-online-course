@@ -43,6 +43,59 @@
     .breadcrumb {
         background-color: unset;
     }
+
+    div[role="main"] {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin: 50px auto;
+        padding: 40px;
+        width: 80%;
+        max-width: 1000px;
+    }
+
+    #finish-btn {
+        padding: 12px 25px;
+        background-color: #0074E1;
+        color: #fff;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 30px;
+    }
+
+    #finish-btn:hover {
+        background-color: #005bb5;
+    }
+
+    .que {
+        margin-bottom: 30px;
+    }
+
+    .answer {
+        margin-left: 20px;
+    }
+
+    #user-notifications {
+        margin-bottom: 20px;
+    }
+
+    .submission-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    #quiz-timer {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #0074E1;
+    }
 </style>
 
 <body id="page-mod-quiz-attempt" class="format-topics  path-mod path-mod-quiz chrome dir-ltr lang-en yui-skin-sam yui3-skin-sam cmshn-fpt-edu-vn pagelayout-incourse course-3929 context-280099 cmid-142960 category-391 drawer-open-left">
@@ -119,7 +172,7 @@
                                                                     @foreach (var choice in question.Choices)
                                                                     {
                                                                         <div class="r0">
-                                                                                    <input type="radio" asp-for="AnswerChoices[i]" value="@choice.Id" />
+                                                                            <input type="radio" asp-for="AnswerChoices[i]" value="@choice.Id" />
                                                                             <label for="@choice.Id" class="m-l-1">
                                                                                 @choice.Content
                                                                             </label>
@@ -152,9 +205,12 @@
                                             }
                                         </div>*@
                                         <div class="othernav">
-                                            <a href="#" id="finish-btn">Finish attempt</a>
-                                            <div id="quiz-timer" role="timer" aria-atomic="true" aria-relevant="text">
-                                                Time left: <span id="quiz-time-left"></span></div>
+                                            <div class="submission-area">
+                                                <a href="#" id="finish-btn">Finish attempt</a>
+                                                <div id="quiz-timer" role="timer" aria-atomic="true" aria-relevant="text">
+                                                    Time left: <span id="quiz-time-left"></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

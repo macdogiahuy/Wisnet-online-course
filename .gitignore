@@ -400,3 +400,5 @@ FodyWeavers.xsd
 *.sln
 CourseHub.Tests/
 CourseHub_Triggers.sql
+CourseHub.API/.config/
+CourseHub.UI/Properties/ServiceDependencies/

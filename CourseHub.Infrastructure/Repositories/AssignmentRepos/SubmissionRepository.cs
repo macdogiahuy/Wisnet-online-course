@@ -22,10 +22,11 @@ public class SubmissionRepository : BaseRepository<Submission>, ISubmissionRepos
             .FirstOrDefaultAsync(_ => _.Id == id);
     }
 
-    public async Task<List<SubmissionMinModel>> GetByAssignmentId(Guid assignmentId)
+    public async Task<List<SubmissionMinModel>> GetByAssignmentId(Guid assignmentId, Guid creatorId)
     {
         return await DbSet
-            .Where(_ => _.AssignmentId == assignmentId)
+            .Where(_ => _.AssignmentId == assignmentId && _.CreatorId == creatorId)
+            .OrderBy(_ => _.CreationTime)
             .ProjectTo<SubmissionMinModel>(SubmissionMapperProfile.MinModelConfig)
             .ToListAsync();
     }

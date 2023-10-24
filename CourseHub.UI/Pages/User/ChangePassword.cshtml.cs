@@ -35,7 +35,10 @@ public class ChangePasswordModel : PageModel
     public async Task OnPost([FromServices] IUserApiService userApiService)
     {
         if (!ModelState.IsValid)
+        {
+            TempData[Global.DATA_USE_BACKGROUND] = true;
             return;
+        }
 
         UpdateUserDto dto = new()
         {

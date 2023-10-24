@@ -67,7 +67,11 @@
 
                             <tr>
                                 <td><a asp-page="@Global.PAGE_COURSE_UPDATE" asp-route-courseId="@course.Id">@course.Title</a></td>
-                                <td style="width: 300px"><img src="@course.ThumbUrl" alt="thumb" style="aspect-ratio: 1.5" /></td>
+                                <td style="width: 300px">
+                                    <a asp-page="@Global.PAGE_COURSE_DETAIL" asp-route-id="@course.Id">
+                                        <img src="@course.ThumbUrl" alt="thumb" style="aspect-ratio: 1.5" />
+                                    </a>
+                                </td>
                                 <td>@course.Status.ToString()</td>
                                 <td>@course.Price</td>
                                 @if (CourseBusinessHelper.IsOnDiscount(course.Discount, course.DiscountExpiry))
@@ -83,7 +87,7 @@
                                 <td>@course.Level.ToString()</td>
                                 <td>@course.LearnerCount</td>
                                 <td>@avgRating</td>
-                                <td>@course.LeafCategoryId</td>
+                                <td>@Model.Categories.FirstOrDefault(_ => _.Id == course.LeafCategoryId)?.Title</td>
                             </tr>
                         }
                     </tbody>

@@ -120,7 +120,7 @@ public class UserService : DomainService, IUserService
         {
             if (dto.NewPassword is null)
                 return BadRequest<UserFullModel>(UserDomainMessages.INVALID_NEWPASSWORD_MISSING);
-            if (User.IsMatchPasswords(dto.NewPassword, entity.Password))
+            if (!User.IsMatchPasswords(dto.CurrentPassword, entity.Password))
                 return Unauthorized<UserFullModel>(UserDomainMessages.UNAUTHORIZED_PASSWORD);
         }
 

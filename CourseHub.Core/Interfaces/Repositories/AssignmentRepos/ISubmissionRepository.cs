@@ -6,5 +6,5 @@ namespace CourseHub.Core.Interfaces.Repositories.AssignmentRepos;
 public interface ISubmissionRepository : IRepository<Submission>
 {
     Task<SubmissionModel?> Get(Guid id);
-    Task<List<SubmissionMinModel>> GetByAssignmentId(Guid assignmentId);
+    Task<List<SubmissionMinModel>> GetByAssignmentId(Guid assignmentId, Guid creatorId);
 }

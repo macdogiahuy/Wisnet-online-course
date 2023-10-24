@@ -13,7 +13,10 @@ class HubConnection {
     #connection;
 
     constructor() {
-        this.#connection = new _signalR.HubConnectionBuilder().withUrl(hubUrl).build();
+        this.#connection = new _signalR.HubConnectionBuilder().withUrl(hubUrl,/*
+            { headers: { "ngrok-skip-browser-warning": "69420" } }
+        */
+        ).build();
     }
 
     subscribe(eventName, callback) {

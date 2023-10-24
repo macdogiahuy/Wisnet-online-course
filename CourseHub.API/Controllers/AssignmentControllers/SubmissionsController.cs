@@ -32,7 +32,8 @@ public class SubmissionsController : BaseController
     //[ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetByAssignmentId([FromQuery] Guid assignmentId)
     {
-        var result = await _submissionService.GetByAssignmentId(assignmentId);
+        var clientId = (Guid)HttpContext.GetClientId()!;
+        var result = await _submissionService.GetByAssignmentId(assignmentId, clientId);
         return result.AsResponse();
     }
 
