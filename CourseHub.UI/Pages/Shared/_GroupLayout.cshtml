@@ -567,16 +567,17 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <script type="module">
+        import { baseAddress } from '/js/constants.js';
+        import { getParsedJson } from '/js/apis/http.js';
+
         var autocomplete = document.getElementById('app-autocomplete-input');
         var autocompleteUl = document.getElementById('app-autocomplete-ul');
 
         autocomplete.addEventListener('input', function() {
             var inputVal = autocomplete.value;
-            console.log(inputVal);
             if (inputVal.length >= 2) {
-                fetch("https://localhost:7277/api/conversations/targets?PageSize=5&Title=" + inputVal)
-                    .then(res => res.json())
+                getParsedJson(baseAddress + "/api/conversations/targets?PageSize=5&Title=" + inputVal)
                     .then(arr => {
                         autocompleteUl.classList.remove('app-display-none');
 

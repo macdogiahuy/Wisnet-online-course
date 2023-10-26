@@ -28,19 +28,7 @@ public partial class AppHub : Hub
 
     public override Task OnConnectedAsync()
     {
-        _logger.Inform(JsonSerializer.Serialize(Context.User,
-            options: new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles
-            })
-        );
-
-        _logger.Inform("http:" + JsonSerializer.Serialize(Context.GetHttpContext()?.User,
-            options: new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles
-            })
-        );
+        _logger.Inform("Connected: " + Context.ConnectionId);
 
         ConnectionsHandler.Connected(Context);
 
@@ -98,41 +86,6 @@ public partial class AppHub : Hub
 
     private Guid GetClientId()
     {
-        /*_logger.Inform(JsonSerializer.Serialize(Context.User,
-            options: new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles
-            })
-        );*/
-
-        /*var contextFeature = (IHttpContextFeature)Context.Features[typeof(IHttpContextFeature)];
-        if (contextFeature is null)
-            return default;
-        var httpContext = contextFeature.HttpContext;
-        if (httpContext is null)
-            return default;
-
-        _logger.Inform(JsonSerializer.Serialize(httpContext.User,
-            options: new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles
-            })
-        );
-        _logger.Inform(JsonSerializer.Serialize(httpContext.Request.Headers,
-            options: new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles
-            })
-        );
-        _logger.Inform(httpContext.Request.Cookies["Bearer"]);
-        */
-
-        /*foreach (Claim claim in Context.User.Claims)
-            if (claim.Type == ClaimTypes.NameIdentifier)
-                if (Guid.TryParse(claim.Value, out Guid clientId))
-                    return clientId;*/
-
-        _logger.Inform("Connected: " + Context.UserIdentifier);
         if (Guid.TryParse(Context.UserIdentifier, out var clientId))
             return clientId;
         return default;

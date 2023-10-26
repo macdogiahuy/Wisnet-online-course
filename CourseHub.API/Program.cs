@@ -20,7 +20,12 @@ OneTimeRunner.InitConfig(builder);
 
 builder.Services
     .AddCors(o => o.AddPolicy(POLICY, builder =>
-        builder.WithOrigins(Configurer.GetCorsOrigins()).AllowCredentials().AllowAnyHeader().AllowAnyMethod()))
+        builder
+            .WithOrigins(Configurer.GetCorsOrigins())
+            .AllowCredentials()
+            .AllowAnyHeader()
+            .AllowAnyMethod())
+    )
     .AddLogger()
     .AddMapper()
     .AddAppInfo()

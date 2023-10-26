@@ -367,6 +367,10 @@
         window.showDeleteModal(id);
     }
 </script>
+<script type="module">
+    import { patchFormDataWithCredentials } from '/js/apis/http.js';
+    window.patchFormDataWithCredentials = patchFormDataWithCredentials;
+</script>
 <script type="text/javascript">
     function openEdit(commentId) {
         var textParent = document.getElementById('app-comment-text-' + commentId);
@@ -387,15 +391,12 @@
             formData.append('Id', commentId);
             formData.append('Content', document.getElementById('input-' + commentId).value)
 
-            fetch("@Model.CommentApiPath", {
-                method: "PATCH",
-                body: formData,
-                credentials: "include",
-            }).then(res => {
-                if (res.ok) {
-                    window.location.reload();
-                }
-            });
+            window.patchFormDataWithCredentials("@Model.CommentApiPath", formData)
+                .then(res => {
+                    if (res.ok) {
+                        window.location.reload();
+                    }
+                });
         }
         textParent.appendChild(newSubmit);
     }

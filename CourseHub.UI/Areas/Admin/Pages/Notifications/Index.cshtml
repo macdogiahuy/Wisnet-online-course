@@ -4,6 +4,7 @@
 
 
 @{
+    ViewData[AdminGlobal.TITLE] = "Notification Management";
 }
 
 
@@ -66,18 +67,17 @@
     </div>
 </div>
 
-<script>
-    var approveBtns = document.getElementsByClassName('app-approve-btn');
+<!-- No exposed js func here, using module -->
+<script type="module">
+    import { patchJsonWithCredentials } from '/js/apis/http.js';
+
+    var approveBtns = document.getElementsByClassName("app-approve-btn");
     for (var i = 0; i < approveBtns.length; i++) {
         let btn = approveBtns[i];
         btn.onclick = () => {
-            fetch("@Model.NotificationRequestPath", {
-                method: "PATCH",
-                body: JSON.stringify({ Id : btn.getAttribute('data-id'), Status: @((int)NotificationStatus.Approved) }),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: "include",
+            patchJsonWithCredentials("@Model.NotificationRequestPath", {
+                Id : btn.getAttribute('data-id'),
+                Status: @((int)NotificationStatus.Approved)
             }).then(res => {
                 if (res.ok) {
                     window.location.reload();
@@ -90,14 +90,9 @@
     for (var i = 0; i < dismissBtns.length; i++) {
         let btn = dismissBtns[i];
         btn.onclick = () => {
-            console.log(btn);
-            fetch("@Model.NotificationRequestPath", {
-                method: "PATCH",
-                body: JSON.stringify({ Id : btn.getAttribute('data-id'), Status: @((int)NotificationStatus.Dismissed) }),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: "include",
+            patchJsonWithCredentials("@Model.NotificationRequestPath", {
+                Id : btn.getAttribute('data-id'),
+                Status: @((int)NotificationStatus.Dismissed)
             }).then(res => {
                 if (res.ok) {
                     window.location.reload();

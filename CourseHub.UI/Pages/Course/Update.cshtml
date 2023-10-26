@@ -185,7 +185,9 @@
 </div>
 
 
-<script>
+<script type="module">
+    import { patchJsonWithCredentials } from '/js/apis/http.js';
+
     var sectionsGroup = document.getElementById('sections-group');
     var addSectionBtn = document.getElementById('add-section-btn');
     addSectionBtn.onclick = addSection;
@@ -206,15 +208,12 @@
             formData.append('Id', '@Model.Course.Id');
             formData.append('RemovedSections', sectionId);
 
-            fetch("@Model.DeleteSectionPath", {
-                method: "PATCH",
-                body: formData,
-                credentials: "include",
-            }).then(res => {
-                if (res.ok) {
-                    window.location.reload();
-                }
-            });
+            patchJsonWithCredentials("@Model.DeleteSectionPath", formData)
+                .then(res => {
+                    if (res.ok) {
+                        window.location.reload();
+                    }
+                });
         }
     }
 

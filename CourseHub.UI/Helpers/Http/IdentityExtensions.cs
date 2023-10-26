@@ -19,7 +19,7 @@ public static class IdentityExtensions
 
     private static readonly CookieOptions credentialOptions = new()
     {
-        HttpOnly = true,
+        //HttpOnly = true,
         Expires = DateTime.UtcNow.AddDays(1),
         Path = "/",
         Secure = true,
@@ -96,6 +96,12 @@ public static class IdentityExtensions
 
     public static void SetAuthCookie(this HttpResponse response, string name, string value)
     {
+        response.Cookies.Append(name, value, credentialOptions);
+    }
+
+    public static void SetAuthCookie(this HttpResponse response, string name, string value, string domain)
+    {
+        credentialOptions.Domain = domain;
         response.Cookies.Append(name, value, credentialOptions);
     }
 

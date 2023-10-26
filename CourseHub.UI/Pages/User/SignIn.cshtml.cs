@@ -1,14 +1,13 @@
-﻿using AutoMapper.Configuration;
-using CourseHub.Core.RequestDtos.User.UserDtos;
+﻿using CourseHub.Core.RequestDtos.User.UserDtos;
 using CourseHub.Core.Services.Domain.UserServices.TempModels;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts.UserServices;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Net.Http.Headers;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 namespace CourseHub.UI.Pages.User;
@@ -22,13 +21,20 @@ public class SignInModel : PageModel
     [BindProperty]
     public bool RememberMe { get; set; }
 
+
+
+    public string SignInPath { get; set; }
     public string GoogleOAuthBasePath { get; set; }
+
+
 
     public SignInModel(IUserApiService userApiService)
     {
         _userApiService = userApiService;
 
-        GoogleOAuthBasePath = Configurer.GetApiClientOptions().ApiServerPath + "/api/auth/google-oauth/";
+        string basePath = Configurer.GetApiClientOptions().ApiServerPath;
+        SignInPath = basePath + "/api/auth/signin";
+        GoogleOAuthBasePath = basePath + "/api/auth/google-oauth/";
     }
 
 
@@ -79,7 +85,9 @@ public class SignInModel : PageModel
         {
             foreach (var header in SetCookieHeaderValue.ParseList(cookies.ToList()))
                 if (header.Name == "Bearer" || header.Name == "Refresh")
+				{
                     HttpContext.Response.SetAuthCookie(header.Name.ToString(), header.Value.ToString());
+				}
         }
 
         if (RememberMe)

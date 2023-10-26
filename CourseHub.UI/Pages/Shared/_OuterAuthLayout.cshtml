@@ -52,10 +52,12 @@
 
     <script>
         let errorBox = document.querySelector(".pageError");
-        if (errorBox.innerHTML == '<ul><li style="display:none"></li>\n</ul>')
-            errorBox.classList.add("d-none");
-        else
-            errorBox.classList.remove("d-none");
+        if (errorBox) {
+            if (errorBox.innerHTML == '<ul><li style="display:none"></li>\n</ul>')
+                errorBox.classList.add("d-none");
+            else
+                errorBox.classList.remove("d-none");
+        }
     </script>
     <link rel="stylesheet" 
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 

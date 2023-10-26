@@ -28,7 +28,9 @@
 
 
 
-<script>
+<script type="module">
+    import { deleteWithCredentials } from '/js/apis/http.js';
+
     window.showDeleteModal = (deleteItem) => {
         $("#app-delete-modal").modal('toggle');
         window.deleteItem = deleteItem;
@@ -37,14 +39,12 @@
     window.postDelete = window.location.reload;
 
     document.getElementById('app-delete-btn').onclick = () => {
-        fetch("@API" + '/' + window.deleteItem, {
-            method: "DELETE",
-            credentials: "include",
-        }).then(res => {
-            if (res.ok) {
-                $("#app-delete-modal").modal('toggle');
-                window.postDelete();
-            }
-        });
+        deleteWithCredentials("@API" + '/' + window.deleteItem)
+            .then(res => {
+                if (res.ok) {
+                    $("#app-delete-modal").modal('toggle');
+                    window.postDelete();
+                }
+            });
     }
 </script>

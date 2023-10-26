@@ -1,9 +1,11 @@
 using CourseHub.Core.Models.Assignment.AssignmentModels;
+using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Assignment.SubmissionDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts.AssignmentServices;
+using CourseHub.UI.Services.Contracts.CourseServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -13,6 +15,7 @@ public class AttemptModel : PageModel
 {
     public AssignmentModel Assignment { get; set; }
     public UserFullModel Client { get; set; }
+    public CourseOverviewModel Course { get; set; }
 
     [BindProperty]
     public CreateSubmissionDto Dto { get; set; }
@@ -23,19 +26,27 @@ public class AttemptModel : PageModel
 
     public async Task<IActionResult> OnGet(
         [FromQuery] Guid id,
-        [FromServices] IAssignmentApiService assignmentApiService)
+        [FromServices] IAssignmentApiService assignmentApiService, [FromServices] ICourseApiService courseApiService)
     {
 #pragma warning disable CS8601
         Assignment = await assignmentApiService.GetAsync(id, HttpContext);
         Client = await HttpContext.GetClientData();
+
+        if (Client is null)
+            return Redirect(Global.PAGE_SIGNIN);
+        if (Assignment is null || Assignment.Section is null)
+            return Redirect(Global.PAGE_404);
+
+        Course = await courseApiService.GetBySectionIdAsync(Assignment.Section.Id);
 #pragma warning restore CS8601
 
 
 
-        if (Client is null)
-            return Redirect(Global.PAGE_SIGNIN);
-        if (Assignment is null)
+        if (Course is null)
             return Redirect(Global.PAGE_404);
+        var isEnrolled = await courseApiService.IsEnrolled(Course.Id, HttpContext);
+        if (!isEnrolled)
+            return Redirect(Global.PAGE_COURSE_DETAIL + "?id=" + Course.Id);
 
 
 

@@ -183,6 +183,10 @@
 
 @section Script {
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="module">
+        import { postWithCredentials } from '/js/apis/http.js';
+        window.postWithCredentials = postWithCredentials;
+    </script>
     <script>
         const popupBox = document.getElementById('popupBox');
         const closeBtn = document.getElementById('close');
@@ -205,10 +209,9 @@
         }
 
         blockSubmitEle.onclick = () => {
-            fetch("@blockUserPath" + blockTarget.id, {
-                method: "POST",
-                credentials: "include",
-            }).then(res => {
+            window.postWithCredentials(
+                "@blockUserPath" + blockTarget.id
+            ).then(res => {
                 if (res.ok) {
                     window.location.reload();
                 }

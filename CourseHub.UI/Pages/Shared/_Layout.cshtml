@@ -173,8 +173,8 @@
 								<i class="fa fa-bell" data-bs-toggle="dropdown"></i>
 								<ul id="app-notification-dropdown" class="dropdown-menu"></ul>
 							</div>
-							<div class="dropdown site-btn header-btn app-dropdown">
-								<div data-bs-toggle="dropdown" aria-expanded="false">@client?.FullName</div>
+							<div class="dropdown site-btn header-btn app-dropdown" style="padding: 0">
+								<div data-bs-toggle="dropdown" aria-expanded="false" style="padding: 15px">@client?.FullName</div>
 								<ul class="dropdown-menu">
 									@if (client!.Role >= Core.Entities.UserDomain.Enums.Role.Admin)
 									{
@@ -253,7 +253,12 @@
 	@await RenderSectionAsync("Scripts", required: false)
 
 
-	<script>
+	<script type="module">
+		import { baseAddress } from '/js/constants.js';
+		import { getNonParsed, getParsedJson, patchJsonWithCredentials } from '/js/apis/http.js';
+
+
+
 		var autocomplete = document.getElementById('u22-search-form-autocomplete--3');
 		var autocompleteUl = document.getElementById('u22-search-form-autocomplete--3-menu-content-items');
 		var autocompleteLi = autocompleteUl.childNodes[0];
@@ -271,8 +276,7 @@
 		autocomplete.addEventListener('input', function() {
 			var inputVal = autocomplete.value;
 			if (inputVal.length >= 2) {
-				fetch("https://localhost:7277/api/courses?Title=" + inputVal)
-					.then(res => res.json())
+				getParsedJson(baseAddress + "/api/courses?Title=" + inputVal)
 					.then(arr => {
 						autocompleteUl.classList.remove('app-display-none');
 						autocompleteLi.innerHTML = '';
@@ -317,7 +321,7 @@
 			var innerHTML = '';
 			notificationEle.innerHTML = innerHTML;
 
-			fetch("@notificationGetPath")
+			getNonParsed("@notificationGetPath")
 				.then(res => {
 					if (res.ok) {
 						console.log(res);
@@ -374,13 +378,9 @@
 		}
 
 		function updateNotification(id, status) {
-			fetch("@notificationPath", {
-				method: "PATCH",
-				body: JSON.stringify({ Id : id, Status: status }),
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				credentials: "include",
+			patchJsonWithCredentials("@notificationPath", {
+				Id : id,
+				Status: status
 			}).then(res => {
 				if (res.ok) {
 					window.location.reload();

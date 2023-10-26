@@ -1,4 +1,5 @@
 ﻿import { hubUrl } from '../constants.js';
+import { getCookieByName } from '../common/storage.js';
 export {
     HubConnection, MessagingHandler, RTCHandler,
     MESSAGE_TYPES, STREAM_EVENTS, ParticipantExtraInfo
@@ -13,9 +14,13 @@ class HubConnection {
     #connection;
 
     constructor() {
+        var bearer = getCookieByName('Bearer');
+        console.log(bearer);
+
         this.#connection = new _signalR.HubConnectionBuilder().withUrl(hubUrl,/*
             { headers: { "ngrok-skip-browser-warning": "69420" } }
         */
+            { accessTokenFactory: () => bearer }
         ).build();
     }
 

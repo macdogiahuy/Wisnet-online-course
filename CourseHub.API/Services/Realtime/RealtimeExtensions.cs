@@ -12,7 +12,9 @@ public static class RealtimeExtensions
         if (options.Enabled != "true")
             return services;
 
-        serverBuilder.AddAzureSignalR(_ => _.ClaimsProvider = context => context.User.Claims);
+        serverBuilder.AddAzureSignalR(_ => {
+            _.ClaimsProvider = context => context.User.Claims;
+        });
         return services;
     }
 }
