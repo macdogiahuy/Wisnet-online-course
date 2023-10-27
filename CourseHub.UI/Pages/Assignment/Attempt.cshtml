@@ -4,11 +4,15 @@
     ViewData[Global.TITLE] = "Attempt";
 }
 
-
 <link rel="stylesheet" href="~/css/Assignment/yui.css" />
 
 <style>
-    #page-header .card:before{
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+    }
+
+    #page-header .card:before {
         width: 0 !important;
     }
 
@@ -98,13 +102,13 @@
     }
 </style>
 
-<body id="page-mod-quiz-attempt" class="format-topics  path-mod path-mod-quiz chrome dir-ltr lang-en yui-skin-sam yui3-skin-sam cmshn-fpt-edu-vn pagelayout-incourse course-3929 context-280099 cmid-142960 category-391 drawer-open-left">
+<body id="page-mod-quiz-attempt" class="format-topics path-mod path-mod-quiz chrome dir-ltr lang-en yui-skin-sam yui3-skin-sam cmshn-fpt-edu-vn pagelayout-incourse course-3929 context-280099 cmid-142960 category-391 drawer-open-left">
     <div id="page-wrapper">
         <div id="page" class="container-fluid">
             <header id="page-header" class="row">
                 <div class="col-12 pt-3 pb-3">
                     <div class="card">
-                        <div class="card-body ">
+                        <div class="card-body">
                             <div class="d-flex">
                                 <div class="mr-auto">
                                     <div class="page-context-header">
@@ -118,19 +122,8 @@
                                 <div id="page-navbar">
                                     <nav role="navigation" aria-label="Breadcrumb trail">
                                         <ol class="breadcrumb">
-                                            <!--<li class="breadcrumb-item">
-                                                <a href="#">Home</a>
-                                            </li>
-                                            <li class="breadcrumb-item">My courses</li>
                                             <li class="breadcrumb-item">
-                                                <a href="#">*** Review for Final Exam ***</a>
-                                            </li>
-                                            <li class="breadcrumb-item">
-                                                <a href="#" aria-current="page" title="Quiz">Practice Final Exam</a>
-                                            </li>-->
-                                            <li class="breadcrumb-item">
-                                                <a asp-page="@Global.PAGE_ASSIGNMENT_OVERVIEW" asp-route-id="@Model.Assignment.Id"
-                                                    aria-current="page" title="Quiz">@Model.Assignment.Name</a>
+                                                <a asp-page="@Global.PAGE_ASSIGNMENT_OVERVIEW" asp-route-id="@Model.Assignment.Id" aria-current="page" title="Quiz">@Model.Assignment.Name</a>
                                             </li>
                                         </ol>
                                     </nav>
@@ -149,14 +142,12 @@
                                 <span class="notifications" id="user-notifications"></span>
                                 <div role="main">
                                     <form method="post" id="responseform">
-                                        <!-- //... -->
-                                        <input asp-for="Dto.TimeSpentInSec" type="text" id="time-spent" hidden value="@Model.Assignment.Duration"/>
-                                        <input asp-for="Dto.AssignmentId" type="text" hidden value="@Model.Assignment.Id"/>
+                                        <input asp-for="Dto.TimeSpentInSec" type="text" id="time-spent" hidden value="@Model.Assignment.Duration" />
+                                        <input asp-for="Dto.AssignmentId" type="text" hidden value="@Model.Assignment.Id" />
                                         <div>
                                             @for (int i = 0; i < Model.Assignment.Questions.Count; i++)
                                             {
                                                 var question = Model.Assignment.Questions[i];
-
                                                 <div id="q1" class="que multichoice deferredfeedback notyetanswered">
                                                     <div class="info">
                                                         <h3 class="no">Question <span class="qno">@(i + 1)</span></h3>
@@ -165,14 +156,12 @@
                                                         <div class="formulation clearfix">
                                                             <div class="qtext">@question.Content</div>
                                                             <div class="ablock">
-                                                                <!--<div class="prompt">Select one:</div>-->
                                                                 <div class="answer">
-                                                                    <!--Make radio array works-->
                                                                     <input name="AnswerChoices.Index" type="hidden" value="@i" />
                                                                     @foreach (var choice in question.Choices)
                                                                     {
                                                                         <div class="r0">
-                                                                            <input type="radio" asp-for="AnswerChoices[i]" value="@choice.Id" />
+                                                                                    <input type="radio" asp-for="AnswerChoices[i]" value="@choice.Id" />
                                                                             <label for="@choice.Id" class="m-l-1">
                                                                                 @choice.Content
                                                                             </label>
@@ -195,15 +184,6 @@
                             <section id="mod_quiz_navblock" class=" block block__fake  card mb-3" role="navigation" data-block="_fake" aria-labelledby="instance-0-header">
                                 <div class="card-body p-3">
                                     <div class="card-text content mt-3">
-                                        @*<div class="qn_buttons clearfix multipages">
-                                            @for (int i = 0; i < Model.Questions.Count; i++)
-                                            {
-                                                <button class="qnbutton notyetanswered free btn btn-secondary thispage"
-                                                    id="@("quiznavbutton" + i)" title="Not yet answered">
-                                                    @(i + 1)
-                                                </button>
-                                            }
-                                        </div>*@
                                         <div class="othernav">
                                             <div class="submission-area">
                                                 <a href="#" id="finish-btn">Finish attempt</a>
