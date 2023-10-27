@@ -34,6 +34,11 @@ public class ChangePasswordModel : PageModel
 
     public async Task OnPost([FromServices] IUserApiService userApiService)
     {
+        if (NewPassword == CurrentPassword)
+        {
+            ModelState.AddModelError(nameof(NewPassword), "New Password must be different from Current Password");
+        }
+
         if (!ModelState.IsValid)
         {
             TempData[Global.DATA_USE_BACKGROUND] = true;

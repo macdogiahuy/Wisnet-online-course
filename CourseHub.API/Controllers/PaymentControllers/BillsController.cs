@@ -2,11 +2,13 @@
 using CourseHub.API.Helpers.Cookie;
 using CourseHub.API.Services.AppInfo;
 using CourseHub.API.Services.External.Payment;
+using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Helpers.Business;
 using CourseHub.Core.Helpers.Messaging.Messages;
 using CourseHub.Core.Helpers.Text;
 using CourseHub.Core.RequestDtos.Payment.BillDtos;
 using CourseHub.Core.Services.Domain.CourseServices.Contracts;
+using CourseHub.Core.Services.Domain.PaymentServices;
 using CourseHub.Core.Services.Domain.PaymentServices.Contracts;
 using CourseHub.Core.Services.Domain.PaymentServices.TempModels;
 using Microsoft.AspNetCore.Authorization;
@@ -25,25 +27,25 @@ public class BillsController : BaseController
     {
         var client = HttpContext.GetClientId();
 
-		int amount = 0;
-		string orderInfo = string.Empty;
+        int amount = 0;
+        string orderInfo = string.Empty;
 
         switch (dto.Action)
         {
             case PaymentDomainMessages.ACTION_PAY_COURSE:
-				if (!Guid.TryParse(dto.Note, out var courseId))
-					return BadRequest(PaymentDomainMessages.INVALID_NOTE);
-				var courseResult = await courseService.GetMinAsync(courseId);
-				if (!courseResult.IsSuccessful)
-					return BadRequest(PaymentDomainMessages.INVALID_NOTE);
+                if (!Guid.TryParse(dto.Note, out var courseId))
+                    return BadRequest(PaymentDomainMessages.INVALID_NOTE);
+                var courseResult = await courseService.GetMinAsync(courseId);
+                if (!courseResult.IsSuccessful)
+                    return BadRequest(PaymentDomainMessages.INVALID_NOTE);
 
-				var course = courseResult.Data!;
+                var course = courseResult.Data!;
                 amount = CourseBusinessHelper.GetPostDiscount(course.Price, course.Discount, course.DiscountExpiry);
                 orderInfo = $"{client}'s payment for course #{courseId}";
                 break;
             default:
                 return BadRequest(PaymentDomainMessages.INVALID_ACTION);
-		}
+        }
 
         var request = new VNPayHelper.VNPayRequest
         {
@@ -59,9 +61,6 @@ public class BillsController : BaseController
 
 
 
-    /// <summary>
-    /// 
-    /// </summary>
     [HttpGet]
     public async Task<IActionResult> RedirectedFromVNPay(
         [FromQuery] VNPayHelper.VNPayResponse? vnpResponse,
@@ -81,7 +80,7 @@ public class BillsController : BaseController
         if (identifiers.Count < 2)
             return Redirect(clientUrl + $"/404");
         Guid client = identifiers[0];
-		Guid courseId = identifiers[1];
+        Guid courseId = identifiers[1];
 
         if (string.IsNullOrEmpty(vnpResponse.vnp_BankTranNo))
             return Redirect(clientUrl + $"/Payment?courseId={courseId}&failed=true");
@@ -114,5 +113,15 @@ public class BillsController : BaseController
         {
             return Redirect(clientUrl + $"/Payment?courseId={courseId}&failed=false");
         }
+    }
+
+
+
+    [HttpGet("Search")]
+    [Authorize(Roles = RoleConstants.SYSADMIN)]
+    public async Task<IActionResult> Get([FromQuery] QueryBillDto dto, [FromServices] IBillService billService)
+    {
+        var result = await billService.Get(dto);
+        return result.AsResponse();
     }
 }

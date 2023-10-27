@@ -1,6 +1,7 @@
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Middlewares;
 using CourseHub.UI.Services;
+using CourseHub.UI.Services.Cache;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services
     })
     .AddHttpContextAccessor()
     .AddSession()
+    .AddCacheService()
     .AddApiServices()
     .AddRazorPages()
     .AddRazorPagesOptions(options =>
@@ -33,6 +35,8 @@ builder.Services
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
 
 var app = builder.Build();
+
+await OneTimeRunner.PrepareFirstUse(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

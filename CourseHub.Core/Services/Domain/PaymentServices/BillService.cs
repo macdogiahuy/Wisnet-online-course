@@ -3,9 +3,11 @@ using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Interfaces.Repositories.Shared;
+using CourseHub.Core.Models.Payment;
 using CourseHub.Core.RequestDtos.Payment.BillDtos;
 using CourseHub.Core.Services.Domain.PaymentServices.Contracts;
 using CourseHub.Core.Services.Domain.PaymentServices.TempModels;
+using System.Linq.Expressions;
 
 namespace CourseHub.Core.Services.Domain.PaymentServices;
 
@@ -15,9 +17,12 @@ public class BillService : DomainService, IBillService
     {
     }
 
-    public Task<ServiceResult<PagedResult<Bill>>> Get(QueryBillDto dto)
+    public async Task<ServiceResult<PagedResult<BillModel>>> Get(QueryBillDto dto)
     {
-        throw new NotImplementedException();
+        var query = _uow.BillRepo.GetPagingQuery(GetPredicate(dto), dto.PageIndex, dto.PageSize);
+
+        PagedResult<BillModel> result = await query.ExecuteWithOrderBy(_ => _.CreationTime, ascending: false);
+        return ToQueryResult(result);
     }
 
     public async Task<ServiceResult<Guid>> Create(Guid id, CreateBillDto dto, PaymentResponse response, Guid clientId)
@@ -38,6 +43,11 @@ public class BillService : DomainService, IBillService
 
 
 
+
+    private Expression<Func<Bill, bool>>? GetPredicate(QueryBillDto dto)
+    {
+        return null;
+    }
 
     private Bill Adapt(Guid id, CreateBillDto dto, PaymentResponse paymentResponse, Guid clientId)
     {

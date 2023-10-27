@@ -17,6 +17,7 @@
 	var client = await Context.GetClientData();
 	string notificationPath = Configurer.GetApiClientOptions().ApiServerPath + "/api/notifications";
 	string notificationGetPath = notificationPath + $"?ReceiverId={client?.Id}";
+	string conversationGetPath = "api/conversations";
 }
 
 <!DOCTYPE html>
@@ -44,6 +45,12 @@
 	<style>
 		body {
 			display: unset;
+		}
+
+		@@supports (-moz-transform: translate(0, 0)) {
+		  body {
+			display: block !important;
+		  }
 		}
 
 		.app-dropdown {
@@ -195,16 +202,16 @@
 							<div locale="en_US" lang="en"
 							class="ud-search-form-autocomplete desktop-header-module--search-bar--2V17S ud-form-group"><label
 							class="ud-sr-only ud-form-label ud-heading-sm" for="u22-search-form-autocomplete--3">Search for anything</label>
-								<form class="ud-search-form-autocomplete-input-group ud-search-form-autocomplete-input-group-reversed">
+								<form class="ud-search-form-autocomplete-input-group ud-search-form-autocomplete-input-group-reversed" id="app-header-search-form">
 									<input type="hidden" name="src" value="ukw">
 									<input type="text" aria-invalid="false" name="q"
-									data-testid="search-input" placeholder="Search" autocomplete="off" role="combobox"
-									aria-autocomplete="both" aria-haspopup="true" aria-expanded="true"
-									aria-controls="u22-search-form-autocomplete--3-menu-content-items" id="u22-search-form-autocomplete--3"
-									class="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field">
+										data-testid="search-input" placeholder="Search" autocomplete="off" role="combobox"
+										aria-autocomplete="both" aria-haspopup="true" aria-expanded="true" id="u22-search-form-autocomplete--3"
+										aria-controls="u22-search-form-autocomplete--3-menu-content-items"
+										class="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field">
 									<ul id="u22-search-form-autocomplete--3-menu-content-items" data-testid="menu-content-items"
-									class="app-display-none ud-unstyled-list ud-block-list js-suggestions ud-search-form-autocomplete-suggestions-with-image"
-									role="listbox"><li></li>
+										class="app-display-none ud-unstyled-list ud-block-list js-suggestions ud-search-form-autocomplete-suggestions-with-image"
+										role="listbox"><li></li>
 									</ul>
 									<div class="ud-btn-large ud-btn-ghost ud-heading-md ud-btn-icon ud-btn-icon-large">
 										<svg
@@ -257,8 +264,12 @@
 		import { baseAddress } from '/js/constants.js';
 		import { getNonParsed, getParsedJson, patchJsonWithCredentials } from '/js/apis/http.js';
 
-
-
+		window.baseAddress = baseAddress;
+		window.getNonParsed = getNonParsed;
+		window.getParsedJson = getParsedJson;
+		window.patchJsonWithCredentials = patchJsonWithCredentials;
+	</script>
+	<script>
 		var autocomplete = document.getElementById('u22-search-form-autocomplete--3');
 		var autocompleteUl = document.getElementById('u22-search-form-autocomplete--3-menu-content-items');
 		var autocompleteLi = autocompleteUl.childNodes[0];
@@ -268,6 +279,12 @@
 
 		var baseDetailUrl = "@UIHelper.GetBaseCourseDetailPage()";
 
+		var headerSearchForm = document.getElementById('app-header-search-form');
+		headerSearchForm.onsubmit = (e) => {
+			e.preventDefault();
+			window.location.href = "/Course/Search?q=" + e.target.elements.q.value;
+		}
+
 
 
 
@@ -276,7 +293,7 @@
 		autocomplete.addEventListener('input', function() {
 			var inputVal = autocomplete.value;
 			if (inputVal.length >= 2) {
-				getParsedJson(baseAddress + "/api/courses?Title=" + inputVal)
+				window.getParsedJson(window.baseAddress + "/api/courses?Title=" + inputVal)
 					.then(arr => {
 						autocompleteUl.classList.remove('app-display-none');
 						autocompleteLi.innerHTML = '';
@@ -319,16 +336,16 @@
 		if (notificationBtn) {
 			notificationBtn.addEventListener('click', () => {
 			var innerHTML = '';
-			notificationEle.innerHTML = innerHTML;
+			notificationEle.innerHTML = '<li>...</li>';
 
-			getNonParsed("@notificationGetPath")
+			window.getNonParsed("@notificationGetPath")
 				.then(res => {
 					if (res.ok) {
 						console.log(res);
 						return res.json();
 					}
 					else {
-						notificationEle.innerHTML = '<li>No notifications</li>';
+						notificationEle.innerHTML = `<li>You don't have any notification</li>`;
 						console.log('empty');
 						return Promise.resolve();
 					}
@@ -341,6 +358,8 @@
 							var li = '';
 							switch (item.type) {
 								case @((byte)NotificationType.InviteMember):
+									console.log(item);
+
 									switch (item.status) {
 										case @((byte)NotificationStatus.None):
 											li =
@@ -378,7 +397,7 @@
 		}
 
 		function updateNotification(id, status) {
-			patchJsonWithCredentials("@notificationPath", {
+			window.patchJsonWithCredentials("@notificationPath", {
 				Id : id,
 				Status: status
 			}).then(res => {

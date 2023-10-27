@@ -58,7 +58,11 @@ public partial class AppHub
         }
     }
 
-    public async Task LeaveRoom(string roomId)
+	/*public async Task SendRoom(string roomId, StreamMessage message, [FromServices] ChatService chatService)
+    {
+    }*/
+
+	public async Task LeaveRoom(string roomId)
     {
         Room? room = ConnectionsHandler.FindRoom(roomId);
         if (room == null)

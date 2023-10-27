@@ -186,7 +186,7 @@
 
 
 <script type="module">
-    import { patchJsonWithCredentials } from '/js/apis/http.js';
+    import { patchFormDataWithCredentials } from '/js/apis/http.js';
 
     var sectionsGroup = document.getElementById('sections-group');
     var addSectionBtn = document.getElementById('add-section-btn');
@@ -208,7 +208,7 @@
             formData.append('Id', '@Model.Course.Id');
             formData.append('RemovedSections', sectionId);
 
-            patchJsonWithCredentials("@Model.DeleteSectionPath", formData)
+            patchFormDataWithCredentials("@Model.DeleteSectionPath", formData)
                 .then(res => {
                     if (res.ok) {
                         window.location.reload();

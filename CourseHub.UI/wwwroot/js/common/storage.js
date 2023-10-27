@@ -39,7 +39,6 @@ function getUserInfo(id) {
 
 
 
-
 function setToLocalStorage(name, value) {
     localStorage.setItem(name, value);
 }

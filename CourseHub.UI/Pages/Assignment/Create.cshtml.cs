@@ -2,24 +2,22 @@ using CourseHub.Core.Models.Course.CourseModels;
 using CourseHub.Core.RequestDtos.Assignment.AssignmentDtos;
 using CourseHub.Core.RequestDtos.Assignment.McqQuestionDtos;
 using CourseHub.UI.Helpers;
-using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Services.Contracts.AssignmentServices;
 using CourseHub.UI.Services.Contracts.CourseServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.StaticFiles;
 using System.Text.Json;
 
 namespace CourseHub.UI.Pages.Assignment;
 
 public class CreateModel : PageModel
 {
-    public Guid SectionId { get; set; }
     public CourseOverviewModel Course { get; set; }
 
     [BindProperty]
     public CreateAssignmentDto Dto { get; set; }
+    [BindProperty]
+    public Guid SectionId { get; set; }
     [BindProperty]
     public IFormFile File { get; set; }
 
@@ -43,6 +41,8 @@ public class CreateModel : PageModel
         if (course is null)
             return Redirect(Global.PAGE_404);
 
+        Dto = new();
+
         SectionId = sectionId;
         Course = course;
         TempData[Global.DATA_USE_BACKGROUND] = true;
@@ -51,14 +51,20 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPost([FromServices] IAssignmentApiService assignmentApiService)
     {
+        if (Dto.Name is null || Dto.Name.Length == 0)
+            return RenderPage(false, "Assignment name is required");
+        if (Dto.Name.Length > 255)
+            return RenderPage(false, "Assignment name must be less than 255 characters");
+        if (Dto.Duration < 10)
+            return RenderPage(false, "Assignment duration is too short");
+        if (Dto.GradeToPass < 0 || Dto.GradeToPass > 10)
+            return RenderPage(false, "Grade to pass must be between 0 and 10");
+
+
+
         //...
         if (File is null || File.ContentType != "application/json")
-        {
-            TempData[Global.ALERT_STATUS] = false;
-            TempData[Global.ALERT_MESSAGE] = "The file format is invalid";
-            TempData[Global.DATA_USE_BACKGROUND] = true;
-            return Page();
-        }
+            return RenderPage(false, "The file format is invalid");
 
         using var reader = new StreamReader(File.OpenReadStream());
         var content = await reader.ReadToEndAsync();
@@ -66,17 +72,19 @@ public class CreateModel : PageModel
 
         //...
         if (questions is null)
-        {
-            TempData[Global.ALERT_STATUS] = false;
-            TempData[Global.ALERT_MESSAGE] = "The file format is invalid";
-            TempData[Global.DATA_USE_BACKGROUND] = true;
-            return Page();
-        }
+            return RenderPage(false, "The file format is invalid");
+
+
 
         Dto.Questions = questions;
         var response = await assignmentApiService.CreateAsync(Dto, HttpContext);
-        TempData[Global.ALERT_STATUS] = true;
-        TempData[Global.ALERT_MESSAGE] = "Created Assignment!";
+        return RenderPage(true, "Created Assignment!");
+    }
+
+    private PageResult RenderPage(bool isSuccessful, string message)
+    {
+        TempData[Global.ALERT_STATUS] = isSuccessful;
+        TempData[Global.ALERT_MESSAGE] = message;
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();
     }

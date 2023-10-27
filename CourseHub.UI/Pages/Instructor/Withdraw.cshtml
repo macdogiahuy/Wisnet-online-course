@@ -24,16 +24,41 @@
     -moz-appearance: textfield;
     }
 </style>
+<style>
+    #dataTable th, #dataTable td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    #dataTable tr {
+        height: 60px;
+    }
+</style>
 
 
 
-<form method="post">
-<div class="list-mb24 list-last-mb app-withdrawals-container">
+<div style="margin: 10px;">
+    <div>
+        <h1>Hi @Model.Client.FullName,</h1>
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <h2>Balance: @Model.Balance đ</h2>
+        <br />
+    </div>
+
+
+
+    <form method="post" id="app-form">
+        <input asp-for="Balance" value="@Model.Balance" type="hidden" />
+
+        <div class="list-mb24 list-last-mb app-withdrawals-container">
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show tab1 active">
                                                         <div class="row list-mb16 list-crop">
 
-                                                            @await Html.PartialAsync("Shared/_Alert")
+                                                            <div style="width: 100%; display: flex; justify-content: center;">
+                                                                @await Html.PartialAsync("Shared/_Alert")
+                                                            </div>
 
                                                             <div class="col-12">
                                                                 <div class="form-group">
@@ -114,7 +139,7 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group-wrap input-default input-size-default input-group-vertical">
                                                                         <label class="input-inner-wrap">
-                                                                            <input asp-for="Dto.Amount" type="number" class="input input-label-change input-has-clear"
+                                                                            <input asp-for="Dto.Amount" id="app-input-amount" type="number" class="input input-label-change input-has-clear"
                                                                                 required autocorrect="off">
                                                                             <label class="input-label">
                                                                                 <div class="inner">Amount</div>
@@ -250,16 +275,79 @@
                                                             <!-- end button.button -->
                                                         </div>*@
                                                         <div class="group-col-item">
-                                                            <!-- button.button -->
-                                                            <button type="submit" class="ubg-primary ubox-size-button-default ubg-hover ubg-active ubtn" id="btnContinue">
+                                                            <!--<button type="submit" class="ubg-primary ubox-size-button-default ubg-hover ubg-active ubtn" id="btnContinue">
                                                                 <div class="ubtn-inner">
                                                                     <span class="ubtn-text">Request withdrawal</span>
                                                                 </div>
-                                                            </button>
-                                                            <!-- end button.button -->
+                                                            </button>-->
+
+                                                            <button type="submit" class="btn btn-outline-warning btn-lg" style="width: 100%;">Request withdrawal</button>
                                                         </div>
                                                     </div>
                                                     <!-- end button.btnGroup -->
                                                 </div>
                                             </div>
-</form>
+    </form>
+</div>
+
+
+
+<div class="container-fluid" style="margin-top: 40px;">
+
+    <h1 style="font-size: 36px; text-align: center; margin-bottom: 12px">Withdrawal History</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Gateway</th>
+                            <th class="text-center">Account Number</th>
+                            <th class="text-center">Account Holder Name</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">Creation Time</th>
+                            <th class="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Notifications.TotalCount == 0)
+                        {
+                            <tr>
+                                <th style="text-align: center; color: red" colspan="10">Empty</th>
+                            </tr>
+                        }
+                        else foreach (var notification in Model.Notifications.Items)
+                        {
+                            var message = Model.Notification_Withdrawal[notification.Id];
+
+                            <tr>
+                                <td>
+                                    <div>@message.Gateway</div>
+                                </td>
+                                <td>
+                                    <div>@message.AccountNumber</div>
+                                </td>
+                                <td>
+                                    <div>@message.AccountHolderName</div>
+                                </td>
+                                <td>
+                                    <div>@message.Amount</div>
+                                </td>
+
+
+
+                                <td>
+                                    <div>@notification.CreationTime</div>
+                                </td>
+                                <td>
+                                    <div>@notification.Status</div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

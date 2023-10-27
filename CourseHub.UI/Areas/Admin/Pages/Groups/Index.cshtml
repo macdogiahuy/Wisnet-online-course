@@ -61,8 +61,24 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     var approveBtns = document.getElementsByClassName('app-approve-btn');
+    var dismissBtns = document.getElementsByClassName('app-dismiss-btn');
 
     for (let btn of approveBtns) {
+        btn.addEventListener('click', () => {
+            event.preventDefault();
+            swal({
+                title: "Success",
+                text: "",
+                icon: "success",
+                buttons: {
+                    confirm: "Okay"
+                },
+                closeOnClickOutside: false
+            });
+        });
+    }
+
+    for (let btn of dismissBtns) {
         btn.addEventListener('click', () => {
             event.preventDefault();
             swal({

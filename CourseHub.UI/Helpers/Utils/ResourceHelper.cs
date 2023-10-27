@@ -4,7 +4,7 @@ public static class ResourceHelper
 {
     public static bool IsRemote(string resourceUrl)
     {
-        if (resourceUrl is null)
+        if (string.IsNullOrEmpty(resourceUrl))
             return false;
         return resourceUrl.StartsWith("http");
     }

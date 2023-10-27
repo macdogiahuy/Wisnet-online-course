@@ -95,10 +95,9 @@
         <label asp-for="Dto.Name">Assignment Name</label>
         <input asp-for="Dto.Name" type="text" class="form-control" />
         <label asp-for="Dto.Duration">Duration</label>
-        <input asp-for="Dto.Duration" type="number" class="form-control" />
-        @* //... *@
-        <label>Grade to pass ( / 10)</label>
-        <input type="number" class="form-control" />
+        <input asp-for="Dto.Duration" type="number" class="form-control" value="@Model.Dto.Duration"/>
+        <label asp-for="Dto.GradeToPass">Grade to pass ( / 10)</label>
+        <input asp-for="Dto.GradeToPass" type="number" class="form-control" value="@Model.Dto.GradeToPass" />
 
 
 
