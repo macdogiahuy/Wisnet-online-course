@@ -4,86 +4,14 @@
     ViewData[Global.TITLE] = "404 Not Found";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Error</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f3f4f6;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+<div class="container-fluid">
 
-        .container-fluid {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 70%;
-            max-width: 600px;
-        }
-
-        .error {
-            font-size: 10em;
-            line-height: 1;
-            letter-spacing: 10px;
-            color: #e74c3c;
-            position: relative;
-        }
-
-            .error::before, .error::after {
-                content: attr(data-text);
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: -1;
-                color: #f3f4f6;
-            }
-
-            .error::before {
-                left: 2px;
-                text-shadow: 1px 0 #e74c3c;
-            }
-
-            .error::after {
-                left: -2px;
-                text-shadow: -1px 0 #e74c3c;
-            }
-
-        a {
-            color: #e74c3c;
-            text-decoration: none;
-            border-bottom: 1px dashed;
-            transition: all 0.3s ease;
-        }
-
-            a:hover {
-                color: #333;
-                border-bottom-color: transparent;
-            }
-
-    </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="text-center">
-            <div class="error mx-auto" data-text="404">404</div>
-            <p class="lead mb-5">Page Not Found</p>
-            <p class="mb-0">It looks like you found page that not exits</p>
-            <br>
-            <a href="/">&larr; Back to index</a>
-        </div>
+    <!-- 404 Error Text -->
+    <div class="text-center">
+        <div class="error mx-auto" data-text="404">404</div>
+        <p class="lead mb-5">Page Not Found</p>
+        <p class="mb-0">It looks like you found a glitch in the matrix...</p>
+        <a href="/">&larr; Back to index</a>
     </div>
-</body>
-</html>
 
+</div>
