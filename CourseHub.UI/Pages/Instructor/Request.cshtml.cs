@@ -14,6 +14,9 @@ public class RequestModel : PageModel
     [BindProperty]
     public CreateInstructorDto Dto { get; set; }
 
+    [BindProperty]
+    public IFormFile? File { get; set; }
+
 
 
     public async Task<IActionResult> OnGet()
@@ -27,8 +30,21 @@ public class RequestModel : PageModel
 
     public async Task OnPost([FromServices] INotificationApiService notificationApiService)
     {
-        if (!ModelState.IsValid)
+        if (Dto.Intro.Length <= 50)
+        {
+            ModelState.AddModelError(string.Empty, "Intro must be more than 50 characters");
+			return;
+		}
+		if (Dto.Experience.Length <= 50)
+		{
+			ModelState.AddModelError(string.Empty, "Experience must be more than 50 characters");
+			return;
+		}
+
+		if (!ModelState.IsValid)
             return;
+
+
 
         var response = await notificationApiService.RequestInstructor(Dto, HttpContext);
 

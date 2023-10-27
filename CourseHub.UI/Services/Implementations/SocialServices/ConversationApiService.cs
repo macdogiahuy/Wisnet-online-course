@@ -5,6 +5,7 @@ using CourseHub.Core.RequestDtos.Social.ConversationDtos;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
 using CourseHub.UI.Helpers.Utils;
+using CourseHub.UI.Services.Cache;
 using CourseHub.UI.Services.Contracts.SocialServices;
 
 namespace CourseHub.UI.Services.Implementations.SocialServices;
@@ -12,11 +13,13 @@ namespace CourseHub.UI.Services.Implementations.SocialServices;
 public class ConversationApiService : IConversationApiService
 {
     private readonly HttpClient _client;
+	//private readonly CacheService _cache;
 
-    public ConversationApiService(HttpClient client)
+	public ConversationApiService(HttpClient client/*, CacheService cache*/)
     {
         _client = client;
-    }
+		//_cache = cache;
+	}
 
 
 
@@ -36,7 +39,9 @@ public class ConversationApiService : IConversationApiService
                     item.AvatarUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/conversations/Resource/{item.Id}";
             }
 
-            return result;
+			/*foreach (var conversation in result.Items)
+				_cache.SetConversation(conversation);*/
+			return result;
         }
         catch
         {
@@ -46,17 +51,27 @@ public class ConversationApiService : IConversationApiService
 
     public async Task<ConversationModel?> GetAsync(Guid id, HttpContext context)
     {
+        ConversationModel? result;
+        /*_cache.TryGetConversation(id, out var result);
+        if (result is not null)
+            return result;*/
+
         try
         {
             _client.AddBearerHeader(context);
-            var result = await _client.GetFromJsonAsync<ConversationModel>(
+            result = await _client.GetFromJsonAsync<ConversationModel>(
                 $"api/conversations/{id}", SerializeOptions.JsonOptions);
 
             if (string.IsNullOrEmpty(result!.AvatarUrl))
-                return result;
-            if (!ResourceHelper.IsRemote(result.AvatarUrl))
-                result.AvatarUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/conversations/Resource/{result.Id}";
+            {
 
+            }
+            else if (!ResourceHelper.IsRemote(result.AvatarUrl))
+			{
+				result.AvatarUrl = Configurer.GetApiClientOptions().ApiServerPath + $"/api/conversations/Resource/{result.Id}";
+			}
+
+            /*_cache.SetConversation(result);*/
             return result;
         }
         catch
@@ -97,6 +112,8 @@ public class ConversationApiService : IConversationApiService
     {
         _client.AddBearerHeader(context);
         var result = await _client.PatchAsync("/api/conversations", ToFormData(dto));
+
+        //_cache.RemoveConversation(dto.Id);
         return result;
     }
 
@@ -104,7 +121,9 @@ public class ConversationApiService : IConversationApiService
     {
         _client.AddBearerHeader(context);
         var result = await _client.DeleteAsync($"/api/conversations/{id}");
-        return result;
+
+		//_cache.RemoveConversation(id);
+		return result;
     }
 
 

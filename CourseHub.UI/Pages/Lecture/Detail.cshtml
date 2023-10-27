@@ -9,6 +9,7 @@
     ViewData[Global.TITLE] = Model.Course.Title;
 
     var defaultAvatar = "if(this.src!='/img/User_Empty.png')this.src='/img/User_Empty.png'";
+    var fallbackUrl = "/5f87e53d-f9a2-4c14-bd27-3622848b38dd.mp4";
 }
 
 
@@ -238,7 +239,9 @@
                                     {
                                         <div class="app-video-wrapper">
                                             <video width="800" height="600" id="player" playsinline controls data-poster="/img/video-thumb.gif">
-                                                <source src="@item.Url" type="video/mp4" />
+                                                @* //publishing problem - might use cloud alternatives *@
+                                                <source src="@fallbackUrl" type="video/mp4" />
+                                                <!--<source src="@item.Url" type="video/mp4" />-->
                                                 <!--<track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />-->
                                             </video>
                                         </div>

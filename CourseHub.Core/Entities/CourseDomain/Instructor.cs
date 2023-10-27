@@ -1,4 +1,6 @@
-﻿namespace CourseHub.Core.Entities.CourseDomain;
+﻿using CourseHub.Core.Helpers.Messaging.Messages;
+
+namespace CourseHub.Core.Entities.CourseDomain;
 
 #pragma warning disable CS8618
 
@@ -35,6 +37,13 @@ public class Instructor : TimeAuditedEntity
         Experience = experience;
         CreatorId = creatorId;
     }
-}
 
 #pragma warning restore CS8618
+
+    public void Withdraw(long amount)
+    {
+        Balance -= amount;
+        if (Balance < 0)
+            throw new Exception(CourseDomainMessages.INVALID_AMOUNT);
+    }
+}

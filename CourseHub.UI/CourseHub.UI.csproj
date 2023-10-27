@@ -29,4 +29,10 @@
     <UpToDateCheckInput Remove="Pages\Course\Enrolled.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\5f87e53d-f9a2-4c14-bd27-3622848b38dd.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

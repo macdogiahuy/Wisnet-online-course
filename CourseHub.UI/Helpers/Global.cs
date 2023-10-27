@@ -1,4 +1,6 @@
-﻿namespace CourseHub.UI.Helpers;
+﻿using CourseHub.Core.Entities.CourseDomain;
+
+namespace CourseHub.UI.Helpers;
 
 public class Global
 {
@@ -18,6 +20,7 @@ public class Global
     // anchor's asp-page
     public const string PAGE_INDEX = "/Index";
     public const string PAGE_404 = "/Shared/404";
+    public const string PAGE_401 = "/Shared/401";
     public const string PAGE_ADMIN = "/Admin";
 
     public const string PAGE_SIGNIN = "/SignIn";
@@ -72,4 +75,8 @@ public class Global
 
     // static files
     public const string FAVICON = "/img/favicon.png";
+
+
+
+    public static List<Category> Categories { get; set; } = new List<Category>();
 }

@@ -4,5 +4,6 @@ namespace CourseHub.UI.Services.Contracts.CourseServices;
 
 public interface ICategoryApiService
 {
-    public Task<List<Category>> GetAsync();
+	Task<List<Category>> GetAsync();
+	Task ForgeGet(List<Category> result);
 }

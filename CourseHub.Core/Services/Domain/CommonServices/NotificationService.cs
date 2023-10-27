@@ -14,6 +14,7 @@ using CourseHub.Core.Services.Domain.CommonServices.Contracts;
 using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using System.Text.Json;
 using CourseHub.Core.RequestDtos.Social.ConversationDtos;
+using CourseHub.Core.RequestDtos.Payment;
 
 namespace CourseHub.Core.Services.Domain.CommonServices;
 
@@ -131,12 +132,28 @@ public class NotificationService : DomainService, INotificationService
                     conversation.Members.Add(new ConversationMember(conversation.Id, client, false));
                 }
                 break;
+            case NotificationType.RequestWithdrawal:
+                if (dto.Status == NotificationStatus.Approved)
+                {
+                    var withdrawalDto = JsonSerializer.Deserialize<CreateWithdrawalDto>(entity.Message);
+                    if (withdrawalDto is null)
+                        throw new Exception(NotificationDomainMessages.INTERNAL_BAD_MESSAGE);
+
+                    var instructor = await _uow.InstructorRepo.FindEntityByUserIdAsync(entity.CreatorId);
+                    if (instructor is null)
+                        throw new Exception(NotificationDomainMessages.NOTFOUND_NOTIFICATION);
+                    instructor.Withdraw(withdrawalDto.Amount);
+                }
+                break;
         }
         entity.Status = dto.Status;
     }
 
     private Expression<Func<Notification, bool>>? GetPredicate(QueryNotificationDto dto)
     {
+        if (dto.CreatorId is not null && dto.Type is not null)
+            return _ => _.CreatorId == dto.CreatorId && _.Type == dto.Type;
+
         if (dto.CreatorId is not null)
             return _ => _.CreatorId == dto.CreatorId;
         if (dto.ReceiverId is not null)

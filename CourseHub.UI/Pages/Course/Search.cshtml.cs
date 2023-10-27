@@ -23,7 +23,9 @@ public class SearchModel : PageModel
         _categoryApiService = categoryApiService;
     }
 
-    public async Task OnGet([FromQuery] string sortBy, [FromQuery] Guid? category = null, [FromQuery] byte page = 0)
+    public async Task OnGet(
+        [FromQuery] string sortBy, [FromQuery] string? q = null,
+        [FromQuery] Guid? category = null, [FromQuery] byte page = 0)
     {
         QueryCourseDto dto = new() { PageIndex = page, PageSize = 12 };
         switch (sortBy)
@@ -45,6 +47,8 @@ public class SearchModel : PageModel
         };
         if (category is not null)
             dto.CategoryId = (Guid)category;
+        if (q is not null)
+            dto.Title = q;
         
         var courseTask = _courseApiService.GetPagedAsync(dto);
         var categoryTask = _categoryApiService.GetAsync();
