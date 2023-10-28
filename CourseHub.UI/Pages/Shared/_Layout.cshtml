@@ -182,7 +182,7 @@
 							</div>
 							<div class="dropdown site-btn header-btn app-dropdown" style="padding: 0">
 								<div data-bs-toggle="dropdown" aria-expanded="false" style="padding: 15px">@client?.FullName</div>
-								<ul class="dropdown-menu">
+								<ul class="dropdown-menu" style="border: 1px solid #999">
 									@if (client!.Role >= Core.Entities.UserDomain.Enums.Role.Admin)
 									{
 										<li><a href="@Global.PAGE_ADMIN">@text["AdminView"]</a></li>
@@ -263,11 +263,13 @@
 	<script type="module">
 		import { baseAddress } from '/js/constants.js';
 		import { getNonParsed, getParsedJson, patchJsonWithCredentials } from '/js/apis/http.js';
+		import { getMinGroupsAsync } from '/js/common/storageService.js';
 
 		window.baseAddress = baseAddress;
 		window.getNonParsed = getNonParsed;
 		window.getParsedJson = getParsedJson;
 		window.patchJsonWithCredentials = patchJsonWithCredentials;
+		window.getMinGroupsAsync = getMinGroupsAsync;
 	</script>
 	<script>
 		var autocomplete = document.getElementById('u22-search-form-autocomplete--3');
@@ -350,21 +352,31 @@
 						return Promise.resolve();
 					}
 				})
-				.then(paged => {
+				.then(async (paged) => {
 					if (paged) {
+						var notification_conversation = {};
+						for (var item of paged.items)
+							notification_conversation[item.id] = JSON.parse(item.message).Conversation;
+
+
+
+						var ids = paged.items.map(_ => notification_conversation[_.id]);
+						var arr = await window.getMinGroupsAsync(ids);
+
 						for (var item of paged.items) {
 							notifications.push(item);
 
 							var li = '';
 							switch (item.type) {
 								case @((byte)NotificationType.InviteMember):
-									console.log(item);
+									var conversation = arr.find(_ => _.id == notification_conversation[item.id]);
+									console.log(conversation);
 
 									switch (item.status) {
 										case @((byte)NotificationStatus.None):
 											li =
 											`<li>
-												<div>You are invited to the group</div>
+												<div>You are invited to the group "${conversation.title}"</div>
 												<div class="notification-btn-lst">
 													<button onclick="approveNotification('${item.id}')" class="btn btn-outline-success" type="button">Accept</button>
 													<button onclick="dismissNotification('${item.id}')" class="btn btn-outline-danger" type="button">Dismiss</button>
@@ -374,7 +386,7 @@
 										default:
 											li =
 											`<li>
-												<div>You are invited to the group</div>
+												<div>You are invited to the group "${conversation.title}"</div>
 											</li>`;
 											break;
 									}

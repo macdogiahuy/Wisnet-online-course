@@ -9,7 +9,7 @@
         { "CourseThumb", "Course thumb" },
         { "CourseIntro", "Course introduction" },
         { "CourseDescription", "Course description" },
-        { "CoursePrice", "Course price" },
+        { "CoursePrice", "Course price (VND)" },
         { "CourseLevel", "Course level" },
         { "CourseOutcomes", "Course outcomes" },
         { "CourseRequirements", "Course requirements" },
@@ -69,7 +69,7 @@
         </div>
         <div class="form-group">
             <label>@text["CoursePrice"]</label>
-            <input type="number" class="form-control" asp-for="Dto.Price" required>
+            <input type="number" class="form-control" asp-for="Dto.Price" min="0" max="10000000" required>
         </div>
         <div class="form-group">
             <label>@text["CourseLevel"]</label>

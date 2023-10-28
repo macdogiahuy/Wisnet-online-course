@@ -37,7 +37,6 @@ public class ConversationsController : BaseController
     }
 
     [HttpGet("multiple")]
-    [Authorize(Roles = RoleConstants.ADMIN_OR_SYSADMIN)]
     public async Task<IActionResult> GetMultiple([FromQuery] List<Guid> ids)
     {
         var result = await _conversationService.GetMultiple(ids);

@@ -1,6 +1,7 @@
 ﻿export {
     setClientData, getClientData,
     setUserInfo, getUserInfo,
+    setToLocalStorage, getFromLocalStorageAsJson,
     getCookieByName
 }
 

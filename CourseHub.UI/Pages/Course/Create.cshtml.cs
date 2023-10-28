@@ -42,15 +42,23 @@ public class CreateModel : PageModel
 		TempData[Global.DATA_USE_BACKGROUND] = true;
 		Categories = await categoryApiService.GetAsync();
 
-		if (!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
+            TempData[Global.ALERT_STATUS] = false;
+
+            if (Dto.SectionNames is null || Dto.SectionNames.Count == 0)
+                TempData[Global.ALERT_MESSAGE] = "Sections are required!";
+            else
+                TempData[Global.ALERT_MESSAGE] = "Invalid fields";
+
 			return Page();
         }
+
+
 
         var response = await courseApiService.CreateAsync(Dto, HttpContext);
 
 		TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
-
 		if (!response.IsSuccessStatusCode)
         {
             TempData[Global.ALERT_MESSAGE] = "Cannot create course!";
