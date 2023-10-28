@@ -34,7 +34,6 @@ function createMessage(message) {
                     <!-- Message: row -->
                     <div class="message-row">
                         <div class="d-flex align-items-center">
-
                             <!-- Message: content -->
                             <div class="message-content bg-light">
                                 <h6 class="mb-2">${senderName}</h6>
@@ -45,28 +44,6 @@ function createMessage(message) {
                                 </div>
                             </div>
                             <!-- Message: content -->
-
-                            <!-- Message: dropdown -->
-                            <div class="dropdown">
-                                <a class="app-dropdown-btn text-muted opacity-60 ml-3" href="#" onclick="openDelete('${message.id}')"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-more-vertical"></i>
-                                </a>
-
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        Edit <span class="ml-auto fe-edit-3"></span>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        Share <span class="ml-auto fe-share-2"></span>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        Delete <span class="ml-auto fe-trash-2"></span>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Message: dropdown -->
-
                         </div>
                     </div>
                     <!-- Message: row -->

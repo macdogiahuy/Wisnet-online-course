@@ -689,6 +689,11 @@
     <script type="module">
         import { postJsonWithCredentials } from '/js/apis/http.js';
 
+        window.postJsonWithCredentials = postJsonWithCredentials;
+    </script>
+
+    <script>
+
         /*var inviteAutocomplete = document.getElementById('app-invite-autocomplete-input');
         var inviteAutocompleteUl = document.getElementById('app-invite-autocomplete-ul');
         inviteAutocomplete.addEventListener('input', function() {
@@ -733,7 +738,7 @@
                 "Conversation": "@Model.CurrentConversation?.Id"
             }
 
-            postJsonWithCredentials("@Model.InviteMemberPath", {
+            window.postJsonWithCredentials("@Model.InviteMemberPath", {
                 Message: JSON.stringify(jsonMessage),
                 Type: @((byte)NotificationType.InviteMember),
                 ReceiverIds: receivers
@@ -798,7 +803,7 @@
                 "Conversation": "@Model.CurrentConversation?.Id"
             }
 
-            postJsonWithCredentials("@Model.ReportPath", {
+            window.postJsonWithCredentials("@Model.ReportPath", {
                 Message : JSON.stringify(jsonMessage),
                 Type: @((byte)NotificationType.ReportGroup)
             }).then(res => {

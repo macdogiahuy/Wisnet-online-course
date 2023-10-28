@@ -61,9 +61,17 @@ public class AssignmentService : DomainService, IAssignmentService
         return Created(entity.Id);
     }
 
-    public Task<ServiceResult> UpdateAsync(UpdateAssignmentDto dto, Guid client)
+    public async Task<ServiceResult> UpdateAsync(UpdateAssignmentDto dto, Guid client)
     {
-        throw new NotImplementedException();
+        var entity = await _uow.AssignmentRepo.Find(dto.Id);
+        if (entity is null)
+            return NotFound();
+        if (entity.CreatorId != client)
+            return Unauthorized();
+
+        ApplyChanges(entity, dto);
+        await _uow.CommitAsync();
+        return Ok();
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id, Guid client)
@@ -96,5 +104,29 @@ public class AssignmentService : DomainService, IAssignmentService
             )
         ).ToList();
         return new Assignment(assignmentId, dto.Name, dto.Duration, dto.GradeToPass, dto.SectionId, creator, questions);
+    }
+
+    private void ApplyChanges(Assignment entity, UpdateAssignmentDto dto)
+    {
+        if (!string.IsNullOrWhiteSpace(dto.Name))
+            entity.Name = dto.Name;
+        if (dto.Duration is not null)
+            entity.Duration = (int) dto.Duration;
+
+        /*if (dto.Questions is not null)
+        {
+            var questions = dto.Questions.Select(_ =>
+                new McqQuestion(
+                    _.Content,
+                    entity.Id,
+                    _.Choices.Select(_ => new McqChoice(_.Content, _.IsCorrect)).ToList()
+                )
+            ).ToList();
+
+            entity.Questions = questions;
+        }*/
+
+        if (dto.GradeToPass is not null)
+            entity.GradeToPass = (double)dto.GradeToPass;
     }
 }

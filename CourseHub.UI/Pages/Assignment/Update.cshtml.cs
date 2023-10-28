@@ -45,9 +45,29 @@ public class UpdateModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
+        if (Dto.Name is null || Dto.Name.Length == 0)
+            return RenderAndRedirect(false, "Assignment name is required");
+        if (Dto.Name.Length > 255)
+            return RenderAndRedirect(false, "Assignment name must be less than 255 characters");
+        if (Dto.Duration < 10)
+            return RenderAndRedirect(false, "Assignment duration is too short");
+        if (Dto.GradeToPass < 0 || Dto.GradeToPass > 10)
+            return RenderAndRedirect(false, "Grade to pass must be between 0 and 10");
+
         //...
-        TempData[Global.ALERT_STATUS] = true;
-        TempData[Global.ALERT_MESSAGE] = "Updated Assignment!";
+        var response = await _assignmentApiService.UpdateAsync(Dto, HttpContext);
+        if (!response.IsSuccessStatusCode)
+            return RenderAndRedirect(false, "Cannot update assignment!");
+
+        return RenderAndRedirect(true, "Updated Assignment Successfully!");
+    }
+
+
+
+    private IActionResult RenderAndRedirect(bool isSuccessful, string message)
+    {
+        TempData[Global.ALERT_STATUS] = isSuccessful;
+        TempData[Global.ALERT_MESSAGE] = message;
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Redirect(Request.Path + "?id=" + Dto.Id);
     }
