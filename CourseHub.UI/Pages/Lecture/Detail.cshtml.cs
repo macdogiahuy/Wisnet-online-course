@@ -44,7 +44,7 @@ public class DetailModel : PageModel
 
         Client = await HttpContext.GetClientData();
         if (!Lecture.IsPreviewable && Client is null)
-            return Redirect(Global.PAGE_401);
+            return Redirect(Global.PAGE_403);
 
         Course = await courseApiService.GetBySectionIdAsync(Lecture.SectionId);
         if (Course is null)
@@ -56,7 +56,7 @@ public class DetailModel : PageModel
         {
             var isEnrolled = await courseApiService.IsEnrolled(Course.Id, HttpContext);
             if (!Lecture.IsPreviewable && !isEnrolled)
-                return Redirect(Global.PAGE_401);
+                return Redirect(Global.PAGE_403);
         }
 
         QueryCommentDto dto = new()

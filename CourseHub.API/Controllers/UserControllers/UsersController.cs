@@ -99,10 +99,13 @@ public class UsersController : BaseController
     {
         ServiceResult<string> result = await _userService.CreateAsync(dto);
 
-        string link = $"{appInfo.Value.MainFrontendApp}/verify-email/{dto.Email}/{result.Data}";
+        if (result.IsSuccessful)
+        {
+            string link = $"{appInfo.Value.MainFrontendApp}/verify-email/{dto.Email}/{result.Data}";
 #pragma warning disable CS4014
-        emailService.SendRegistrationEmail(dto.Email, dto.UserName, link);
+            emailService.SendRegistrationEmail(dto.Email, dto.UserName, link);
 #pragma warning restore CS4014
+        }
 
         return result.AsResponse();
     }

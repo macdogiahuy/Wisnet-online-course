@@ -75,6 +75,9 @@ public class UserService : DomainService, IUserService
         if (await _uow.UserRepo.EmailExisted(dto.Email))
             return Conflict<string>(UserDomainMessages.CONFLICT_EMAIL);
 
+        if (await _uow.UserRepo.UserNameExisted(dto.UserName))
+            return Conflict<string>(UserDomainMessages.CONFLICT_USERNAME);
+
         User newUser = Adapt(dto, Role.Learner);
         try
         {

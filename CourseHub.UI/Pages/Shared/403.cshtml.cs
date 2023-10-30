@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CourseHub.UI.Pages.Shared;
 
-public class _401Model : PageModel
+public class _403Model : PageModel
 {
     public void OnGet()
     {

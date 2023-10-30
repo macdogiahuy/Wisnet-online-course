@@ -32,7 +32,7 @@ public class IndexModel : PageModel
         if (client is null)
             return Redirect(Global.PAGE_SIGNIN);
         if (client.Role != Role.SysAdmin)
-            return Redirect(Global.PAGE_401);
+            return Redirect(Global.PAGE_403);
 
 
 

@@ -30,7 +30,7 @@ public class ManageModel : PageModel
 
         Instructor = await instructorApiService.GetByUserId(Client.Id);
         if (Instructor is null)
-            return Redirect(Global.PAGE_401);
+            return Redirect(Global.PAGE_403);
 
         QueryCourseDto query = new()
         {

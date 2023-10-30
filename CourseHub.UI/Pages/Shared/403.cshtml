@@ -1,7 +1,7 @@
 ﻿@page
-@model CourseHub.UI.Pages.Shared._401Model
+@model CourseHub.UI.Pages.Shared._403Model
 @{
-    ViewData[Global.TITLE] = "Unauthorized";
+    ViewData[Global.TITLE] = "Forbidden";
 }
 
 
@@ -45,8 +45,8 @@
 
     <!-- 401 Error Text -->
     <div class="text-center">
-        <div class="error mx-auto" data-text="401">401</div>
-        <p class="no-margin lead mb-5">Unauthorized</p>
+        <div class="error mx-auto" data-text="403">403</div>
+        <p class="no-margin lead mb-5">Forbidden</p>
         <p class="no-margin mb-0">You do not have permission to view the page</p>
         <a href="/">&larr; Back to index</a>
     </div>

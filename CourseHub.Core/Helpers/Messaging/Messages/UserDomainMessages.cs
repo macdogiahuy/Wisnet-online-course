@@ -26,4 +26,5 @@ internal static class UserDomainMessages
 
     // 409
     internal const string CONFLICT_EMAIL = "This email has already been used";
+    internal const string CONFLICT_USERNAME = "This username has already been taken";
 }

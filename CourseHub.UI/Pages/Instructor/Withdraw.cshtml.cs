@@ -38,7 +38,7 @@ public class WithdrawModel : PageModel
         if (Client is null)
             context.Result = Redirect(Global.PAGE_SIGNIN);
         else if (Client.Role != Core.Entities.UserDomain.Enums.Role.Instructor)
-            context.Result = Redirect(Global.PAGE_401);
+            context.Result = Redirect(Global.PAGE_403);
     }
 
 

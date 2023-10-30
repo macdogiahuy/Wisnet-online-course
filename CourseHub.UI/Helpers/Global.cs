@@ -20,7 +20,7 @@ public class Global
     // anchor's asp-page
     public const string PAGE_INDEX = "/Index";
     public const string PAGE_404 = "/Shared/404";
-    public const string PAGE_401 = "/Shared/401";
+    public const string PAGE_403 = "/Shared/403";
     public const string PAGE_ADMIN = "/Admin";
 
     public const string PAGE_SIGNIN = "/SignIn";

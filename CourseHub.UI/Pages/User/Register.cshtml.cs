@@ -21,7 +21,7 @@ public class RegisterModel : PageModel
             return;
         if (RePassword != Dto.Password)
         {
-            ModelState.AddModelError("RePassword", "Password and RePassword doesn't match");
+            ModelState.AddModelError("RePassword", "Password and RePassword don't match");
             return;
         }
 
@@ -30,7 +30,10 @@ public class RegisterModel : PageModel
         TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
         if (!response.IsSuccessStatusCode)
         {
-            TempData[Global.ALERT_MESSAGE] = "Cannot register!";
+            if (response.StatusCode != System.Net.HttpStatusCode.Conflict)
+                TempData[Global.ALERT_MESSAGE] = "Cannot register!";
+            else
+                TempData[Global.ALERT_MESSAGE] = (await response.Content.ReadAsStringAsync()).Trim('\"');
             return;
         }
         TempData[Global.ALERT_MESSAGE] = "Please check your confirmation email!";

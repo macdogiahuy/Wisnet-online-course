@@ -36,7 +36,7 @@ public class IndexModel : PageModel
 
         Instructor = await _instructorApiService.GetByUserId(Client.Id);
         if (Instructor is null)
-            return Redirect(Global.PAGE_401);
+            return Redirect(Global.PAGE_403);
 
         TempData[Global.DATA_USE_BACKGROUND] = true;
         return Page();
