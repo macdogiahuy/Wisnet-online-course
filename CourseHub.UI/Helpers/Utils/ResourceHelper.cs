@@ -22,4 +22,18 @@ public static class ResourceHelper
 
         return true;
     }
+
+    public static bool IsImage(IFormFile file)
+    {
+        var allowedImageExtensions = new string[] { ".jpg", ".png", ".gif" };
+        var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        if (!allowedImageExtensions.Contains(fileExtension))
+            return false;
+
+        var allowedImageContentTypes = new string[] { "image/jpeg", "image/png", "image/gif" };
+        if (!allowedImageContentTypes.Contains(file.ContentType.ToLowerInvariant()))
+            return false;
+
+        return true;
+    }
 }

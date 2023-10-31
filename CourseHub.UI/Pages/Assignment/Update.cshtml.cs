@@ -1,10 +1,12 @@
 using CourseHub.Core.Models.Assignment.AssignmentModels;
 using CourseHub.Core.RequestDtos.Assignment.AssignmentDtos;
+using CourseHub.Core.RequestDtos.Assignment.McqQuestionDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Services.Contracts.AssignmentServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace CourseHub.UI.Pages.Assignment;
 
@@ -54,6 +56,13 @@ public class UpdateModel : PageModel
         if (Dto.GradeToPass < 0 || Dto.GradeToPass > 10)
             return RenderAndRedirect(false, "Grade to pass must be between 0 and 10");
 
+        if (File is not null && File.ContentType != "application/json")
+            return RenderAndRedirect(false, "The file format is invalid");
+        using var reader = new StreamReader(File.OpenReadStream());
+        var content = await reader.ReadToEndAsync();
+        List<CreateMcqQuestionDto>? questions = JsonSerializer.Deserialize<List<CreateMcqQuestionDto>>(content);
+        if (questions is null)
+            return RenderAndRedirect(false, "The file format is invalid");
         //...
         var response = await _assignmentApiService.UpdateAsync(Dto, HttpContext);
         if (!response.IsSuccessStatusCode)

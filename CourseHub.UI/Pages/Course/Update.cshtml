@@ -94,7 +94,7 @@
         <input type="hidden" asp-for="UpdateCourseDto.Id" value="@Model.UpdateCourseDto.Id" />
         <div class="form-group">
             <label>@text["CourseTitle"]</label>
-            <input type="text" class="form-control" asp-for="UpdateCourseDto.Title" value="@Model.Course.Title">
+            <input type="text" class="form-control" asp-for="UpdateCourseDto.Title" value="@Model.Course.Title" required>
         </div>
         <div class="form-group">
             <label>@text["CourseThumb"]</label>
@@ -102,18 +102,18 @@
         </div>
         <div class="form-group">
             <label>@text["CourseIntro"]</label>
-            <textarea class="form-control" name="UpdateCourseDto.Intro">@Model.Course.Intro</textarea>
+            <textarea class="form-control" name="UpdateCourseDto.Intro" required>@Model.Course.Intro</textarea>
         </div>
         <div class="form-group">
             <label>@text["CourseDescription"]</label>
-            <textarea class="form-control" name="UpdateCourseDto.Description">@Model.Course.Description</textarea>
+            <textarea class="form-control" name="UpdateCourseDto.Description" required>@Model.Course.Description</textarea>
         </div>
 
 
 
         <div class="form-group">
             <label>@text["CoursePrice"]</label>
-            <input type="number" class="form-control" asp-for="UpdateCourseDto.Price" value="@Model.Course.Price" >
+            <input type="number" class="form-control" asp-for="UpdateCourseDto.Price" value="@Model.Course.Price" min="0" max="10000000" >
         </div>
         <div class="form-group">
             <label>@text["CourseDiscount"]</label>
@@ -123,7 +123,9 @@
         <div class="form-group">
             <label>@text["CourseDiscountExpiry"]</label>
             <input type="date" class="form-control" asp-for="UpdateCourseDto.DiscountExpiry"
-            value="@(Model.Course.DiscountExpiry > DateTime.UtcNow ? Model.Course.DiscountExpiry.ToString("yyyy-MM-dd") : "")" >
+            value="@(Model.Course.Discount > 0 && Model.Course.DiscountExpiry > DateTime.UtcNow
+                    ? Model.Course.DiscountExpiry.ToString("yyyy-MM-dd")
+                    : "")" >
         </div>
 
 

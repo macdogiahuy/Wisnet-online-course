@@ -378,7 +378,7 @@
 											`<li>
 												<div>You are invited to the group "${conversation.title}"</div>
 												<div class="notification-btn-lst">
-													<button onclick="approveNotification('${item.id}')" class="btn btn-outline-success" type="button">Accept</button>
+													<button onclick="approveGroupNotification('${item.id}', '${conversation.id}')" class="btn btn-outline-success" type="button">Accept</button>
 													<button onclick="dismissNotification('${item.id}')" class="btn btn-outline-danger" type="button">Dismiss</button>
 												</div>
 											</li>`;
@@ -400,18 +400,21 @@
 			});
 		}
 
-		function approveNotification(id) {
-			updateNotification(id, @((byte)NotificationStatus.Approved));
+		function approveGroupNotification(id, groupId) {
+			window.patchJsonWithCredentials("@notificationPath", {
+				Id : id,
+				Status: @((byte)NotificationStatus.Approved)
+			}).then(res => {
+				if (res.ok) {
+					window.location.href = '/group/conversation?id=' + groupId;
+				}
+			});
 		}
 
 		function dismissNotification(id) {
-			updateNotification(id, @((byte)NotificationStatus.Dismissed));
-		}
-
-		function updateNotification(id, status) {
 			window.patchJsonWithCredentials("@notificationPath", {
 				Id : id,
-				Status: status
+				Status: @((byte)NotificationStatus.Dismissed)
 			}).then(res => {
 				if (res.ok) {
 					window.location.reload();

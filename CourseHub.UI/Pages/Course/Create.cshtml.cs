@@ -67,7 +67,5 @@ public class CreateModel : PageModel
 
 		TempData[Global.ALERT_MESSAGE] = "Create course successfully!";
 		return Page();
-
-
     }
 }

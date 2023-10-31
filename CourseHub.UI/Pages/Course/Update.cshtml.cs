@@ -4,6 +4,7 @@ using CourseHub.Core.RequestDtos.Course.CourseDtos;
 using CourseHub.UI.Helpers;
 using CourseHub.UI.Helpers.AppStart;
 using CourseHub.UI.Helpers.Http;
+using CourseHub.UI.Helpers.Utils;
 using CourseHub.UI.Services.Contracts.CourseServices;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -46,8 +47,10 @@ public class UpdateModel : PageModel
     public override void OnPageHandlerExecuting(PageHandlerExecutingContext context)
     {
         var client = context.HttpContext.GetClientData().Result;
-        if (client is null || client.Role < Core.Entities.UserDomain.Enums.Role.Instructor)
-            context.Result = Redirect(Global.PAGE_404);
+        if (client is null)
+            context.Result = Redirect(Global.PAGE_SIGNIN);
+        else if (client.Role != Core.Entities.UserDomain.Enums.Role.Instructor)
+            context.Result = Redirect(Global.PAGE_403);
 
         DeleteSectionPath = Configurer.GetApiClientOptions().ApiServerPath + "/api/courses";
     }
@@ -75,17 +78,49 @@ public class UpdateModel : PageModel
 
     public async Task<IActionResult> OnPostUpdateCourse()
     {
-        // ModelState
+        //... Not model state
+        if (string.IsNullOrEmpty(UpdateCourseDto.Title))
+            return Reload(false, "Title cannot be empty!");
+        if (UpdateCourseDto.DiscountExpiry is not null && UpdateCourseDto.DiscountExpiry < DateTime.UtcNow)
+            return Reload(false, "Invalid discount expiry date!");
+        if (UpdateCourseDto.Discount is not null && UpdateCourseDto.DiscountExpiry is null)
+            return Reload(false, "Invalid discount");
+        if (UpdateCourseDto.Thumb is not null)
+        {
+            var file = UpdateCourseDto.Thumb.File;
+            if (file is null)
+                return Reload(false, "Invalid file!");
+            if (!ResourceHelper.IsImage(file))
+                return Reload(false, "Invalid file type!");
+        }
+
+
+
+        if (UpdateCourseDto.Discount is null)
+        {
+            //...
+            UpdateCourseDto.Discount = 0;
+        }
+        if (string.IsNullOrEmpty(UpdateCourseDto.Outcomes))
+            UpdateCourseDto.Outcomes = " ";
+        if (string.IsNullOrEmpty(UpdateCourseDto.Requirements))
+            UpdateCourseDto.Requirements = " ";
+
+
+
+
         var response = await _courseApiService.UpdateAsync(UpdateCourseDto, HttpContext);
 
-        TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
         if (!response.IsSuccessStatusCode)
-        {
-            TempData[Global.ALERT_MESSAGE] = "Cannot update course!";
-            return Redirect(Request.Path + $"?courseId={UpdateCourseDto.Id}");
-        }
-        TempData[Global.ALERT_MESSAGE] = "Update course successfully!";
+            return Reload(false, "Cannot update course!");
 
+        return Reload(true, "Update course successfully!");
+    }
+
+    private IActionResult Reload(bool status, string message)
+    {
+        TempData[Global.ALERT_STATUS] = status;
+        TempData[Global.ALERT_MESSAGE] = message;
         return Redirect(Request.Path + $"?courseId={UpdateCourseDto.Id}");
     }
 }

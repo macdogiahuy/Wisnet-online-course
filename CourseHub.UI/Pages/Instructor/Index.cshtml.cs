@@ -44,12 +44,18 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
+        //...
+        if (Dto.Intro is null)
+            Dto.Intro = string.Empty;
+        if (Dto.Experience is null)
+            Dto.Experience = string.Empty;
+
         var response = await _instructorApiService.Update(Dto, HttpContext);
 
         TempData[Global.ALERT_STATUS] = response.IsSuccessStatusCode;
-        TempData[Global.ALERT_MESSAGE] = response.IsSuccessStatusCode ?
-            "Updated successfully." :
-            $"Error updating!";
+        TempData[Global.ALERT_MESSAGE] = response.IsSuccessStatusCode
+            ? "Updated successfully."
+            : $"Error updating!";
 
         return await OnGet();
     }

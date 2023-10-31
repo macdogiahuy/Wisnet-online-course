@@ -62,18 +62,14 @@
 
                                                             <div class="col-12">
                                                                 <div class="form-group">
-                                                                    <div class="input-group-wrap input-default input-size-default input-group-vertical">
-                                                                        <label class="input-inner-wrap">
-                                                                            <input asp-for="Dto.Gateway" type="text" class="input input-label-change input-has-clear"
-                                                                                required autocorrect="off" value="VNPay">
-                                                                            <label class="input-label">
-                                                                                <div class="inner">Gateway</div>
-                                                                            </label>
-                                                                            <div class="input-extend input-extend-right">
-                                                                                <div class="input-box input-ic-clear"></div>
-                                                                            </div>
-                                                                            <div class="input-frame"></div>
+                                                                    <div class="input-group-wrap input-default input-size-default input-group-vertical"
+                                                                        style="justify-content: space-between">
+                                                                        <label class="input-label">
+                                                                            <div class="inner">Gateway</div>
                                                                         </label>
+                                                                        <select asp-for="Dto.Gateway" class="form-control" style="width: 30%">
+                                                                            <option value="VNPay">VNPay</option>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="errorBlock"></div>
                                                                 </div>
@@ -83,13 +79,15 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group-wrap input-default input-size-default input-group-vertical">
                                                                         <label class="input-inner-wrap">
-                                @*placeholder="Nhập số thẻ"*@
-                                @*data-parsley-required-message="Quý khách vui lòng nhập Số thẻ" data-parsley-length-message="Số thẻ không hợp lệ"*@
-                                                                            <input asp-for="Dto.AccountNumber" type="digits" class="input input-label-change input-has-clear" placeholder="Card Number"
-                                                                                maxlength="19" minlength="14" id="card_number_mask" autocorrect="off" required="required"
+                                                                            @*  //...
+                                                                                maxlength="19" minlength="14"
+                                                                            *@
+                                                                            <input asp-for="Dto.AccountNumber" type="text"
+                                                                                pattern="[0-9]{14,19}" title="Account number must be between 14 and 19 digits."
+                                                                                class="input input-label-change input-has-clear" placeholder="Card Number"
+                                                                                id="card_number_mask" autocorrect="off" required="required"
                                                                                 inputmode="numeric" data-parsley-errors-container="#err-card">
-                                                                            <input type="hidden" id="cardNumber" name="cardNumber" placeholder="Nhập số thẻ" required="required" minlength="14" maxlength="19" autocorrect="off"
-                                                                                @*data-parsley-required-message="Quý khách vui lòng nhập Số thẻ" data-parsley-pattern-message="Số thẻ không hợp lệ" data-parsley-length-message="Số thẻ không hợp lệ"*@ data-parsley-errors-container="#err-card">
+                                                                            <input type="hidden" id="cardNumber" name="cardNumber" placeholder="Nhập số thẻ" required="required" minlength="14" maxlength="19" autocorrect="off" data-parsley-errors-container="#err-card">
                                                                             <label class="input-label">
                                                                                 <div class="inner">
                                                                                     @*Số thẻ*@
@@ -118,9 +116,12 @@
                                                                         <label class="input-inner-wrap">
                                 @*placeholder="Nhập tên chủ thẻ (không dấu)"*@
                                 @*data-parsley-required-message="Quý khách vui lòng nhập Tên chủ thẻ" data-parsley-pattern-message="Tên chủ thẻ không hợp lệ"*@
-                                                                            <input asp-for="Dto.AccountHolderName" type="text" class="input input-label-change input-has-clear" id="cardHolder"
-                                                                             placeholder="Card holder's name"
-                                                                                required="required" maxlength="35" pattern="^\s*[a-zA-Z,\s]+\s*$" autocorrect="off">
+                                                                            <input asp-for="Dto.AccountHolderName" type="text"
+                                                                                class="input input-label-change input-has-clear" id="cardHolder"
+                                                                                placeholder="Card holder's name"
+                                                                                required="required" maxlength="35"
+                                                                                pattern="^\s*[a-zA-Z,\s]+\s*$" title="Account holder name must be alphabetic characters"
+                                                                                autocorrect="off">
                                                                             <label class="input-label">
                                                                                 <div class="inner">
                                                                                     @*Tên chủ thẻ*@Card holder's name
@@ -139,8 +140,8 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group-wrap input-default input-size-default input-group-vertical">
                                                                         <label class="input-inner-wrap">
-                                                                            <input asp-for="Dto.Amount" id="app-input-amount" type="number" class="input input-label-change input-has-clear"
-                                                                                required autocorrect="off">
+                                                                            <input asp-for="Dto.Amount" id="app-input-amount" type="number" min="15000"
+                                                                                class="input input-label-change input-has-clear" required autocorrect="off">
                                                                             <label class="input-label">
                                                                                 <div class="inner">Amount</div>
                                                                             </label>

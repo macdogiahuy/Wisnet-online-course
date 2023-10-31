@@ -10,6 +10,8 @@ using CourseHub.Core.Models.Social;
 using CourseHub.Core.RequestDtos.Social.ChatMessageDtos;
 using CourseHub.UI.Services.Implementations.UserServices;
 using CourseHub.UI.Helpers.AppStart;
+using CourseHub.Core.RequestDtos.Course.CourseDtos;
+using CourseHub.UI.Helpers.Utils;
 
 namespace CourseHub.UI.Pages.Group;
 
@@ -90,7 +92,7 @@ public class ConversationModel : PageModel
         foreach (var conversation in Conversations)
             foreach (var member in conversation.Members)
             {
-                MemberIds.Add(member.CreatorId);
+                //MemberIds.Add(member.CreatorId);
                 if (member.IsAdmin)
                     Admins.Add(member.CreatorId);
             }
@@ -98,13 +100,18 @@ public class ConversationModel : PageModel
         // CurrentConversation
         if (CurrentConversation.IsPrivate)
         {
-            Admins.AddRange(CurrentConversation.Members.Select(_ => _.CreatorId));
+            var members = CurrentConversation.Members.Select(_ => _.CreatorId);
+            MemberIds.AddRange(members);
+            Admins.AddRange(members);
         }
         else
         {
             foreach (var member in CurrentConversation.Members)
+            {
+                MemberIds.Add(member.CreatorId);
                 if (member.IsAdmin)
                     Admins.Add(member.CreatorId);
+            }
         }
 
         var allUsers = await userApiService.GetAllMinAsync(HttpContext);
@@ -158,10 +165,24 @@ public class ConversationModel : PageModel
         {
             return Redirect(Request.Path + "?id=" + UpdateDto.Id);
         }
+        if (UpdateDto.Avatar is not null)
+        {
+            var file = UpdateDto.Avatar.File;
+            if (file is null)
+                return Reload();
+            if (!ResourceHelper.IsImage(file))
+                return Reload();
+        }
+
+
 
         var response = await conversationApiService.UpdateAsync(UpdateDto, HttpContext);
         // Alert
+        return Reload();
+    }
 
+    private IActionResult Reload()
+    {
         return Redirect(Request.Path + "?id=" + UpdateDto.Id);
     }
 }

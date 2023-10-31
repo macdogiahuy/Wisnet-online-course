@@ -38,6 +38,11 @@ function setupWindow() {
 }
 
 function send() {
+    if (_chatInp.value.length == 0) {
+        console.log("Empty message!");
+        return;
+    }
+
     // add as client-sent message
     let message = new ChatMessage(_chatInp.value, null);
     message.setCreationData(_client.id);

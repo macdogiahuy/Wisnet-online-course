@@ -588,7 +588,8 @@
 
                         <div class="form-group">
                             <label class="small" for="new-chat-title">Title</label>
-                                <input asp-for="UpdateDto.Title" class="form-control form-control-lg" id="new-chat-title" type="text" placeholder="Conversation Name">
+                                <input asp-for="UpdateDto.Title" class="form-control form-control-lg" id="new-chat-title"
+                                    type="text" value="@Model.CurrentConversation.Title" required>
                         </div>
 
                         <div class="pb-6">
@@ -732,6 +733,22 @@
                 if (input.checked)
                     receivers.push(input.getAttribute('data-val'));
             }
+                
+            console.log(receivers);
+
+            if (receivers.length == 0) {
+                swal({
+                    title: "Error",
+                    text: "No one has been invited",
+                    icon: "info",
+                    buttons: {
+                        confirm: "Okay"
+                    },
+                    closeOnClickOutside: false
+                });
+
+                return;
+            }
 
             /* CreateInvitationDto */
             var jsonMessage = {
@@ -743,7 +760,7 @@
                 Type: @((byte)NotificationType.InviteMember),
                 ReceiverIds: receivers
             }).then(res => {
-                    if (res.ok) {
+                if (res.ok) {
                     swal({
                         title: "Success",
                         text: "",
