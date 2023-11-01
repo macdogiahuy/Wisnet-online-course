@@ -20,6 +20,11 @@
     };
 
     var defaultAvatar = "if(this.src!='/img/User_Empty.png')this.src='/img/User_Empty.png'";
+
+    bool IsInConversation()
+    {
+        return Model.Conversations.Any(_ => _.Id == currentConversation.Id);
+    }
 }
 
 @section Style {
@@ -233,45 +238,48 @@
 
                             <!-- Chat toolbar -->
                                     
-                            <div class="col-3 col-xl-6 text-right">
-                                <ul class="nav justify-content-end">
-                                    <li>
-                                        <a asp-page="@Global.PAGE_GROUP_CALL" asp-route-id="@Model.CurrentConversation?.Id" class="nav-link text-muted px-3" title="Join Group's Video Call">
-                                            <i class="fa fa-video-camera"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" id="app-member-list-btn" class="nav-link text-muted px-3" title="Conversation's Members">
-                                            <i class="fa fa-users"></i>
-                                        </a>
-                                    </li>
-                                    @if (Model.Admins.Contains(Model.Client.Id))
-                                    {
+                            @if (IsInConversation())
+                            {
+                                <div class="col-3 col-xl-6 text-right">
+                                    <ul class="nav justify-content-end">
                                         <li>
-                                            <a href="#" id="app-edit-btn" class="nav-link text-muted px-3" title="Edit Conversation">
-                                                <i class="fa fa-edit"></i>
+                                            <a asp-page="@Global.PAGE_GROUP_CALL" asp-route-id="@Model.CurrentConversation?.Id" class="nav-link text-muted px-3" title="Join Group's Video Call">
+                                                <i class="fa fa-video-camera"></i>
                                             </a>
                                         </li>
-                                    }
-                                    @if (!Model.CurrentConversation.IsPrivate)
-                                    {
                                         <li>
-                                            <a href="#" id="app-member-btn" class="nav-link text-muted px-3" title="Add Members">
-                                                <i class="fa fa-user-plus"></i>
-                                                <!--<i class="icon-md fe-user-plus"></i>-->
+                                            <a href="#" id="app-member-list-btn" class="nav-link text-muted px-3" title="Conversation's Members">
+                                                <i class="fa fa-users"></i>
                                             </a>
                                         </li>
-                                    }
-                                    @if (!Model.Admins.Contains(Model.Client.Id))
-                                    {
-                                        <li>
-                                            <a href="#" id="reportBtn" class="nav-link text-muted px-3" title="Report Conversation">
-                                                Report
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
+                                        @if (Model.Admins.Contains(Model.Client.Id))
+                                        {
+                                            <li>
+                                                <a href="#" id="app-edit-btn" class="nav-link text-muted px-3" title="Edit Conversation">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (!Model.CurrentConversation.IsPrivate)
+                                        {
+                                            <li>
+                                                <a href="#" id="app-member-btn" class="nav-link text-muted px-3" title="Add Members">
+                                                    <i class="fa fa-user-plus"></i>
+                                                    <!--<i class="icon-md fe-user-plus"></i>-->
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (!Model.Admins.Contains(Model.Client.Id))
+                                        {
+                                            <li>
+                                                <a href="#" id="reportBtn" class="nav-link text-muted px-3" title="Report Conversation">
+                                                    Report
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
 
                             @*<div class="col-3 col-xl-6 text-right">
                                 <ul class="nav justify-content-end">
@@ -314,7 +322,7 @@
                 </div>
                 <!-- Chat: Header -->
 
-                @if (Model.Conversations.Any(_ => _.Id == currentConversation.Id))
+                @if (IsInConversation())
                 {
                     <!-- Chat: Content-->
                     <div class="chat-content px-lg-8">
@@ -671,7 +679,6 @@
         for (var user of relatedUsers) {
             setUserInfo(user.id, user);
         }
-
 
         @if (Model.Messages.Count > 0)
         {

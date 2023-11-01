@@ -84,8 +84,8 @@
 		}
 
 		.icon-dropdown .dropdown-menu li {
-			height: 80px;
-			padding: 5%;
+			height: 100px;
+			padding: 4%;
 		}
 
 		.notification-btn-lst {
@@ -263,13 +263,14 @@
 	<script type="module">
 		import { baseAddress } from '/js/constants.js';
 		import { getNonParsed, getParsedJson, patchJsonWithCredentials } from '/js/apis/http.js';
-		import { getMinGroupsAsync } from '/js/common/storageService.js';
+		import { getMinGroupsAsync, getCoursesAsync } from '/js/common/storageService.js';
 
 		window.baseAddress = baseAddress;
 		window.getNonParsed = getNonParsed;
 		window.getParsedJson = getParsedJson;
 		window.patchJsonWithCredentials = patchJsonWithCredentials;
 		window.getMinGroupsAsync = getMinGroupsAsync;
+		window.getCoursesAsync = getCoursesAsync;
 	</script>
 	<script>
 		var autocomplete = document.getElementById('u22-search-form-autocomplete--3');
@@ -355,22 +356,61 @@
 				.then(async (paged) => {
 					if (paged) {
 						var notification_conversation = {};
-						for (var item of paged.items)
-							notification_conversation[item.id] = JSON.parse(item.message).Conversation;
+						var notification_course = {};
+						var groupIds = [];
+						var courseIds = [];
 
+						for (var item of paged.items) {
+							var message = JSON.parse(item.message);
+							if (message.Conversation) {
+								notification_conversation[item.id] = message.Conversation;
+								groupIds.push(message.Conversation);
+							}
+							if (message.Course) {
+								notification_course[item.id] = message.Course;
+								courseIds.push(message.Course);
+							}
+						}
 
-
-						var ids = paged.items.map(_ => notification_conversation[_.id]);
-						var arr = await window.getMinGroupsAsync(ids);
+						var groups = groupIds.length > 0
+							? await window.getMinGroupsAsync(groupIds)
+							: [];
+						var courses = courseIds.length > 0
+							? await window.getCoursesAsync(courseIds)
+							: [];
 
 						for (var item of paged.items) {
 							notifications.push(item);
 
 							var li = '';
 							switch (item.type) {
+								case @((byte)NotificationType.InstructorResponse):
+									var isApproved = JSON.parse(item.message).IsApproved;
+
+									switch (isApproved) {
+										case true:
+											li =
+											`
+											<li>
+												<div>You have became an instructor</div>
+											</li>
+											`;
+											break;
+										case false:
+											li =
+											`
+											<li>
+												<div>Your request to become an instructor has been dismissed</div>
+											</li>
+											`;
+											break;
+									}
+									break;
+								
+
+
 								case @((byte)NotificationType.InviteMember):
-									var conversation = arr.find(_ => _.id == notification_conversation[item.id]);
-									console.log(conversation);
+									var conversation = groups.find(_ => _.id == notification_conversation[item.id]);
 
 									switch (item.status) {
 										case @((byte)NotificationStatus.None):
@@ -383,13 +423,53 @@
 												</div>
 											</li>`;
 											break;
-										default:
+										case @((byte)NotificationStatus.Approved):
 											li =
 											`<li>
 												<div>You are invited to the group "${conversation.title}"</div>
+												<div>You approved the request</div>
+											</li>`;
+											break;
+										case @((byte)NotificationStatus.Dismissed):
+											li =
+											`<li>
+												<div>You are invited to the group "${conversation.title}"</div>
+												<div>You dismissed the request</div>
 											</li>`;
 											break;
 									}
+									break;
+
+
+
+								case @((byte)NotificationType.InstructorReportedCourse):
+									var course = courses.find(_ => _.id == notification_course[item.id]);
+									console.log(course);
+									var reportMessage = JSON.parse(item.message).Message;
+
+									li =
+									`<li>
+										<div>Your course ${course.title} has been reported for "${reportMessage}"</div>
+										<a href="/Course/Detail?id=${course.id}" class="btn btn-outline-success"
+											style="display: unset; padding: 0.5rem 2rem">View course</a>
+									</li>
+									`;
+									break;
+
+
+
+								case @((byte)NotificationType.GroupAdminReportedGroup):
+									var conversation = groups.find(_ => _.id == notification_conversation[item.id]);
+									console.log(conversation);
+									var reportMessage = JSON.parse(item.message).Message;
+
+									li =
+									`<li>
+										<div>The group ${conversation.title} has been reported for "${reportMessage}"</div>
+										<a href="/Group/Conversation?id=${conversation.id}" class="btn btn-outline-success"
+											style="display: unset; padding: 0.5rem 2rem">View group</a>
+									</li>
+									`;
 									break;
 							}
 							innerHTML += li;

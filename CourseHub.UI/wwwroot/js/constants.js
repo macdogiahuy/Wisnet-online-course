@@ -10,7 +10,7 @@ const hubUrl = 'https://wisnetapi.azurewebsites.net/hub';*/
 
 
 
-const signInPage = '/signin.html';
+const signInPage = '/signin';
 
 
 

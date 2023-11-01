@@ -3,9 +3,17 @@
 public enum NotificationType : byte
 {
     AdminMessage,
+
     RequestToBecomeInstructor,
+    InstructorResponse,
+
     ReportGroup,
+    GroupAdminReportedGroup,
+
     ReportCourse,
+    InstructorReportedCourse,
+
     InviteMember,
+
     RequestWithdrawal
 }

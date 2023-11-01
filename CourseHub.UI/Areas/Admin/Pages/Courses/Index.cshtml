@@ -1,4 +1,5 @@
 ﻿@page
+@using CourseHub.Core.Entities.CommonDomain.Enums;
 @using CourseHub.UI.Helpers;
 @using CourseHub.UI.Helpers.AppStart;
 @model CourseHub.UI.Areas.Admin.Pages.Courses.IndexModel
@@ -8,7 +9,7 @@
 @{
     ViewData[Global.TITLE] = "Courses";
 
-    string notificationPath = Configurer.GetApiClientOptions().ApiServerPath + "/api/notifications";
+    string notificationRequestPath = Configurer.GetApiClientOptions().ApiServerPath + "/api/notifications";
 }
 
 
@@ -66,22 +67,62 @@
 
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
+<script type="module">
+    import { patchJsonWithCredentials } from '/js/apis/http.js';
+
+
+
     var approveBtns = document.getElementsByClassName('app-approve-btn');
+    var dismissBtns = document.getElementsByClassName('app-dismiss-btn');
 
     for (let btn of approveBtns) {
         btn.addEventListener('click', () => {
-            event.preventDefault();
-            swal({
-                title: "Success",
-                text: "",
-                icon: "success",
-                buttons: {
-                    confirm: "Okay"
-                },
-                closeOnClickOutside: false
-            });
+            patchJsonWithCredentials("@notificationRequestPath", {
+                Id : btn.getAttribute('data-id'),
+                Status: @((int)NotificationStatus.Approved)
+            }).then(res => {
+                if (res.ok) {
+                    swal({
+                        title: "Success",
+                        text: "Sent alert to instructor!",
+                        icon: "success",
+                        buttons: {
+                            confirm: "Okay"
+                        },
+                        closeOnClickOutside: false
+                    });
+                    setTimeoutReload();
+                }
+            })
         });
+    }
+
+    for (let btn of dismissBtns) {
+        btn.addEventListener('click', () => {
+            patchJsonWithCredentials("@notificationRequestPath", {
+                Id : btn.getAttribute('data-id'),
+                Status: @((int)NotificationStatus.Dismissed)
+            }).then(res => {
+                if (res.ok) {
+                    swal({
+                        title: "Success",
+                        text: "",
+                        icon: "success",
+                        buttons: {
+                            confirm: "Okay"
+                        },
+                        closeOnClickOutside: false
+                    });
+                    setTimeoutReload();
+                }
+            })
+        });
+    }
+
+    function setTimeoutReload() {
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
     }
 
 </script>

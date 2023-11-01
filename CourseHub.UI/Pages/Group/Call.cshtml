@@ -1,4 +1,6 @@
 ﻿@page
+@using System.Text.Json;
+@using CourseHub.UI.Helpers.Http;
 @model CourseHub.UI.Pages.Group.CallModel
 @{
     Layout = null;
@@ -467,6 +469,15 @@
     <script type="text/javascript">
         window.conversationName = "Video call";
         window.conversationId = "@Model.ConversationId";
+    </script>
+    <script type="module">
+        import { getClientData, setClientData, setUserInfo } from '/js/common/storage.js';
+        var client = @Html.Raw(JsonSerializer.Serialize(Model.Client, SerializeOptions.JsonCamelCaseOptions));
+        window.unsetClient = client;
+        var currentClient = getClientData();
+        if (!currentClient || currentClient.id != client.id) {
+            setClientData(client);
+        }
     </script>
     <script src="~/vendor/@@microsoft/signalr/signalr.min.js"></script>
     <script type="module" src="/js/apis/hubGateway.js"></script>

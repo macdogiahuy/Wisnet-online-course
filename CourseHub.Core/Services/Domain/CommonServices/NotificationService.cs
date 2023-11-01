@@ -15,6 +15,7 @@ using CourseHub.Core.RequestDtos.Course.InstructorDtos;
 using System.Text.Json;
 using CourseHub.Core.RequestDtos.Social.ConversationDtos;
 using CourseHub.Core.RequestDtos.Payment;
+using CourseHub.Core.Services.Domain.CommonServices.TempModels;
 
 namespace CourseHub.Core.Services.Domain.CommonServices;
 
@@ -103,12 +104,12 @@ public class NotificationService : DomainService, INotificationService
         switch (entity.Type)
         {
             case NotificationType.RequestToBecomeInstructor:
-                if (dto.Status == NotificationStatus.Approved)
-                {
-					var user = await _uow.UserRepo.Find(entity.CreatorId);
-					if (user is null)
-						throw new Exception(UserDomainMessages.NOT_FOUND);
+				var user = await _uow.UserRepo.Find(entity.CreatorId);
+				if (user is null)
+					throw new Exception(UserDomainMessages.NOT_FOUND);
 
+				if (dto.Status == NotificationStatus.Approved)
+                {
 					var instructorDto = JsonSerializer.Deserialize<CreateInstructorDto>(entity.Message);
 					if (instructorDto is null)
 						throw new Exception(CourseDomainMessages.INVALID_INSTRUCTOR);
@@ -117,8 +118,39 @@ public class NotificationService : DomainService, INotificationService
 					Instructor instructorEntity = new(instructorId, user.Id, instructorDto.Intro, instructorDto.Experience);
 					await _uow.InstructorRepo.Insert(instructorEntity);
 					user.SetInstructor(instructorId);
+
+                    CreateNotificationDto approvedNotificationDto = new()
+                    {
+                        Message = JsonSerializer.Serialize(new InstructorResponseModel()
+                        {
+                            IsApproved = true,
+                            Message = string.Empty
+                        }),
+                        Type = NotificationType.InstructorResponse,
+                        ReceiverId = user.Id
+                    };
+                    var approvedNotification = Adapt(approvedNotificationDto, client);
+                    await _uow.NotificationRepo.Insert(approvedNotification);
+				}
+                else
+				{
+					CreateNotificationDto dismissNotificationDto = new()
+					{
+						Message = JsonSerializer.Serialize(new InstructorResponseModel()
+                        {
+                            IsApproved = false,
+                            Message = string.Empty
+                        }),
+						Type = NotificationType.InstructorResponse,
+						ReceiverId = user.Id
+					};
+                    var dismissNotification = Adapt(dismissNotificationDto, client);
+                    await _uow.NotificationRepo.Insert(dismissNotification);
 				}
                 break;
+
+
+
             case NotificationType.InviteMember:
                 if (dto.Status == NotificationStatus.Approved)
                 {
@@ -132,6 +164,9 @@ public class NotificationService : DomainService, INotificationService
                     conversation.Members.Add(new ConversationMember(conversation.Id, client, false));
                 }
                 break;
+
+
+
             case NotificationType.RequestWithdrawal:
                 if (dto.Status == NotificationStatus.Approved)
                 {
@@ -143,6 +178,55 @@ public class NotificationService : DomainService, INotificationService
                     if (instructor is null)
                         throw new Exception(NotificationDomainMessages.NOTFOUND_NOTIFICATION);
                     instructor.Withdraw(withdrawalDto.Amount);
+                }
+                break;
+
+
+
+            case NotificationType.ReportCourse:
+                if (dto.Status == NotificationStatus.Approved)
+                {
+                    var reportDto = JsonSerializer.Deserialize<CreateCourseReportDto>(entity.Message);
+                    if (reportDto is null)
+                        throw new Exception(NotificationDomainMessages.INTERNAL_BAD_MESSAGE);
+
+                    var course = await _uow.CourseRepo.Find(reportDto.Course);
+                    if (course is null)
+                        throw new Exception(NotificationDomainMessages.NOTFOUND_NOTIFICATION);
+
+                    CreateNotificationDto newNotificationDto = new()
+                    {
+                        Message = entity.Message,
+                        Type = NotificationType.InstructorReportedCourse,
+                        ReceiverId = course.CreatorId
+                    };
+                    var instructorNotification = Adapt(newNotificationDto, client);
+                    await _uow.NotificationRepo.Insert(instructorNotification);
+                }
+                break;
+
+
+
+            case NotificationType.ReportGroup:
+                if (dto.Status == NotificationStatus.Approved)
+                {
+                    var reportDto = JsonSerializer.Deserialize<CreateConversationReportDto>(entity.Message);
+                    if (reportDto is null)
+                        throw new Exception(NotificationDomainMessages.INTERNAL_BAD_MESSAGE);
+
+                    var conversation = await _uow.ConversationRepo.FindWithMembers(reportDto.Conversation);
+                    if (conversation is null)
+                        throw new Exception(NotificationDomainMessages.NOTFOUND_NOTIFICATION);
+
+                    //...
+                    CreateMultipleNotificationDto newNotificationDto = new()
+                    {
+                        Message = entity.Message,
+                        Type = NotificationType.GroupAdminReportedGroup,
+                        ReceiverIds = conversation.Members.Where(_ => _.IsAdmin).Select(_ => _.CreatorId).ToList()
+                    };
+                    var groupAdminNotifications = Adapt(newNotificationDto, client);
+                    await _uow.NotificationRepo.Insert(groupAdminNotifications);
                 }
                 break;
         }

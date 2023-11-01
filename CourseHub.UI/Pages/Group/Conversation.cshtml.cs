@@ -19,6 +19,7 @@ public class ConversationModel : PageModel
 {
     public UserFullModel Client { get; set; }
     public Dictionary<Guid, UserMinModel> RelatedUsers { get; set; }
+    // Conversations that user is member
     public List<Core.Models.Social.ConversationModel> Conversations { get; set; }
     public Core.Models.Social.ConversationModel? CurrentConversation { get; set; }
     public List<Guid> MemberIds { get; set; }

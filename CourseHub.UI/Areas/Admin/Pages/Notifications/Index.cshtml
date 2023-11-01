@@ -32,9 +32,10 @@
                         {
                             foreach (var item in Model.Data.Items
                                 .Where(_ =>
-                                    _.Type != NotificationType.ReportGroup &&
-                                    _.Type != NotificationType.ReportCourse &&
-                                    _.Type != NotificationType.InviteMember))
+                                    _.Type == NotificationType.AdminMessage ||
+                                    _.Type == NotificationType.RequestToBecomeInstructor ||
+                                    _.Type == NotificationType.RequestWithdrawal
+                                ))
                             {
                                 <tr>
                                     <td>@item.Type.ToString()</td>

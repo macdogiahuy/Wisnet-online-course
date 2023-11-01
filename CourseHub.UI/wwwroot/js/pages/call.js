@@ -25,8 +25,14 @@ const constraints = {
 
 
 var client = Storage.getClientData();
-if (!client)
-    redirectToSignin();
+if (!client) {
+    if (window.unsetClient) {
+        Storage.setClientData(window.unsetClient);
+    }
+    else {
+        redirectToSignin();
+    }
+}
 
 var _roomId = 'eb4e0163-271a-4886-9e60-bee318d7ca44';                //storage
 //...
