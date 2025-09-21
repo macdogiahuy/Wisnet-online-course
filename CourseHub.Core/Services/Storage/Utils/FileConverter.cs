@@ -1,30 +1,32 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using System.IO;
+using System.Threading.Tasks;
 
-namespace CourseHub.Core.Services.Storage.Utils;
-
-internal class FileConverter
+namespace CourseHub.Core.Services.Storage.Utils
 {
-    // using SixLabors.ImageSharp
-    // System.Drawing.Common is only supported on Windows
-
-    public const string EXTENSION_JPG = ".jpg";
-
-
-
-    public async Task<Stream> ToJpg(IFormFile file)
+    internal class FileConverter
     {
-        if (file.ContentType == "image/jpeg")
-            return file.OpenReadStream();
+        public const string EXTENSION_JPG = ".jpg";
 
-        using var imgStream = new MemoryStream();
-        await file.CopyToAsync(imgStream);
-        imgStream.Seek(0, SeekOrigin.Begin);
-        using var image = await Image.LoadAsync(imgStream);
+        public async Task<Stream> ToJpg(IFormFile file)
+        {
+            if (file.ContentType == "image/jpeg")
+                return file.OpenReadStream();
 
-        // not closing the stream (let it be closed by ServerStorage)
-        var jpgStream = new MemoryStream();
-        await image.SaveAsJpegAsync(jpgStream);
-        jpgStream.Position = 0;
-        return jpgStream;
+            using var imgStream = new MemoryStream();
+            await file.CopyToAsync(imgStream);
+            imgStream.Seek(0, SeekOrigin.Begin);
+
+            using var image = await Image.LoadAsync(imgStream);
+
+            // not closing the stream (let it be closed by ServerStorage)
+            var jpgStream = new MemoryStream();
+            await image.SaveAsJpegAsync(jpgStream);
+            jpgStream.Position = 0;
+            return jpgStream;
+        }
     }
 }
