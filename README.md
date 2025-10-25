@@ -85,46 +85,51 @@ GitHub Actions (`.github/workflows/dotnet-ci.yml`) performs restore, build, and 
   ```
   để tạo báo cáo HTML để dễ quan sát hơn.
 
-## Test Case Inventory
+## Test Case Inventory (29 tests)
 
-### Assignment Module
+### Course Service (15 tests)
 
-| Test ID | Test Name                                                        | Type       | Priority | Description                                 |
-| ------- | ---------------------------------------------------------------- | ---------- | -------- | ------------------------------------------- |
-| TC001   | CreateAssignment_WithValidData_ShouldCreateSuccessfully          | Functional | High     | Tao assignment voi du lieu hop le           |
-| TC004   | AssignmentAttempt_EnrolledStudent_ShouldDisplayAssignment        | Functional | High     | Hien thi assignment cho hoc vien da dang ky |
-| TC007   | CreateAssignment_WithInvalidFile_ShouldReturnError               | Negative   | High     | Tao assignment voi file khong hop le        |
-| TC009   | AssignmentAttempt_NotEnrolled_ShouldRedirectToCourseDetail       | Negative   | High     | Truy cap assignment khi chua dang ky        |
-| TC012   | CreateAssignment_WithMinimumDuration_ShouldHandleCorrectly       | Boundary   | Medium   | Test voi thoi gian toi thieu                |
-| TC013   | CreateAssignment_WithBoundaryGradeToPass_ShouldValidateCorrectly | Boundary   | Medium   | Test voi diem dat o cac gia tri bien        |
-| TC016   | SubmitAssignment_WithValidAnswers_ShouldRedirectToOverview       | Functional | Medium   | Nop bai assignment thanh cong               |
-| TC017   | AssignmentAttempt_UnauthenticatedUser_ShouldRedirectToLogin      | Negative   | Medium   | User chua dang nhap truy cap assignment     |
+| Test ID | Test Name                                                    | Type       | Priority | Mô tả ngắn                                    |
+| ------- | ------------------------------------------------------------ | ---------- | -------- | --------------------------------------------- |
+| C01     | CreateAsync_Should_ReturnCreated_When_InputIsValid           | Functional | High     | Tạo khóa học hợp lệ trả về 201 và commit      |
+| C02     | CreateAsync_Should_ReturnServerError_When_InstructorMissing  | Negative   | High     | Thiếu giảng viên → không insert, trả về 500   |
+| C03     | CreateAsync_Should_HandleRepositoryException                 | Negative   | High     | Repository ném lỗi → ServiceResult 500        |
+| C04     | UpdateAsync_Should_ReturnServerError_When_InstructorMissing  | Negative   | High     | Instructor không tồn tại khi cập nhật         |
+| C05     | UpdateAsync_Should_ReturnBadRequest_When_CourseMissing       | Negative   | High     | Khóa học không tồn tại khi cập nhật           |
+| C06     | UpdateAsync_Should_UpdateCourse_When_DataValid               | Functional | High     | Cập nhật thành công với dữ liệu mới và commit |
+| C07     | DeleteAsync_Should_ReturnServerError_When_InstructorMissing  | Negative   | High     | Instructor không tìm thấy khi xóa             |
+| C08     | DeleteAsync_Should_ReturnNotFound_When_CourseMissing         | Negative   | High     | Không tìm thấy khóa học khi xóa               |
+| C09     | DeleteAsync_Should_DeleteCourse_When_EntityExists            | Functional | High     | Xóa khóa học thành công và commit             |
+| C10     | GetPagedAsync_Should_OrderByPrice_When_ByPriceEnabled        | Functional | Medium   | Sắp xếp theo giá khi bật ByPrice              |
+| C11     | GetPagedAsync_Should_OrderByDiscountDescending               | Functional | Medium   | Sắp xếp giảm dần theo discount                |
+| C12     | GetPagedAsync_Should_OrderByLastModificationTime_When_NoFlag | Functional | Medium   | Mặc định sắp xếp theo LastModificationTime    |
+| C13     | GetPagedAsync_Should_FilterByKeyword_When_TitleProvided      | Functional | Medium   | Lọc theo từ khóa Title                        |
+| C14     | GetAsync_Should_ReturnCourse_When_EntityExists               | Functional | Medium   | Lấy chi tiết khóa học thành công              |
+| C15     | GetAsync_Should_ReturnNotFound_When_CourseMissing            | Negative   | Medium   | Trả về 404 khi khóa học không tồn tại         |
 
-### Course Module
+### User Service (7 tests)
 
-| Test ID | Test Name                                                          | Type       | Priority | Description                       |
-| ------- | ------------------------------------------------------------------ | ---------- | -------- | --------------------------------- |
-| TC002   | UpdateCourse_ByOwner_ShouldUpdateSuccessfully                      | Functional | High     | Cap nhat khoa hoc boi chu so huu  |
-| TC003   | CreateCourse_WithValidData_ShouldCreateSuccessfully                | Functional | High     | Tao khoa hoc voi du lieu hop le   |
-| TC005   | SearchCourses_ByKeyword_ShouldReturnMatchingResults                | Functional | Medium   | Tim kiem khoa hoc theo tu khoa    |
-| TC006   | CourseDetail_WithValidId_ShouldDisplayFullInformation              | Functional | Medium   | Hien thi chi tiet khoa hoc        |
-| TC010   | UpdateCourse_WithEmptyTitle_ShouldReturnError                      | Negative   | High     | Cap nhat khoa hoc voi title trong |
-| TC011   | CourseDetail_WithNonExistentId_ShouldRedirectTo404                 | Negative   | High     | Truy cap khoa hoc khong ton tai   |
-| TC015   | UpdateCourse_ByDifferentInstructor_ShouldPreventUnauthorizedAccess | Security   | High     | Ngan chan truy cap trai phep      |
-| TC018   | CreateCourse_WithoutSections_ShouldShowValidationError             | Negative   | Medium   | Tao khoa hoc khong co sections    |
-| TC019   | CreateCourse_AsLearner_ShouldReturnForbidden                       | Security   | High     | Learner tao khoa hoc (forbidden)  |
+| Test ID | Test Name                                                    | Type       | Priority | Mô tả ngắn                                     |
+| ------- | ------------------------------------------------------------ | ---------- | -------- | ---------------------------------------------- |
+| U01     | SignInAsync_Should_ReturnAuthModel_When_CredentialsValid     | Functional | High     | Đăng nhập bằng username/password hợp lệ        |
+| U02     | SignInAsync_Should_ReturnAuthModel_When_UsingEmail           | Functional | High     | Đăng nhập bằng email hợp lệ                    |
+| U03     | SignInAsync_Should_ReturnUnauthorized_When_PasswordInvalid   | Negative   | High     | Sai mật khẩu tăng AccessFailedCount            |
+| U04     | SignInAsync_Should_ReturnForbidden_When_UserNotApproved      | Security   | High     | Tài khoản chưa duyệt bị chặn truy cập          |
+| U05     | SignInAsync_Should_ReturnForbidden_When_AccessFailedExceeded | Security   | High     | Vượt ngưỡng AccessFailedCount → khóa đăng nhập |
+| U06     | SignInAsync_Should_ReturnBadRequest_When_CredentialsMissing  | Negative   | Medium   | Thiếu thông tin đăng nhập                      |
+| U07     | SignInAsync_Should_ReturnUnauthorized_When_UserMissing       | Negative   | Medium   | Không tìm thấy user → trả về 401               |
 
-### Payment/Withdrawal Module
+### Bills Controller (7 tests)
 
-| Test ID | Test Name                                                         | Type       | Priority | Description                            |
-| ------- | ----------------------------------------------------------------- | ---------- | -------- | -------------------------------------- |
-| TC003   | RequestWithdrawal_WithSufficientBalance_ShouldProcessSuccessfully | Functional | High     | Yeu cau rut tien voi so du du          |
-| TC008   | RequestWithdrawal_ExceedsBalance_ShouldReturnError                | Negative   | High     | Yeu cau rut tien vuot qua so du        |
-| TC014   | InstructorWithdraw_AsLearner_ShouldReturnForbidden                | Security   | High     | Learner truy cap trang rut tien        |
-| TC020   | DisplayWithdrawalHistory_ShouldShowPreviousRequests               | Functional | Medium   | Hien thi lich su rut tien              |
-| TC021   | RequestWithdrawal_WithInvalidAccountNumber_ShouldReturnError      | Negative   | Medium   | Rut tien voi so tai khoan khong hop le |
-| TC022   | InstructorWithdraw_Unauthenticated_ShouldRedirectToLogin          | Security   | High     | User chua dang nhap truy cap rut tien  |
-| TC023   | RequestWithdrawal_WithMinimumAmount_ShouldProcessCorrectly        | Boundary   | Medium   | Test voi so tien toi thieu             |
+| Test ID | Test Name                                                          | Type       | Priority | Mô tả ngắn                                              |
+| ------- | ------------------------------------------------------------------ | ---------- | -------- | ------------------------------------------------------- |
+| P01     | GetRedirectLink_Should_ReturnPaymentUrl_When_CourseValid           | Functional | High     | Tạo URL thanh toán VNPay hợp lệ                         |
+| P02     | GetRedirectLink_Should_ReturnBadRequest_When_NoteInvalid           | Negative   | High     | Note không phải GUID trả về 400                         |
+| P03     | GetRedirectLink_Should_ReturnBadRequest_When_ActionUnsupported     | Negative   | High     | Từ chối action không hỗ trợ                             |
+| P04     | GetRedirectLink_Should_ReturnBadRequest_When_CourseNotFound        | Negative   | High     | Không lấy được CourseMinModel → 400                     |
+| P05     | RedirectedFromVNPay_Should_ProcessPayment_When_ResponseValid       | Functional | High     | Ghi nhận bill, enroll và redirect tới chi tiết khóa học |
+| P06     | RedirectedFromVNPay_Should_RedirectToFailed_When_MissingBankTranNo | Negative   | Medium   | Response thiếu BankTranNo → redirect thất bại           |
+| P07     | RedirectedFromVNPay_Should_RedirectTo404_When_ResponseMissing      | Negative   | Medium   | Không có response → chuyển hướng 404                    |
 
 ## Common issues
 
@@ -162,12 +167,12 @@ The solution depends on third-party libraries (ASP.NET Core, EF Core, ImageSharp
 - Here are an example outputs from the application:
 
 ```bash
-[Test Session Finished] 10/25/2025 13:03:47
-Total tests: 1
-Passed tests: 1
+[Test Session Finished] 10/25/2025 13:50:19
+Total tests: 29
+Passed tests: 29
 Success rate: 100.00%
 ...
-Build succeeded with 8 warning(s) in 2.8s
+Build succeeded with 7 warning(s) in 2.3s
 ```
 
 ## Prompts Used
