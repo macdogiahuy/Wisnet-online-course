@@ -59,6 +59,34 @@ public class UserServiceTests
         tokenService.Verify(t => t.GenerateAccessToken(user.Id.ToString(), user.Role.ToString()), Times.Once);
     }
 
+    [Fact(DisplayName = "SignInAsync trả về AuthModel khi đăng nhập bằng email")]
+    public async Task SignInAsync_Should_ReturnAuthModel_When_UsingEmail()
+    {
+        var user = CreateApprovedLearner("janedoe", "Password123!");
+        var dto = new SignInDto { Email = user.Email, Password = "Password123!" };
+        var tokenService = new Mock<ITokenService>();
+        tokenService.Setup(t => t.GenerateAccessToken(user.Id.ToString(), user.Role.ToString())).Returns("access-token");
+        tokenService.Setup(t => t.GenerateRefreshToken()).Returns("refresh-token");
+
+        var expectedFullModel = new UserFullModel { Id = user.Id, UserName = user.UserName, Role = user.Role };
+        _mapper.Setup(m => m.Map<UserFullModel>(user)).Returns(expectedFullModel);
+        _userRepository.Setup(r => r.FindByEmail(user.Email)).ReturnsAsync(user);
+        _unitOfWork.Setup(u => u.CommitAsync()).Returns(Task.CompletedTask);
+
+        ServiceResult<AuthModel> result = await _service.SignInAsync(dto, tokenService.Object);
+
+        result.IsSuccessful.Should().BeTrue();
+        result.Status.Should().Be(200);
+        result.Data.Should().NotBeNull();
+        result.Data!.AccessToken.Should().Be("access-token");
+        result.Data.RefreshToken.Should().Be("refresh-token");
+    result.Data.User.Should().Be(expectedFullModel);
+    user.AccessFailedCount.Should().Be(0);
+    _userRepository.Verify(r => r.FindByEmail(user.Email), Times.Once);
+    _unitOfWork.Verify(u => u.CommitAsync(), Times.Once);
+    tokenService.Verify(t => t.GenerateAccessToken(user.Id.ToString(), user.Role.ToString()), Times.Once);
+    }
+
     [Fact(DisplayName = "SignInAsync trả về Unauthorized khi sai mật khẩu")]
     public async Task SignInAsync_Should_ReturnUnauthorized_When_PasswordInvalid()
     {
@@ -124,6 +152,22 @@ public class UserServiceTests
 
         result.IsSuccessful.Should().BeFalse();
         result.Status.Should().Be(400);
+        _unitOfWork.Verify(u => u.CommitAsync(), Times.Never);
+    }
+
+    [Fact(DisplayName = "SignInAsync trả về Unauthorized khi user không tồn tại")]
+    public async Task SignInAsync_Should_ReturnUnauthorized_When_UserMissing()
+    {
+        var dto = new SignInDto { UserName = "ghost", Password = "Password123!" };
+        var tokenService = new Mock<ITokenService>();
+
+        _userRepository.Setup(r => r.FindByUserName(dto.UserName!)).ReturnsAsync((User?)null);
+
+        ServiceResult<AuthModel> result = await _service.SignInAsync(dto, tokenService.Object);
+
+        result.IsSuccessful.Should().BeFalse();
+        result.Status.Should().Be(401);
+        tokenService.Verify(t => t.GenerateAccessToken(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         _unitOfWork.Verify(u => u.CommitAsync(), Times.Never);
     }
 

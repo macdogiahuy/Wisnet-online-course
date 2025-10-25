@@ -1,12 +1,16 @@
 using AutoMapper;
 using CourseHub.Core.Entities.CourseDomain;
 using CourseHub.Core.Entities.CourseDomain.Enums;
+using CourseHub.Core.Entities.UserDomain.Enums;
 using CourseHub.Core.Helpers.Messaging;
 using CourseHub.Core.Interfaces.Logging;
 using CourseHub.Core.Interfaces.Repositories;
 using CourseHub.Core.Interfaces.Repositories.CourseRepos;
 using CourseHub.Core.Interfaces.Repositories.Shared;
 using CourseHub.Core.Models.Course.CourseModels;
+using CourseHub.Core.Models.Course.CourseReviewModels;
+using CourseHub.Core.Models.Course.SectionModels;
+using CourseHub.Core.Models.User.UserModels;
 using CourseHub.Core.RequestDtos.Course.CourseDtos;
 using CourseHub.Core.Services.Domain.CourseServices;
 using FluentAssertions;
@@ -396,6 +400,133 @@ public class CourseServiceTests
         result.IsSuccessful.Should().BeTrue();
         result.Data.Should().Be(paged);
         queryMock.Verify(q => q.ExecuteWithOrderBy(It.IsAny<Expression<Func<Course, DateTime>>>(), false, false, false), Times.Once);
+    }
+
+    [Fact(DisplayName = "GetPagedAsync lọc theo từ khóa Title khi Title được truyền")]
+    public async Task GetPagedAsync_Should_FilterByKeyword_When_TitleProvided()
+    {
+        var dto = new QueryCourseDto
+        {
+            PageIndex = 0,
+            PageSize = 10,
+            Title = "Clean Code"
+        };
+
+        Expression<Func<Course, bool>>? capturedPredicate = null;
+        var paged = new PagedResult<CourseOverviewModel>(1, 0, 10, new List<CourseOverviewModel>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Title = "Course",
+                MetaTitle = "course",
+                ThumbUrl = "thumb",
+                Status = CourseStatus.Ongoing,
+                Price = 100,
+                Discount = 0,
+                DiscountExpiry = DateTime.UtcNow.AddDays(1),
+                Level = CourseLevel.Beginner,
+                LectureCount = 10,
+                LearnerCount = 5,
+                RatingCount = 1,
+                TotalRating = 5,
+                BookmarkCount = 0,
+                LastModificationTime = DateTime.UtcNow
+            }
+        });
+        var queryMock = new Mock<IPagingQuery<Course, CourseOverviewModel>>();
+        queryMock
+            .Setup(q => q.ExecuteWithOrderBy(It.IsAny<Expression<Func<Course, DateTime>>>(), false, false, false))
+            .ReturnsAsync(paged);
+
+        _courseRepository
+            .Setup(r => r.GetPagingQuery(
+                It.IsAny<Expression<Func<Course, bool>>>(),
+                dto.PageIndex,
+                dto.PageSize,
+                It.IsAny<Expression<Func<Course, object?>>[]>()
+            ))
+            .Callback((Expression<Func<Course, bool>> predicate, short _, byte _, Expression<Func<Course, object?>>[]? __) => capturedPredicate = predicate)
+            .Returns(queryMock.Object);
+
+        ServiceResult<PagedResult<CourseOverviewModel>> result = await _service.GetPagedAsync(dto);
+
+        result.IsSuccessful.Should().BeTrue();
+        capturedPredicate.Should().NotBeNull();
+
+        var matchingCourse = BuildCourse(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        matchingCourse.SetTitle("Ultimate Clean Code Guide");
+        var nonMatchingCourse = BuildCourse(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        nonMatchingCourse.SetTitle("Refactoring Primer");
+
+        var predicate = capturedPredicate!.Compile();
+        predicate(matchingCourse).Should().BeTrue();
+        predicate(nonMatchingCourse).Should().BeFalse();
+    }
+
+    [Fact(DisplayName = "GetAsync trả về CourseModel khi khóa học tồn tại")]
+    public async Task GetAsync_Should_ReturnCourse_When_EntityExists()
+    {
+        var courseId = Guid.NewGuid();
+        var courseModel = new CourseModel
+        {
+            Id = courseId,
+            CreationTime = DateTime.UtcNow,
+            LastModificationTime = DateTime.UtcNow,
+            Title = "Clean Architecture",
+            MetaTitle = "clean-architecture",
+            ThumbUrl = "thumb.jpg",
+            Intro = "Intro",
+            Description = "Description",
+            Status = CourseStatus.Ongoing,
+            Price = 120,
+            Discount = 0.1,
+            DiscountExpiry = DateTime.UtcNow.AddDays(10),
+            Level = CourseLevel.Intermediate,
+            Outcomes = "Outcomes",
+            LectureCount = 10,
+            LearnerCount = 5,
+            RatingCount = 1,
+            TotalRating = 5,
+            BookmarkCount = 0,
+            LeafCategoryId = Guid.NewGuid(),
+            Requirements = "Requirements",
+            InstructorId = Guid.NewGuid(),
+            Creator = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Email = "instructor@example.com",
+                FullName = "Instructor",
+                AvatarUrl = "avatar.jpg",
+                Role = Role.Instructor,
+                IsApproved = true,
+                Bio = "Bio",
+                EnrollmentCount = 0
+            },
+            Sections = new List<SectionModel>(),
+            Metas = new List<CourseMeta>(),
+            Reviews = new List<CourseReviewModel>()
+        };
+
+        _courseRepository.Setup(r => r.GetAsync(courseId)).ReturnsAsync(courseModel);
+
+        ServiceResult<CourseModel> result = await _service.GetAsync(courseId);
+
+        result.IsSuccessful.Should().BeTrue();
+        result.Status.Should().Be(200);
+        result.Data.Should().Be(courseModel);
+    }
+
+    [Fact(DisplayName = "GetAsync trả về NotFound khi khóa học không tồn tại")]
+    public async Task GetAsync_Should_ReturnNotFound_When_CourseMissing()
+    {
+        var courseId = Guid.NewGuid();
+        _courseRepository.Setup(r => r.GetAsync(courseId)).ReturnsAsync((CourseModel?)null);
+
+        ServiceResult<CourseModel> result = await _service.GetAsync(courseId);
+
+        result.IsSuccessful.Should().BeFalse();
+        result.Status.Should().Be(404);
     }
 
     private static Course BuildCourse(Guid courseId, Guid creatorId, Guid instructorId)

@@ -113,6 +113,58 @@ public class BillsControllerTests
         courseService.Verify(s => s.GetMinAsync(It.IsAny<Guid>()), Times.Never);
     }
 
+    [Fact(DisplayName = "GetRedirectLink trả về BadRequest khi action không hỗ trợ")]
+    public async Task GetRedirectLink_Should_ReturnBadRequest_When_ActionUnsupported()
+    {
+        var courseService = new Mock<ICourseService>();
+        var controller = CreateControllerWithUser(Guid.NewGuid());
+        var dto = new CreateBillDto
+        {
+            Action = "UNKNOWN_ACTION",
+            Note = Guid.NewGuid().ToString(),
+            Gateway = PaymentDomainMessages.GATEWAY_VNPAY
+        };
+        var appInfo = Options.Create(new AppInfoOptions
+        {
+            MainBackendApp = "https://backend.local",
+            MainFrontendApp = "https://frontend.local",
+            AppName = "WisNet"
+        });
+
+        var result = await controller.GetRedirectLink(dto, courseService.Object, appInfo);
+
+        result.Should().BeOfType<BadRequestObjectResult>();
+        courseService.Verify(s => s.GetMinAsync(It.IsAny<Guid>()), Times.Never);
+    }
+
+    [Fact(DisplayName = "GetRedirectLink trả về BadRequest khi không lấy được thông tin khóa học")]
+    public async Task GetRedirectLink_Should_ReturnBadRequest_When_CourseNotFound()
+    {
+        var courseService = new Mock<ICourseService>();
+        var controller = CreateControllerWithUser(Guid.NewGuid());
+        var courseId = Guid.NewGuid();
+        var dto = new CreateBillDto
+        {
+            Action = PaymentDomainMessages.ACTION_PAY_COURSE,
+            Note = courseId.ToString(),
+            Gateway = PaymentDomainMessages.GATEWAY_VNPAY
+        };
+        courseService
+            .Setup(s => s.GetMinAsync(courseId))
+            .ReturnsAsync(new ServiceResult<CourseMinModel>(404));
+        var appInfo = Options.Create(new AppInfoOptions
+        {
+            MainBackendApp = "https://backend.local",
+            MainFrontendApp = "https://frontend.local",
+            AppName = "WisNet"
+        });
+
+        var result = await controller.GetRedirectLink(dto, courseService.Object, appInfo);
+
+        result.Should().BeOfType<BadRequestObjectResult>();
+        courseService.Verify(s => s.GetMinAsync(courseId), Times.Once);
+    }
+
     [Fact(DisplayName = "RedirectedFromVNPay gọi service và redirect về trang chi tiết khi thành công")]
     public async Task RedirectedFromVNPay_Should_ProcessPayment_When_ResponseValid()
     {
