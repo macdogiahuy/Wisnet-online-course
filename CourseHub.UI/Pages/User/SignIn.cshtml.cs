@@ -59,13 +59,23 @@ public class SignInModel : PageModel
         HttpResponseMessage response = await _userApiService.SignInAsync(Dto);
         if (!response.IsSuccessStatusCode)
         {
-            string? responseMessage = await response.Content.ReadFromJsonAsync<string>();
-            if (responseMessage is not null)
+            string responseMessage = await response.Content.ReadAsStringAsync();
+            if (!string.IsNullOrWhiteSpace(responseMessage))
             {
-                if (responseMessage.StartsWith("400") ||
-                    responseMessage.StartsWith("401") ||
-                    responseMessage.StartsWith("403"))
-                    ModelState.AddModelError(string.Empty, responseMessage.Substring(5));
+                string sanitizedMessage = responseMessage.Trim();
+                if (sanitizedMessage.StartsWith('"') && sanitizedMessage.EndsWith('"'))
+                    sanitizedMessage = sanitizedMessage.Trim('"');
+
+                if (sanitizedMessage.StartsWith("400") ||
+                    sanitizedMessage.StartsWith("401") ||
+                    sanitizedMessage.StartsWith("403"))
+                {
+                    ModelState.AddModelError(string.Empty, sanitizedMessage.Substring(5));
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, sanitizedMessage);
+                }
             }
             else
             {
