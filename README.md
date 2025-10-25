@@ -72,6 +72,38 @@ GitHub Actions (`.github/workflows/dotnet-ci.yml`) performs restore, build, and 
 
 ---
 
+## Quy trình kiểm thử (AI4SE)
+
+### Phân tích Feature
+
+- Xác định module có ảnh hưởng lớn (Course, User, Payment) dựa trên lưu lượng sử dụng và rủi ro kinh doanh.
+- Thu thập yêu cầu chức năng, luồng nghiệp vụ và các ràng buộc hiện có (role, trạng thái, điều kiện dữ liệu).
+
+### Các Function Cần Test
+
+- Lập danh sách phương thức/domain service/controller quan trọng cùng trạng thái đầu ra mong đợi.
+- Ưu tiên theo tiêu chí business value, độ phức tạp logic và mức độ dễ bị lỗi.
+
+### Thiết kế Test Cases
+
+- Chuyển từng function thành kịch bản kiểm thử cụ thể (happy-path, negative, boundary, security).
+- Ghi nhận dữ liệu giả lập, điều kiện trước, kỳ vọng sau và mã lỗi dự kiến.
+
+### Sinh Test Code
+
+- Hiện thực test bằng xUnit + Moq + FluentAssertions, tái sử dụng builder/helper khi có thể.
+- Đảm bảo test đặt tên theo convention Given/When/Should để dễ truy vết.
+
+### Chạy & Debug Tests
+
+- Thực thi `dotnet test` local và CI; phân tích kết quả, log và stacktrace khi có lỗi.
+- Sử dụng breakpoint hoặc `ITestOutputHelper` khi cần làm rõ hành vi.
+
+### Tối ưu & Mocking
+
+- Tinh chỉnh mock để chỉ phủ nhận dependency cần thiết, tránh over-mocking.
+- Loại bỏ test trùng lặp, gom fixture chung, bổ sung dữ liệu giả lập sát thực tế.
+
 ## Báo cáo Coverage (Tiếng Việt)
 
 - Chạy kiểm thử kèm báo cáo coverage:
